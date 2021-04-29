@@ -1,0 +1,453 @@
+{
+    "SERVER_URL_333": "http://192.168.1.111:8405/",
+    "SERVER_URL_erw": "dev/",
+    "SERVER_URL_d": "http://192.168.1.111:8405/",
+    "SERVER_URL": "http://39.101.168.200:8304/",
+    "SERVER_URL1": "http://192.168.1.111:8401/",
+    "SERVER_URL_11": "http://192.168.1.111:8402/",
+    "SERVER_URL33": "http://39.101.168.200:8304/",
+    "REPORT_SERVER_URL": "http://39.101.168.200:8079/ReportServerV2.ashx",
+    "MSG_SERVER_URL": "ws://192.168.1.111:8420/api.push.message/websocket/message/push/abe76e78c469dd46a4d9252247848c6b/",
+    "systemSettings": {
+        "enableResourceProx": false,
+        "systemMode": "dev",
+        "enablePermission": false,
+        "enableLogin": true,
+        "enableExceptionLogin": true,
+        "enableLog": true,
+        "enablenotice": false,
+        "enableClient": false,
+        "enableDefaultPage":true,
+        "systemInfo": {
+            "title": "管理系统",
+            "subtitle": "生产管理系统",
+            "logo": "./assets/logo-color.svg",
+            "logoFull": "./assets/logo-full.svg",
+            "copyrightTime": "2020",
+            "copyright": "博道工业科技有限公司",
+            "backgroundStyle": {
+                "background-image": "url('./assets/logo-full.jpg')",
+                "background-size": "cover",
+                "background-position": "center"
+            },
+            "backgroundStyle1": {
+                "background-image": "url('https://gw.alipayobjects.com/zos/rmsportal/TVYTbAXWheQpRcWDaDMu.svg')",
+                "background-image1": "url('./assets/logo-full.svg')"
+            }
+        },
+        "permissionInfo": {
+            "enableMenuPermission": false,
+            "enableOperatePermission": false,
+            "enableToolbarPermission": false,
+            "enableRowActionPermission": false,
+            "enableColumnPermission": false
+        },
+        "loginInfo": {
+            "CAWebSocket": {
+                "url": "ws://{ip}:{port}/TCPService",
+                "pathParam": [
+                    {
+                        "name": "ip",
+                        "type": "cacheValue",
+                        "value": "192.168.1.111",
+                        "valueName":"clientIp"
+                    },
+                    {
+                        "name": "port",
+                        "type": "value",
+                        "value": "8888"
+                    }
+                ]
+            },
+            "loginAjaxConfig": {
+                "url": "resource/B_P_LOGIN/operate",
+                "ajaxType": "post",
+                "params": [
+                    {
+                        "name": "userName",
+                        "type": "componentValue",
+                        "valueName": "userName"
+                    },
+                    {
+                        "name": "passWord",
+                        "type": "componentValue",
+                        "valueName": "password",
+                        "dataType": "MD5"
+                    },
+                    {
+                        "name": "attribute",
+                        "type": "componentValue",
+                        "valueName": "ca",
+                        "value": "enable"
+                    }
+                ]
+            },
+            "resultData": {},
+            "userInfo": [
+                {
+                    "name": "userId",
+                    "path": "data\\_procedure_resultset_1$0",
+                    "type": "returnValue",
+                    "valueName": "R_USERID"
+                },
+                {
+                    "name": "name",
+                    "path": "data\\_procedure_resultset_1$0",
+                    "type": "returnValue",
+                    "valueName": "R_USERNAME"
+                },
+                {
+                    "name": "email",
+                    "path": "data\\_procedure_resultset_1$0",
+                    "type": "value",
+                    "value": ""
+                },
+                {
+                    "name": "avatar",
+                    "path": "data\\_procedure_resultset_1$0",
+                    "type": "value",
+                    "value": "./assets/tmp/img/avatar.jpg"
+                },
+                {
+                    "name": "userName",
+                    "path": "data\\_procedure_resultset_1$0",
+                    "type": "returnValue",
+                    "valueName": "R_USERNAME"
+                },
+                {
+                    "name": "realName",
+                    "path": "data\\_procedure_resultset_1$0",
+                    "type": "returnValue",
+                    "valueName": "R_REALNAME"
+                },
+                {
+                    "name": "departmentName",
+                    "path": "data\\_procedure_resultset_1$0",
+                    "type": "returnValue",
+                    "valueName": "R_DEPARTMENTNAME"
+                },
+                {
+                    "name": "departmentId",
+                    "path": "data\\_procedure_resultset_1$0",
+                    "type": "returnValue",
+                    "valueName": "R_DEPARTMENTID"
+                },
+                {
+                    "name": "parentDepartmentId",
+                    "path": "data\\_procedure_resultset_1$0",
+                    "type": "returnValue",
+                    "valueName": "R_PARENTDEPARTMENTID"
+                },
+                {
+                    "name": "departmentIds",
+                    "path": "data\\_procedure_resultset_1$0",
+                    "type": "returnValue",
+                    "valueName": "R_DEPARTMENTIDS"
+                },
+                {
+                    "name": "roleCodes",
+                    "path": "data\\_procedure_resultset_1$0",
+                    "type": "returnValue",
+                    "valueName": "R_ROLECODES"
+                },
+                {
+                    "name": "validationMessage",
+                    "path": "data\\_procedure_resultset_1$0",
+                    "type": "returnValue",
+                    "valueName": "R_VALIDATIONMESSAGE"
+                },
+                {
+                    "name": "result",
+                    "path": "data\\_procedure_resultset_1$0",
+                    "type": "returnValue",
+                    "valueName": "R_RESULT"
+                }
+            ]
+        },
+        "exceptionLoginInfo": {
+            "enablepassword": true,
+            "enablePermission": false,
+            "userList": [
+                {
+                    "name": "admin",
+                    "email": "",
+                    "avatar": "./assets/tmp/img/avatar.jpg",
+                    "userId": "_001",
+                    "userName": "admin",
+                    "passWord": "1",
+                    "realName": "开发账号"
+                }
+            ]
+        },
+        "menuInfo": {
+            "workMenuInfo": {
+                "menuAjaxConfig": {
+                    "url": "resource/B_P_MENU/operate",
+                    "ajaxType": "post",
+                    "params": [
+                        {
+                            "name": "userId",
+                            "type": "userValue",
+                            "valueName": "userId"
+                        },
+                        {
+                            "name": "attribute",
+                            "type": "value",
+                            "valueName": "attribute",
+                            "value": "pt"
+                        },
+                        {
+                            "name": "enablePermission",
+                            "type": "value",
+                            "valueName": "enable",
+                            "value": "enable"
+                        }
+                    ]
+                },
+                "resultData": {},
+                "menuInfo": [
+                    {
+                        "name": "menuData",
+                        "path": "data",
+                        "type": "returnValue",
+                        "valueName": "_procedure_resultset_1"
+                    }
+                ],
+                "enableMenuMapping": true,
+                "menuMapping": [
+                    {
+                        "name": "i18n",
+                        "type": "returnValue",
+                        "valueName": "I18N"
+                    },
+                    {
+                        "name": "icon",
+                        "type": "returnValue",
+                        "valueName": "ICON"
+                    },
+                    {
+                        "name": "id",
+                        "type": "returnValue",
+                        "valueName": "ID"
+                    },
+                    {
+                        "name": "jsonId",
+                        "type": "returnValue",
+                        "valueName": "JSON_ID"
+                    },
+                    {
+                        "name": "mainPageId",
+                        "type": "returnValue",
+                        "valueName": "MAIN_PAGE_ID"
+                    },
+                    {
+                        "name": "level",
+                        "type": "returnValue",
+                        "valueName": "LEVEL"
+                    },
+                    {
+                        "name": "link",
+                        "type": "returnValue",
+                        "valueName": "LINK"
+                    },
+                    {
+                        "name": "nodetype",
+                        "type": "returnValue",
+                        "valueName": "NODETYPE"
+                    },
+                    {
+                        "name": "parentId",
+                        "type": "returnValue",
+                        "valueName": "PARENT_ID"
+                    },
+                    {
+                        "name": "sortcode",
+                        "type": "returnValue",
+                        "valueName": "SORTCODE"
+                    },
+                    {
+                        "name": "status",
+                        "type": "returnValue",
+                        "valueName": "STATUS"
+                    },
+                    {
+                        "name": "text",
+                        "type": "returnValue",
+                        "valueName": "TEXT"
+                    }
+                ]
+            },
+            "devMenuInfo": {},
+            "menuMode": "card"
+        },
+        "pageInfo": {
+            "workPageInfo": {
+                "pageAjaxConfig": {
+                    "url": "resource/B_P_PERMISION_PAGE_ALL/operate",
+                    "ajaxType": "post",
+                    "params": [
+                        {
+                            "name": "PageId",
+                            "type": "item",
+                            "valueName": "PageId"
+                        },
+                        {
+                            "name": "userId",
+                            "type": "userValue",
+                            "valueName": "userId"
+                        },
+                        {
+                            "name": "menuId",
+                            "type": "activeMenu",
+                            "valueName": "id",
+                            "value": ""
+                        },
+                        {
+                            "name": "mainPageId",
+                            "type": "activeMenu",
+                            "valueName": "mainPageId",
+                            "value": ""
+                        },
+                        {
+                            "name": "enablePermission",
+                            "type": "value",
+                            "valueName": "enable",
+                            "value": "enable"
+                        }
+                    ]
+                },
+                "pageInfo": [
+                    {
+                        "name": "pageData",
+                        "path": "data",
+                        "type": "returnValue",
+                        "valueName": "_procedure_resultset_1"
+                    }
+                ]
+            }
+        },
+        "logInfo": {
+            "enableToolbarLog": true,
+            "enableRowActionLog": true,
+            "logAjaxConfig": {
+                "url": "resource/LOG_OPERATION_1/insert",
+                "ajaxType": "post",
+                "params": [
+                    {
+                        "name": "USER_NAME",
+                        "type": "userValue",
+                        "valueName": "userName"
+                    },
+                    {
+                        "name": "USER_ID",
+                        "type": "userValue",
+                        "valueName": "userId"
+                    },
+                    {
+                        "name": "MODULE_NAME",
+                        "type": "menuValue",
+                        "valueName": "text"
+                    },
+                    {
+                        "name": "MODULE_ID",
+                        "type": "menuValue",
+                        "valueName": "id"
+                    },
+                    {
+                        "name": "FUNC_NAME",
+                        "type": "item",
+                        "valueName": "btnText"
+                    },
+                    {
+                        "name": "FUNC_ID",
+                        "type": "item",
+                        "valueName": "btnId"
+                    },
+                    {
+                        "name": "COMPONENT_ID",
+                        "type": "item",
+                        "valueName": "targetViewId"
+                    },
+                    {
+                        "name": "DESCRIPTION",
+                        "type": "item",
+                        "valueName": "description"
+                    },
+                    {
+                        "name": "LEVEL",
+                        "type": "value",
+                        "value": 1
+                    },
+                    {
+                        "name": "LANGUAGE",
+                        "type": "value",
+                        "value": "ZH"
+                    },
+                    {
+                        "name": "OPER_DATE",
+                        "type": "value",
+                        "dataType": "datetime",
+                        "defaultDate": "defaultDate"
+                    }
+                ]
+            }
+        },
+        "noticeInfo": {
+            "linkUrl": "#/template/dynamic/vwzxewXqHDrxa7AsPKgrfQbo2AuJp6dGr3oW",
+            "intervalTime": 5000,
+            "linkMenu": {
+                "id": "m1VQ80hKinvWqfb3vFaGMnNCUldXyrcsxpIg",
+                "jsonId": "vwzxewXqHDrxa7AsPKgrfQbo2AuJp6dGr3oW",
+                "text": "待办",
+                "mainPageId": ""
+            },
+            "noticeAjaxConfig": {
+                "url": "resource/getNoticeData/query",
+                "ajaxType": "get",
+                "params": [
+                    {
+                        "name": "_mapToObject",
+                        "type": "value",
+                        "value": true
+                    },
+                    {
+                        "name": "reciverId",
+                        "type": "userValue",
+                        "valueName": "userId"
+                    },
+                    {
+                        "name": "taskState",
+                        "type": "value",
+                        "value": 1
+                    },
+                    {
+                        "name": "instanceState",
+                        "type": "value",
+                        "conditionType": "in",
+                        "value": "0,1"
+                    }
+                ]
+            }
+        },
+        "clientInfo": {
+            "clientAjaxConfig": {
+                "url": "login/getClientIp",
+                "ajaxType": "get",
+                "params": []
+            }
+        },
+        "defaultPageInfo":{
+            "type":"div",
+            "backgroundStyle": {
+                "width":"100%",
+                "height":"100%",
+                "background-image": "url('./assets/航天42所.jpg')",
+                "background-size": "cover",
+                "background-position": "center"
+            }
+        }
+    },
+    "resultDataRule":{
+        "list":{}
+    }
+}

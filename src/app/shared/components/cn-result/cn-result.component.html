@@ -1,0 +1,19 @@
+<nz-result
+      [nzTitle]="title"
+      [nzStatus]="status"
+      [nzSubTitle]="subTitle"
+    >
+      <div nz-result-content *ngIf="resultContent">
+        <div class="desc">
+          <h4 nz-title>{{resultContent.contentTitle}}</h4>
+          <p nz-paragraph *ngFor="let pa of resultContent.contentList">
+            <i nz-icon [nzType]="pa.icon"></i>
+            {{pa.content}}
+          </p>
+        </div>
+      </div>
+      <div nz-result-extra>
+        <cn-toolbar [config]="toolbarConfig" *ngIf="toolbarConfig"></cn-toolbar>
+        <cn-dynamic-template-layout [layoutId]="layoutId"></cn-dynamic-template-layout>
+      </div>
+</nz-result>

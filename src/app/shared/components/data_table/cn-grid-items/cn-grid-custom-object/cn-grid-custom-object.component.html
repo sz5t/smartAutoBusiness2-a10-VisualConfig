@@ -1,0 +1,12 @@
+<input nz-input hidden="hidden" [(ngModel)]="value" (ngModelChange)="valueChange($event)" />
+
+<ng-container *ngIf="!config.readonly">
+    <button nz-button type="button" nzType="primary" (click)="createCustomModal()">
+        <i nz-icon nzType="small-dash"></i>设置
+    </button>
+</ng-container>
+<ng-container *ngIf="config.readonly">
+    <button nz-button type="button" nzType="primary" (click)="createCustomModalRead()">
+        <i nz-icon nzType="small-dash"></i>查看
+    </button>
+</ng-container>

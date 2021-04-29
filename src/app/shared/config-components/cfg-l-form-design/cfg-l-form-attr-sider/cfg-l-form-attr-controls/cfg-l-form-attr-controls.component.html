@@ -1,0 +1,44 @@
+<button nz-button style="margin-right: 8px;" [nzSize]="'small'" nzType="primary" nzTitle="保存" (click)="saveControls()"
+    nz-tooltip>
+    <i nz-icon nzType="save" nzTheme="outline"></i>保存</button>
+
+<!-- <ng-container CfgLControlDesignDirective [config]="base_config.panelConent"> </ng-container>
+<nz-collapse *ngIf="selectedItem['active']">
+    <nz-collapse-panel *ngFor="let panel of event_panels" [nzHeader]="extraH" [nzActive]="panel.active"
+        [nzDisabled]="panel.disabled" [nzExtra]="extraTpl">
+
+        <ng-container CfgLControlDesignDirective [config]="panel.panelConent"> </ng-container>
+        <ng-template #extraTpl>
+          
+            <i nz-icon nzType="setting" (click)="setting(panel)"></i>
+
+        </ng-template>
+        <ng-template #extraH>
+            {{panel.name}}
+
+
+        </ng-template>
+    </nz-collapse-panel>
+</nz-collapse> -->
+
+<ng-container *ngIf="structure_config">
+    <ng-container CfgLControlDesignDirective [config]="structure_config.conentComponent" [sourceData]="data">
+    </ng-container>
+    <nz-collapse *ngIf="structure_config['childrenComponents']">
+        <nz-collapse-panel *ngFor="let panel of structure_config.childrenComponents" [nzHeader]="extraH"
+            [nzActive]="panel.active" [nzDisabled]="panel.disabled" [nzExtra]="extraTpl">
+
+            <ng-container CfgLControlDesignDirective [config]="panel" [(sourceData)]="data[panel.sourceData['name']]">
+            </ng-container>
+            <ng-template #extraTpl>
+
+                <i nz-icon nzType="setting" (click)="setting(panel)"></i>
+
+            </ng-template>
+            <ng-template #extraH>
+                {{panel.name}}
+
+            </ng-template>
+        </nz-collapse-panel>
+    </nz-collapse>
+</ng-container>

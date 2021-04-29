@@ -1,0 +1,120 @@
+<form [formGroup]="validateForm">
+    <!-- 三个form放在validation中一起验证 -->
+    <nz-form-item nzFlex>
+        <nz-form-label nz-col [nzSpan]="6" nzFor="pageId">页标识</nz-form-label>
+        <nz-form-control nz-col [nzSpan]="14">
+            <input nz-input formControlName="pageId">
+        </nz-form-control>
+    </nz-form-item>
+    <nz-form-item nzFlex>
+        <nz-form-label nz-col [nzSpan]="6" nzFor="cmptId">组件标识</nz-form-label>
+        <nz-form-control nz-col [nzSpan]="14">
+            <input nz-input formControlName="cmptId">
+        </nz-form-control>
+    </nz-form-item>
+    <nz-form-item nzFlex>
+        <nz-form-label nz-col [nzSpan]="6" nzFor="interfaceName">调用接口名称</nz-form-label>
+        <nz-form-control nz-col [nzSpan]="14">
+            <input nz-input formControlName="interfaceName">
+        </nz-form-control>
+    </nz-form-item>
+    <nz-form-item nzFlex>
+        <nz-form-label nz-col [nzSpan]="6" nzFor="interfaceExec">执行方法</nz-form-label>
+        <nz-form-control nz-col [nzSpan]="14">
+            <input nz-input formControlName="interfaceExec">
+        </nz-form-control>
+    </nz-form-item>
+
+    <!-- 第二张表 -->
+    <div formArrayName="parameterContent">
+        <nz-card nzTitle="参数列表" [nzExtra]="extraTemplate">
+            <ul nz-list nzBordered nzSize="large">
+                <div *ngFor="let item of testArrFormArray.controls;let i = index;" [formGroupName]="i">
+
+                    <li nz-list-item nzNoFlex style="border-bottom: 1px solid #f0f0f0;">
+
+                        <div nz-row>
+                            <div nz-col [nzSpan]="18">
+                                <nz-form-item>
+                                    <nz-form-label nz-col [nzSpan]="6" nzFor="parameterName">参数名称</nz-form-label>
+                                    <nz-form-control nz-col [nzSpan]="14">
+                                        <input nz-input formControlName="parameterName">
+                                    </nz-form-control>
+                                </nz-form-item>
+                                <nz-form-item>
+                                    <nz-form-label nz-col [nzSpan]="6" nzFor="parameterType">取值类型</nz-form-label>
+                                    <nz-form-control nz-col [nzSpan]="14">
+                                        <input nz-input formControlName="parameterType">
+
+                                    </nz-form-control>
+                                </nz-form-item>
+                                <nz-form-item>
+                                    <nz-form-label nz-col [nzSpan]="6" nzFor="parameterValueName">取值名称</nz-form-label>
+                                    <nz-form-control nz-col [nzSpan]="14">
+                                        <input nz-input formControlName="parameterType">
+
+                                    </nz-form-control>
+                                </nz-form-item>
+                                <nz-form-item>
+                                    <nz-form-label nz-col [nzSpan]="6" nzFor="parameterValue">默认值</nz-form-label>
+                                    <nz-form-control nz-col [nzSpan]="14">
+                                        <input nz-input formControlName="parameterType">
+
+                                    </nz-form-control>
+                                </nz-form-item>
+                            </div>
+                            <div nz-col [nzSpan]="6">
+                                <ul nz-list-item-actions>
+                                    <nz-list-item-action>
+                                        <button *ngIf="i>=0" nz-button nzType="dashed" (click)="delItem(i)" nzDanger
+                                            nzBlock>删除</button>
+                                    </nz-list-item-action>
+                                </ul>
+                            </div>
+                        </div>
+
+
+
+
+
+                    </li>
+
+                </div>
+            </ul>
+            <!--   <div *ngFor="let item of testArrFormArray.controls;let i = index;" [formGroupName]="i">
+                <nz-card nzType="inner" [nzTitle]="'参数详细'+i">
+
+                    <nz-form-item nzFlex>
+                        <nz-form-label nz-col [nzSpan]="6" nzFor="etcName">参数名称</nz-form-label>
+                        <nz-form-control nz-col [nzSpan]="14">
+                            <input nz-input formControlName="etcName">
+                        </nz-form-control>
+                    </nz-form-item>
+                    <nz-form-item nzFlex>
+                        <nz-form-label nz-col [nzSpan]="6" nzFor="date">参数类型</nz-form-label>
+                        <nz-form-control nz-col [nzSpan]="14">
+                            <input nz-input formControlName="date">
+
+                        </nz-form-control>
+                    </nz-form-item>
+                    <button *ngIf="i>=0" nz-button nzType="dashed" (click)="delItem(i)" nzDanger nzBlock>删除</button>
+                </nz-card>
+
+
+            </div> -->
+        </nz-card>
+        <ng-template #extraTemplate>
+            <button nz-button nzType="primary" (click)="addItem()">添加</button>
+        </ng-template>
+        <ng-template #delextraTemplate let-i>
+            <button nz-button nzType="primary" (click)="delItem(i)">删除</button>
+        </ng-template>
+
+    </div>
+
+    <!-- 第三张表 -->
+
+</form>
+
+<hr>
+<button nz-button nzType="dashed" (click)="test_to_form()" nzDanger nzBlock>【测试】表单值</button>

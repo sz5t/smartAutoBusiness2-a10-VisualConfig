@@ -1,0 +1,39 @@
+<nz-collapse>
+    <nz-collapse-panel *ngFor="let panel of event_panels" [nzHeader]="extraH" [nzActive]="panel.active"
+        [nzDisabled]="panel.disabled" [nzExtra]="extraTpl">
+        <ul nz-list nzBordered nzSize="large">
+            <!-- [nzDataSource]="panel.eventConent" -->
+            <li nz-list-item *ngFor="let item of panel.eventConent" nzNoFlex>
+                <ul nz-list-item-actions>
+                    <nz-list-item-action>
+                        <!-- <a (click)="info('edit')">edit</a>
+                        <a (click)="info('edit')">delete</a> -->
+                        <button nz-button [nzSize]="'small'" nzType="primary" nzTitle="设置" nz-tooltip> <i nz-icon
+                                nzType="setting"></i></button>
+                        <button nz-button [nzSize]="'small'" (click)="delete(item,panel)" nzType="primary"
+                            style="margin-left: 3px;" nzTitle="删除" nz-tooltip>
+                            <i nz-icon nzType="delete"></i></button>
+                    </nz-list-item-action>
+                </ul>
+                {{ item['name'] }}
+            </li>
+            <nz-list-footer>
+                <button nz-button *ngIf="!readonly" type="button" nzType="dashed" nzBlock="true" nzSize="default"
+                    (click)="addBtnClick($event,panel.eventConent)"><i nz-icon nzType="plus"></i>
+                    添加</button>
+            </nz-list-footer>
+        </ul>
+        <ng-template #extraTpl>
+            <!-- You can use stopPropagation if you don't want the panel to toggle -->
+            <i nz-icon nzType="setting" (click)="setting(panel)"></i>
+
+        </ng-template>
+        <ng-template #extraH>
+            {{panel.name}}
+            <nz-badge nzStandalone [nzCount]="panel.eventConent.length" [nzOverflowCount]="999"
+                [nzStyle]="{ backgroundColor: '#52c41a' }">
+            </nz-badge>
+
+        </ng-template>
+    </nz-collapse-panel>
+</nz-collapse>

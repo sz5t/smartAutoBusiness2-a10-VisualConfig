@@ -1,0 +1,29 @@
+{
+    "/smt-base-A": {
+        "target": "http://192.168.1.111:8404/", 
+        "logLevel": "debug",
+        "secure": false,
+        "changeOrigin": true,
+        "pathRewrite": {
+            "^/smt-base-A": ""
+        }
+    },
+    "/smt-cfg-A": {
+        "target": "http://192.168.1.111:8403/", 
+        "logLevel": "debug",
+        "secure": false,
+        "changeOrigin": true,
+        "pathRewrite": {
+            "^/smt-cfg-A": ""
+        }
+    },
+    "/dev": {
+        "target": "http://192.168.1.111:8405/", 
+        "logLevel": "debug",
+        "secure": false,
+        "changeOrigin": true,
+        "pathRewrite": {
+            "^/dev": ""
+        }
+    }
+}

@@ -1,0 +1,44 @@
+<nz-table nzTitle="分组合并" [nzData]="colTableList" [nzShowPagination]="false" nzSize="small">
+    <thead>
+        <tr>
+            <th nzWidth="40%">分组合并标识</th>
+            <th nzWidth="40%">是否开启独自编辑</th>
+            <th>操作</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let data of colTableList">
+            <ng-container *ngIf="colEditCache && colEditCache[data.id].edit; else textTemplate">
+                <td>
+                    <nz-select [(ngModel)]="colEditCache[data.id].data.mergeColName">
+                        <nz-option *ngFor="let col of unSelectedColumnsMap" [nzValue]="col.field" [nzLabel]="col.title">
+                        </nz-option>
+                    </nz-select>
+                </td>
+                <td>
+                    <nz-select [(ngModel)]="colEditCache[data.id].data.singleEdit">
+                        <nz-option nzValue="true" nzLabel="启用"></nz-option>
+                        <nz-option nzValue="false" nzLabel="不启用"></nz-option>
+                    </nz-select>
+                </td>
+                <td>
+                    <a (click)="saveEdit(data.id)" class="save">保存</a>
+                    <nz-divider nzType="vertical"></nz-divider>
+                    <a (click)="cancelEdit(data.id)" class="cancel">关闭</a>
+                </td>
+            </ng-container>
+            <ng-template #textTemplate>
+                <td>{{ data.mergeColName }}</td>
+                <td>{{ data.singleEdit }}</td>
+                <td><a (click)="startEdit(data.id)">编辑</a>
+                    <nz-divider nzType="vertical"></nz-divider>
+                    <a nz-popconfirm nzPopconfirmTitle="Sure to delete?" (nzOnConfirm)="deleteRow(data.id)">删除</a>
+                </td>
+            </ng-template>
+        </tr>
+    </tbody>
+</nz-table>
+<button nz-button [nzType]="'dashed'" (click)="add('rowGroup')" nzBlock class="mt-md">
+    <i nz-icon nzType="plus"></i>
+    <span>新增</span>
+</button>

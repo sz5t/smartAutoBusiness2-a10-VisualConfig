@@ -1,0 +1,53 @@
+<nz-layout>
+
+    <nz-layout>
+        <nz-sider>
+
+            <nz-divider nzOrientation="left" nzText="流程节点"></nz-divider>
+            <div style="width: 200px; height: 100%;" #checkContainer> </div>
+
+        </nz-sider>
+        <nz-content>
+            <nz-breadcrumb>
+                <nz-breadcrumb-item>流程内容</nz-breadcrumb-item>
+                <!-- <button nz-button nzType="default" (click)="onUndo()" [disabled]="!this.state.canUndo">撤销</button>
+                <button nz-button nzType="default" (click)="onRedo()" [disabled]="!this.state.canRedo">恢复</button>
+
+                <button nz-button nzType="default" (click)="onCopy()">复制</button>
+                <button nz-button nzType="default" (click)="onPaste()">粘贴</button>
+                <button nz-button nzType="default" (click)="onDelete()">删除</button>
+                <button nz-button nzType="default" (click)="onSave()">保存</button>
+                <button nz-button nzType="default" (click)="printData()">画布JSON(测试)</button>
+              <button nz-button nzType="default" (click)="onTestSave()">(测试)</button> -->
+
+                <ng-template ngFor let-btn [ngForOf]="config.innerToolbar">
+                    <button style="font-weight: 500" *ngIf="!btn.hidden" [nzSize]="btn.size ? btn.size : 'default'"
+                        [nzType]="btn.color ? btn.color : 'default'" [disabled]="btn.disabled" nz-button type="button"
+                        (click)="inner_action(btn)">
+                        <i nz-icon *ngIf="btn.icon" [nzType]="btn.icon" [nzTheme]="btn.theme ? btn.theme : 'outline'"
+                            [nzTwotoneColor]="'#A5A5B8'"></i>
+                        {{btn.text}}
+                    </button>
+                </ng-template>
+
+
+            </nz-breadcrumb>
+            <div class="inner-content" #refcontent>
+                <div #refContainer style="width: 100%; height: 100%;">
+                </div>
+            </div>
+        </nz-content>
+
+    </nz-layout>
+</nz-layout>
+
+<nz-dropdown-menu #menu="nzDropdownMenu">
+    <ul nz-menu>
+
+        <li nz-menu-item *ngFor="let item of config.dropdownMenu" (click)="dropdown_change(item.execute)">
+            <i nz-icon *ngIf="item.icon" [nzType]="item.icon" [nzTheme]="item.theme ? item.theme : 'outline'"
+                [nzTwotoneColor]="'#A5A5B8'"></i>
+            {{item.text}}
+        </li>
+    </ul>
+</nz-dropdown-menu>

@@ -1,0 +1,51 @@
+<form nz-form [formGroup]="form" [nzLayout]="'vertical'">
+    <div>
+        <nz-table formArrayName="ReceiverOptionsConfig" [nzData]="ReceiverOptionsConfig.value"
+            [nzShowPagination]="false">
+            <thead>
+                <tr>
+                    <th>被级联方式</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of ReceiverOptionsConfig.controls; let i = index" [formGroupName]="i">
+                    <td>
+                        <span *ngIf="editIndex !== i">{{ ReceiverOptionsConfig.value[i].receiverRelationName
+                            }}</span>
+                        <span *ngIf="editIndex === i" nz-form-control>
+                            <input nz-input formControlName="receiverRelationName" placeholder="请输入被级联方式" />
+                        </span>
+                    </td>
+                    <td>
+                        <span *ngIf="editIndex !== i">
+                            <a (click)="set(i)">设置</a>
+                            <nz-divider nzType="vertical"></nz-divider>
+                            <a (click)="del(i)">删除</a>
+                        </span>
+                        <span *ngIf="editIndex === i">
+                            <a (click)="save(i)">保存</a>
+                            <nz-divider nzType="vertical"></nz-divider>
+                            <a (click)="cancel(i)">关闭</a>
+                            <!-- <nz-popconfirm (nzOnConfirm)="cancel(i)" [nzTitle]="'是否要取消操作？'">
+                      <a nz-popconfirm>取消</a>
+                    </nz-popconfirm> -->
+                        </span>
+                    </td>
+                </tr>
+            </tbody>
+        </nz-table>
+        <button *ngIf="editIndex === -1" nz-button [nzType]="'dashed'" (click)="add()" nzBlock class="mt-md">
+            <i nz-icon nzType="plus"></i>
+            <span>新增级联接收配置</span>
+        </button>
+        <nz-modal [(nzVisible)]="isVisible" nzTitle="接收级联方式的配置" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()"
+            nzWidth="600" [nzFooter]="null">
+            <ng-container *nzModalContent>
+                <app-cfg-property-editor-cascade-value [rowData]="rowData" [config]="config"
+                    (updateValue)="valueChange($event)">
+                </app-cfg-property-editor-cascade-value>
+            </ng-container>
+        </nz-modal>
+    </div>
+</form>

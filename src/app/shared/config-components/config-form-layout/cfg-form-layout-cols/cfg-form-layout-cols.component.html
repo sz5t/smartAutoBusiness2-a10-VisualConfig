@@ -1,0 +1,37 @@
+<div *ngIf="showLayout">
+    <div *ngIf="l_config['children'].length >0" nz-row [nzGutter]="6">
+        <div nz-col *ngFor="let r of l_config['children']  let i=index" [nzSpan]="r.span" [nzSm]="r.size.nzSm"
+            [nzXs]="r.size.nzXs" [nzMd]="r.size.nzMd" [nzLg]="r.size.nzLg" [nzXl]="r.size.nzXl">
+            <div [ngStyle]="r['style']" (drop)="f_ondrop($event,l_config,i)" (dragover)="f_ondragover($event,l_config)"
+                (dragenter)="f_ondragenter($event,i)" (dragleave)="f_ondragleave($event,i)">
+                <cfg-form-layout-col [(l_config)]="l_config['children'][i]" [showLayout]="showLayout"
+                    [(selectedItem)]="selectedItem" [(cmptState)]="cmptState" [fromDataService]="fromDataService"
+                    (layoutOptions)="exec_options($event)">
+                </cfg-form-layout-col>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="l_config['children'].length === 0" nz-row [nzGutter]="6">
+        <div nz-col (drop)="f_ondrop($event,l_config,0)" (dragover)="f_ondragover($event,l_config)"
+            (dragenter)="f_ondragenter($event,0)" (dragleave)="f_ondragleave($event,0)" nzSpan="24">
+            可添加列
+        </div>
+    </div>
+</div>
+
+<div *ngIf="!showLayout">
+    <div *ngIf="l_config['children'].length > 0" nz-row [nzGutter]="6">
+        <div nz-col *ngFor="let r of l_config['children']  let i=index" [nzSpan]="r.span" [nzSm]="r.size.nzSm"
+            [nzXs]="r.size.nzXs" [nzMd]="r.size.nzMd" [nzLg]="r.size.nzLg" [nzXl]="r.size.nzXl">
+            <div [ngStyle]="r['style']" (drop)="f_ondrop($event,l_config,i)" (dragover)="f_ondragover($event,l_config)"
+                (dragenter)="f_ondragenter($event,i)" (dragleave)="f_ondragleave($event,i)">
+                <cfg-form-layout-col [(l_config)]="l_config['children'][i]" [showLayout]="showLayout"
+                    [(selectedItem)]="selectedItem" [(cmptState)]="cmptState" [fromDataService]="fromDataService">
+                </cfg-form-layout-col>
+            </div>
+        </div>
+
+    </div>
+
+
+</div>

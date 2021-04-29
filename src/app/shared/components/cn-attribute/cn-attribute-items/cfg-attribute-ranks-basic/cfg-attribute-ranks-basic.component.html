@@ -1,0 +1,182 @@
+<div nz-row>
+    <div nz-col nzSpan="24">
+        <nz-card [nzBordered]="false" nzTitle="表格行列合并设置">
+            <form nz-form [formGroup]="buttonForm" [nzLayout]="'Horizontal'">
+                <div nz-row nzSpan="24">
+                    <div nz-col nzSpan="12">
+                        <nz-form-item>
+                            <nz-form-label [nzSpan]="4">启用行合并</nz-form-label>
+                            <nz-form-control [nzSpan]="4">
+                                <nz-switch formControlName="enableColMerge" [ngModel]="enableColMerge"
+                                    (ngModelChange)="changeColMerge($event)" nzCheckedChildren="启用"
+                                    nzUnCheckedChildren="不启用"></nz-switch>
+                            </nz-form-control>
+                        </nz-form-item>
+                    </div>
+                    <div nz-col nzSpan="12">
+                        <nz-form-item>
+                            <nz-form-label [nzSpan]="4">启用列合并</nz-form-label>
+                            <nz-form-control [nzSpan]="4">
+                                <nz-switch formControlName="enableRowMerge" [ngModel]="enableRowMerge"
+                                    (ngModelChange)="changeRowMerge($event)" nzCheckedChildren="启用"
+                                    nzUnCheckedChildren="不启用"></nz-switch>
+                            </nz-form-control>
+                        </nz-form-item>
+                    </div>
+                </div>
+            </form>
+        </nz-card>
+    </div>
+</div>
+<div nz-row>
+    <div nz-col [hidden]="enableColMerge === false" nzSpan="12" style="height:500px;width:900px;overflow:auto;">
+        <nz-card [nzBordered]="false" nzTitle="行合并配置">
+            <nz-table nzTitle="分组合并" [nzData]="colTableList" [nzShowPagination]="false" nzSize="small">
+                <thead>
+                    <tr>
+                        <th>列标识</th>
+                        <th>合并标识</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let data of colTableList">
+                        <ng-container *ngIf="colEditCache && colEditCache[data.id].edit; else textTemplate">
+                            <td>
+                                <input type="text" nz-input [(ngModel)]="colEditCache[data.id].data.colName" />
+
+                            </td>
+                            <td>
+                                <input type="text" nz-input [(ngModel)]="colEditCache[data.id].data.groupName" />
+                            </td>
+                            <td>
+                                <a (click)="saveEdit('colGroup',data.id)" class="save">保存</a>
+                                <nz-divider nzType="vertical"></nz-divider>
+                                <a (click)="cancelEdit('colGroup',data.id)" class="cancel">关闭</a>
+                            </td>
+                        </ng-container>
+                        <ng-template #textTemplate>
+                            <td>{{ data.colName }}</td>
+                            <td>{{ data.groupName }}</td>
+                            <td><a (click)="startEdit('colGroup',data.id)">编辑</a>
+                                <nz-divider nzType="vertical"></nz-divider>
+                                <a nz-popconfirm nzPopconfirmTitle="Sure to delete?"
+                                    (nzOnConfirm)="deleteRow('colGroup',data.id)">删除</a>
+                                <nz-divider nzType="vertical"></nz-divider>
+                                <a (click)="setColMerge(data.id)">设置</a>
+                            </td>
+                        </ng-template>
+                    </tr>
+                </tbody>
+            </nz-table>
+            <button nz-button [nzType]="'dashed'" (click)="add('colGroup')" nzBlock class="mt-md">
+                <i nz-icon nzType="plus"></i>
+                <span>新增</span>
+            </button>
+        </nz-card>
+    </div>
+    <div nz-col [hidden]="enableRowMerge === false || (enableColMerge === false && enableRowMerge === true)" nzSpan="12"
+        style="height:500px;width:900px;overflow:auto;">
+        <nz-card [nzBordered]="false" nzTitle="列合并配置">
+            <nz-table nzTitle="分组合并" [nzData]="rowTableList" [nzShowPagination]="false" nzSize="small">
+                <thead>
+                    <tr>
+                        <th>列合并字段</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let data of rowTableList">
+                        <ng-container *ngIf="rowEditCache && rowEditCache[data.id].edit; else textTemplate">
+                            <td>
+                                <input type="text" nz-input [(ngModel)]="rowEditCache[data.id].data.colName" />
+
+                            </td>
+                            <td>
+                                <a (click)="saveEdit('rowGroup',data.id)" class="save">保存</a>
+                                <nz-divider nzType="vertical"></nz-divider>
+                                <a (click)="cancelEdit('colGroup',data.id)" class="cancel">关闭</a>
+                            </td>
+                        </ng-container>
+                        <ng-template #textTemplate>
+                            <td>{{ data.colName }}</td>
+                            <td><a (click)="startEdit('rowGroup',data.id)">编辑</a>
+                                <nz-divider nzType="vertical"></nz-divider>
+                                <a nz-popconfirm nzPopconfirmTitle="Sure to delete?"
+                                    (nzOnConfirm)="deleteRow('rowGroup',data.id)">删除</a>
+                                <nz-divider nzType="vertical"></nz-divider>
+                                <a (click)="setRowMerge(data.id)">设置</a>
+                            </td>
+                        </ng-template>
+                    </tr>
+                </tbody>
+            </nz-table>
+            <button nz-button [nzType]="'dashed'" (click)="add('rowGroup')" nzBlock class="mt-md">
+                <i nz-icon nzType="plus"></i>
+                <span>新增</span>
+            </button>
+        </nz-card>
+    </div>
+    <div nz-col [hidden]="!(enableColMerge === false && enableRowMerge === true)" nzOffset="12" nzSpan="12"
+        style="height:500px;width:900px;overflow:auto;">
+        <nz-card [nzBordered]="false" nzTitle="列合并配置">
+            <nz-table nzTitle="分组合并" [nzData]="rowTableList" [nzShowPagination]="false" nzSize="small">
+                <thead>
+                    <tr>
+                        <th>列合并字段</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let data of rowTableList">
+                        <ng-container *ngIf="rowEditCache && rowEditCache[data.id].edit; else textTemplate">
+                            <td>
+                                <input type="text" nz-input [(ngModel)]="rowEditCache[data.id].data.colName" />
+
+                            </td>
+                            <td>
+                                <a (click)="saveEdit('rowGroup',data.id)" class="save">保存</a>
+                                <nz-divider nzType="vertical"></nz-divider>
+                                <a (click)="cancelEdit('colGroup',data.id)" class="cancel">关闭</a>
+                            </td>
+                        </ng-container>
+                        <ng-template #textTemplate>
+                            <td>{{ data.colName }}</td>
+                            <td><a (click)="startEdit('rowGroup',data.id)">编辑</a>
+                                <nz-divider nzType="vertical"></nz-divider>
+                                <a nz-popconfirm nzPopconfirmTitle="Sure to delete?"
+                                    (nzOnConfirm)="deleteRow('rowGroup',data.id)">删除</a>
+                                <nz-divider nzType="vertical"></nz-divider>
+                                <a (click)="setRowMerge(data.id)">设置</a>
+                            </td>
+                        </ng-template>
+                    </tr>
+                </tbody>
+            </nz-table>
+            <button nz-button [nzType]="'dashed'" (click)="add('rowGroup')" nzBlock class="mt-md">
+                <i nz-icon nzType="plus"></i>
+                <span>新增</span>
+            </button>
+        </nz-card>
+    </div>
+</div>
+<button nz-button nzType="primary" [nzBlock]="true" (click)="_submitForm()">提交数据</button>
+
+
+<nz-modal [(nzVisible)]="colModalVisible" nzTitle="列合并具体配置" (nzOnCancel)="colModalhandleCancel()"
+    (nzOnOk)="colModalhandleCancel()" nzWidth="800px">
+    <ng-container *nzModalContent>
+        <app-cfg-attribute-ranks-col [rowData]="colRowData" [columns]="columns" [config]="config"
+            (updateValue)="colValueChange($event)">
+        </app-cfg-attribute-ranks-col>
+    </ng-container>
+</nz-modal>
+
+<nz-modal [(nzVisible)]="rowModalVisible" nzTitle="行合并具体配置" (nzOnCancel)="rowModalhandleCancel()"
+    (nzOnOk)="rowModalhandleCancel()" nzWidth="800px">
+    <ng-container *nzModalContent>
+        <app-cfg-attribute-ranks-row-modal [rowData]="rowRowData" [columns]="columns" [config]="config"
+            (updateValue)="rowValueChange($event)">
+        </app-cfg-attribute-ranks-row-modal>
+    </ng-container>
+</nz-modal>

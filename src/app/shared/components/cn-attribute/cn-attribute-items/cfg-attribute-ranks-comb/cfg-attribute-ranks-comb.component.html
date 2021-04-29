@@ -1,0 +1,233 @@
+<div nz-row>
+    <div nz-col nzSpan="24">
+        <nz-card [nzBordered]="false" nzTitle="表格行列合并设置">
+            <form nz-form [formGroup]="buttonForm" [nzLayout]="'Horizontal'">
+                <div nz-row nzSpan="24">
+                    <div nz-col nzSpan="12">
+                        <nz-form-item>
+                            <nz-form-label [nzSpan]="4">启用列合并</nz-form-label>
+                            <nz-form-control [nzSpan]="4">
+                                <nz-switch formControlName="enableColMerge" [ngModel]="enableColMerge"
+                                    (ngModelChange)="changeColMerge($event)" nzCheckedChildren="启用"
+                                    nzUnCheckedChildren="不启用"></nz-switch>
+                            </nz-form-control>
+                        </nz-form-item>
+                    </div>
+                    <div nz-col nzSpan="12">
+                        <nz-form-item>
+                            <nz-form-label [nzSpan]="4">启用行合并</nz-form-label>
+                            <nz-form-control [nzSpan]="4">
+                                <nz-switch formControlName="enableRowMerge" [ngModel]="enableRowMerge"
+                                    (ngModelChange)="changeRowMerge($event)" nzCheckedChildren="启用"
+                                    nzUnCheckedChildren="不启用"></nz-switch>
+                            </nz-form-control>
+                        </nz-form-item>
+                    </div>
+                </div>
+            </form>
+        </nz-card>
+    </div>
+</div>
+<div nz-row>
+    <div nz-col [hidden]="enableColMerge !== true" nzSpan="12" style="height:500px;width:500px;overflow:auto;">
+        <nz-card [nzBordered]="false" nzTitle="列合并配置">
+            <form nz-form [formGroup]="colForm" [nzLayout]="'Horizontal'">
+                <div nz-row nzSpan="24">
+                    <div nz-col nzSpan="12">
+                        <nz-form-item>
+                            <nz-form-label [nzSpan]="4">列标识</nz-form-label>
+                            <nz-form-control [nzSpan]="16">
+                                <input nz-input formControlName="colColName" placeholder="请输入列标识" />
+                            </nz-form-control>
+                        </nz-form-item>
+                    </div>
+                    <div nz-col nzSpan="12">
+                        <nz-form-item>
+                            <nz-form-label [nzSpan]="4">合并标识</nz-form-label>
+                            <nz-form-control [nzSpan]="16">
+                                <input nz-input formControlName="colGroupName" placeholder="请输入合并标识" />
+                            </nz-form-control>
+                        </nz-form-item>
+                    </div>
+                </div>
+            </form>
+            <div>
+                <nz-table nzTitle="分组合并" [nzData]="colTableList" [nzShowPagination]="false" nzSize="small">
+                    <thead>
+                        <tr>
+                            <th>分组合并标识</th>
+                            <th>是否开启独自编辑</th>
+                            <th>操作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let data of colTableList">
+                            <ng-container *ngIf="colEditCache && colEditCache[data.id].edit; else textTemplate">
+                                <td>
+                                    <input type="text" nz-input [(ngModel)]="colEditCache[data.id].data.mergeColName" />
+
+                                </td>
+                                <td>
+                                    <nz-select [(ngModel)]="colEditCache[data.id].data.singleEdit">
+                                        <nz-option nzValue="true" nzLabel="启用"></nz-option>
+                                        <nz-option nzValue="false" nzLabel="不启用"></nz-option>
+                                    </nz-select>
+                                </td>
+                                <td>
+                                    <a (click)="saveEdit('rowGroup',data.id)" class="save">保存</a>
+                                    <nz-divider nzType="vertical"></nz-divider>
+                                    <a (click)="cancelEdit('rowGroup',data.id)" class="cancel">关闭</a>
+                                </td>
+                            </ng-container>
+                            <ng-template #textTemplate>
+                                <td>{{ data.mergeColName }}</td>
+                                <td>{{ data.singleEdit }}</td>
+                                <td><a (click)="startEdit('rowGroup',data.id)">编辑</a>
+                                    <nz-divider nzType="vertical"></nz-divider>
+                                    <a nz-popconfirm nzPopconfirmTitle="Sure to delete?"
+                                        (nzOnConfirm)="deleteRow(data.id)">删除</a>
+                                </td>
+                            </ng-template>
+                        </tr>
+                    </tbody>
+                </nz-table>
+                <button nz-button [nzType]="'dashed'" (click)="add('rowGroup')" nzBlock class="mt-md">
+                    <i nz-icon nzType="plus"></i>
+                    <span>新增</span>
+                </button>
+            </div>
+        </nz-card>
+    </div>
+    <div nz-col [hidden]="enableRowMerge !== true" nzSpan="12" style="height:500px;width:1400px;overflow:auto;">
+        <nz-card [nzBordered]="false" nzTitle="行合并配置">
+            <form nz-form [formGroup]="rowForm" [nzLayout]="'Horizontal'">
+                <nz-form-item>
+                    <nz-form-label [nzSpan]="4">待合并的列</nz-form-label>
+                    <nz-form-control [nzSpan]="16">
+                        <input nz-input formControlName="rowColName" placeholder="请输入待合并的列" />
+                    </nz-form-control>
+                </nz-form-item>
+                <div formArrayName="stageContent">
+                    <nz-card [nzExtra]="extraTemplate">
+                        <div *ngFor="let item of testArrFormArray.controls;let i = index;" [formGroupName]="i">
+                            <nz-card nzType="inner">
+                                <nz-form-item nzFlex>
+                                    <nz-form-label nz-col [nzSpan]="4">是否开启合并条件</nz-form-label>
+                                    <nz-form-control nz-col [nzSpan]="20">
+                                        <nz-switch formControlName="isCondition" [ngModel]="enableColMerge"
+                                            (ngModelChange)="changeCondition($event)" nzCheckedChildren="启用"
+                                            nzUnCheckedChildren="不启用"></nz-switch>
+                                    </nz-form-control>
+                                </nz-form-item>
+                                <div [hidden]="isCondition !== true">
+                                    <div nz-row nzSpan="24">
+                                        <div nz-col nzSpan="8">
+                                            <nz-form-item>
+                                                <nz-form-label [nzSpan]="8">值类型</nz-form-label>
+                                                <nz-form-control [nzSpan]="16">
+                                                    <nz-select formControlName="rowParamsType"
+                                                        [nzPlaceHolder]="'请选择值类型'">
+                                                        <nz-option [nzLabel]="'当前行'" [nzValue]="'rowValue'"></nz-option>
+                                                    </nz-select>
+                                                </nz-form-control>
+                                            </nz-form-item>
+                                        </div>
+                                        <div nz-col nzSpan="8">
+                                            <nz-form-item>
+                                                <nz-form-label [nzSpan]="8">参数名</nz-form-label>
+                                                <nz-form-control [nzSpan]="16">
+                                                    <input nz-input formControlName="rowParamsName"
+                                                        placeholder="请输入参数名" />
+                                                </nz-form-control>
+                                            </nz-form-item>
+                                        </div>
+                                        <div nz-col nzSpan="8">
+                                            <nz-form-item>
+                                                <nz-form-label [nzSpan]="8">表达式</nz-form-label>
+                                                <nz-form-control [nzSpan]="16">
+                                                    <input nz-input formControlName="rowParamsExpression"
+                                                        placeholder="请输入表达式" />
+                                                </nz-form-control>
+                                            </nz-form-item>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <nz-table formControlName="rowTableData" [nzData]="rowTableList"
+                                        [nzShowPagination]="false">
+                                        <thead>
+                                            <tr>
+                                                <th>分组合并标识</th>
+                                                <th>是否开启独自编辑</th>
+                                                <th>操作</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let item of rowTableList; let i = index" [formGroupName]="i">
+                                                <td>
+                                                    <span *ngIf="colGroupEditIndex !== i">{{
+                                                        item.mergeColName
+                                                        }}</span>
+                                                    <span *ngIf="colGroupEditIndex === i" nz-form-control>
+                                                        <input nz-input formControlName="mergeColName"
+                                                            placeholder="请输入分组合并标识" />
+                                                    </span>
+                                                </td>
+                                                <td>
+                                                    <span *ngIf="colGroupEditIndex !== i">{{
+                                                        item.singleEdit
+                                                        }}</span>
+                                                    <span *ngIf="colGroupEditIndex === i" nz-form-control>
+                                                        <nz-select formControlName="singleEdit"
+                                                            [nzPlaceHolder]="'请选择是否开启独自编辑'">
+                                                            <nz-option [nzLabel]="'开启'" [nzValue]="'true'"></nz-option>
+                                                            <nz-option [nzLabel]="'不开启'" [nzValue]="'false'">
+                                                            </nz-option>
+                                                        </nz-select>
+                                                    </span>
+                                                </td>
+                                                <td>
+                                                    <span *ngIf="colGroupEditIndex !== i">
+                                                        <a (click)="edit('colGroup',i)">编辑</a>
+                                                        <nz-divider nzType="vertical"></nz-divider>
+                                                        <a (click)="del('colGroup',i)">删除</a>
+                                                        <!-- <nz-popconfirm (nzOnConfirm)="del(i)" [nzTitle]="'是否要删除此行？'">
+                                      <a nz-popconfirm>删除</a>
+                                    </nz-popconfirm> -->
+                                                    </span>
+                                                    <span *ngIf="colGroupEditIndex === i">
+                                                        <a (click)="save('colGroup',i)">保存</a>
+                                                        <nz-divider nzType="vertical"></nz-divider>
+                                                        <a (click)="cancel('colGroup',i)">关闭</a>
+                                                        <!-- <nz-popconfirm (nzOnConfirm)="cancel(i)" [nzTitle]="'是否要取消操作？'">
+                                      <a nz-popconfirm>取消</a>
+                                    </nz-popconfirm> -->
+                                                    </span>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </nz-table>
+                                    <button *ngIf="colGroupEditIndex === -1" nz-button [nzType]="'dashed'"
+                                        (click)="add('colGroup')" nzBlock class="mt-md">
+                                        <i nz-icon nzType="plus"></i>
+                                        <span>新增列合并配置</span>
+                                    </button>
+                                </div>
+                                <button *ngIf="i>=0" nz-button nzType="dashed" (click)="delItem(i)" nzDanger
+                                    nzBlock>删除</button>
+                            </nz-card>
+                        </div>
+                    </nz-card>
+                    <ng-template #extraTemplate>
+                        <button nz-button nzType="primary" (click)="addItem()">添加</button>
+                    </ng-template>
+                    <ng-template #delextraTemplate let-i>
+                        <!-- <button nz-button nzType="primary" (click)="test_del(i)">删除</button> -->
+                    </ng-template>
+
+                </div>
+            </form>
+        </nz-card>
+    </div>
+</div>
+<button nz-button nzType="primary" [nzBlock]="true" (click)="_submitForm()">提交数据</button>

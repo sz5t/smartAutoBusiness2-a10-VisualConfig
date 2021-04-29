@@ -1,0 +1,53 @@
+<nz-collapse>
+    <nz-collapse-panel *ngFor="let panel of dataConent" [nzHeader]="extraH" [nzActive]="panel.active"
+        [nzDisabled]="panel.disabled" [nzExtra]="extraTpl">
+        <ng-container *ngIf="panel.hasOwnProperty('dropdown')">
+            <app-cfg-toolbar-action-dropdown [(dataConent)]="panel['dropdown']"></app-cfg-toolbar-action-dropdown>
+        </ng-container>
+        <ng-container *ngIf="!panel.hasOwnProperty('dropdown')">
+            <ul nz-list nzBordered nzSize="large">
+                <!-- [nzDataSource]="panel.eventConent" -->
+                <li nz-list-item *ngFor="let item of panel.eventConent" nzNoFlex>
+                    <ul nz-list-item-actions>
+                        <nz-list-item-action>
+                            <!-- <a (click)="info('edit')">edit</a>
+                        <a (click)="info('edit')">delete</a> -->
+                            <button nz-button [nzSize]="'small'" nzType="primary" nzTitle="设置" nz-tooltip> <i nz-icon
+                                    nzType="setting"></i></button>
+                            <button nz-button [nzSize]="'small'" (click)="delete(item,panel)" nzType="primary"
+                                style="margin-left: 3px;" nzTitle="删除" nz-tooltip>
+                                <i nz-icon nzType="delete"></i></button>
+                        </nz-list-item-action>
+                    </ul>
+                    {{ item['name'] }}
+                </li>
+                <nz-list-footer>
+                    <button nz-button *ngIf="!readonly" type="button" nzType="dashed" nzBlock="true" nzSize="default"
+                        (click)="addBtnClick($event,panel.eventConent)"><i nz-icon nzType="plus"></i>
+                        添加</button>
+                </nz-list-footer>
+            </ul>
+        </ng-container>
+        <ng-template #extraTpl>
+            <!-- You can use stopPropagation if you don't want the panel to toggle -->
+            <i nz-icon nzType="setting" (click)="setting(panel)"></i>
+
+        </ng-template>
+        <ng-template #extraH>
+            <ng-container *ngIf="panel.hasOwnProperty('dropdown')">
+                <i nz-icon nzType="down-square" nzTheme="outline"></i>
+            </ng-container>
+            <ng-container *ngIf="!panel.hasOwnProperty('dropdown')">
+                <i nz-icon nzType="thunderbolt" nzTheme="outline"></i>
+            </ng-container>
+            {{panel.name}}
+            <ng-container *ngIf="panel.hasOwnProperty('dropdown')">
+                <nz-badge nzStandalone [nzCount]="panel.dropdown.length" [nzOverflowCount]="999"
+                    [nzStyle]="{ backgroundColor: '#fff', color: '#999', boxShadow: '0 0 0 1px #d9d9d9 inset' }">
+                </nz-badge>
+            </ng-container>
+
+
+        </ng-template>
+    </nz-collapse-panel>
+</nz-collapse>

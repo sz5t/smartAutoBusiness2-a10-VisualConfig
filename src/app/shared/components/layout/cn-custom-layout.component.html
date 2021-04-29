@@ -1,0 +1,82 @@
+<!-- west 左  east 右  center 中间  North  上  South  下-->
+
+<!-- <nz-card nzTitle="自定义收缩" [nzExtra]="extraTemplate"> -->
+  <div style="display: flex;">
+    <!-- customlayout -->
+    <ng-container *ngFor="let cl of customLayout">
+      <div #west *ngIf="cl.layoutType==='west'"
+        [ngStyle]="cl.hidden? {'display': 'none'} : {'flex-grow':cl.span,'align-items':'stretch'}">
+        <nz-card [nzTitle]="title['west']" [nzExtra]="westTemplate" [ngStyle]=" {'height': '100%'} ">
+          <ng-container *ngIf="isCollapsed['west']" [ngStyle]="isCollapsed['west'] ? { }: {'display': 'none'} ">
+            <h3 class="liutitle">{{contenttitle['west']}}</h3>
+          </ng-container>
+          <div [ngStyle]="!isCollapsed['west'] ? { }: {'display': 'none'} ">
+            <!-- <liu-layout  [config]="cl.layout"></liu-layout> -->
+            <ng-container cnLayoutResolverDirective [config]="cl.layout"></ng-container>
+          </div>
+
+        </nz-card>
+        <ng-template #westTemplate>
+          <ng-container *ngIf="!isCollapsed['west']  ">
+            <a>
+              <i nz-icon type="double-left" (click)="ss('west')" nzTooltipTitle="收缩" nz-tooltip></i>
+            </a>
+          </ng-container>
+          <ng-container *ngIf="isCollapsed['west']">
+            <a>
+              <i nz-icon type="double-right" (click)="zk('west')" nzTooltipTitle="展开" nz-tooltip></i>
+            </a>
+          </ng-container>
+        </ng-template>
+      </div>
+      <div #center *ngIf="cl.layoutType==='center' "
+        [ngStyle]="cl.hidden? {'display': 'none'} : {'flex-grow':cl.span,'align-items':'stretch'}">
+        <nz-card [nzTitle]="title['center']" [ngStyle]=" {'height': '100%'} ">
+          <!-- <liu-layout  [config]="cl.layout"></liu-layout> -->
+          <ng-container cnLayoutResolverDirective [config]="cl.layout"></ng-container>
+        </nz-card>
+
+      </div>
+      <div #east *ngIf="cl.layoutType==='east' "
+        [ngStyle]="cl.hidden? {'display': 'none'} : {'flex-grow':cl.span,'align-items':'stretch'}">
+        <nz-card [nzTitle]="title['east']" [nzExtra]="eastTemplate" [ngStyle]=" {'height': '100%'} ">
+          <ng-container *ngIf="isCollapsed['east']">
+            <h3 class="liutitle">{{contenttitle['east']}}</h3>
+          </ng-container>
+          <div *ngIf="!isCollapsed['east']">
+            <!-- <liu-layout  [config]="cl.layout"></liu-layout> -->
+            <ng-container cnLayoutResolverDirective [config]="cl.layout"></ng-container>
+          </div>
+
+        </nz-card>
+        <ng-template #eastTemplate>
+          <ng-container *ngIf="!isCollapsed['east']">
+            <a>
+              <i nz-icon type="double-right" (click)="ss('east')" nzTooltipTitle="收缩" nz-tooltip></i>
+            </a>
+          </ng-container>
+          <ng-container *ngIf="isCollapsed['east']">
+            <a>
+              <i nz-icon type="double-left" (click)="zk('east')" nzTooltipTitle="展开" nz-tooltip></i>
+            </a>
+          </ng-container>
+        </ng-template>
+      </div>
+    </ng-container>
+  </div>
+<!-- </nz-card> -->
+<ng-template #extraTemplate>
+
+  <button nz-button [nzSize]="'small'" nzTooltipTitle="收缩布局设置" nz-tooltip (click)="open()">
+    <i nz-icon type="diff"></i>
+  </button>
+  <ng-container *ngIf="configType">
+    <button nz-button [nzSize]="'small'" nzType="primary" nzTooltipTitle="保存json" (click)="SaveJson()" nz-tooltip>
+      <i nz-icon type="download"></i>保存json</button>
+  </ng-container>
+
+</ng-template>
+
+
+
+

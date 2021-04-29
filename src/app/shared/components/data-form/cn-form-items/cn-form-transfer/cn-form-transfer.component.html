@@ -1,0 +1,39 @@
+<nz-form-item>
+    <nz-form-label [nzFor]="config.field" [nzSpan]="config.config.labelSize.span" [nzSm]="config.config.labelSize.nzSm"
+        [nzXs]="config.config.labelSize.nzXs" [nzMd]="config.config.labelSize.nzMd"
+        [nzLg]="config.config.labelSize.nzLg" [nzXl]="config.config.labelSize.nzXl"
+        [nzRequired]="config.config.titleConfig.required">
+        {{config.config.title}}</nz-form-label>
+
+    <nz-form-control [nzSpan]="config.config.controlSize.span" [nzSm]="config.config.controlSize.nzSm"
+        [nzXs]="config.config.controlSize.nzXs" [nzMd]="config.config.controlSize.nzMd"
+        [nzLg]="config.config.controlSize.nzLg" [nzXl]="config.config.controlSize.nzXl" [formGroup]="formGroup"
+        [nzErrorTip]="emailErrorTpl">
+        <nz-transfer [nzDataSource]="transferObj.list" [nzTitles]="transferObj.title" (nzChange)="change($event)"
+            [nzTargetKeys]="transferObj.targetKeys" [nzFooter]="footer">
+        </nz-transfer>
+
+
+
+        <input nz-input type="hidden" [formControlName]="config.field" [(ngModel)]="transferObj.formDataArr"
+            (ngModelChange)="valueChange($event)" />
+
+        <ng-template #footer let-direction>
+            <div *ngIf="transferObj.footer">
+                <button *ngIf="direction === 'left'" nz-button nzSize="small" nzType="primary"
+                    (click)="click(transferObj.footer.dialogId)" class="float-right" style="margin: 0 5"><i nz-icon
+                        nzTheme="outline" [nzType]="transferObj.footer.icon"></i>
+                    {{transferObj.footer.btnTitle}}</button>
+                <!-- <span *ngIf="direction === 'left'" class="text-blue-6 float-right">{{transferObj.footer.label}}</span> -->
+            </div>
+
+        </ng-template>
+        <ng-template #emailErrorTpl let-control>
+            <ng-container nz-col *ngFor="let c of config.validations">
+                <ng-container *ngIf="control.hasError(c['validator'])">{{c.message ? c.message:'校验不通过' }}</ng-container>
+            </ng-container>
+        </ng-template>
+    </nz-form-control>
+
+
+</nz-form-item>

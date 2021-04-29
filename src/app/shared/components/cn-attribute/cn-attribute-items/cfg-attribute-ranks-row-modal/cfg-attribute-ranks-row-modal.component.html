@@ -1,0 +1,67 @@
+<div nz-row nzSpan="24">
+    <div nz-col style="height:500px;width:800px;overflow:auto;">
+        <form nz-form [formGroup]="rowForm" [nzLayout]="'Horizontal'">
+            <div formArrayName="stageContent">
+                <nz-card [nzExtra]="extraTemplate">
+                    <div *ngFor="let item of testArrFormArray.controls;let i = index;" [formGroupName]="i">
+                        <nz-card nzType="inner">
+                            <nz-form-item nzFlex>
+                                <nz-form-label nz-col [nzSpan]="4">是否开启合并条件</nz-form-label>
+                                <nz-form-control nz-col [nzSpan]="20">
+                                    <nz-switch formControlName="isCondition" [ngModel]="isCondition"
+                                        (ngModelChange)="changeCondition($event)" nzCheckedChildren="启用"
+                                        nzUnCheckedChildren="不启用"></nz-switch>
+                                </nz-form-control>
+                            </nz-form-item>
+                            <div [hidden]="isCondition !== true">
+                                <div nz-row nzSpan="24">
+                                    <div nz-col nzSpan="8">
+                                        <nz-form-item>
+                                            <nz-form-label [nzSpan]="8">值类型</nz-form-label>
+                                            <nz-form-control [nzSpan]="16">
+                                                <nz-select formControlName="rowParamsType" [nzPlaceHolder]="'请选择值类型'">
+                                                    <nz-option [nzLabel]="'当前行'" [nzValue]="'rowValue'"></nz-option>
+                                                </nz-select>
+                                            </nz-form-control>
+                                        </nz-form-item>
+                                    </div>
+                                    <div nz-col nzSpan="8">
+                                        <nz-form-item>
+                                            <nz-form-label [nzSpan]="8">参数名</nz-form-label>
+                                            <nz-form-control [nzSpan]="16">
+                                                <input nz-input formControlName="rowParamsName" placeholder="请输入参数名" />
+                                            </nz-form-control>
+                                        </nz-form-item>
+                                    </div>
+                                    <div nz-col nzSpan="8">
+                                        <nz-form-item>
+                                            <nz-form-label [nzSpan]="8">表达式</nz-form-label>
+                                            <nz-form-control [nzSpan]="16">
+                                                <input nz-input formControlName="rowParamsExpression"
+                                                    placeholder="请输入表达式" />
+                                            </nz-form-control>
+                                        </nz-form-item>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <app-cfg-attribute-ranks-row [rowData]="rowData" [columns]="columns"
+                                    (updateValue)="valueChange($event)">
+                                </app-cfg-attribute-ranks-row>
+                            </div>
+                            <button *ngIf="i>=0" nz-button nzType="dashed" (click)="delItem(i)" nzDanger
+                                nzBlock>删除</button>
+                        </nz-card>
+                    </div>
+                </nz-card>
+                <ng-template #extraTemplate>
+                    <button nz-button nzType="primary" (click)="addItem()">添加</button>
+                </ng-template>
+                <ng-template #delextraTemplate let-i>
+                    <!-- <button nz-button nzType="primary" (click)="test_del(i)">删除</button> -->
+                </ng-template>
+
+            </div>
+        </form>
+    </div>
+</div>

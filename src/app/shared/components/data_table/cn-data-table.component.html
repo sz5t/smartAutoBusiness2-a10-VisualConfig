@@ -1,0 +1,313 @@
+<nz-spin nzTip="数据加载中,请稍后..." [nzSpinning]="isLoading">
+  <nz-table #dataTable [nzShowSizeChanger]="config.isShowSizeChanger" [nzLoadingDelay]="300"
+    [nzFrontPagination]="config.isFrontPagination" [nzShowPagination]="config.isPagination" [nzTotal]="total"
+    [(nzPageIndex)]="pageIndex" [(nzPageSize)]="pageSize" (nzPageIndexChange)="searchData()"
+    (nzPageSizeChange)="searchData(true)" [nzPageSizeOptions]="config.pageSizeOptions" [nzData]="dataList"
+    [nzShowTotal]="showTotal" [nzBordered]="config.isBordered" [nzSize]="config.size"
+    [nzTitle]="config.title ? title : null" [nzScroll]="config.scroll ? config.scroll : null">
+    <!-- 分组的 nzWidthConfig 与nzWidth 冲突  [nzWidthConfig]="config.spanWidthConfig ? config.spanWidthConfig : false" -->
+    <thead (nzSortChange)="sort($event)" nzSingleSort="true">
+      <!-- 夸列表头 -->
+      <ng-template ngFor let-spans let-i="index" [ngForOf]="config.spanHeader"
+        *ngIf="config.spanHeader; else normalHeader">
+        <tr [ngClass]="{tableHeader: true}">
+          <th *ngIf="i === 0  && config.showCheckBox" attr.rowspan="{{ config.spanHeader.length }}" [nzWidth]="'50px'"
+            [nzShowCheckbox]="config.showCheckBox" [(nzChecked)]="isAllChecked" [nzIndeterminate]="indeterminate"
+            (nzCheckedChange)="checkAll($event)"></th>
+          <ng-template ngFor let-span [ngForOf]="spans">
+            <ng-container [ngSwitch]="span.spanType">
+              <th *ngSwitchCase="'row'" [nzAlign]="span.titleAlign?span.titleAlign:'left'"
+                attr.rowspan="{{ span.span }}">
+                {{ span.title }}</th>
+              <th *ngSwitchCase="'col'" [nzAlign]="span.titleAlign?span.titleAlign:'left'"
+                attr.colspan="{{ span.span }}">
+                {{ span.title }}</th>
+              <th *ngSwitchDefault [nzAlign]="span.titleAlign?span.titleAlign:'left'">{{ span.title }}</th>
+            </ng-container>
+          </ng-template>
+        </tr>
+      </ng-template>
+      <!-- 夸列表头 -->
+
+      <!-- 常规表头 -->
+      <ng-template #normalHeader>
+
+        <tr [ngClass]="{tableHeader: true}">
+          <th
+            [nzWidth]="(config.showCheckBoxConfig && config.showCheckBoxConfig.hasOwnProperty('width'))?config.showCheckBoxConfig['width']:'50px'"
+            [nzLeft]="(config.showCheckBoxConfig && config.showCheckBoxConfig.hasOwnProperty('offsetLeft'))?config.showCheckBoxConfig.offsetLeft:false"
+            *ngIf="config.showCheckBox" [nzShowCheckbox]="config.showCheckBox" [(nzChecked)]="isAllChecked"
+            [nzIndeterminate]="indeterminate" (nzCheckedChange)="checkAll($event)"></th>
+
+          <ng-template ngFor let-header [ngForOf]="tableColumns">
+            <th [nzAlign]="header.titleAlign?header.titleAlign:'left'"
+              [nzLeft]="header.hasOwnProperty('offsetLeft')?header.offsetLeft:false"
+              [nzRight]="header.hasOwnProperty('offsetRight')?header.offsetRight:false" [nzWidth]="header.width"
+              *ngIf="header.hasOwnProperty('titleHidden')? !header.titleHidden :!header.hidden"
+              [nzShowSort]="header.showSort" attr.rowspan="{{ header.rowspan?header.rowspan:1 }}"
+              attr.colspan="{{ header.colspan?header.colspan:1 }}">
+              <!--   [attr.rowspan]="header.rowspan?:header.rowspan:1"
+            [attr.colspan]="header.colspan?header.colspan:1"
+            header.hasOwnProperty('titleHidden')? !header.titleHidden :  -->
+              {{ header.title }}
+            </th>
+          </ng-template>
+        </tr>
+      </ng-template>
+      <!-- 常规表头 -->
+    </thead>
+    <tbody>
+      <tr *ngFor="let rowData of dataTable.data" (click)="setSelectRow(rowData, $event)"
+        [ngClass]="{ selectedRow: mapOfDataState[rowData[KEY_ID]] ? mapOfDataState[rowData[KEY_ID]]['selected'] : true, validationError: !mapOfDataState[rowData[KEY_ID]]['validation']}"
+        [ngStyle]="mapOfDataState[rowData[KEY_ID]] ? mapOfDataState[rowData[KEY_ID]]['style']:null">
+        <td *ngIf="config.showCheckBox" [nzShowCheckbox]="config.showCheckBox"
+          [nzLeft]="(config.showCheckBoxConfig && config.showCheckBoxConfig.hasOwnProperty('offsetLeft'))?true:false"
+          [(nzChecked)]="mapOfDataState[rowData[KEY_ID]]['checked']" (nzCheckedChange)="dataCheckedStatusChange()"></td>
+        <ng-template ngFor let-col [ngForOf]="tableColumns">
+          <ng-container [ngSwitch]="col.type" *ngIf="!col.hidden">
+            <ng-container *ngSwitchCase="'index'">
+              <td [nzAlign]="col.align?col.align:'left'" [nzLeft]="col.hasOwnProperty('offsetLeft')?true:false"
+                [nzRight]="col.hasOwnProperty('offsetRight')?true:false">
+                {{ mapOfDataState[rowData[KEY_ID]]['originData'][col.field] }}
+              </td>
+            </ng-container>
+            <ng-container *ngSwitchCase="'field'">
+              <ng-container [ngSwitch]="mapOfDataState[rowData[KEY_ID]]['state']">
+                <ng-container *ngIf="col.editor">
+                  <ng-container *ngSwitchCase="'new'">
+                    <td nzBreakWord [nzAlign]="col.align?col.align:'left'"
+                      [nzLeft]="col.hasOwnProperty('offsetLeft')?col.offsetLeft:false"
+                      [nzRight]="col.hasOwnProperty('offsetRight')?col.offsetRight:false"
+                      [attr.rowspan]="mapOfDataState[rowData[KEY_ID]]['mergeData'][col.field]?(mapOfDataState[rowData[KEY_ID]]['mergeData'][col.field].groupIndex===1 ? mapOfDataState[rowData[KEY_ID]]['mergeData'][col.field]['groupNum'] : 1):1"
+                      [attr.colspan]="mapOfDataState[rowData[KEY_ID]]['mergeData'][col.field]?(mapOfDataState[rowData[KEY_ID]]['mergeData'][col.field]['colgroupIndex']===1 ? mapOfDataState[rowData[KEY_ID]]['mergeData'][col.field]['colgroupNum'] : 1):1"
+                      *ngIf="!mapOfDataState[rowData[KEY_ID]]['mergeData'][col.field] || ( mapOfDataState[rowData[KEY_ID]]['mergeData'][col.field]['groupIndex'] === 1 && mapOfDataState[rowData[KEY_ID]]['mergeData'][col.field]['colgroupIndex'] === 1 )">
+                      <ng-container CnGridItemDirective [state]="'new'" *ngIf="col.editor ; else t1"
+                        [config]="col.editor" [rowData]="mapOfDataState[rowData[KEY_ID]]['data']" [initData]="initData"
+                        [tempData]="tempData"
+                        [valueConfig]="{'id':rowData[KEY_ID],'value':mapOfDataState[rowData[KEY_ID]]['data'][col.editor.field]}"
+                        (updateValue)="valueChange($event)"
+                        [formCascade]="formCascade[rowData[KEY_ID]]?formCascade[rowData[KEY_ID]][col.editor.field]:null">
+                      </ng-container>
+                      <ng-template #t1>
+                        <ng-container [ngSwitch]="mapOfDataState[rowData[KEY_ID]]['state']">
+                          <ng-container *ngSwitchCase="'new'">
+                            {{ mapOfDataState[rowData[KEY_ID]]['data'][col.field] }}
+                          </ng-container>
+                          <ng-container *ngSwitchCase="'edit'">
+                            {{ mapOfDataState[rowData[KEY_ID]]['data'][col.field] }}
+                          </ng-container>
+                          <ng-container *ngSwitchDefault>
+                            {{ mapOfDataState[rowData[KEY_ID]]['originData'][col.field] }}
+                          </ng-container>
+                        </ng-container>
+                      </ng-template>
+                    </td>
+                  </ng-container>
+
+                  <ng-container *ngSwitchCase="'edit'">
+                    <td nzBreakWord [nzAlign]="col.align?col.align:'left'"
+                      [nzLeft]="col.hasOwnProperty('offsetLeft')?col.offsetLeft:false"
+                      [nzRight]="col.hasOwnProperty('offsetRight')?col.offsetRight:false"
+                      [attr.rowspan]="mapOfDataState[rowData[KEY_ID]]['mergeData'][col.field]?(mapOfDataState[rowData[KEY_ID]]['mergeData'][col.field].groupIndex===1 ? mapOfDataState[rowData[KEY_ID]]['mergeData'][col.field]['groupNum'] : 1):1"
+                      [attr.colspan]="mapOfDataState[rowData[KEY_ID]]['mergeData'][col.field]?(mapOfDataState[rowData[KEY_ID]]['mergeData'][col.field]['colgroupIndex']===1 ? mapOfDataState[rowData[KEY_ID]]['mergeData'][col.field]['colgroupNum'] : 1):1"
+                      *ngIf="!mapOfDataState[rowData[KEY_ID]]['mergeData'][col.field] || ( mapOfDataState[rowData[KEY_ID]]['mergeData'][col.field]['groupIndex'] === 1 && mapOfDataState[rowData[KEY_ID]]['mergeData'][col.field]['colgroupIndex'] === 1 )">
+
+                      <ng-container CnGridItemDirective [state]="'edit'" *ngIf="col.editor ; else t2"
+                        [config]="col.editor" [rowData]="mapOfDataState[rowData[KEY_ID]]['data']" [initData]="initData"
+                        [tempData]="tempData"
+                        [valueConfig]="{'id':rowData[KEY_ID],'value':mapOfDataState[rowData[KEY_ID]]['data'][col.editor.field]}"
+                        (updateValue)="valueChange($event)"
+                        [formCascade]="formCascade[rowData[KEY_ID]]?formCascade[rowData[KEY_ID]][col.editor.field]:null">
+                      </ng-container>
+                      <ng-template #t2>
+                        <ng-container [ngSwitch]="mapOfDataState[rowData[KEY_ID]]['state']">
+                          <ng-container *ngSwitchCase="'new'">
+                            {{ mapOfDataState[rowData[KEY_ID]]['data'][col.field] }}
+                          </ng-container>
+                          <ng-container *ngSwitchCase="'edit'">
+                            {{ mapOfDataState[rowData[KEY_ID]]['data'][col.field] }}
+                          </ng-container>
+                          <ng-container *ngSwitchDefault>
+                            {{ mapOfDataState[rowData[KEY_ID]]['originData'][col.field] }}
+                          </ng-container>
+                        </ng-container>
+                      </ng-template>
+                    </td>
+                  </ng-container>
+
+                  <ng-container *ngSwitchDefault>
+                    <td [nzAlign]="col.align?col.align:'left'"
+                      [nzLeft]="col.hasOwnProperty('offsetLeft')?col.offsetLeft:false"
+                      [nzRight]="col.hasOwnProperty('offsetRight')?col.offsetRight:false" nzBreakWord
+                      [attr.rowspan]="mapOfDataState[rowData[KEY_ID]]['mergeData'][col.field]?(mapOfDataState[rowData[KEY_ID]]['mergeData'][col.field].groupIndex===1 ? mapOfDataState[rowData[KEY_ID]]['mergeData'][col.field]['groupNum'] : 1):1"
+                      [attr.colspan]="mapOfDataState[rowData[KEY_ID]]['mergeData'][col.field]?(mapOfDataState[rowData[KEY_ID]]['mergeData'][col.field]['colgroupIndex']===1 ? mapOfDataState[rowData[KEY_ID]]['mergeData'][col.field]['colgroupNum'] : 1):1"
+                      *ngIf="!mapOfDataState[rowData[KEY_ID]]['mergeData'][col.field] || ( mapOfDataState[rowData[KEY_ID]]['mergeData'][col.field]['groupIndex'] === 1 && mapOfDataState[rowData[KEY_ID]]['mergeData'][col.field]['colgroupIndex'] === 1 )">
+
+                      <ng-container CnGridItemDirective *ngIf="col.custom; else innerText" [state]="'edit'"
+                        [config]="col.custom" [rowData]="mapOfDataState[rowData[KEY_ID]]['data']" [initData]="initData"
+                        [tempData]="tempData"
+                        [valueConfig]="{'id':rowData[KEY_ID],'value':mapOfDataState[rowData[KEY_ID]]['data']}"
+                        (updateValue)="valueChange($event)"
+                        [formCascade]="formCascade[rowData[KEY_ID]]?formCascade[rowData[KEY_ID]][col.custom.field]:null">
+                      </ng-container>
+                      <ng-template #innerText>{{ mapOfDataState[rowData[KEY_ID]]['originData'][col.field] }}
+                      </ng-template>
+                    </td>
+                  </ng-container>
+
+                </ng-container>
+                <ng-container *ngIf="!col.editor">
+                  <td nzBreakWord [nzAlign]="col.align?col.align:'left'"
+                    [nzLeft]="col.hasOwnProperty('offsetLeft')?col.offsetLeft:false"
+                    [nzRight]="col.hasOwnProperty('offsetRight')?col.offsetRight:false">
+                    <ng-container CnGridItemDirective *ngIf="col.custom; else t3" [state]="'edit'" [config]="col.custom"
+                      [rowData]="mapOfDataState[rowData[KEY_ID]]['data']" [initData]="initData" [tempData]="tempData"
+                      [valueConfig]="{'id':rowData[KEY_ID],'value':mapOfDataState[rowData[KEY_ID]]['data']}"
+                      (updateValue)="valueChange($event)"
+                      [formCascade]="formCascade[rowData[KEY_ID]]?formCascade[rowData[KEY_ID]][col.custom.field]:null">
+                    </ng-container>
+                    <ng-template #t3>
+                      <ng-container [ngSwitch]="mapOfDataState[rowData[KEY_ID]]['state']">
+                        <ng-container *ngSwitchCase="'new'">
+                          {{ mapOfDataState[rowData[KEY_ID]]['data'][col.field] }}
+                        </ng-container>
+                        <ng-container *ngSwitchCase="'edit'">
+                          {{ mapOfDataState[rowData[KEY_ID]]['data'][col.field] }}
+                        </ng-container>
+                        <ng-container *ngSwitchDefault>
+                          {{ mapOfDataState[rowData[KEY_ID]]['originData'][col.field] }}
+                        </ng-container>
+                      </ng-container>
+                    </ng-template>
+                  </td>
+
+                </ng-container>
+
+              </ng-container>
+              <!-- <ng-container *ngIf="mapOfDataState[rowData[KEY_ID]]['state'] === 'edit'; else rowTextTemplate">
+              <td><input type="text" nz-input [(ngModel)]="mapOfDataState[rowData[KEY_ID]]['data'][col.field]" /></td>
+            </ng-container>
+            <ng-template #rowTextTemplate>
+              <td>{{ rowData[col.field] }}</td>
+            </ng-template> -->
+            </ng-container>
+
+            <ng-container *ngSwitchCase="'action'">
+              <td [nzLeft]="col.hasOwnProperty('offsetLeft')?col.offsetLeft:null"
+                [nzRight]="col.hasOwnProperty('offsetRight')?col.offsetRight:null">
+
+                <ng-container *ngIf="mapOfDataState[rowData[KEY_ID]]['actions'].length>1">
+                  <nz-button-group>
+                    <button style="padding: 0px 4px" nzSize="default" nzType="primary" nz-button type="button"
+                      nz-dropdown [nzDropdownMenu]="menu" nzPlacement="bottomLeft">
+                      <i nz-icon nzType="ellipsis" class="text-lg green"></i>
+                    </button>
+                  </nz-button-group>
+                  <nz-dropdown-menu #menu="nzDropdownMenu">
+                    <ul nz-menu nzSelectable>
+                      <li (click)="rowAction(act, rowData, $event)" nz-menu-item
+                        *ngFor="let act of mapOfDataState[rowData[KEY_ID]]['actions']">
+                        <i nz-icon [nzType]="act.icon" nzTheme="outline"></i> {{ act.text }}
+                        <!-- <button (click)="rowAction(act, rowData, $event)" nz-button [nzSize]="act.size"
+                              [nzType]="act.color ? act.color : 'default'">
+        
+                            </button> -->
+                      </li>
+                    </ul>
+                  </nz-dropdown-menu>
+                </ng-container>
+                <ng-container *ngIf="mapOfDataState[rowData[KEY_ID]]['actions'].length===1">
+                  <ng-template ngFor let-act [ngForOf]="mapOfDataState[rowData[KEY_ID]]['actions']">
+                    <button (click)="rowAction(act, rowData, $event)" nz-button type="button" nzSize="act.size"
+                      [nzType]="act.color ? act.color : 'default'">
+                      <i nz-icon [nzType]="act.icon" nzTheme="outline"></i> {{ act.text }}
+                    </button>
+                  </ng-template>
+                </ng-container>
+
+
+                <!-- <ng-template ngFor let-act [ngForOf]="mapOfDataState[rowData[KEY_ID]]['actions']">
+                <ng-container [ngSwitch]="act.type">
+                  <ng-container *ngSwitchCase="'link'">
+                    <a *ngIf="!act.hidden" (click)="rowAction(act, rowData, $event)"><i nz-icon [nzType]="act.icon"
+                        nzTheme="outline"></i> {{ act.text }}</a>
+                    <nz-divider nzType="vertical" *ngIf="!act.hidden"></nz-divider>
+                  </ng-container>
+                  <ng-container *ngSwitchCase="'button'">
+                    <button (click)="rowAction(act, rowData, $event)" nz-button nzSize="act.size"
+                      [nzType]="act.color ? act.color : 'default'">
+                      <i nz-icon [nzType]="act.icon" nzTheme="outline"></i> {{ act.text }}
+                    </button>
+                  </ng-container>
+                </ng-container>
+              </ng-template> -->
+              </td>
+            </ng-container>
+          </ng-container>
+        </ng-template>
+      </tr>
+    </tbody>
+    <tfoot>
+      <ng-template #showTotal style="text-align: left">
+        <span>
+          已选中
+          <span class="count" nz-text>
+            <code>{{ checkedNumber }}</code>
+          </span>
+          条记录
+        </span>
+        共
+        <span class="count" nz-text>
+          <code>{{ total }}</code>
+        </span>
+        条记录
+      </ng-template>
+    </tfoot>
+  </nz-table>
+</nz-spin>
+
+
+<ng-template #title>
+
+  <i nz-icon [nzType]="config.titleIcon" nzTheme="outline" style="font-size:16px"></i> <span style="font-size:16px">{{
+    config.title }}</span>
+
+  <cn-toolbar style="float: right" *ngIf="config.toolbar" [config]="config.toolbar"></cn-toolbar>
+  <div class="clearfix"></div>
+
+</ng-template>
+
+<!-- <button  (click)="hiddentrue()">隐藏</button>
+
+<input [hidden]="is_hidden" nz-input placeholder="Basic usage" /> -->
+
+
+<ng-container *ngIf="config.hasOwnProperty('analysisLayout')">
+  <button (click)="executeAnalysisLayout_test()">页面结构预览</button>
+  <nz-tree *ngIf="showTree" showTree [nzData]="nodes" nzShowIcon nzShowLine [nzExpandedIcon]="mutiExpandedIconTpl">
+    <ng-template #mutiExpandedIconTpl let-node>
+      <i *ngIf="!node.origin.isLeaf" nz-icon [nzType]="node.isExpanded ? 'folder-open' : 'folder'"
+        class="ant-tree-switcher-line-icon"></i>
+      <i *ngIf="node.origin.isLeaf" nz-icon nzType="file" class="ant-tree-switcher-line-icon"></i>
+    </ng-template>
+  </nz-tree>
+</ng-container>
+
+<!--
+<cn-flow-design></cn-flow-design>
+<cn-flow-preview></cn-flow-preview>-->
+<!-- <button (click)="buildAjax_More()">测试路径地址解析</button>
+<button (click)="demo()">测试新ajax</button> -->
+<!-- <button (click)="test_WHere()">分析where</button>
+<button (click)="test_filter()">数组过滤</button>
+
+<div>
+  <div style="float:left;margin-top: 100px;width: 50px;height: 200px;text-align: center; ">
+    <div style="display: inline;">[and]</div>
+  </div>
+  <div style="float:left;margin-top: 30px;width: 1px;height: 200px; background: darkgray;"></div>
+</div>
+
+-->
+<!-- <app-cfg-condition></app-cfg-condition>
+<app-cfg-view-layout></app-cfg-view-layout> -->

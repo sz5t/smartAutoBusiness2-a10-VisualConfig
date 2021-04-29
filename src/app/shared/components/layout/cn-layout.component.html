@@ -1,0 +1,59 @@
+<nz-layout>
+  <nz-content>
+    <ng-container *ngIf="layoutObj.rows">
+      <div nz-row [nzGutter]="6" *ngFor="let row of layoutObj.rows">
+       
+        <div nz-col *ngFor="let c of row.cols" [nzSpan]="c.span" [nzSm]="c.size.nzSm" [nzXs]="c.size.nzXs"
+      
+          [nzMd]="c.size.nzMd" [nzLg]="c.size.nzLg" [nzXl]="c.size.nzXl"
+          [ngSwitch]="c.container">
+          <ng-container *ngSwitchCase="'pageHeader'" cnLayoutResolverDirective [config]="c.pageHeader"
+            [tempData]="tempData" [initData]="initData"></ng-container>
+
+          <nz-card *ngSwitchCase="'tabs'">
+            <ng-container cnLayoutResolverDirective [config]="c.tabs" [tempData]="tempData" [initData]="initData">
+            </ng-container>
+          </nz-card>
+
+
+          <ng-container *ngSwitchCase="'layout'" cnLayoutResolverDirective [config]="c.layout" [tempData]="tempData"
+            [initData]="initData">
+          </ng-container>
+
+
+
+          <ng-container *ngSwitchCase="'component'">
+            <nz-card [nzBodyStyle]="c.bodyStyle" [nzBordered]="c.noBorder ? false : true"
+            [nzTitle]="c.header ? titleTmpl : false" [nzExtra]="c.header ? extraTemplate : false">
+            <ng-template #titleTmpl>
+                <i nz-icon spin style="font-size:14px" [nzType]="c.header.icon" *ngIf="c.header.icon"></i>
+                {{c.header.title}}
+              </ng-template>
+
+            <ng-template #extraTemplate>
+              <ng-container cnComponentResolverDirective *ngIf="c.header.toolbar" [config]="c.header.toolbar"
+               [tempData]="tempData" [initData]="initData">
+              </ng-container>
+            </ng-template>
+
+              
+               
+          
+            <ng-container cnComponentResolverDirective [config]="c.component" [tempData]="tempData"
+              [initData]="initData">
+            </ng-container>
+          </nz-card>
+          </ng-container>
+
+
+
+
+          <ng-container *ngSwitchCase="'rows'" cnLayoutResolverDirective [config]="c" [tempData]="tempData"
+            [initData]="initData">
+          </ng-container>
+
+        </div>
+      </div>
+    </ng-container>
+  </nz-content>
+</nz-layout>

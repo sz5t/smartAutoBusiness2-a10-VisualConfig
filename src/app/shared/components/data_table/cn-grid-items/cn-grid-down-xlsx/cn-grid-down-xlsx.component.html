@@ -1,0 +1,18 @@
+<nz-card nzType="inner" style="width:100%;" nzTitle="导出范围">
+    <nz-radio-group [(ngModel)]="radioValue">
+        <label nz-radio nzValue="page">当前页</label>
+        <label nz-radio nzValue="all">所有数据</label>
+    </nz-radio-group>
+</nz-card>
+<nz-card nzType="inner" style="width:100%;" nzTitle="导出字段设置">
+    <!-- <nz-checkbox-group [(ngModel)]="checkOptionsOne" (ngModelChange)="log(checkOptionsOne)"></nz-checkbox-group> -->
+    <nz-checkbox-wrapper style="width: 100%;" (nzOnChange)="log1($event)">
+        <div nz-row>
+            <div nz-col [nzSpan]="config.span" *ngFor="let c of checkOptionsOne">
+                <label nz-checkbox [nzValue]="c['value']" [ngModel]="c['checked']"
+                    [ngModelOptions]="{standalone: true}">{{c['label']}}</label>
+            </div>
+        </div>
+
+    </nz-checkbox-wrapper>
+</nz-card>

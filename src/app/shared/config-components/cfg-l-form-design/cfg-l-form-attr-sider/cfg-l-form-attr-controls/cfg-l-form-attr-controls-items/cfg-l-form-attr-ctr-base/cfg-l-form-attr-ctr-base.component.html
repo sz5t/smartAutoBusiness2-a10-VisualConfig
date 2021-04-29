@@ -1,0 +1,16 @@
+<form nz-form>
+    <nz-form-item>
+        <nz-form-label [nzSpan]="6" nzFor="email">id</nz-form-label>
+        <nz-form-control [nzSpan]="14">
+            <input nz-input name="email" type="text" id="email" [ngModel]="configData['id']">
+        </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+        <nz-form-label [nzSpan]="6" nzFor="email">字段</nz-form-label>
+        <nz-form-control [nzSpan]="14">
+            <input nz-input name="email" type="email" id="email">
+        </nz-form-control>
+    </nz-form-item>
+</form>
+{{configData? configData['id']:'bu'}}
+{{configData? configData['type']:'未知'}}

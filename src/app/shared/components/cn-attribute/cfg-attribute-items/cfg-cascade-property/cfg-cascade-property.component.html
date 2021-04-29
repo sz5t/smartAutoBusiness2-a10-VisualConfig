@@ -1,0 +1,132 @@
+<div style="width:100%;">
+
+    <form [formGroup]="validateForm">
+        <!-- 三个form放在validation中一起验证 -->
+        <div formGroupName="connection">
+            <!-- 第一张表 -->
+            <!-- 信息-->
+            <nz-card nzTitle="级联发出组件配置">
+                <div nz-row>
+                    <!-- 信息 -->
+                    <div nz-col [nzSpan]="24">
+                        <nz-form-item nzFlex>
+                            <nz-form-label nz-col [nzSpan]="6" nzFor="SenderCompId">发出级联组件ID</nz-form-label>
+                            <nz-form-control nz-col [nzSpan]="14">
+                                <input nz-input formControlName="SenderCompId">
+                            </nz-form-control>
+                            <nz-form-label nz-col [nzSpan]="6" nzFor="SenderCompName">发出级联组件名称</nz-form-label>
+                            <nz-form-control nz-col [nzSpan]="14">
+                                <input nz-input formControlName="SenderCompName">
+                            </nz-form-control>
+                        </nz-form-item>
+                    </div>
+                </div>
+            </nz-card>
+        </div>
+
+        <!-- 第二张表 -->
+        <div formArrayName="stageContent">
+            <nz-card nzTitle="级联接收组件配置" [nzExtra]="extraTemplate">
+                <div *ngFor="let item of testArrFormArray.controls;let i = index;" [formGroupName]="i">
+                    <nz-card nzType="inner" [nzTitle]="'接收组件'+i">
+                        <div nz-row>
+                            <div nz-col [nzSpan]="24">
+                                <nz-form-item nzFlex>
+                                    <nz-form-label nz-col [nzSpan]="6" nzFor="SenderCompId">接收级联组件ID</nz-form-label>
+                                    <nz-form-control nz-col [nzSpan]="14">
+                                        <input nz-input formControlName="SenderCompId">
+                                    </nz-form-control>
+                                    <nz-form-label nz-col [nzSpan]="6" nzFor="SenderCompName">接收级联组件名称</nz-form-label>
+                                    <nz-form-control nz-col [nzSpan]="14">
+                                        <input nz-input formControlName="SenderCompName">
+                                    </nz-form-control>
+                                    <nz-form-label nz-col [nzSpan]="6" nzFor="TriggerMode">级联触发方式</nz-form-label>
+                                    <nz-form-control nz-col [nzSpan]="14">
+                                        <nz-select ngModel="condition" formControlName="TriggerMode"
+                                            (ngModelChange)="changeTriigerMode($event)">
+                                            <nz-option nzValue="default" nzLabel="一直触发"></nz-option>
+                                            <nz-option nzValue="condition" nzLabel="条件触发"></nz-option>
+                                        </nz-select>
+                                    </nz-form-control>
+                                </nz-form-item>
+                                <nz-form-item nzFlex [hidden]="condition ? false : true">
+                                    <nz-form-label [nzSpan]="6" nzFor="ParamType">取值参数类型</nz-form-label>
+                                    <nz-form-control [nzSpan]="14">
+                                        <nz-select ngModel="selectValue" formControlName="ParamType">
+                                            <nz-option nzValue="selectObjectValue" nzLabel="选中行"></nz-option>
+                                            <nz-option nzValue="selectValue" nzLabel="选中值"></nz-option>
+                                            <nz-option nzValue="formValue" nzLabel="表单值"></nz-option>
+                                            <nz-option nzValue="value" nzLabel="固定值"></nz-option>
+                                            <nz-option nzValue="rowValue" nzLabel="当前行数据"></nz-option>
+                                        </nz-select>
+                                    </nz-form-control>
+                                    <nz-form-label nz-col [nzSpan]="6" nzFor="ParamName">取值变量名称</nz-form-label>
+                                    <nz-form-control nz-col [nzSpan]="14">
+                                        <nz-select ngModel="num" formControlName="ParamName">
+                                            <nz-option nzValue="num" nzLabel="num"></nz-option>
+                                        </nz-select>
+                                    </nz-form-control>
+                                </nz-form-item>
+                                <nz-form-item nzFlex>
+                                    <nz-form-label nz-col [nzSpan]="6" nzFor="CascadeType">级联类型</nz-form-label>
+                                    <nz-form-control nz-col [nzSpan]="14">
+                                        <nz-select ngModel="ajax" formControlName="CascadeType"
+                                            (ngModelChange)="changeCascadeType($event)">
+                                            <nz-option nzValue="ajax" nzLabel="异步请求的方式响应"></nz-option>
+                                            <nz-option nzValue="setOptions" nzLabel="固定选项的方式响应"></nz-option>
+                                            <nz-option nzValue="setValue" nzLabel="设置固定值的方式响应"></nz-option>
+                                            <nz-option nzValue="relation" nzLabel="发送消息响应"></nz-option>
+                                            <nz-option nzValue="changeValue" nzLabel="值改变响应"></nz-option>
+                                            <nz-option nzValue="updateValue" nzLabel="值更新响应"></nz-option>
+                                        </nz-select>
+                                    </nz-form-control>
+                                </nz-form-item>
+                                <nz-form-item nzFlex [hidden]="cascadeType !== 'ajax' ? true : false">
+                                    <nz-form-label nz-col [nzSpan]="6" nzFor="expressionList">响应参数</nz-form-label>
+                                    <nz-form-control nz-col [nzSpan]="14">
+                                        <input nz-input formControlName="expressionList" [ngModel]="ajaxOptionDataList">
+                                        <button (click)="add()">添加</button>
+                                        <div formControlName="paramsTable">
+                                            <nz-table #basicTable [nzData]="ajaxOptionDataList">
+                                                <thead>
+                                                    <tr>
+                                                        <th>字段名</th>
+                                                        <th>参数来源</th>
+                                                        <th>参数名</th>
+                                                        <th>是否启用默认值</th>
+                                                        <th>默认值</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr *ngFor="let data of basicTable.data;let i = index;">
+                                                        <td><input nz-input [(ngModel)]="data.name"></td>
+                                                        <td><input nz-input [(ngModel)]="data.type"></td>
+                                                        <td><input nz-input [(ngModel)]="data.valueName"></td>
+                                                        <td><input nz-input [(ngModel)]="data.isDefault"></td>
+                                                        <td><input nz-input [(ngModel)]="data.value"></td>
+                                                    </tr>
+                                                </tbody>
+                                            </nz-table>
+                                        </div>
+                                    </nz-form-control>
+                                </nz-form-item>
+                                <button *ngIf="i>=0" nz-button nzType="dashed" (click)="delItem(i)" nzDanger
+                                    nzBlock>删除</button>
+                            </div>
+                        </div>
+                    </nz-card>
+                </div>
+            </nz-card>
+            <ng-template #extraTemplate>
+                <button nz-button nzType="primary" (click)="addItem()">添加</button>
+            </ng-template>
+            <ng-template #delextraTemplate let-i>
+                <button nz-button nzType="primary" (click)="test_del(i)">删除</button>
+            </ng-template>
+
+        </div>
+
+    </form>
+    <button (click)="test_to_form()">输出表单值</button>
+    <button (click)="getComponentValueNew()">输出流程组件值</button>
+</div>

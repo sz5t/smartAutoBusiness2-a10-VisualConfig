@@ -1,0 +1,39 @@
+
+<nz-table [nzData]="dataList" [nzFrontPagination]="false" [nzShowPagination]="false"  [nzFooter]="footer">
+    <thead>
+      <tr>
+
+         <!-- <th *ngFor="let c of config.columns">
+           {{c.title}}
+           hidden
+          </th> -->
+
+          <ng-template ngFor let-header [ngForOf]="config.columns">
+              <th  *ngIf="header.isGrid!=='hidden'">
+                {{ header.title }}
+              </th>
+            </ng-template>
+        <!-- <th>操作</th> -->
+      </tr>
+    </thead>
+    <tbody cdkDropList (cdkDropListDropped)="drop($event)">
+      <tr *ngFor="let data of dataList" cdkDrag  (click)="setSelectRow(data, $event)" (dblclick)="editModal()"
+      [ngClass]="{ selectedRow: data['rowSelected'] ? data['rowSelected']: false}"
+      >
+      <ng-template ngFor let-col [ngForOf]="config.columns">
+          <td  *ngIf="col.isGrid!=='hidden'">
+              {{data[col.field]}}
+          </td>
+      </ng-template>
+            <!-- <td *ngFor="let c of config.columns">{{data[c.field]}}</td> -->
+        <!-- <td>  <button nz-button nzType="primary"  style="width: 100%"> <i nz-icon nzType="edit" ></i></button></td> -->
+      </tr>
+    </tbody>
+  </nz-table>
+  <ng-template #footer>
+      <!-- "float:left;margin-left: 20px;" -->
+        <button nz-button nzType="primary" style="width: 22%" (click)="onRefresh()"><i nz-icon nzType="redo" ></i>刷新</button>
+        <button nz-button nzType="primary"  style="width: 22%"  (click)="createModal()"><i nz-icon nzType="file-add" ></i>添加</button>
+        <button nz-button *ngIf="!typeConfig" nzType="primary"  style="width: 22%"  (click)="editModal()"><i nz-icon nzType="edit" ></i>编辑</button>
+        <button nz-button nzType="primary"  style="width: 22%" (click)="deleteRow()"><i nz-icon nzType="delete"></i>移除</button>
+      </ng-template>

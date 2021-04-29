@@ -1,0 +1,29 @@
+<nz-card nzHoverable="true" *ngIf="showLayout || l_config['showTitle']" nzType="inner" nzTitle="行"
+  (click)="click($event)" style="width:100%;border: 1px solid #bfec1b;  padding-right: 4px;"
+  [nzBodyStyle]="{'padding':'1px 2px'}" [nzExtra]="extraTemplate"
+  [ngStyle]="(selectedItem['rowitem'] &&(selectedItem['active']==='row')&& (selectedItem['rowitem']['id']===l_config['id']) )? body_style_selected: body_style">
+
+
+  <form-layout-cols *ngIf="l_config['children']" [(l_config)]="l_config" [showLayout]="showLayout"
+    [(selectedItem)]="selectedItem" [(cmptState)]="cmptState" [fromDataService]="fromDataService">
+  </form-layout-cols>
+  <ng-template #extraTemplate>
+
+    <ng-container
+      *ngIf="optionState &&(selectedItem['active']==='row') && (selectedItem['rowitem'] && (selectedItem['rowitem']['id']===l_config['id']) )">
+
+      <button nz-button [nzSize]="'small'" nzTitle="删除列" nz-tooltip (click)="del()">
+        <i nz-icon nzType="delete"></i>
+      </button>
+
+    </ng-container>
+
+  </ng-template>
+</nz-card>
+
+<div *ngIf="!showLayout && !l_config['showTitle']">
+  <form-layout-cols *ngIf="l_config['children'] " [(l_config)]="l_config" [showLayout]="showLayout"
+    [(selectedItem)]="selectedItem" [(cmptState)]="cmptState" [fromDataService]="fromDataService">
+  </form-layout-cols>
+
+</div>

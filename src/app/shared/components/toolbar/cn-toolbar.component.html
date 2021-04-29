@@ -1,0 +1,36 @@
+<!-- <div class="table-operations"> -->
+<span *ngFor="let toolbar of toolbarConfig">
+  <span class="toolbarGroup" *ngIf="toolbar.group">
+    <!-- <nz-button-group> -->
+    <ng-template ngFor let-btn [ngForOf]="toolbar.group">
+      <button style="font-weight: 500" *ngIf="!btn.hidden && btn.permission" [nzSize]="btn.size ? btn.size : 'default'"
+        [nzType]="btn.color ? btn.color : 'default'" nz-button type="button" (click)="action(btn, toolbar.targetViewId)">
+        <i nz-icon *ngIf="btn.icon" [nzType]="btn.icon"
+          [nzTheme]="btn.theme ? btn.theme : 'outline'" [nzTwotoneColor]="'#A5A5B8'"></i>
+        {{btn.text}}
+      </button>
+    </ng-template>
+    <!-- </nz-button-group> -->
+  </span>
+  <span class="toolbarGroup" *ngIf="toolbar.dropdown &&  toolbar.permission">
+    <nz-button-group>
+      <button nzSize="default" nzType="primary" nz-button type="button" nz-dropdown [nzDropdownMenu]="menu"
+      nzPlacement="bottomLeft">
+     {{toolbar.text}}  <i nz-icon [nzType]="toolbar.icon ? toolbar.icon :'down'" [nzTheme]="toolbar.theme ? toolbar.theme : 'outline'" [nzTwotoneColor]="'#A5A5B8'"></i> 
+    </button>
+    </nz-button-group>
+    <nz-dropdown-menu #menu="nzDropdownMenu">
+      <ul nz-menu>
+        <ng-template ngFor let-btn [ngForOf]="toolbar.dropdown">
+          <li *ngIf="!btn.hidden  &&  btn.permission" nz-menu-item (click)="action(btn, toolbar.targetViewId)">
+            <i nz-icon [nzType]="btn.icon" [nzTheme]="btn.theme ? btn.theme : 'outline'" [nzTwotoneColor]="'#A5A5B8'"></i> {{btn.text}}
+          </li>
+        </ng-template>
+      </ul>
+    </nz-dropdown-menu>
+
+    <!-- <ng-container *ngFor="let btn of toolbar.dropdown">
+      
+    </ng-container> -->
+  </span>
+</span>

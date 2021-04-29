@@ -1,0 +1,44 @@
+<!-- <p>config-l-cols works!</p> -->
+<!-- 
+<nz-card *ngIf="showLayout" nzType="inner" nzTitle="列集合【列拖拽】"
+    style="width:100%;border: 1px solid #942fe7;  padding-right: 4px;" [nzBodyStyle]="{'padding':'1px 2px'}">
+
+    <div nz-row [nzGutter]="6">
+        <div nz-col *ngFor="let r of l_config  let i=index" [nzSpan]="r.span" [nzSm]="r.size.nzSm" [nzXs]="r.size.nzXs"
+            [nzMd]="r.size.nzMd" [nzLg]="r.size.nzLg" [nzXl]="r.size.nzXl">
+            <div [ngStyle]="r['style']" (drop)="f_ondrop($event,l_config,i)" (dragover)="f_ondragover($event,l_config)"
+                (dragenter)="f_ondragenter($event,i)" (dragleave)="f_ondragleave($event,i)">
+                <app-config-l-col [(l_config)]="l_config[i]" [showLayout]="showLayout"
+                    (layoutOptions)="exec_options($event)">
+                </app-config-l-col>
+            </div>
+        </div>
+    </div>
+
+</nz-card> -->
+
+<div *ngIf="showLayout" nz-row [nzGutter]="6">
+    <div nz-col *ngFor="let r of l_config  let i=index" [nzSpan]="r.span" [nzSm]="r.size.nzSm" [nzXs]="r.size.nzXs"
+        [nzMd]="r.size.nzMd" [nzLg]="r.size.nzLg" [nzXl]="r.size.nzXl">
+        <div [ngStyle]="r['style']" (drop)="f_ondrop($event,l_config,i)" (dragover)="f_ondragover($event,l_config)"
+            (dragenter)="f_ondragenter($event,i)" (dragleave)="f_ondragleave($event,i)">
+            <app-config-l-col [(l_config)]="l_config[i]" [showLayout]="showLayout" [(selectedItem)]="selectedItem"
+                [(cmptState)]="cmptState" [fromDataService]="fromDataService" (layoutOptions)="exec_options($event)">
+            </app-config-l-col>
+        </div>
+    </div>
+</div>
+<div *ngIf="!showLayout">
+    <div nz-row [nzGutter]="6">
+        <div nz-col *ngFor="let r of l_config  let i=index" [nzSpan]="r.span" [nzSm]="r.size.nzSm" [nzXs]="r.size.nzXs"
+            [nzMd]="r.size.nzMd" [nzLg]="r.size.nzLg" [nzXl]="r.size.nzXl">
+            <div [ngStyle]="r['style']" (drop)="f_ondrop($event,l_config,i)" (dragover)="f_ondragover($event,l_config)"
+                (dragenter)="f_ondragenter($event,i)" (dragleave)="f_ondragleave($event,i)">
+                <app-config-l-col [(l_config)]="l_config[i]" [showLayout]="showLayout" [(selectedItem)]="selectedItem"
+                    [(cmptState)]="cmptState" [fromDataService]="fromDataService">
+                </app-config-l-col>
+            </div>
+        </div>
+    </div>
+
+</div>

@@ -1,0 +1,117 @@
+<nz-card nzType="inner" [nzTitle]="titleTemplate" [nzExtra]="extraTemplate"
+    style="width:100%;border: 1px solid #54e72f; height: 100%;  padding-right: 4px;">
+    <!--     <div nz-row>
+        <div nz-col nzFlex="100px">
+
+            <nz-tag [nzColor]="'magenta'">and:</nz-tag>
+        </div>
+        <div nz-col nzFlex="auto">
+            a>6
+        </div>
+
+    </div>
+    <div nz-row>
+        <div nz-col nzFlex="100px">
+
+            <nz-tag [nzColor]="'cyan'"> or:</nz-tag>
+        </div>
+        <div nz-col nzFlex="auto">
+            <app-cfg-brackets></app-cfg-brackets>
+        </div>
+
+    </div> -->
+
+
+    <ng-container *ngFor="let condition of data let i=index">
+        <div nz-row>
+            <div nz-col nzFlex="80px" style="text-align:center">
+
+
+                <ng-container *ngIf="i===0">
+                    <nz-select [ngModel]="condition['condition']">
+                        <nz-option nzValue="and" nzLabel="并且"></nz-option>
+                    </nz-select>
+                </ng-container>
+                <ng-container *ngIf="i>0">
+                    <nz-select [(ngModel)]="condition['condition']">
+                        <nz-option nzValue="and" nzLabel="并且"></nz-option>
+                        <nz-option nzValue="or" nzLabel="或者"></nz-option>
+                    </nz-select>
+                </ng-container>
+
+
+
+                <!-- <nz-tag [nzColor]="'#108ee9'" style="margin:0 auto; vertical-align: middle;width: 50%;">
+                    {{condition['condition']}}</nz-tag> -->
+            </div>
+            <div nz-col nzFlex="auto">
+                <ng-container *ngIf="condition.type==='括号'">
+
+                    <div nz-row>
+                        <div nz-col nzFlex="auto">
+                            <app-cfg-brackets [(data)]="condition['centent']"></app-cfg-brackets>
+                        </div>
+                        <div nz-col nzFlex="40px"> <i nz-icon nzType="minus-circle-o" class="dynamic-delete-button"
+                                (click)="removeCondition(condition, $event)"></i>
+                        </div>
+                    </div>
+
+
+                </ng-container>
+                <ng-container *ngIf="condition.type==='条件'">
+                    <!-- a <nz-tag [nzColor]="'#f50'">></nz-tag>6 -->
+                    <!-- {{condition['conditionStr']}} -->
+
+                    <span style="margin-left: 30px;margin-top: 4px;">
+                        <nz-select style="width: 150px;" [(ngModel)]="condition['conditionObj']['leftName']">
+                            <nz-option nzValue="a" nzLabel="组件值a"></nz-option>
+                            <nz-option nzValue="b" nzLabel="组件值b"></nz-option>
+                            <nz-option nzValue="c" nzLabel="组件值c"></nz-option>
+                            <nz-option nzValue="d" nzLabel="组件值d"></nz-option>
+                            <nz-option nzValue="e" nzLabel="组件值e"></nz-option>
+                        </nz-select>
+                        <nz-select style="width: 100px;" [(ngModel)]="condition['conditionObj']['Symbol']">
+                            <nz-option nzValue=">" nzLabel="大于"></nz-option>
+                            <nz-option nzValue="<" nzLabel="小于"></nz-option>
+                            <nz-option nzValue="=" nzLabel="等于"></nz-option>
+                            <nz-option nzValue="btw" nzLabel="包含"></nz-option>
+                            <nz-option nzValue="regex" nzLabel="正则表达式"></nz-option>
+                            <nz-option nzValue="not" nzLabel="不做运算"></nz-option>
+                        </nz-select>
+                        <input nz-input style="width: 200px;" placeholder="表达式值"
+                            [(ngModel)]="condition['conditionObj']['rightName']" />
+                        <i nz-icon nzType="minus-circle-o" class="dynamic-delete-button"
+                            (click)="removeCondition(condition, $event)"></i>
+                    </span>
+
+                </ng-container>
+
+            </div>
+
+        </div>
+    </ng-container>
+
+
+</nz-card>
+<ng-template #titleTemplate>
+    <span style="color: crimson;">【表达式】</span>
+</ng-template>
+<ng-template #extraTemplate>
+    <!--  (dragstart)="f_ondragstart($event,config)" (click)="dragCol()"-->
+    <ng-container>
+
+        <button nz-button [nzSize]="'small'" nzTitle="添加条件" (click)="addCondition()" nz-tooltip [draggable]="is_drag">
+            <i nz-icon nzType="plus"></i>条件
+        </button>
+        <button nz-button [nzSize]="'small'" nzTitle="添加括号" (click)="addBrackets()" nz-tooltip [draggable]="is_drag">
+            <i nz-icon nzType="plus"></i>括号
+        </button>
+        <button nz-button [nzSize]="'small'" nzTitle="表达式" (click)="printCondition()" nz-tooltip [draggable]="is_drag">
+            <i nz-icon nzType="container"></i>【测试表达式】
+        </button>
+
+
+    </ng-container>
+
+
+</ng-template>

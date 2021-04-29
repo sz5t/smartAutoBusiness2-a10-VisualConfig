@@ -1,0 +1,7 @@
+<nz-timeline>
+    <ng-template ngFor let-item [ngForOf]="dataList">
+        <nz-timeline-item [nzColor]="item.color">
+            <a (click)="clickNode(item)">{{item.content}}</a>
+        </nz-timeline-item>
+    </ng-template>
+</nz-timeline>

@@ -1,0 +1,9 @@
+<p>cfg-form-input-design works!</p>
+<form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()">
+    <nz-form-item>
+        <nz-form-label [nzSm]="8" [nzXs]="24" nzRequired>DatePicker</nz-form-label>
+        <nz-form-control [nzSm]="16" [nzXs]="24">
+            <nz-date-picker formControlName="datePicker"></nz-date-picker>
+        </nz-form-control>
+    </nz-form-item>
+</form>

@@ -1,0 +1,649 @@
+<nz-table nzTitle="Ajax配置" [nzData]="ajaxList" [nzShowPagination]="false" nzSize="small">
+    <thead>
+        <tr>
+            <th>AjaxId</th>
+            <th>资源名称</th>
+            <th>操作</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let data of ajaxList">
+            <td>{{ data.AjaxId }}</td>
+            <td>{{ data.resoureceName }}</td>
+            <td>
+                <!-- <a (click)="setSymbol(data.AjaxId)">编辑</a>
+                <nz-divider nzType="vertical"></nz-divider> -->
+                <a nz-popconfirm nzPopconfirmTitle="Sure to delete?" (nzOnConfirm)="deleteRow(data.AjaxId)">删除</a>
+            </td>
+        </tr>
+    </tbody>
+</nz-table>
+<div nz-row>
+    <div nz-col [nzSpan]="12">
+        <button nz-button [nzType]="'dashed'" (click)="setSymbol()" nzBlock class="mt-md">
+            <i nz-icon nzType="plus"></i>
+            <span>新增</span>
+        </button>
+    </div>
+    <div nz-col [nzSpan]="12">
+        <button nz-button nzType="primary" [nzBlock]="true" class="mt-md" (click)="submitAjax()">提交数据</button>
+    </div>
+</div>
+
+
+
+<nz-modal [(nzVisible)]="isVisible" nzWidth="1200px" [nzFooter]="modalFooter">
+    <ng-container *nzModalContent>
+        <form nz-form [formGroup]="form" [nzLayout]="'Horizontal'">
+            <div nz-row>
+                <div nz-col nzSpan="8" style="height:700px;width:500px;overflow:auto;">
+                    <nz-card [nzBordered]="false" nzTitle="加载基本属性配置">
+                        <nz-form-item [hidden]="true">
+                            <nz-form-label [nzSpan]="8">Ajax标识</nz-form-label>
+                            <nz-form-control [nzSpan]="16">
+                                <input nz-input formControlName="Id" placeholder="请输入Ajax标识" />
+                            </nz-form-control>
+                        </nz-form-item>
+                        <nz-form-item>
+                            <nz-form-label [nzSpan]="8">请求地址类型</nz-form-label>
+                            <nz-form-control [nzSpan]="16">
+                                <nz-select formControlName="urlType" [nzShowSearch]="true" [nzPlaceHolder]="'请选择参数类型'">
+                                    <nz-option [nzLabel]="'系统内部'" [nzValue]="'inner'"></nz-option>
+                                </nz-select>
+                            </nz-form-control>
+                        </nz-form-item>
+                        <nz-form-item>
+                            <nz-form-label [nzSpan]="8">请求方式</nz-form-label>
+                            <nz-form-control [nzSpan]="16">
+                                <nz-select formControlName="innerAjaxType" [nzShowSearch]="true"
+                                    [nzPlaceHolder]="'请选择请求方式'">
+                                    <nz-option [nzLabel]="'post'" [nzValue]="'post'"></nz-option>
+                                    <nz-option [nzLabel]="'put'" [nzValue]="'put'"></nz-option>
+                                    <nz-option [nzLabel]="'get'" [nzValue]="'get'"></nz-option>
+                                    <nz-option [nzLabel]="'delete'" [nzValue]="'delete'"></nz-option>
+                                </nz-select>
+                            </nz-form-control>
+                        </nz-form-item>
+                        <nz-form-item>
+                            <nz-form-label [nzSpan]="8">请求地址</nz-form-label>
+                            <nz-form-control [nzSpan]="16">
+                                <nz-select formControlName="ResourceType" [nzPlaceHolder]="'请选择请求资源类型'"
+                                    (ngModelChange)="changeResourceType()">
+                                    <nz-option [nzLabel]="'业务模型资源'" [nzValue]="'cfgBusiModel'"></nz-option>
+                                    <nz-option [nzLabel]="'SQL资源'" [nzValue]="'SQL'"></nz-option>
+                                    <nz-option [nzLabel]="'表资源'" [nzValue]="'TABLE'"></nz-option>
+                                </nz-select>
+
+                                <nz-input-group [nzSuffix]="suffixTemplateInfo">
+                                    <input nz-input formControlName="innerUrl" [(ngModel)]="innerUrl"
+                                        placeholder="请输入资源名称" />
+                                </nz-input-group>
+                                <ng-template #suffixTemplateInfo><i nz-icon nzType="search"
+                                        (click)="selectResource()"></i>
+                                </ng-template>
+
+
+                                <nz-select formControlName="ResourceOperateType" [nzPlaceHolder]="'请选择资源操作方式'">
+                                    <nz-option [nzLabel]="'添加'" [nzValue]="'insert'"
+                                        [nzHide]="resourceType !== 'TABLE'">
+                                    </nz-option>
+                                    <nz-option [nzLabel]="'批量添加'" [nzValue]="'batchInsert'"
+                                        [nzHide]="resourceType !== 'TABLE'">
+                                    </nz-option>
+                                    <nz-option [nzLabel]="'修改'" [nzValue]="'update'"
+                                        [nzHide]="resourceType !== 'TABLE'">
+                                    </nz-option>
+                                    <nz-option [nzLabel]="'批量修改'" [nzValue]="'batchUpdate'"
+                                        [nzHide]="resourceType !== 'TABLE'">
+                                    </nz-option>
+                                    <nz-option [nzLabel]="'删除'" [nzValue]="'delete'"
+                                        [nzHide]="resourceType !== 'TABLE'">
+                                    </nz-option>
+                                    <nz-option [nzLabel]="'查询'" [nzValue]="'query'" [nzHide]="resourceType === 'SQL'">
+                                    </nz-option>
+                                    <nz-option [nzLabel]="'SQL操作'" [nzValue]="'operate'"
+                                        [nzHide]="resourceType === 'TABLE'">
+                                    </nz-option>
+                                    <nz-option [nzLabel]="'SQL批量操作'" [nzValue]="'batchOperate'"
+                                        [nzHide]="resourceType !== 'SQL'"></nz-option>
+                                </nz-select>
+                            </nz-form-control>
+                        </nz-form-item>
+                        <nz-form-item>
+                            <nz-form-label [nzSpan]="8">启用外部接口资源</nz-form-label>
+                            <nz-form-control [nzSpan]="16">
+                                <nz-switch formControlName="isUrlContent" [ngModel]="true" nzCheckedChildren="启用"
+                                    nzUnCheckedChildren="不启用"></nz-switch>
+                            </nz-form-control>
+                        </nz-form-item>
+                        <div [hidden]="isUrlContent !== true">
+                            <nz-form-item>
+                                <nz-form-label [nzSpan]="8">资源名称</nz-form-label>
+                                <nz-form-control [nzSpan]="16">
+                                    <input nz-input formControlName="outterUrlName" placeholder="请输入外部资源名称" />
+                                </nz-form-control>
+                            </nz-form-item>
+                            <nz-form-item>
+                                <nz-form-label [nzSpan]="8">资源标题</nz-form-label>
+                                <nz-form-control [nzSpan]="16">
+                                    <input nz-input formControlName="outterUrlTitle" placeholder="请输入资源标题" />
+                                </nz-form-control>
+                            </nz-form-item>
+                        </div>
+                        <nz-form-item>
+                            <nz-form-label [nzSpan]="8">启用额外参数配置</nz-form-label>
+                            <nz-form-control [nzSpan]="16">
+                                <nz-switch formControlName="isAdditionalParams" [ngModel]="true" nzCheckedChildren="启用"
+                                    nzUnCheckedChildren="不启用"></nz-switch>
+                            </nz-form-control>
+                        </nz-form-item>
+                        <div [hidden]="isAdditionalParams !== true">
+                            <nz-form-item>
+                                <nz-form-label [nzSpan]="8">启用页头参数参数配置</nz-form-label>
+                                <nz-form-control [nzSpan]="16">
+                                    <nz-switch formControlName="isHeadParams" [ngModel]="false" nzCheckedChildren="启用"
+                                        (ngModelChange)="changeParams($event)" nzUnCheckedChildren="不启用"></nz-switch>
+                                </nz-form-control>
+                            </nz-form-item>
+                            <nz-form-item>
+                                <nz-form-label [nzSpan]="8">启用路径参数配置</nz-form-label>
+                                <nz-form-control [nzSpan]="16">
+                                    <nz-switch formControlName="isPathParams" [ngModel]="false" nzCheckedChildren="启用"
+                                        (ngModelChange)="changeParams($event)" nzUnCheckedChildren="不启用"></nz-switch>
+                                </nz-form-control>
+                            </nz-form-item>
+                            <nz-form-item>
+                                <nz-form-label [nzSpan]="8">启用查询参数配置</nz-form-label>
+                                <nz-form-control [nzSpan]="16">
+                                    <nz-switch formControlName="isQueryParams" [ngModel]="false" nzCheckedChildren="启用"
+                                        (ngModelChange)="changeParams($event)" nzUnCheckedChildren="不启用"></nz-switch>
+                                </nz-form-control>
+                            </nz-form-item>
+                            <nz-form-item>
+                                <nz-form-label [nzSpan]="8">启用请求体参数配置</nz-form-label>
+                                <nz-form-control [nzSpan]="16">
+                                    <nz-switch formControlName="isBodyParams" [ngModel]="false" nzCheckedChildren="启用"
+                                        (ngModelChange)="changeParams($event)" nzUnCheckedChildren="不启用"></nz-switch>
+                                </nz-form-control>
+                            </nz-form-item>
+                        </div>
+                    </nz-card>
+                </div>
+                <div nz-col nzSpan="16" style="height:700px;width:1400px;overflow:auto;">
+                    <nz-card [nzBordered]="false" nzTitle="参数配置">
+                        <div [hidden]="!(isAdditionalParams === true && isHeadParams === true)">
+                            <nz-table nzTitle="头参数配置" nzBordered="true" formArrayName="headParams"
+                                [nzData]="headParams.value" [nzShowPagination]="false">
+                                <thead>
+                                    <tr>
+                                        <th>参数名</th>
+                                        <th>取值类型</th>
+                                        <th>取值字段</th>
+                                        <th>过滤条件</th>
+                                        <th>固定值</th>
+                                        <th>操作</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let item of headParams.controls; let i = index" [formGroupName]="i">
+                                        <td>
+                                            <span *ngIf="headParamsEditIndex !== i">{{ headParams.value[i].name
+                                                }}</span>
+                                            <span *ngIf="headParamsEditIndex === i" nz-form-control>
+                                                <input nz-input formControlName="name" placeholder="请输入参数名" />
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <span *ngIf="headParamsEditIndex !== i">{{ headParams.value[i].type
+                                                }}</span>
+                                            <span *ngIf="headParamsEditIndex === i" nz-form-control>
+                                                <input nz-input formControlName="type" placeholder="请输入取值类型" />
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <span *ngIf="headParamsEditIndex !== i">{{ headParams.value[i].valueName
+                                                }}</span>
+                                            <span *ngIf="headParamsEditIndex === i" nz-form-control>
+                                                <input nz-input formControlName="valueName" placeholder="请输入取值字段" />
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <span *ngIf="headParamsEditIndex !== i">{{ headParams.value[i].conditionType
+                                                }}</span>
+                                            <span *ngIf="headParamsEditIndex === i" nz-form-control>
+                                                <nz-select formControlName="conditionType" [nzPlaceHolder]="'请选择过滤条件'">
+                                                    <nz-option [nzLabel]="'等于'" [nzValue]="'eq'"></nz-option>
+                                                    <nz-option [nzLabel]="'不等于'" [nzValue]="'neq'"></nz-option>
+                                                    <nz-option [nzLabel]="'模糊匹配'" [nzValue]="'ctn'"></nz-option>
+                                                    <nz-option [nzLabel]="'模糊不匹配'" [nzValue]="'nctn'"></nz-option>
+                                                    <nz-option [nzLabel]="'包含匹配'" [nzValue]="'in'"></nz-option>
+                                                    <nz-option [nzLabel]="'不包含匹配'" [nzValue]="'nin'"></nz-option>
+                                                    <nz-option [nzLabel]="'区间匹配'" [nzValue]="'btn'"></nz-option>
+                                                    <nz-option [nzLabel]="'大于等于'" [nzValue]="'ge'"></nz-option>
+                                                    <nz-option [nzLabel]="'大于'" [nzValue]="'gt'"></nz-option>
+                                                    <nz-option [nzLabel]="'小于等于'" [nzValue]="'le'"></nz-option>
+                                                    <nz-option [nzLabel]="'小于'" [nzValue]="'lt'"></nz-option>
+                                                </nz-select>
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <span *ngIf="headParamsEditIndex !== i">{{ headParams.value[i].value
+                                                }}</span>
+                                            <span *ngIf="headParamsEditIndex === i" nz-form-control>
+                                                <input nz-input formControlName="value" placeholder="请输入固定值" />
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <span *ngIf="headParamsEditIndex !== i">
+                                                <a (click)="edit('headParams',i)">编辑</a>
+                                                <nz-divider nzType="vertical"></nz-divider>
+                                                <a (click)="del('headParams',i)">删除</a>
+                                                <!-- <nz-popconfirm (nzOnConfirm)="del(i)" [nzTitle]="'是否要删除此行？'">
+                      <a nz-popconfirm>删除</a>
+                    </nz-popconfirm> -->
+                                            </span>
+                                            <span *ngIf="headParamsEditIndex === i">
+                                                <a (click)="save('headParams',i)">保存</a>
+                                                <nz-divider nzType="vertical"></nz-divider>
+                                                <a (click)="cancel('headParams',i)">关闭</a>
+                                                <!-- <nz-popconfirm (nzOnConfirm)="cancel(i)" [nzTitle]="'是否要取消操作？'">
+                      <a nz-popconfirm>取消</a>
+                    </nz-popconfirm> -->
+                                            </span>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </nz-table>
+                            <button *ngIf="headParamsEditIndex === -1" nz-button [nzType]="'dashed'"
+                                (click)="add('headParams')" nzBlock class="mt-md">
+                                <i nz-icon nzType="plus"></i>
+                                <span>新增头参数配置</span>
+                            </button>
+                        </div>
+                        <div [hidden]="!(isAdditionalParams === true && isPathParams === true)">
+                            <nz-table nzTitle="路径参数配置" nzBordered="true" formArrayName="pathParams"
+                                [nzData]="pathParams.value" nzBodered="true" [nzShowPagination]="false">
+                                <thead>
+                                    <tr>
+                                        <th>参数名</th>
+                                        <th>取值类型</th>
+                                        <th>取值字段</th>
+                                        <th>过滤条件</th>
+                                        <th>固定值</th>
+                                        <th>操作</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let item of pathParams.controls; let i = index" [formGroupName]="i">
+                                        <td>
+                                            <span *ngIf="pathParamsEditIndex !== i">{{ pathParams.value[i].name
+                                                }}</span>
+                                            <span *ngIf="pathParamsEditIndex === i" nz-form-control>
+                                                <input nz-input formControlName="name" placeholder="请输入参数名" />
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <span *ngIf="pathParamsEditIndex !== i">{{ pathParams.value[i].type
+                                                }}</span>
+                                            <span *ngIf="pathParamsEditIndex === i" nz-form-control>
+                                                <input nz-input formControlName="type" placeholder="请输入取值类型" />
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <span *ngIf="pathParamsEditIndex !== i">{{ pathParams.value[i].valueName
+                                                }}</span>
+                                            <span *ngIf="pathParamsEditIndex === i" nz-form-control>
+                                                <input nz-input formControlName="valueName" placeholder="请输入取值字段" />
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <span *ngIf="pathParamsEditIndex !== i">{{ pathParams.value[i].conditionType
+                                                }}</span>
+                                            <span *ngIf="pathParamsEditIndex === i" nz-form-control>
+                                                <nz-select formControlName="conditionType" [nzPlaceHolder]="'请选择过滤条件'">
+                                                    <nz-option [nzLabel]="'等于'" [nzValue]="'eq'"></nz-option>
+                                                    <nz-option [nzLabel]="'不等于'" [nzValue]="'neq'"></nz-option>
+                                                    <nz-option [nzLabel]="'模糊匹配'" [nzValue]="'ctn'"></nz-option>
+                                                    <nz-option [nzLabel]="'模糊不匹配'" [nzValue]="'nctn'"></nz-option>
+                                                    <nz-option [nzLabel]="'包含匹配'" [nzValue]="'in'"></nz-option>
+                                                    <nz-option [nzLabel]="'不包含匹配'" [nzValue]="'nin'"></nz-option>
+                                                    <nz-option [nzLabel]="'区间匹配'" [nzValue]="'btn'"></nz-option>
+                                                    <nz-option [nzLabel]="'大于等于'" [nzValue]="'ge'"></nz-option>
+                                                    <nz-option [nzLabel]="'大于'" [nzValue]="'gt'"></nz-option>
+                                                    <nz-option [nzLabel]="'小于等于'" [nzValue]="'le'"></nz-option>
+                                                    <nz-option [nzLabel]="'小于'" [nzValue]="'lt'"></nz-option>
+                                                </nz-select>
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <span *ngIf="pathParamsEditIndex !== i">{{ pathParams.value[i].value
+                                                }}</span>
+                                            <span *ngIf="pathParamsEditIndex === i" nz-form-control>
+                                                <input nz-input formControlName="value" placeholder="请输入固定值" />
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <span *ngIf="pathParamsEditIndex !== i">
+                                                <a (click)="edit('pathParams',i)">编辑</a>
+                                                <nz-divider nzType="vertical"></nz-divider>
+                                                <a (click)="del('pathParams',i)">删除</a>
+                                                <!-- <nz-popconfirm (nzOnConfirm)="del(i)" [nzTitle]="'是否要删除此行？'">
+                      <a nz-popconfirm>删除</a>
+                    </nz-popconfirm> -->
+                                            </span>
+                                            <span *ngIf="pathParamsEditIndex === i">
+                                                <a (click)="save('pathParams',i)">保存</a>
+                                                <nz-divider nzType="vertical"></nz-divider>
+                                                <a (click)="cancel('pathParams',i)">关闭</a>
+                                                <!-- <nz-popconfirm (nzOnConfirm)="cancel(i)" [nzTitle]="'是否要取消操作？'">
+                      <a nz-popconfirm>取消</a>
+                    </nz-popconfirm> -->
+                                            </span>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </nz-table>
+                            <button *ngIf="pathParamsEditIndex === -1" nz-button [nzType]="'dashed'"
+                                (click)="add('pathParams')" nzBlock class="mt-md">
+                                <i nz-icon nzType="plus"></i>
+                                <span>新增路径参数配置</span>
+                            </button>
+                        </div>
+                        <div [hidden]="!(isAdditionalParams === true && isQueryParams === true)">
+                            <nz-table nzTitle="查询参数配置" nzBordered="true" formArrayName="queryParams"
+                                [nzData]="queryParams.value" [nzShowPagination]="false">
+                                <thead>
+                                    <tr>
+                                        <th>参数名</th>
+                                        <th>取值类型</th>
+                                        <th>取值字段</th>
+                                        <th>过滤条件</th>
+                                        <th>固定值</th>
+                                        <th>操作</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let item of queryParams.controls; let i = index" [formGroupName]="i">
+                                        <td>
+                                            <span *ngIf="queryParamsEditIndex !== i">{{ queryParams.value[i].name
+                                                }}</span>
+                                            <span *ngIf="queryParamsEditIndex === i" nz-form-control>
+                                                <input nz-input formControlName="name" placeholder="请输入参数名" />
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <span *ngIf="queryParamsEditIndex !== i">{{ queryParams.value[i].type
+                                                }}</span>
+                                            <span *ngIf="queryParamsEditIndex === i" nz-form-control>
+                                                <input nz-input formControlName="type" placeholder="请输入取值类型" />
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <span *ngIf="queryParamsEditIndex !== i">{{ queryParams.value[i].valueName
+                                                }}</span>
+                                            <span *ngIf="queryParamsEditIndex === i" nz-form-control>
+                                                <input nz-input formControlName="valueName" placeholder="请输入取值字段" />
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <span *ngIf="queryParamsEditIndex !== i">{{
+                                                queryParams.value[i].conditionType
+                                                }}</span>
+                                            <span *ngIf="queryParamsEditIndex === i" nz-form-control>
+                                                <nz-select formControlName="conditionType" [nzPlaceHolder]="'请选择过滤条件'">
+                                                    <nz-option [nzLabel]="'等于'" [nzValue]="'eq'"></nz-option>
+                                                    <nz-option [nzLabel]="'不等于'" [nzValue]="'neq'"></nz-option>
+                                                    <nz-option [nzLabel]="'模糊匹配'" [nzValue]="'ctn'"></nz-option>
+                                                    <nz-option [nzLabel]="'模糊不匹配'" [nzValue]="'nctn'"></nz-option>
+                                                    <nz-option [nzLabel]="'包含匹配'" [nzValue]="'in'"></nz-option>
+                                                    <nz-option [nzLabel]="'不包含匹配'" [nzValue]="'nin'"></nz-option>
+                                                    <nz-option [nzLabel]="'区间匹配'" [nzValue]="'btn'"></nz-option>
+                                                    <nz-option [nzLabel]="'大于等于'" [nzValue]="'ge'"></nz-option>
+                                                    <nz-option [nzLabel]="'大于'" [nzValue]="'gt'"></nz-option>
+                                                    <nz-option [nzLabel]="'小于等于'" [nzValue]="'le'"></nz-option>
+                                                    <nz-option [nzLabel]="'小于'" [nzValue]="'lt'"></nz-option>
+                                                </nz-select>
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <span *ngIf="queryParamsEditIndex !== i">{{ queryParams.value[i].value
+                                                }}</span>
+                                            <span *ngIf="queryParamsEditIndex === i" nz-form-control>
+                                                <input nz-input formControlName="value" placeholder="请输入固定值" />
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <span *ngIf="queryParamsEditIndex !== i">
+                                                <a (click)="edit('queryParams',i)">编辑</a>
+                                                <nz-divider nzType="vertical"></nz-divider>
+                                                <a (click)="del('queryParams',i)">删除</a>
+                                                <!-- <nz-popconfirm (nzOnConfirm)="del(i)" [nzTitle]="'是否要删除此行？'">
+                      <a nz-popconfirm>删除</a>
+                    </nz-popconfirm> -->
+                                            </span>
+                                            <span *ngIf="queryParamsEditIndex === i">
+                                                <a (click)="save('queryParams',i)">保存</a>
+                                                <nz-divider nzType="vertical"></nz-divider>
+                                                <a (click)="cancel('queryParams',i)">关闭</a>
+                                                <!-- <nz-popconfirm (nzOnConfirm)="cancel(i)" [nzTitle]="'是否要取消操作？'">
+                      <a nz-popconfirm>取消</a>
+                    </nz-popconfirm> -->
+                                            </span>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </nz-table>
+                            <button *ngIf="queryParamsEditIndex === -1" nz-button [nzType]="'dashed'"
+                                (click)="add('queryParams')" nzBlock class="mt-md">
+                                <i nz-icon nzType="plus"></i>
+                                <span>新增查询参数配置</span>
+                            </button>
+                        </div>
+                        <div [hidden]="!(isAdditionalParams === true && isBodyParams === true)">
+                            <nz-table nzTitle="请求体参数配置" nzBordered="true" formArrayName="bodyParams"
+                                [nzData]="bodyParams.value" [nzShowPagination]="false">
+                                <thead>
+                                    <tr>
+                                        <th>参数名</th>
+                                        <th>取值类型</th>
+                                        <th>取值字段</th>
+                                        <th>过滤条件</th>
+                                        <th>固定值</th>
+                                        <th>操作</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let item of bodyParams.controls; let i = index" [formGroupName]="i">
+                                        <td>
+                                            <span *ngIf="bodyParamsEditIndex !== i">{{ bodyParams.value[i].name
+                                                }}</span>
+                                            <span *ngIf="bodyParamsEditIndex === i" nz-form-control>
+                                                <input nz-input formControlName="name" placeholder="请输入参数名" />
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <span *ngIf="bodyParamsEditIndex !== i">{{ bodyParams.value[i].type
+                                                }}</span>
+                                            <span *ngIf="bodyParamsEditIndex === i" nz-form-control>
+                                                <input nz-input formControlName="type" placeholder="请输入取值类型" />
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <span *ngIf="bodyParamsEditIndex !== i">{{ bodyParams.value[i].valueName
+                                                }}</span>
+                                            <span *ngIf="bodyParamsEditIndex === i" nz-form-control>
+                                                <input nz-input formControlName="valueName" placeholder="请输入取值字段" />
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <span *ngIf="bodyParamsEditIndex !== i">{{ bodyParams.value[i].conditionType
+                                                }}</span>
+                                            <span *ngIf="bodyParamsEditIndex === i" nz-form-control>
+                                                <nz-select formControlName="conditionType" [nzPlaceHolder]="'请选择过滤条件'">
+                                                    <nz-option [nzLabel]="'等于'" [nzValue]="'eq'"></nz-option>
+                                                    <nz-option [nzLabel]="'不等于'" [nzValue]="'neq'"></nz-option>
+                                                    <nz-option [nzLabel]="'模糊匹配'" [nzValue]="'ctn'"></nz-option>
+                                                    <nz-option [nzLabel]="'模糊不匹配'" [nzValue]="'nctn'"></nz-option>
+                                                    <nz-option [nzLabel]="'包含匹配'" [nzValue]="'in'"></nz-option>
+                                                    <nz-option [nzLabel]="'不包含匹配'" [nzValue]="'nin'"></nz-option>
+                                                    <nz-option [nzLabel]="'区间匹配'" [nzValue]="'btn'"></nz-option>
+                                                    <nz-option [nzLabel]="'大于等于'" [nzValue]="'ge'"></nz-option>
+                                                    <nz-option [nzLabel]="'大于'" [nzValue]="'gt'"></nz-option>
+                                                    <nz-option [nzLabel]="'小于等于'" [nzValue]="'le'"></nz-option>
+                                                    <nz-option [nzLabel]="'小于'" [nzValue]="'lt'"></nz-option>
+                                                </nz-select>
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <span *ngIf="bodyParamsEditIndex !== i">{{ bodyParams.value[i].value
+                                                }}</span>
+                                            <span *ngIf="bodyParamsEditIndex === i" nz-form-control>
+                                                <input nz-input formControlName="value" placeholder="请输入固定值" />
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <span *ngIf="bodyParamsEditIndex !== i">
+                                                <a (click)="edit('bodyParams',i)">编辑</a>
+                                                <nz-divider nzType="vertical"></nz-divider>
+                                                <a (click)="del('bodyParams',i)">删除</a>
+                                                <!-- <nz-popconfirm (nzOnConfirm)="del(i)" [nzTitle]="'是否要删除此行？'">
+                      <a nz-popconfirm>删除</a>
+                    </nz-popconfirm> -->
+                                            </span>
+                                            <span *ngIf="bodyParamsEditIndex === i">
+                                                <a (click)="save('bodyParams',i)">保存</a>
+                                                <nz-divider nzType="vertical"></nz-divider>
+                                                <a (click)="cancel('bodyParams',i)">关闭</a>
+                                                <!-- <nz-popconfirm (nzOnConfirm)="cancel(i)" [nzTitle]="'是否要取消操作？'">
+                      <a nz-popconfirm>取消</a>
+                    </nz-popconfirm> -->
+                                            </span>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </nz-table>
+                            <button *ngIf="bodyParamsEditIndex === -1" nz-button [nzType]="'dashed'"
+                                (click)="add('bodyParams')" nzBlock class="mt-md">
+                                <i nz-icon nzType="plus"></i>
+                                <span>新增请求体参数配置</span>
+                            </button>
+                        </div>
+                        <div [hidden]="isAdditionalParams === true ">
+                            <nz-table nzTitle="参数配置" formArrayName="params" [nzData]="params.value"
+                                [nzShowPagination]="false">
+                                <thead>
+                                    <tr>
+                                        <th>参数名</th>
+                                        <th>取值类型</th>
+                                        <th>取值字段</th>
+                                        <th>过滤条件</th>
+                                        <th>固定值</th>
+                                        <th>操作</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let item of params.controls; let i = index" [formGroupName]="i">
+                                        <td>
+                                            <span *ngIf="paramsEditIndex !== i">{{ params.value[i].name }}</span>
+                                            <span *ngIf="paramsEditIndex === i" nz-form-control>
+                                                <input nz-input formControlName="name" placeholder="请输入参数名" />
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <span *ngIf="paramsEditIndex !== i">{{ params.value[i].type }}</span>
+                                            <span *ngIf="paramsEditIndex === i" nz-form-control>
+                                                <input nz-input formControlName="type" placeholder="请输入取值类型" />
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <span *ngIf="paramsEditIndex !== i">{{ params.value[i].valueName }}</span>
+                                            <span *ngIf="paramsEditIndex === i" nz-form-control>
+                                                <input nz-input formControlName="valueName" placeholder="请输入取值字段" />
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <span *ngIf="paramsEditIndex !== i">{{ params.value[i].conditionType
+                                                }}</span>
+                                            <span *ngIf="paramsEditIndex === i" nz-form-control>
+                                                <nz-select formControlName="conditionType" [nzPlaceHolder]="'请选择过滤条件'">
+                                                    <nz-option [nzLabel]="'等于'" [nzValue]="'eq'"></nz-option>
+                                                    <nz-option [nzLabel]="'不等于'" [nzValue]="'neq'"></nz-option>
+                                                    <nz-option [nzLabel]="'模糊匹配'" [nzValue]="'ctn'"></nz-option>
+                                                    <nz-option [nzLabel]="'模糊不匹配'" [nzValue]="'nctn'"></nz-option>
+                                                    <nz-option [nzLabel]="'包含匹配'" [nzValue]="'in'"></nz-option>
+                                                    <nz-option [nzLabel]="'不包含匹配'" [nzValue]="'nin'"></nz-option>
+                                                    <nz-option [nzLabel]="'区间匹配'" [nzValue]="'btn'"></nz-option>
+                                                    <nz-option [nzLabel]="'大于等于'" [nzValue]="'ge'"></nz-option>
+                                                    <nz-option [nzLabel]="'大于'" [nzValue]="'gt'"></nz-option>
+                                                    <nz-option [nzLabel]="'小于等于'" [nzValue]="'le'"></nz-option>
+                                                    <nz-option [nzLabel]="'小于'" [nzValue]="'lt'"></nz-option>
+                                                </nz-select>
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <span *ngIf="paramsEditIndex !== i">{{ params.value[i].value }}</span>
+                                            <span *ngIf="paramsEditIndex === i" nz-form-control>
+                                                <input nz-input formControlName="value" placeholder="请输入固定值" />
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <span *ngIf="paramsEditIndex !== i">
+                                                <a (click)="edit('params',i)">编辑</a>
+                                                <nz-divider nzType="vertical"></nz-divider>
+                                                <a (click)="del('params',i)">删除</a>
+                                                <!-- <nz-popconfirm (nzOnConfirm)="del(i)" [nzTitle]="'是否要删除此行？'">
+                      <a nz-popconfirm>删除</a>
+                    </nz-popconfirm> -->
+                                            </span>
+                                            <span *ngIf="paramsEditIndex === i">
+                                                <a (click)="save('params',i)">保存</a>
+                                                <nz-divider nzType="vertical"></nz-divider>
+                                                <a (click)="cancel('params',i)">关闭</a>
+                                                <!-- <nz-popconfirm (nzOnConfirm)="cancel(i)" [nzTitle]="'是否要取消操作？'">
+                      <a nz-popconfirm>取消</a>
+                    </nz-popconfirm> -->
+                                            </span>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </nz-table>
+                            <button *ngIf="paramsEditIndex === -1" nz-button [nzType]="'dashed'" (click)="add('params')"
+                                nzBlock class="mt-md">
+                                <i nz-icon nzType="plus"></i>
+                                <span>新增请求体参数配置</span>
+                            </button>
+                        </div>
+                        <div [hidden]="isAdditionalParams === false || subParams === true ">
+                            <nz-empty nzNotFoundImage="simple" nzNotFoundContent="请设置相关的参数"></nz-empty>
+                        </div>
+                    </nz-card>
+                </div>
+            </div>
+            <div nz-row>
+                <div nz-col nzSpan="8">
+                    <div nz-row>
+                        <div nz-col nzSpan="12">
+                            <nz-form-item>
+                                <nz-form-control>
+                                    <button nz-button nzType="primary" [nzBlock]="true"
+                                        (click)="_submitForm()">提交</button>
+                                </nz-form-control>
+                            </nz-form-item>
+                        </div>
+                        <div nz-col nzSpan="12">
+                            <nz-form-item>
+                                <nz-form-control>
+                                    <button nz-button nzType="default" [nzBlock]="true"
+                                        (click)="_resetForm()">重置</button>
+                                </nz-form-control>
+                            </nz-form-item>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </ng-container>
+    <ng-template #modalFooter>
+        <button nz-button nzType="default" (click)="handleCancel()">关闭</button>
+    </ng-template>
+</nz-modal>

@@ -1,0 +1,41 @@
+<!-- <p>config-l-col works!</p> -->
+
+<!-- <ng-container *ngIf="draging">
+    <nz-card nzType="inner" nzTitle="列" style="width:100%;border: 5px solid #54e72f;  padding-right: 4px;"
+        [nzBodyStyle]="{'padding':'1px 2px'}">
+        {{l_config['id']}}
+    </nz-card>
+</ng-container> -->
+<!-- (mouseover)="mousemove($event)" (mouseout)="mouseout($event)"   style="width:100%;border: 1px solid #54e72f;  padding-right: 4px;"-->
+<div style="width: 100%;" *ngIf="showLayout || l_config['showTitle']" (click)="click($event)">
+    <nz-card nzHoverable="true" draggable="false" [hidden]="draging" (dragstart)="f_ondragstart($event,'col')"
+        (dragend)="f_ondragend($event)" nzType="inner" nzTitle="列"
+        [ngStyle]="(selectedItem['item'] &&(selectedItem['active']==='col')&& (selectedItem['item']['id']===l_config['id']) )? body_style_selected: body_style"
+        [nzBodyStyle]="{'padding':'1px 2px'}" [nzExtra]="extraTemplate">
+        <!-- {{l_config['id']}} -->
+        <app-config-l-drag-container [(l_config)]="l_config['component']" [(selectedItem)]="selectedItem"
+            [(cmptState)]="cmptState" [fromDataService]="fromDataService">
+        </app-config-l-drag-container>
+        <ng-template #extraTemplate>
+
+            <ng-container
+                *ngIf="optionState && (selectedItem['item'] && (selectedItem['item']['id']===l_config['id']) )">
+
+                <button nz-button [nzSize]="'small'" nzTitle="删除列" nz-tooltip (click)="del()">
+                    <i nz-icon nzType="delete"></i>
+                </button>
+
+            </ng-container>
+
+
+        </ng-template>
+    </nz-card>
+</div>
+
+<div *ngIf="!showLayout && !l_config['showTitle']">
+    <!-- {{l_config['id']}} -->
+    <app-config-l-drag-container [(l_config)]="l_config['component']" [(selectedItem)]="selectedItem"
+        [(cmptState)]="cmptState" [fromDataService]="fromDataService">
+    </app-config-l-drag-container>
+
+</div>

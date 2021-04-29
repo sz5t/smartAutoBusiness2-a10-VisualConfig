@@ -1,0 +1,627 @@
+<form nz-form [formGroup]="form" [nzLayout]="'vertical'">
+    <nz-card [nzBordered]="false">
+        <nz-row nzGutter="16">
+            <nz-col nzLg="6" nzMd="12" nzSm="24">
+                <nz-form-item>
+                    <nz-form-label>触发方式</nz-form-label>
+                    <nz-form-control>
+                        <nz-select formControlName="TriggerType" [ngModel]="'condition'" [nzShowSearch]="true"
+                            [nzPlaceHolder]="'请选择触发方式'">
+                            <nz-option [nzLabel]="'一直触发'" [nzValue]="'default'"></nz-option>
+                            <nz-option [nzLabel]="'条件触发'" [nzValue]="'condition'"></nz-option>
+                        </nz-select>
+                        <!-- <nz-form-explain *ngIf="(owner2.dirty || owner2.touched) && owner2.errors?.required">
+                请选择执行人
+              </nz-form-explain> -->
+                    </nz-form-control>
+                </nz-form-item>
+            </nz-col>
+        </nz-row>
+        <div [hidden]="TriggerType === 'default'">
+            <nz-row nzGutter="16">
+                <nz-col nzLg="6" nzMd="12" nzSm="24">
+                    <nz-form-item>
+                        <nz-form-label>参数类型</nz-form-label>
+                        <nz-form-control>
+                            <nz-select formControlName="ParamsType" [nzShowSearch]="true" [nzPlaceHolder]="'请选择参数类型'">
+                                <nz-option [nzLabel]="'选中对象'" [nzValue]="'selectObjectValue'"></nz-option>
+                                <nz-option [nzLabel]="'选中值'" [nzValue]="'selectValue'"></nz-option>
+                                <nz-option [nzLabel]="'固定值'" [nzValue]="'value'"></nz-option>
+                                <nz-option [nzLabel]="'当前行'" [nzValue]="'rowValue'"></nz-option>
+                                <nz-option [nzLabel]="'表单值'" [nzValue]="'formValue'"></nz-option>
+                            </nz-select>
+                            <!-- <nz-form-explain *ngIf="(approver2.dirty || approver2.touched) && approver2.errors?.required">
+                    请选择责任人
+                  </nz-form-explain> -->
+                        </nz-form-control>
+                    </nz-form-item>
+                </nz-col>
+                <nz-col [nzXl]="{ span: 6, offset: 2 }" [nzLg]="{ span: 8 }" [nzMd]="{ span: 12 }" nzSm="24">
+                    <nz-form-item>
+                        <nz-form-label>参数名称</nz-form-label>
+                        <nz-form-control>
+                            <input nz-input formControlName="ParamsName" placeholder="请输入参数名称" />
+                        </nz-form-control>
+                    </nz-form-item>
+                </nz-col>
+                <nz-col [nzXl]="{ span: 8, offset: 2 }" [nzLg]="{ span: 10 }" [nzMd]="{ span: 24 }" nzSm="24">
+                    <nz-form-item>
+                        <nz-form-label>条件</nz-form-label>
+                        <nz-form-control>
+                            <input nz-input formControlName="ParamsCondition" placeholder="请输入条件" />
+                            <!-- <nz-form-explain *ngIf="(type2.dirty || type2.touched) && type2.errors?.required">
+                    请选择任务类型
+                  </nz-form-explain> -->
+                        </nz-form-control>
+                    </nz-form-item>
+                </nz-col>
+            </nz-row>
+        </div>
+    </nz-card>
+    <nz-card [nzBordered]="false" nzTitle="参数配置">
+        <div [hidden]="rowData['receiverRelationName'] !== 'ajax'">
+            <nz-table formArrayName="ajaxOptionsConfig" [nzData]="ajaxOptionsConfig.value" [nzShowPagination]="false">
+                <thead>
+                    <tr>
+                        <th>参数名</th>
+                        <th>取值类型</th>
+                        <th>取值字段</th>
+                        <th>启用固定值</th>
+                        <th>固定值</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of ajaxOptionsConfig.controls; let i = index" [formGroupName]="i">
+                        <td>
+                            <span *ngIf="editIndex !== i">{{ ajaxOptionsConfig.value[i].name }}</span>
+                            <span *ngIf="editIndex === i" nz-form-control>
+                                <input nz-input formControlName="name" placeholder="请输入参数名" />
+                            </span>
+                        </td>
+                        <td>
+                            <span *ngIf="editIndex !== i">{{ ajaxOptionsConfig.value[i].type }}</span>
+                            <span *ngIf="editIndex === i" nz-form-control>
+                                <input nz-input formControlName="type" placeholder="请输入取值类型" />
+                            </span>
+                        </td>
+                        <td>
+                            <span *ngIf="editIndex !== i">{{ ajaxOptionsConfig.value[i].valueName }}</span>
+                            <span *ngIf="editIndex === i" nz-form-control>
+                                <input nz-input formControlName="valueName" placeholder="请输入取值字段" />
+                            </span>
+                        </td>
+                        <td>
+                            <span *ngIf="editIndex !== i">{{ ajaxOptionsConfig.value[i].isDefault }}</span>
+                            <span *ngIf="editIndex === i" nz-form-control>
+                                <nz-select formControlName="isDefault" [nzPlaceHolder]="'请选择是否启用固定值'">
+                                    <nz-option [nzLabel]="'启用'" [nzValue]="'true'"></nz-option>
+                                    <nz-option [nzLabel]="'不启用'" [nzValue]="'false'"></nz-option>
+                                </nz-select>
+                            </span>
+                        </td>
+                        <td>
+                            <span *ngIf="editIndex !== i">{{ ajaxOptionsConfig.value[i].value }}</span>
+                            <span *ngIf="editIndex === i" nz-form-control>
+                                <input nz-input formControlName="value" placeholder="请输入固定值" />
+                            </span>
+                        </td>
+                        <td>
+                            <span *ngIf="editIndex !== i">
+                                <a (click)="edit(rowData['receiverRelationName'],i)">编辑</a>
+                                <nz-divider nzType="vertical"></nz-divider>
+                                <a (click)="del(rowData['receiverRelationName'],i)">删除</a>
+                                <!-- <nz-popconfirm (nzOnConfirm)="del(i)" [nzTitle]="'是否要删除此行？'">
+                      <a nz-popconfirm>删除</a>
+                    </nz-popconfirm> -->
+                            </span>
+                            <span *ngIf="editIndex === i">
+                                <a (click)="save(rowData['receiverRelationName'],i)">保存</a>
+                                <nz-divider nzType="vertical"></nz-divider>
+                                <a (click)="cancel(rowData['receiverRelationName'],i)">关闭</a>
+                                <!-- <nz-popconfirm (nzOnConfirm)="cancel(i)" [nzTitle]="'是否要取消操作？'">
+                      <a nz-popconfirm>取消</a>
+                    </nz-popconfirm> -->
+                            </span>
+                        </td>
+                    </tr>
+                </tbody>
+            </nz-table>
+            <button *ngIf="editIndex === -1" nz-button [nzType]="'dashed'"
+                (click)="add(rowData['receiverRelationName'])" nzBlock class="mt-md">
+                <i nz-icon nzType="plus"></i>
+                <span>新增参数配置</span>
+            </button>
+        </div>
+        <div [hidden]="rowData['receiverRelationName'] !== 'setOptions'">
+            <nz-table formArrayName="setOptionsConfig" [nzData]="setOptionsConfig.value" [nzShowPagination]="false">
+                <thead>
+                    <tr>
+                        <th>参数展示值</th>
+                        <th>参数传输值</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of setOptionsConfig.controls; let i = index" [formGroupName]="i">
+                        <td>
+                            <span *ngIf="editIndex !== i">{{ setOptionsConfig.value[i].label }}</span>
+                            <span *ngIf="editIndex === i" nz-form-control>
+                                <input nz-input formControlName="label" placeholder="请输入参数展示值" />
+                            </span>
+                        </td>
+                        <td>
+                            <span *ngIf="editIndex !== i">{{ setOptionsConfig.value[i].value }}</span>
+                            <span *ngIf="editIndex === i" nz-form-control>
+                                <input nz-input formControlName="value" placeholder="请输入参数传输值" />
+                            </span>
+                        </td>
+                        <td>
+                            <span *ngIf="editIndex !== i">
+                                <a (click)="edit(rowData['receiverRelationName'],i)">编辑</a>
+                                <nz-divider nzType="vertical"></nz-divider>
+                                <a (click)="del(rowData['receiverRelationName'],i)">删除</a>
+                                <!-- <nz-popconfirm (nzOnConfirm)="del(i)" [nzTitle]="'是否要删除此行？'">
+                      <a nz-popconfirm>删除</a>
+                    </nz-popconfirm> -->
+                            </span>
+                            <span *ngIf="editIndex === i">
+                                <a (click)="save(rowData['receiverRelationName'],i)">保存</a>
+                                <nz-divider nzType="vertical"></nz-divider>
+                                <a (click)="cancel(rowData['receiverRelationName'],i)">关闭</a>
+                                <!-- <nz-popconfirm (nzOnConfirm)="cancel(i)" [nzTitle]="'是否要取消操作？'">
+                      <a nz-popconfirm>取消</a>
+                    </nz-popconfirm> -->
+                            </span>
+                        </td>
+                    </tr>
+                </tbody>
+            </nz-table>
+            <button *ngIf="editIndex === -1" nz-button [nzType]="'dashed'"
+                (click)="add(rowData['receiverRelationName'])" nzBlock class="mt-md">
+                <i nz-icon nzType="plus"></i>
+                <span>新增参数配置</span>
+            </button>
+        </div>
+        <div [hidden]="rowData['receiverRelationName'] !== 'setValue'">
+            <nz-table formArrayName="setValueOptionsConfig" [nzData]="setValueOptionsConfig.value"
+                [nzShowPagination]="false">
+                <thead>
+                    <tr>
+                        <th>参数名</th>
+                        <th>取值类型</th>
+                        <th>取值字段</th>
+                        <th>启用固定值</th>
+                        <th>固定值</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of setValueOptionsConfig.controls; let i = index" [formGroupName]="i">
+                        <td>
+                            <span *ngIf="editIndex !== i">{{ setValueOptionsConfig.value[i].name }}</span>
+                            <span *ngIf="editIndex === i" nz-form-control>
+                                <input nz-input formControlName="name" placeholder="请输入参数名" />
+                            </span>
+                        </td>
+                        <td>
+                            <span *ngIf="editIndex !== i">{{ setValueOptionsConfig.value[i].type }}</span>
+                            <span *ngIf="editIndex === i" nz-form-control>
+                                <input nz-input formControlName="type" placeholder="请输入取值类型" />
+                            </span>
+                        </td>
+                        <td>
+                            <span *ngIf="editIndex !== i">{{ setValueOptionsConfig.value[i].valueName }}</span>
+                            <span *ngIf="editIndex === i" nz-form-control>
+                                <input nz-input formControlName="valueName" placeholder="请输入取值字段" />
+                            </span>
+                        </td>
+                        <td>
+                            <span *ngIf="editIndex !== i">{{ setValueOptionsConfig.value[i].isDefault }}</span>
+                            <span *ngIf="editIndex === i" nz-form-control>
+                                <nz-select formControlName="isDefault" [nzPlaceHolder]="'请选择是否启用固定值'">
+                                    <nz-option [nzLabel]="'启用'" [nzValue]="'true'"></nz-option>
+                                    <nz-option [nzLabel]="'不启用'" [nzValue]="'false'"></nz-option>
+                                </nz-select>
+                            </span>
+                        </td>
+                        <td>
+                            <span *ngIf="editIndex !== i">{{ setValueOptionsConfig.value[i].value }}</span>
+                            <span *ngIf="editIndex === i" nz-form-control>
+                                <input nz-input formControlName="value" placeholder="请输入固定值" />
+                            </span>
+                        </td>
+                        <td>
+                            <span *ngIf="editIndex !== i">
+                                <a (click)="edit(rowData['receiverRelationName'],i)">编辑</a>
+                                <nz-divider nzType="vertical"></nz-divider>
+                                <a (click)="del(rowData['receiverRelationName'],i)">删除</a>
+                                <!-- <nz-popconfirm (nzOnConfirm)="del(i)" [nzTitle]="'是否要删除此行？'">
+                      <a nz-popconfirm>删除</a>
+                    </nz-popconfirm> -->
+                            </span>
+                            <span *ngIf="editIndex === i">
+                                <a (click)="save(rowData['receiverRelationName'],i)">保存</a>
+                                <nz-divider nzType="vertical"></nz-divider>
+                                <a (click)="cancel(rowData['receiverRelationName'],i)">关闭</a>
+                                <!-- <nz-popconfirm (nzOnConfirm)="cancel(i)" [nzTitle]="'是否要取消操作？'">
+                      <a nz-popconfirm>取消</a>
+                    </nz-popconfirm> -->
+                            </span>
+                        </td>
+                    </tr>
+                </tbody>
+            </nz-table>
+            <button *ngIf="editIndex === -1" nz-button [nzType]="'dashed'"
+                (click)="add(rowData['receiverRelationName'])" nzBlock class="mt-md">
+                <i nz-icon nzType="plus"></i>
+                <span>新增参数配置</span>
+            </button>
+        </div>
+        <div [hidden]="rowData['receiverRelationName'] !== 'relation'">
+            <div>
+                <nz-form-item>
+                    <nz-form-label>发出消息ID</nz-form-label>
+                    <nz-form-control>
+                        <input nz-input formControlName="SendMessageId" placeholder="请输入发出消息ID" />
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
+            <nz-table formArrayName="relationOptionsConfig" [nzData]="relationOptionsConfig.value"
+                [nzShowPagination]="false">
+                <thead>
+                    <tr>
+                        <th>参数名</th>
+                        <th>取值类型</th>
+                        <th>取值字段</th>
+                        <th>启用固定值</th>
+                        <th>固定值</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of relationOptionsConfig.controls; let i = index" [formGroupName]="i">
+                        <td>
+                            <span *ngIf="editIndex !== i">{{ relationOptionsConfig.value[i].name }}</span>
+                            <span *ngIf="editIndex === i" nz-form-control>
+                                <input nz-input formControlName="name" placeholder="请输入参数名" />
+                            </span>
+                        </td>
+                        <td>
+                            <span *ngIf="editIndex !== i">{{ relationOptionsConfig.value[i].type }}</span>
+                            <span *ngIf="editIndex === i" nz-form-control>
+                                <input nz-input formControlName="type" placeholder="请输入取值类型" />
+                            </span>
+                        </td>
+                        <td>
+                            <span *ngIf="editIndex !== i">{{ relationOptionsConfig.value[i].valueName }}</span>
+                            <span *ngIf="editIndex === i" nz-form-control>
+                                <input nz-input formControlName="valueName" placeholder="请输入取值字段" />
+                            </span>
+                        </td>
+                        <td>
+                            <span *ngIf="editIndex !== i">{{ relationOptionsConfig.value[i].isDefault }}</span>
+                            <span *ngIf="editIndex === i" nz-form-control>
+                                <nz-select formControlName="isDefault" [nzPlaceHolder]="'请选择是否启用固定值'">
+                                    <nz-option [nzLabel]="'启用'" [nzValue]="'true'"></nz-option>
+                                    <nz-option [nzLabel]="'不启用'" [nzValue]="'false'"></nz-option>
+                                </nz-select>
+                            </span>
+                        </td>
+                        <td>
+                            <span *ngIf="editIndex !== i">{{ relationOptionsConfig.value[i].value }}</span>
+                            <span *ngIf="editIndex === i" nz-form-control>
+                                <input nz-input formControlName="value" placeholder="请输入固定值" />
+                            </span>
+                        </td>
+                        <td>
+                            <span *ngIf="editIndex !== i">
+                                <a (click)="edit(rowData['receiverRelationName'],i)">编辑</a>
+                                <nz-divider nzType="vertical"></nz-divider>
+                                <a (click)="del(rowData['receiverRelationName'],i)">删除</a>
+                                <!-- <nz-popconfirm (nzOnConfirm)="del(i)" [nzTitle]="'是否要删除此行？'">
+                      <a nz-popconfirm>删除</a>
+                    </nz-popconfirm> -->
+                            </span>
+                            <span *ngIf="editIndex === i">
+                                <a (click)="save(rowData['receiverRelationName'],i)">保存</a>
+                                <nz-divider nzType="vertical"></nz-divider>
+                                <a (click)="cancel(rowData['receiverRelationName'],i)">关闭</a>
+                                <!-- <nz-popconfirm (nzOnConfirm)="cancel(i)" [nzTitle]="'是否要取消操作？'">
+                      <a nz-popconfirm>取消</a>
+                    </nz-popconfirm> -->
+                            </span>
+                        </td>
+                    </tr>
+                </tbody>
+            </nz-table>
+            <button *ngIf="editIndex === -1" nz-button [nzType]="'dashed'"
+                (click)="add(rowData['receiverRelationName'])" nzBlock class="mt-md">
+                <i nz-icon nzType="plus"></i>
+                <span>新增参数配置</span>
+            </button>
+        </div>
+        <div [hidden]="rowData['receiverRelationName'] !== 'compute'">
+            <nz-table formArrayName="symbolOptionsConfig" [nzData]="symbolOptionsConfig.value"
+                [nzShowPagination]="false">
+                <thead>
+                    <tr>
+                        <th>公式内容</th>
+                        <th>操作设置</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of symbolOptionsConfig.controls; let i = index" [formGroupName]="i">
+                        <td>
+                            <span *ngIf="editParamsIndex !== i">{{ symbolOptionsConfig.value[i].name }}</span>
+                            <span *ngIf="editParamsIndex === i" nz-form-control>
+                                <input nz-input formControlName="name" placeholder="请输入公式内容" />
+                            </span>
+                        </td>
+                        <td>
+                            <span *ngIf="editParamsIndex !== i">
+                                <a (click)="editsymbol(i)">编辑</a>
+                                <nz-divider nzType="vertical"></nz-divider>
+                                <a (click)="delsymbol(i)">删除</a>
+                                <nz-divider nzType="vertical"></nz-divider>
+                                <a (click)="setsymbol(i)">公式设置</a>
+                                <nz-modal [(nzVisible)]="isVisible" nzTitle="参数取值设置" (nzOnCancel)="handleCancel()"
+                                    (nzOnOk)="handleOk()">
+                                    <ng-template nzDrawerContent *nzModalContent>
+                                        <p>Content one</p>
+                                        <p>Content two</p>
+                                        <p>Content three</p>
+                                    </ng-template>
+                                </nz-modal>
+                                <!-- <nz-popconfirm (nzOnConfirm)="del(i)" [nzTitle]="'是否要删除此行？'">
+                      <a nz-popconfirm>删除</a>
+                    </nz-popconfirm> -->
+                            </span>
+                            <span *ngIf="editParamsIndex === i">
+                                <a (click)="savesymbol(i)">保存</a>
+                                <nz-divider nzType="vertical"></nz-divider>
+                                <a (click)="cancelsymbol(i)">关闭</a>
+                                <!-- <nz-popconfirm (nzOnConfirm)="cancel(i)" [nzTitle]="'是否要取消操作？'">
+                      <a nz-popconfirm>取消</a>
+                    </nz-popconfirm> -->
+                            </span>
+                        </td>
+                    </tr>
+                </tbody>
+            </nz-table>
+            <button *ngIf="editParamsIndex === -1" nz-button [nzType]="'dashed'" (click)="addsymbol()" nzBlock
+                class="mt-md">
+                <i nz-icon nzType="plus"></i>
+                <span>新增公式内容</span>
+            </button>
+            <nz-table formArrayName="computeOptionsConfig" [nzData]="computeOptionsConfig.value"
+                [nzShowPagination]="false">
+                <thead>
+                    <tr>
+                        <th>参数名</th>
+                        <th>取值类型</th>
+                        <th>取值字段</th>
+                        <th>启用固定值</th>
+                        <th>固定值</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of computeOptionsConfig.controls; let i = index" [formGroupName]="i">
+                        <td>
+                            <span *ngIf="editIndex !== i">{{ computeOptionsConfig.value[i].name }}</span>
+                            <span *ngIf="editIndex === i" nz-form-control>
+                                <input nz-input formControlName="name" placeholder="请输入参数名" />
+                            </span>
+                        </td>
+                        <td>
+                            <span *ngIf="editIndex !== i">{{ computeOptionsConfig.value[i].type }}</span>
+                            <span *ngIf="editIndex === i" nz-form-control>
+                                <input nz-input formControlName="type" placeholder="请输入取值类型" />
+                            </span>
+                        </td>
+                        <td>
+                            <span *ngIf="editIndex !== i">{{ computeOptionsConfig.value[i].valueName }}</span>
+                            <span *ngIf="editIndex === i" nz-form-control>
+                                <input nz-input formControlName="valueName" placeholder="请输入取值字段" />
+                            </span>
+                        </td>
+                        <td>
+                            <span *ngIf="editIndex !== i">{{ computeOptionsConfig.value[i].isDefault }}</span>
+                            <span *ngIf="editIndex === i" nz-form-control>
+                                <nz-select formControlName="isDefault" [nzPlaceHolder]="'请选择是否启用固定值'">
+                                    <nz-option [nzLabel]="'启用'" [nzValue]="'true'"></nz-option>
+                                    <nz-option [nzLabel]="'不启用'" [nzValue]="'false'"></nz-option>
+                                </nz-select>
+                            </span>
+                        </td>
+                        <td>
+                            <span *ngIf="editIndex !== i">{{ computeOptionsConfig.value[i].value }}</span>
+                            <span *ngIf="editIndex === i" nz-form-control>
+                                <input nz-input formControlName="value" placeholder="请输入固定值" />
+                            </span>
+                        </td>
+                        <td>
+                            <span *ngIf="editIndex !== i">
+                                <a (click)="edit(rowData['receiverRelationName'],i)">编辑</a>
+                                <nz-divider nzType="vertical"></nz-divider>
+                                <a (click)="del(rowData['receiverRelationName'],i)">删除</a>
+                                <!-- <nz-popconfirm (nzOnConfirm)="del(i)" [nzTitle]="'是否要删除此行？'">
+                      <a nz-popconfirm>删除</a>
+                    </nz-popconfirm> -->
+                            </span>
+                            <span *ngIf="editIndex === i">
+                                <a (click)="save(rowData['receiverRelationName'],i)">保存</a>
+                                <nz-divider nzType="vertical"></nz-divider>
+                                <a (click)="cancel(rowData['receiverRelationName'],i)">关闭</a>
+                                <!-- <nz-popconfirm (nzOnConfirm)="cancel(i)" [nzTitle]="'是否要取消操作？'">
+                      <a nz-popconfirm>取消</a>
+                    </nz-popconfirm> -->
+                            </span>
+                        </td>
+                    </tr>
+                </tbody>
+            </nz-table>
+            <button *ngIf="editIndex === -1" nz-button [nzType]="'dashed'"
+                (click)="add(rowData['receiverRelationName'])" nzBlock class="mt-md">
+                <i nz-icon nzType="plus"></i>
+                <span>新增参数配置</span>
+            </button>
+        </div>
+        <div [hidden]="rowData['receiverRelationName'] !== 'changeValue'">
+            <nz-table formArrayName="changeValueOptionsConfig" [nzData]="changeValueOptionsConfig.value"
+                [nzShowPagination]="false">
+                <thead>
+                    <tr>
+                        <th>参数名</th>
+                        <th>取值类型</th>
+                        <th>取值字段</th>
+                        <th>启用固定值</th>
+                        <th>固定值</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of changeValueOptionsConfig.controls; let i = index" [formGroupName]="i">
+                        <td>
+                            <span *ngIf="editIndex !== i">{{ changeValueOptionsConfig.value[i].name }}</span>
+                            <span *ngIf="editIndex === i" nz-form-control>
+                                <input nz-input formControlName="name" placeholder="请输入参数名" />
+                            </span>
+                        </td>
+                        <td>
+                            <span *ngIf="editIndex !== i">{{ changeValueOptionsConfig.value[i].type }}</span>
+                            <span *ngIf="editIndex === i" nz-form-control>
+                                <input nz-input formControlName="type" placeholder="请输入取值类型" />
+                            </span>
+                        </td>
+                        <td>
+                            <span *ngIf="editIndex !== i">{{ changeValueOptionsConfig.value[i].valueName }}</span>
+                            <span *ngIf="editIndex === i" nz-form-control>
+                                <input nz-input formControlName="valueName" placeholder="请输入取值字段" />
+                            </span>
+                        </td>
+                        <td>
+                            <span *ngIf="editIndex !== i">{{ changeValueOptionsConfig.value[i].isDefault }}</span>
+                            <span *ngIf="editIndex === i" nz-form-control>
+                                <nz-select formControlName="isDefault" [nzPlaceHolder]="'请选择是否启用固定值'">
+                                    <nz-option [nzLabel]="'启用'" [nzValue]="'true'"></nz-option>
+                                    <nz-option [nzLabel]="'不启用'" [nzValue]="'false'"></nz-option>
+                                </nz-select>
+                            </span>
+                        </td>
+                        <td>
+                            <span *ngIf="editIndex !== i">{{ changeValueOptionsConfig.value[i].value }}</span>
+                            <span *ngIf="editIndex === i" nz-form-control>
+                                <input nz-input formControlName="value" placeholder="请输入固定值" />
+                            </span>
+                        </td>
+                        <td>
+                            <span *ngIf="editIndex !== i">
+                                <a (click)="edit(rowData['receiverRelationName'],i)">编辑</a>
+                                <nz-divider nzType="vertical"></nz-divider>
+                                <a (click)="del(rowData['receiverRelationName'],i)">删除</a>
+                                <!-- <nz-popconfirm (nzOnConfirm)="del(i)" [nzTitle]="'是否要删除此行？'">
+                      <a nz-popconfirm>删除</a>
+                    </nz-popconfirm> -->
+                            </span>
+                            <span *ngIf="editIndex === i">
+                                <a (click)="save(rowData['receiverRelationName'],i)">保存</a>
+                                <nz-divider nzType="vertical"></nz-divider>
+                                <a (click)="cancel(rowData['receiverRelationName'],i)">关闭</a>
+                                <!-- <nz-popconfirm (nzOnConfirm)="cancel(i)" [nzTitle]="'是否要取消操作？'">
+                      <a nz-popconfirm>取消</a>
+                    </nz-popconfirm> -->
+                            </span>
+                        </td>
+                    </tr>
+                </tbody>
+            </nz-table>
+            <button *ngIf="editIndex === -1" nz-button [nzType]="'dashed'"
+                (click)="add(rowData['receiverRelationName'])" nzBlock class="mt-md">
+                <i nz-icon nzType="plus"></i>
+                <span>新增参数配置</span>
+            </button>
+        </div>
+        <div [hidden]="rowData['receiverRelationName'] !== 'updateValue'">
+            <nz-table formArrayName="updateValueOptionsConfig" [nzData]="updateValueOptionsConfig.value"
+                [nzShowPagination]="false">
+                <thead>
+                    <tr>
+                        <th>参数名</th>
+                        <th>取值类型</th>
+                        <th>取值字段</th>
+                        <th>启用固定值</th>
+                        <th>固定值</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of updateValueOptionsConfig.controls; let i = index" [formGroupName]="i">
+                        <td>
+                            <span *ngIf="editIndex !== i">{{ updateValueOptionsConfig.value[i].name }}</span>
+                            <span *ngIf="editIndex === i" nz-form-control>
+                                <input nz-input formControlName="name" placeholder="请输入参数名" />
+                            </span>
+                        </td>
+                        <td>
+                            <span *ngIf="editIndex !== i">{{ updateValueOptionsConfig.value[i].type }}</span>
+                            <span *ngIf="editIndex === i" nz-form-control>
+                                <input nz-input formControlName="type" placeholder="请输入取值类型" />
+                            </span>
+                        </td>
+                        <td>
+                            <span *ngIf="editIndex !== i">{{ updateValueOptionsConfig.value[i].valueName }}</span>
+                            <span *ngIf="editIndex === i" nz-form-control>
+                                <input nz-input formControlName="valueName" placeholder="请输入取值字段" />
+                            </span>
+                        </td>
+                        <td>
+                            <span *ngIf="editIndex !== i">{{ updateValueOptionsConfig.value[i].isDefault }}</span>
+                            <span *ngIf="editIndex === i" nz-form-control>
+                                <nz-select formControlName="isDefault" [nzPlaceHolder]="'请选择是否启用固定值'">
+                                    <nz-option [nzLabel]="'启用'" [nzValue]="'true'"></nz-option>
+                                    <nz-option [nzLabel]="'不启用'" [nzValue]="'false'"></nz-option>
+                                </nz-select>
+                            </span>
+                        </td>
+                        <td>
+                            <span *ngIf="editIndex !== i">{{ updateValueOptionsConfig.value[i].value }}</span>
+                            <span *ngIf="editIndex === i" nz-form-control>
+                                <input nz-input formControlName="value" placeholder="请输入固定值" />
+                            </span>
+                        </td>
+                        <td>
+                            <span *ngIf="editIndex !== i">
+                                <a (click)="edit(rowData['receiverRelationName'],i)">编辑</a>
+                                <nz-divider nzType="vertical"></nz-divider>
+                                <a (click)="del(rowData['receiverRelationName'],i)">删除</a>
+                                <!-- <nz-popconfirm (nzOnConfirm)="del(i)" [nzTitle]="'是否要删除此行？'">
+                      <a nz-popconfirm>删除</a>
+                    </nz-popconfirm> -->
+                            </span>
+                            <span *ngIf="editIndex === i">
+                                <a (click)="save(rowData['receiverRelationName'],i)">保存</a>
+                                <nz-divider nzType="vertical"></nz-divider>
+                                <a (click)="cancel(rowData['receiverRelationName'],i)">关闭</a>
+                                <!-- <nz-popconfirm (nzOnConfirm)="cancel(i)" [nzTitle]="'是否要取消操作？'">
+                      <a nz-popconfirm>取消</a>
+                    </nz-popconfirm> -->
+                            </span>
+                        </td>
+                    </tr>
+                </tbody>
+            </nz-table>
+            <button *ngIf="editIndex === -1" nz-button [nzType]="'dashed'"
+                (click)="add(rowData['receiverRelationName'])" nzBlock class="mt-md">
+                <i nz-icon nzType="plus"></i>
+                <span>新增参数配置</span>
+            </button>
+        </div>
+    </nz-card>
+    <nz-form-item>
+        <nz-form-control [nzSpan]="24">
+            <button nz-button nzType="primary" [nzBlock]="true" (click)="_submitForm()">提交数据</button>
+        </nz-form-control>
+    </nz-form-item>
+</form>
