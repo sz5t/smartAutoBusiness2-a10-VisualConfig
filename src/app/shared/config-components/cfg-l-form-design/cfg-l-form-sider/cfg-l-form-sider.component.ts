@@ -112,7 +112,9 @@ export class CfgLFormSiderComponent implements OnInit {
 
 
   public nzEvent(v?) {
-    console.log('树节点选中', v, this.layout_nodes, this.selectedItem);
+
+    let selectNode = this.nzLayoutTreeComponent.getSelectedNodeList()
+    console.log('树节点选中', v, this.layout_nodes, this.selectedItem, '=select::=', selectNode);
     if (v.node['origin']['type'] === 'col') {
       this.selectedItem['item'] = { id: v.node['key'] };
       this.selectedItem['active'] = 'col';

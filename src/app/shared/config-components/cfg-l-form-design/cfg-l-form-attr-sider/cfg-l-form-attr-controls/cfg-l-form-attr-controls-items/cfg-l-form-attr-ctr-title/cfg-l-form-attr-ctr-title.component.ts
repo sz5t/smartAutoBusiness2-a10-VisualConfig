@@ -9,9 +9,12 @@ import { Component, Input, OnInit } from '@angular/core';
 export class CfgLFormAttrCtrTitleComponent implements OnInit {
   @Input() public config;
   @Input() public configData;
+  data: any;
   constructor() { }
 
   ngOnInit(): void {
+
+    // this.data = this.fromDataService.layoutSourceData[node['id']];
   }
 
 }

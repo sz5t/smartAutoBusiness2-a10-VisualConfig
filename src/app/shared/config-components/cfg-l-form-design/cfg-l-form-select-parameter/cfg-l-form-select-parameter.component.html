@@ -32,6 +32,7 @@
         <nz-table #basicTable [nzData]="listOfData">
             <thead>
                 <tr>
+                    <th>参数code</th>
                     <th>参数名称</th>
                     <th>参数类型</th>
                     <th>参数来源</th>
@@ -40,6 +41,7 @@
             <tbody>
                 <tr *ngFor="let data of basicTable.data">
                     <td>{{ data.name }}</td>
+                    <td>{{ data.title }}</td>
                     <td>{{ data.type }}</td>
                     <td>{{ data.source }}</td>
                 </tr>

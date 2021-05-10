@@ -1,9 +1,19 @@
-<nz-tabset nzTabPosition="top" [nzType]="'card'">
+<!-- <nz-tabset nzTabPosition="top" [nzType]="'card'">
     <nz-tab nzTitle="样式">
         <app-cfg-l-form-attr-style-col [(selectedItem)]="selectedItem"></app-cfg-l-form-attr-style-col>
     </nz-tab>
     <nz-tab nzTitle="属性">
         <app-cfg-l-form-attr-controls [(selectedItem)]="selectedItem" [fromDataService]="fromDataService">
         </app-cfg-l-form-attr-controls>
+    </nz-tab>
+</nz-tabset> -->
+
+
+<nz-tabset *ngIf="attr_config" nzTabPosition="top" [nzType]="'card'">
+    <nz-tab *ngFor="let tab of attr_config['typeConent']" [nzTitle]="tab.title">
+        {{ tab.title}}
+        <app-cfg-l-form-attr-property-type [config]="tab['propertyTypeConent']" [configData]="attr_config_data"
+            [fromDataService]="fromDataService">
+        </app-cfg-l-form-attr-property-type>
     </nz-tab>
 </nz-tabset>

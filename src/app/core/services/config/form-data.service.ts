@@ -8,6 +8,7 @@ export class configFormDataServerService {
     public treeInstance: any;
     public layoutInstance: any;
     public controlsInstance: any;
+    public attrSiderInstance: any;
     public formParameter: any;
     public layoutSourceData: any = {};
     constructor() { }
@@ -113,7 +114,20 @@ export class configFormDataServerService {
     }
 
     controlsLoad(node?) {
-        this.controlsInstance.load(node);
+        // this.controlsInstance.load(node);
+        this.attrSiderInstance.load(node);
+
+    }
+
+
+
+    click_node(node?) {
+
+        // 根据node 数据 响应
+        //1 判断当前节点类型（布局、组件）
+
+        //2 根据内容更新结构
+
     }
 
 
@@ -261,6 +275,89 @@ export class configFormDataServerService {
 
     }
 
+
+    // 可选参数
+    Parameter = {
+        tempValue: [
+            { id: '001', name: 'pid', title: '', source: '[消息]', description: '', dataType: '' }
+        ],
+        initValue: [
+            { id: '002', name: 'pageId', title: '', source: '[初始化]', description: '', dataType: '' }
+        ],
+        componentValue: [
+            { id: '003', name: 'pageId', title: '', source: '[组件值]', description: '', dataType: '' }
+        ]
+    }
+
+    // 【数据集】主资源参数，表格 列字段；表单 表单项字段； 指定字段-》从此处选择
+    mainParameter = [
+        {
+            'id': '0001',
+            name: '',
+            title: '',
+            source: '[主资源]',  // 主资源、自定义
+            description: '',
+            dataType: '' // 数据类型
+
+
+        }
+    ]
+
+    //=============【参数】===============
+
+    /**
+     * 获取当前参数列表
+    */
+    public getParameter() {
+
+        return this.Parameter;
+
+    }
+
+    // 添加当前参数列表
+    public setParameter(data, type) {
+        if (type) {
+            let _data: [] = this.Parameter[type];
+            let _index = _data.findIndex(item => {
+                item['name'] === data['name']
+            });
+            if (_index > -1) {
+                // 修改属性（来源）可不做
+
+            } else {
+                // 新增属性
+                this.Parameter[type].push(data);
+            }
+        }
+
+
+    }
+
+    // 绑定主资源生成 组件参数
+    createMainResourceParameter(data?) {
+        this.mainParameter = data;
+
+        console.log('生成主资源参数，feild 字段绑定取值');
+
+
+    }
+
+    // 删除参数
+    public deleteParameter(data, type) {
+        if (type) {
+            let _data: [] = this.Parameter[type];
+            let _index = _data.findIndex(item => {
+                item['name'] === data['name']
+            });
+            if (_index > -1) {
+                // 删除属性
+                this.Parameter[type].splice(_index, 1);
+            }
+        }
+
+    }
+
+    //=================================
 
 
 }

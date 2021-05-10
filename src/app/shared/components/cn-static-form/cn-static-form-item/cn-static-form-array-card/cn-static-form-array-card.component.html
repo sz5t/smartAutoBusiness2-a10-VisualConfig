@@ -1,0 +1,27 @@
+<div>
+    <div *ngIf="config['formType'] === 'array'">
+        <nz-card [nzTitle]="config['title']">
+            <button nz-button type="button" nzType="dashed" nzBlock="true" nzSize="default" style="margin-bottom: 3px;"
+                (click)="add()"><i nz-icon nzType="plus"></i>
+                添加</button>
+            <div *ngFor="let item of validateFormArray.controls;let i = index;">
+
+
+                <nz-card nzType="inner" [nzTitle]="config['title']+i" [nzExtra]="delextraTemplate">
+                    <div *ngFor="let r_arr of  config['object'];let i1 = index;">
+                        <ng-container CnStaticFormItemDirective [validateForm]="item" [config]="r_arr">
+                        </ng-container>
+                    </div>
+                </nz-card>
+                <ng-template #delextraTemplate let-i>
+                    <button nz-button nzType="primary" (click)="delItem(i)">删除</button>
+                </ng-template>
+
+            </div>
+
+        </nz-card>
+
+
+    </div>
+
+</div>

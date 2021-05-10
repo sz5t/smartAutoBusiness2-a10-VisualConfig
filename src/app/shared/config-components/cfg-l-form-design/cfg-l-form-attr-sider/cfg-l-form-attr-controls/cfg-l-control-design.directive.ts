@@ -36,6 +36,9 @@ export class CfgLControlDesignDirective implements OnInit, OnChanges, OnDestroy 
         if (this.config) {
           // console.log('触发级联', this.formCascade, this.componentConfig);
           this.container.clear();
+          if (!this.config['type']) {
+            return;
+          }
           const comp = this.resolver.resolveComponentFactory<any>(components[this.config['type']]);
           this.component = this.container.createComponent(comp);
           this.component.instance.configData = this.sourceData;
@@ -47,6 +50,10 @@ export class CfgLControlDesignDirective implements OnInit, OnChanges, OnDestroy 
   ngOnInit(): void {
     // throw new Error('Method not implemented.');
     this.container.clear();
+
+    if (!this.config['type']) {
+      return;
+    }
     const comp = this.resolver.resolveComponentFactory<any>(components[this.config['type']]);
     this.component = this.container.createComponent(comp);
     // this.component.instance.configData = { id: '001' };

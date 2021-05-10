@@ -344,6 +344,115 @@ export class CfgLFormAttrControlsComponent implements OnInit {
 
   }
 
+  public test_cmpt() {
+
+    // 基本格式
+    let form_a = {
+      id: '',
+      base: {
+        type: '',
+        feild: ''
+      },
+      privateProperty: { // 私有属性
+
+        lableName: '',
+        valueName: ''
+
+      },
+      sourceData: {  // 数据
+        sourceDataType: 'static',  // staticData 静态数据 apiData 数据
+        options: [],
+        loadingConfig: {}, // 主资源
+        expandConfig: {}, // 展开资源
+        loadingItemConfig: {} // 加载初值资源（根据value值，加载当前内容，例如 名称）
+      },
+      formatConfig: {  // 文本收缩
+
+      },
+      dataMapping: {  // 字段展示效果映射
+
+      },
+      columns: { // 列字段映射
+
+      },
+      customPage: { // 自定义页面
+
+      }
+    }
+
+    // 配置结构
+    let input = {
+      id: '001',
+      base: {
+        type: 'input',
+        feild: '',
+        placeholder: "请输入",
+      },
+      privateProperty: { // 私有属性
+        displayType: "text"
+      }
+    }
+
+    // 配置结构
+    let select = {
+      base: {
+        id: '001',
+        type: 'select',
+        feild: '',
+        placeholder: "请输入",
+      },
+      style: {  // 当前样式
+        width: '100%'
+
+      },
+      privateProperty: { // 私有属性
+        "labelName": "label",                //设置显示内容的属性名称, 静态下拉列表为固定的内容
+        "valueName": "value",
+        "showSearch": true,                  // 是否启用查询
+        "serverSearch": true                 // 服务端查询 
+      },
+      sourceData: {  // 数据
+        sourceDataType: 'static',  // staticData 静态数据 apiData 数据
+        options: [],
+        loadingConfig: {} // 主资源
+      }
+    }
+
+    // 组件描述
+    let f_input = {
+
+      componentCode: 'form-input',
+      typeConent: [
+        {
+          code: 'style',
+          propertyTypeConent: [
+            {
+              code: 'style'
+            }
+          ]
+        },
+        {
+          code: 'attr',
+          propertyTypeConent: [
+            {
+              code: 'privateProperty'
+            },
+            {
+              code: 'validations'
+            }
+          ]
+        }
+
+      ]
+
+
+    }
+
+
+
+  }
+
+
 
 
 
