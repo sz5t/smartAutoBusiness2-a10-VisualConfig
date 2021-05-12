@@ -1678,5 +1678,7 @@ export class CalendarDemoComponent implements OnInit {
     },
   };
 
-  public ngOnInit() {}
+  public ngOnInit() {
+    console.log(JSON.stringify(this.config));
+  }
 }

@@ -354,9 +354,9 @@ export class StartupService {
     }
   }
   private buildServerMenu(serverData) {
-    const menu_level_1 = serverData.data.filter((d) => (d.menuType === 1 || d.menuType === 999) && d.menuLevel === 1);
-    const menu_level_2 = serverData.data.filter((d) => (d.menuType === 2 || d.menuType === 999) && d.menuLevel === 2);
-    const menu_level_3 = serverData.data.filter((d) => (d.menuType === 3 || d.menuType === 999) && d.menuLevel === 3);
+    const menu_level_1 = serverData.data.filter((d) => (d.menuType === 1 || d.menuType === 999) && d.level === 1);
+    const menu_level_2 = serverData.data.filter((d) => (d.menuType === 2 || d.menuType === 999) && d.level === 2);
+    const menu_level_3 = serverData.data.filter((d) => (d.menuType === 3 || d.menuType === 999) && d.level === 3);
 
     if (menu_level_3) {
       for (const l2 of menu_level_2) {

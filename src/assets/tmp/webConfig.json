@@ -1,11 +1,11 @@
 {
     "SERVER_URL_333": "http://192.168.1.111:8405/",
     "SERVER_URL_erw": "dev/",
-    "SERVER_URL": "http://192.168.1.103:8407/",
+    "SERVER_URL": "http://192.168.1.111:8406/",
     "SERVER_URL——d": "http://39.101.168.200:8304/",
     "SERVER_URL1": "http://192.168.1.111:8401/",
     "SERVER_URL_11": "http://192.168.1.111:8402/",
-    "SERVER_URL33": "http://39.101.168.200:8304/",
+    "SERVER_URL_3": "http://39.101.168.200:8304/",
     "REPORT_SERVER_URL": "http://39.101.168.200:8079/ReportServerV2.ashx",
     "MSG_SERVER_URL": "ws://192.168.1.111:8420/api.push.message/websocket/message/push/abe76e78c469dd46a4d9252247848c6b/",
     "systemSettings": {

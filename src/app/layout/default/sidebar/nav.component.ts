@@ -645,6 +645,7 @@ export class NavComponent implements OnInit, OnDestroy {
     this._menuService.openedByUrl(this._router.url);
     // this.genFloatingContainer();
     this.change$ = this._menuService.change.subscribe((res) => {
+      console.log(res);
       this.list = res;
       this._cd.detectChanges();
     });
