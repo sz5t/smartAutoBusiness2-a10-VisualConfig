@@ -70,8 +70,6 @@ export class StartupService {
         const ip = r_data['data'];
         this._cacheService.set('clientIp', ip);
       }
-
-
     }
     // const data1 = await this.httpClient.get(`http://192.168.1.111:8401/page/struct/parse?pageId=m2lSKOiIgmNR5R3JStQg0CYPNzdSd4Fd`).toPromise();
     console.log('+++++++++加载后台服务访问地址++++++++++++', data, environment);
@@ -88,9 +86,9 @@ export class StartupService {
     let MenuDataList: any[] = [];
 
     this.userInfo = this._cacheService.getNone('userInfo');
-    let menu_url = 'GET_MODULE_LIST_WORK';
+    let menu_url = 'GET_MENU_LIST_WORK';
     if (environment.systemSettings && environment.systemSettings.systemMode === 'work') {
-      menu_url = 'GET_MODULE_LIST_WORK';
+      menu_url = 'GET_MENU_LIST_WORK';
       const workMenuInfo = environment.systemSettings.menuInfo.workMenuInfo;
 
       if (this.userInfo && this.userInfo.userId) {
@@ -110,14 +108,13 @@ export class StartupService {
         console.log('加载菜单=====>', MenuDataList);
       }
     } else {
-      menu_url = 'GET_MODULE_LIST';
+      menu_url = 'GET_MENU_LIST';
     }
     return new Promise(async (resolve) => {
       const langData: any = await this.httpClient.get(`assets/tmp/i18n/${this.i18n.defaultLang}.json`).toPromise();
-      const serverlangData: any = await this.httpClient.get(`resource/GET_SYS_I18N_LIST/query?_mapToObject=true&ddicCode=${this.i18n.defaultLang}`).toPromise();
+      const serverlangData: any = []; // await this.httpClient.get(`resource/GET_SYS_I18N_LIST/query?_mapToObject=true&ddicCode=${this.i18n.defaultLang}`).toPromise();
       const appData: any = await this.httpClient.get(`assets/tmp/app-data.json`).toPromise();
-      const serverData: any = await this.httpClient.get(`resource/${menu_url}/query?_mapToObject=true&_sort=sortcode asc`).toPromise();
-
+      const serverData: any = await this.httpClient.get(`resource/${menu_url}/query?_mapToObject=true&_sort=menuSort asc`).toPromise();
 
       if (langData) {
         const lang_data = this.buildI18NServerRes(langData, serverlangData);
@@ -127,10 +124,9 @@ export class StartupService {
 
       // setting language data
 
-
-
       // application data
       // const res = appData;
+      debugger;
       let res: any;
       if (environment.systemSettings && environment.systemSettings.systemMode === 'work') {
         appData.menu = [];
@@ -173,7 +169,7 @@ export class StartupService {
         //   this.httpClient.get(`assets/tmp/i18n/${this.i18n.defaultLang}.json`),
         //   this.httpClient.get(`resource/GET_SYS_I18N_LIST/query?_mapToObject=true&ddicCode=${this.i18n.defaultLang}`),
         //   this.httpClient.get(`assets/tmp/app-data.json`),
-        //   this.httpClient.get(`resource/${menu_url}/query?_mapToObject=true&_sort=sortcode asc`),
+        //   this.httpClient.get(`resource/${menu_url}/query?_mapToObject=true&_sort=menuSort asc`),
         // )
         //   .pipe(
         //     // 接收其他拦截器后产生的异常消息
@@ -358,15 +354,15 @@ export class StartupService {
     }
   }
   private buildServerMenu(serverData) {
-    const menu_level_1 = serverData.data.filter((d) => d.nodetype === 1);
-    const menu_level_2 = serverData.data.filter((d) => d.nodetype === 2);
-    const menu_level_3 = serverData.data.filter((d) => d.nodetype === 3);
+    const menu_level_1 = serverData.data.filter((d) => (d.menuType === 1 || d.menuType === 999) && d.menuLevel === 1);
+    const menu_level_2 = serverData.data.filter((d) => (d.menuType === 2 || d.menuType === 999) && d.menuLevel === 2);
+    const menu_level_3 = serverData.data.filter((d) => (d.menuType === 3 || d.menuType === 999) && d.menuLevel === 3);
 
     if (menu_level_3) {
       for (const l2 of menu_level_2) {
         l2.children = [];
         for (const l3 of menu_level_3) {
-          if (l3.parentId === l2.id) {
+          if (l3.menuParentId === l2.id) {
             l2.children.push(l3);
           }
         }
@@ -386,7 +382,7 @@ export class StartupService {
       menu_level_1.map((l1) => {
         l1.children = [];
         menu_level_2.map((l2) => {
-          if (l2.parentId === l1.id) {
+          if (l2.menuParentId === l1.id) {
             l1.children.push(l2);
           }
         });

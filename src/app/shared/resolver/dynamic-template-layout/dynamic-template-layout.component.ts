@@ -87,7 +87,7 @@ export class CnDynamicTemplateLayoutComponent extends CnComponentBase implements
         }
       });
     } else {
-      this.componentService.apiService.post('resource/B_P_C_CONFIG_PAGE_ALL/operate', { PageId: layoutId }).subscribe((response) => {
+      this.componentService.apiService.post('resource/B_P_C_CONFIG_PAGE_ALL/operate', { PAGE_CODE: layoutId }).subscribe((response) => {
         if (response.data._procedure_resultset_1[0].W === '') {
           this.config = null;
         } else {
@@ -281,47 +281,49 @@ export class CnDynamicTemplateLayoutComponent extends CnComponentBase implements
     this._route.params.subscribe((params: any) => {
       console.log('params=========>', params);
       if (params.name) {
-        this.componentService.apiService.post('resource/B_P_C_CONFIG_PAGE_ALL/operate', { PageId: params.name }).subscribe((response) => {
-          if (response.data._procedure_resultset_1[0].W === '') {
-            this.config = null;
-          } else {
-            const pageJson = JSON.parse(response.data._procedure_resultset_1[0].W);
-            console.log('=====当前页加载数据=====', pageJson);
-            for (const key in pageJson) {
-              if (pageJson.hasOwnProperty(key)) {
-                // 判断是否时主页面配置,如果是主页面配置,则直接进行页面解析
-                if (key === params.name) {
-                  this.config = pageJson[params.name].layoutJson;
-                  const componentJson = pageJson[params.name].componentsJson;
-                  if (Array.isArray(componentJson) && componentJson.length > 0) {
-                    componentJson.forEach((json) => {
-                      // 组件信息
-                      this.componentService.cacheService.set(json.id, json);
+        this.componentService.apiService
+          .post('resource/B_P_C_CONFIG_PAGE_ALL/operate', { PAGE_CODE: params.name })
+          .subscribe((response) => {
+            if (response.data._procedure_resultset_1[0].W === '') {
+              this.config = null;
+            } else {
+              const pageJson = JSON.parse(response.data._procedure_resultset_1[0].W);
+              console.log('=====当前页加载数据=====', pageJson);
+              for (const key in pageJson) {
+                if (pageJson.hasOwnProperty(key)) {
+                  // 判断是否时主页面配置,如果是主页面配置,则直接进行页面解析
+                  if (key === params.name) {
+                    this.config = pageJson[params.name].layoutJson;
+                    const componentJson = pageJson[params.name].componentsJson;
+                    if (Array.isArray(componentJson) && componentJson.length > 0) {
+                      componentJson.forEach((json) => {
+                        // 组件信息
+                        this.componentService.cacheService.set(json.id, json);
+                      });
+                    }
+                    this._route.queryParams.subscribe((queryParam) => {
+                      this.buildLayout({ ...params, ...queryParam });
                     });
-                  }
-                  this._route.queryParams.subscribe((queryParam) => {
-                    this.buildLayout({ ...params, ...queryParam });
-                  });
 
-                  // 页面信息
-                  this.componentService.cacheService.set(key, pageJson[params.name]);
-                } else {
-                  // 将子页面的配置加入缓存, 后期使用子页面数据时直接从缓存中获取
-                  this.componentService.cacheService.set(key, pageJson[key]);
-                  const componentJson = pageJson[key].componentsJson;
-                  if (Array.isArray(componentJson) && componentJson.length > 0) {
-                    componentJson.forEach((json) => {
-                      // 子页面组件信息
-                      this.componentService.cacheService.set(json.id, json);
-                    });
+                    // 页面信息
+                    this.componentService.cacheService.set(key, pageJson[params.name]);
+                  } else {
+                    // 将子页面的配置加入缓存, 后期使用子页面数据时直接从缓存中获取
+                    this.componentService.cacheService.set(key, pageJson[key]);
+                    const componentJson = pageJson[key].componentsJson;
+                    if (Array.isArray(componentJson) && componentJson.length > 0) {
+                      componentJson.forEach((json) => {
+                        // 子页面组件信息
+                        this.componentService.cacheService.set(json.id, json);
+                      });
+                    }
                   }
                 }
               }
-            }
 
-            console.log(this.config);
-          }
-        });
+              console.log(this.config);
+            }
+          });
       }
     });
   }

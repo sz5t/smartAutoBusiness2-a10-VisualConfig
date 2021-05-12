@@ -1,8 +1,8 @@
 {
     "SERVER_URL_333": "http://192.168.1.111:8405/",
     "SERVER_URL_erw": "dev/",
-    "SERVER_URL_d": "http://192.168.1.111:8405/",
-    "SERVER_URL": "http://39.101.168.200:8304/",
+    "SERVER_URL": "http://192.168.1.103:8407/",
+    "SERVER_URL——d": "http://39.101.168.200:8304/",
     "SERVER_URL1": "http://192.168.1.111:8401/",
     "SERVER_URL_11": "http://192.168.1.111:8402/",
     "SERVER_URL33": "http://39.101.168.200:8304/",
@@ -278,7 +278,7 @@
                 ]
             },
             "devMenuInfo": {},
-            "menuMode": "card"
+            "menuMode": "normal"
         },
         "pageInfo": {
             "workPageInfo": {

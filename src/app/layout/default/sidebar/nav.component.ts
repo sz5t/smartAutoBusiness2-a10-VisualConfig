@@ -762,11 +762,12 @@ export class NavComponent implements OnInit, OnDestroy {
 
   onClick(menu) {
     console.log('====menu=====', menu);
+    debugger;
     const activeMenu = {
       id: menu.id,
-      jsonId: menu.jsonId,
+      jsonId: menu.pageCode,
       text: menu.text,
-      mainPageId: menu.mainPageId,
+      mainPageId: menu.pageCode,
     };
     this.componentService.cacheService.set('activeMenu', activeMenu);
 
@@ -787,8 +788,8 @@ export class NavComponent implements OnInit, OnDestroy {
     // console.log('缓存信息',this.menuList);
     pageConfigCache[menu.id] = { pageConfig: {}, permissionConfig: {} };
     if (!menu.link) {
-      if (menu.jsonId) {
-        menu.link = '/template/dynamic/' + menu.jsonId;
+      if (menu.pageCode) {
+        menu.link = '/template/dynamic/' + menu.pageCode;
       }
     }
     this._router.navigateByUrl(menu.link);

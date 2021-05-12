@@ -339,7 +339,7 @@ export class CnContainersComponent extends CnComponentBase implements OnInit, On
   // 取出当前配置 参数：页面id
   public async getCustomConfig1(customConfigId?) {
     const response = await this.componentService.apiService
-      .post('resource/B_P_C_CONFIG_PAGE_ALL/operate', { PageId: customConfigId })
+      .post('resource/B_P_C_CONFIG_PAGE_ALL/operate', { PAGE_CODE: customConfigId })
       .toPromise();
 
     if (response.data) {
@@ -396,7 +396,7 @@ export class CnContainersComponent extends CnComponentBase implements OnInit, On
       router: this.routerValue,
       returnValue: returnData ? returnData : {},
       item: itemData ? itemData : {},
-      userValue: this.userValue
+      userValue: this.userValue,
     });
   }
 }
