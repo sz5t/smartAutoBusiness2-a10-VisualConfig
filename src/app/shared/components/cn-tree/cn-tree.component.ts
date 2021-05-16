@@ -1085,7 +1085,7 @@ export class CnTreeComponent extends CnComponentBase implements OnInit, AfterVie
     }
   }
 
-  public async executeHttpRequest(url, method, paramData, logInfo?: any) {
+  public executeHttpRequest(url, method, paramData, logInfo?: any) {
     let _header = {};
     if (logInfo) {
       const logInfoStr = JSON.stringify(logInfo);
@@ -1194,7 +1194,7 @@ export class CnTreeComponent extends CnComponentBase implements OnInit, AfterVie
           userValue: this.userValue,
         });
       }
-      response = await this.executeHttpRequest(url, method, paramData, option.logInfo ? option.logInfo : {});
+      response = await this.executeHttpRequest(url, method, paramData, option.logInfo ? option.logInfo : {}).toPromise();
     }
     // 批量对象数据,返回结果都将以对象的形式返回,如果对应结果没有值则返回 {}
     this._sendDataSuccessMessage(response, option.ajaxConfig.result);
@@ -1229,7 +1229,7 @@ export class CnTreeComponent extends CnComponentBase implements OnInit, AfterVie
         userValue: this.userValue,
       });
     }
-    const response = await this.executeHttpRequest(url, method, paramData, option.logInfo ? option.logInfo : {});
+    const response: any = await this.executeHttpRequest(url, method, paramData, option.logInfo ? option.logInfo : {}).toPromise();
     // 批量对象数据,返回结果都将以对象的形式返回,如果对应结果没有值则返回 {}
     this._sendDataSuccessMessage(response, option.ajaxConfig.result);
 
@@ -1279,7 +1279,7 @@ export class CnTreeComponent extends CnComponentBase implements OnInit, AfterVie
           ids.push(pData);
         }
       });
-      const response = await this.executeHttpRequest(url, method, { ids: ids.join(',') }, option.logInfo ? option.logInfo : {});
+      const response = await this.executeHttpRequest(url, method, { ids: ids.join(',') }, option.logInfo ? option.logInfo : {}).toPromise();
       // 批量对象数据,返回结果都将以对象的形式返回,如果对应结果没有值则返回 {}
       this._sendDataSuccessMessage(response, option.ajaxConfig.result);
 
@@ -1302,6 +1302,7 @@ export class CnTreeComponent extends CnComponentBase implements OnInit, AfterVie
    * loggin finish
    */
   public async executeCheckedNodesByID(option) {
+    debugger;
     console.log('execute checked nodes', option);
     const url = option.ajaxConfig.url;
     const method = option.ajaxConfig.ajaxType;
@@ -1340,7 +1341,7 @@ export class CnTreeComponent extends CnComponentBase implements OnInit, AfterVie
         cacheValue: this.cacheValue,
         userValue: this.userValue,
       });
-      const response = await this.executeHttpRequest(url, method, paramData, option.logInfo ? option.logInfo : {});
+      const response = await this.executeHttpRequest(url, method, paramData, option.logInfo ? option.logInfo : {}).toPromise();
       // 批量对象数据,返回结果都将以对象的形式返回,如果对应结果没有值则返回 {}
       this._sendDataSuccessMessage(response, option.ajaxConfig.result);
 
@@ -1419,7 +1420,7 @@ export class CnTreeComponent extends CnComponentBase implements OnInit, AfterVie
       userValue: this.userValue,
     });
 
-    const response = await this.executeHttpRequest(url, method, paramData, option.logInfo ? option.logInfo : {});
+    const response = await this.executeHttpRequest(url, method, paramData, option.logInfo ? option.logInfo : {}).tpPromise();
 
     // 批量对象数据,返回结果都将以对象的形式返回,如果对应结果没有值则返回 {}
     this._sendDataSuccessMessage(response, ajaxConfig.result);
@@ -1446,7 +1447,7 @@ export class CnTreeComponent extends CnComponentBase implements OnInit, AfterVie
     this.COMPONENT_VALUE = this._getComponentValueByHttpMethod(ajaxConfig.ajaxType);
     const paramsData = this.buildParameters(ajaxConfig.params, this.COMPONENT_VALUE, true);
     // const response = await this.componentService.apiService[ajaxConfig.ajaxType](url, paramsData).toPromise();
-    const response = await this.executeHttpRequest(url, ajaxConfig.ajaxType, paramsData, option.logInfo ? option.logInfo : {});
+    const response = await this.executeHttpRequest(url, ajaxConfig.ajaxType, paramsData, option.logInfo ? option.logInfo : {}).toPromise();
     // 批量提交数据,返回结果都将以数组的形式返回,如果对应结果没有值则返回 {}
     this._sendDataSuccessMessage(response, ajaxConfig.result);
 
@@ -2435,7 +2436,7 @@ export class CnTreeComponent extends CnComponentBase implements OnInit, AfterVie
       cacheValue: this.cacheValue,
       userValue: this.userValue,
     });
-    const response = await this.executeHttpRequest(url, method, paramData);
+    const response = await this.executeHttpRequest(url, method, paramData).toPromise();
     // 批量对象数据,返回结果都将以对象的形式返回,如果对应结果没有值则返回 {}
     this._sendDataSuccessMessage(response, option.ajaxConfig.result);
 
@@ -2467,7 +2468,7 @@ export class CnTreeComponent extends CnComponentBase implements OnInit, AfterVie
       cacheValue: this.cacheValue,
       userValue: this.userValue,
     });
-    const response = await this.executeHttpRequest(url, method, paramData);
+    const response = await this.executeHttpRequest(url, method, paramData).toPromise();
     // 批量对象数据,返回结果都将以对象的形式返回,如果对应结果没有值则返回 {}
     this._sendDataSuccessMessage(response, option.ajaxConfig.result);
 

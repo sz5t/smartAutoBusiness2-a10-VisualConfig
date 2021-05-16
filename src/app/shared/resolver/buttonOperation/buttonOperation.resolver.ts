@@ -124,7 +124,6 @@ export class ButtonOperationResolver {
       triggerType: cfg.triggerType,
       trigger: cfg.trigger,
     };
-    debugger;
     switch (cfg.triggerType) {
       // 状态触发
       case BSN_TRIGGER_TYPE.STATE:
@@ -179,6 +178,7 @@ export class ButtonOperationResolver {
         break;
       // 操作触发
       case BSN_TRIGGER_TYPE.OPERATION:
+        debugger;
         // 获取ajax操作配置
         // 获取条件状配置
         // 获取前置条件配置

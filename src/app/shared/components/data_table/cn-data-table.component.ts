@@ -1392,7 +1392,6 @@ export class CnDataTableComponent extends CnComponentBase implements OnInit, Aft
   }
 
   private _sendDataSuccessMessage(response, resultCfg): boolean {
-    debugger;
     let result = false;
     if (Array.isArray(response.data) && response.data.length <= 0) {
       return result;
@@ -1446,7 +1445,6 @@ export class CnDataTableComponent extends CnComponentBase implements OnInit, Aft
    * logging finish
    */
   public async saveRow(option) {
-    debugger;
     const ajaxConfig = option.ajaxConfig;
     const rowData = option.data.data ? option.data.data : option.data;
     const url = ajaxConfig.url;
@@ -1488,7 +1486,6 @@ export class CnDataTableComponent extends CnComponentBase implements OnInit, Aft
    * logging finish
    */
   public async saveRows(option) {
-    debugger;
     const ajaxConfig = option.ajaxConfig;
     // 构建业务对象
     // 执行异步操作

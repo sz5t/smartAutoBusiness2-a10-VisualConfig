@@ -763,7 +763,6 @@ export class NavComponent implements OnInit, OnDestroy {
 
   onClick(menu) {
     console.log('====menu=====', menu);
-    debugger;
     const activeMenu = {
       id: menu.id,
       jsonId: menu.pageCode,

@@ -113,7 +113,18 @@ export class StartupService {
     return new Promise(async (resolve) => {
       const langData: any = await this.httpClient.get(`assets/tmp/i18n/${this.i18n.defaultLang}.json`).toPromise();
       const serverlangData: any = []; // await this.httpClient.get(`resource/GET_SYS_I18N_LIST/query?_mapToObject=true&ddicCode=${this.i18n.defaultLang}`).toPromise();
-      const appData: any = await this.httpClient.get(`assets/tmp/app-data.json`).toPromise();
+      const appData: any = {
+        app: {
+          name: 'Alain',
+          description: 'Ng-zorro admin panel front-end framework',
+        },
+        user: {
+          name: 'Admin',
+          avatar: './assets/tmp/img/avatar.jpg',
+          email: 'cipchk@qq.com',
+        },
+        menu: [],
+      }; //await this.httpClient.get(`assets/tmp/app-data.json`).toPromise();
       const serverData: any = await this.httpClient.get(`resource/${menu_url}/query?_mapToObject=true&_sort=menuSort asc`).toPromise();
 
       if (langData) {
@@ -126,7 +137,6 @@ export class StartupService {
 
       // application data
       // const res = appData;
-      debugger;
       let res: any;
       if (environment.systemSettings && environment.systemSettings.systemMode === 'work') {
         appData.menu = [];

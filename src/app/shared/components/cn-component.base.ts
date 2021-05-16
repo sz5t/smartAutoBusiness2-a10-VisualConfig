@@ -520,7 +520,6 @@ export class CnComponentBase {
   }
 
   public async buildAjax_More(backData?, ajaxConfig?) {
-    debugger;
     let ajaxType = ajaxConfig.ajaxType;
     let url = ajaxConfig['url'];
     for (let key in backData['pathParams']) {
