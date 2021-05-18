@@ -14,9 +14,24 @@ export class CnStaticFormArrayTableComponent implements OnInit {
   @Input() config;
 
   @Output() public updateValue = new EventEmitter<any>(true);
+
+  dataList = [];
   constructor(private fb: FormBuilder) { }
 
   ngOnInit(): void {
+
+    this.dataList = this.setDataList();
+
+  }
+
+  setDataList() {
+    let list = [];
+    let obj = {};
+    this.validateFormArray.controls.forEach((element, index) => {
+      obj['key'] = index;
+      list.push(obj);
+    });
+    return list;
   }
 
   add() {
@@ -35,11 +50,12 @@ export class CnStaticFormArrayTableComponent implements OnInit {
 
     // console.log('', this.validateForm)
 
-
+    this.dataList = this.setDataList();
   }
   //刪除组合
   delItem(i) {
     this.validateFormArray.removeAt(i);
+    this.dataList = this.setDataList();
   }
 
 
@@ -53,7 +69,7 @@ export class CnStaticFormArrayTableComponent implements OnInit {
   set_formGroupControlName(data, Control) {
 
     let obj: any = {};
-    Control.object.forEach(item => {
+    Control.properties.forEach(item => {
       let value = null;
       let obj_key = item['name'];
       if (data && data.hasOwnProperty(obj_key)) {

@@ -247,6 +247,12 @@ import { CnStaticFormContainersComponent } from './components/cn-static-form/cn-
 import { CnStaticFormSelectComponent } from './components/cn-static-form/cn-static-form-item/cn-static-form-select/cn-static-form-select.component';
 import { CnStaticFormCheckComponent } from './components/cn-static-form/cn-static-form-item/cn-static-form-check/cn-static-form-check.component';
 import { CnStaticFormCheckboxComponent } from './components/cn-static-form/cn-static-form-item/cn-static-form-checkbox/cn-static-form-checkbox.component';
+import { CfgLFormAttrPopBaseComponent } from './config-components/cfg-l-form-design/cfg-l-form-attr-sider/cfg-l-form-attr-property-type/cfg-l-form-attr-property-items/cfg-l-form-attr-pop-base/cfg-l-form-attr-pop-base.component';
+import { CnStaticFormSliderComponent } from './components/cn-static-form/cn-static-form-item/cn-static-form-slider/cn-static-form-slider.component';
+import { CfgLFormAttrPopComponentComponent } from './config-components/cfg-l-form-design/cfg-l-form-attr-sider/cfg-l-form-attr-property-type/cfg-l-form-attr-property-items/cfg-l-form-attr-pop-component/cfg-l-form-attr-pop-component.component';
+import { CnStaticFormCustomSelectComponent } from './components/cn-static-form/cn-static-form-item/cn-static-form-custom-select/cn-static-form-custom-select.component';
+import { CnStaticFormAjaxComponent } from './components/cn-static-form/cn-static-form-cmpt/cn-static-form-ajax/cn-static-form-ajax.component';
+import { CfgFormContainerComponent } from './config-components/config-form-layout/cfg-form-container/cfg-form-container.component';
 
 // #region third libs
 
@@ -487,6 +493,15 @@ const COMPONENTS = [
   CnStaticFormSwitchComponent,
   CnStaticFormContainersComponent,
   CnStaticFormSelectComponent,
+  CnStaticFormCheckComponent,
+  CnStaticFormCheckboxComponent,
+  CnStaticFormSliderComponent,
+  CnStaticFormCustomSelectComponent,
+  // --静态表单内特殊组件结构--
+  CnStaticFormAjaxComponent,
+
+  CfgLFormAttrPopBaseComponent,
+  CfgLFormAttrPopComponentComponent,
 ];
 const DIRECTIVES = [
   CnLayoutResolverDirective,
@@ -536,8 +551,12 @@ const DIRECTIVES = [
     CfgFormInputDesignComponent,
     CfgFormSelectDesignComponent,
     CfgLFormAttrPropertyTypeComponent,
-    CnStaticFormCheckComponent,
-    CnStaticFormCheckboxComponent,
+    CfgFormContainerComponent,
+
+
+
+
+
 
 
 

@@ -1,0 +1,19 @@
+<ng-container *ngIf="config['formType'] === 'value'">
+    <nz-form-item>
+        <nz-form-label [nzSm]="8" [nzXs]="24" nzRequired>{{config['title']}}</nz-form-label>
+        <nz-form-control [nzSm]="16" [nzXs]="24" [formGroup]="validateForm">
+            <!--  <input nz-input [formControlName]="config['name']" (ngModelChange)="log($event)" /> -->
+            <nz-row>
+                <nz-col nzSpan="10">
+                    <nz-slider [nzMin]="1" [nzMax]="24" [formControlName]="config['name']"
+                        (ngModelChange)="log($event)"></nz-slider>
+                </nz-col>
+                <div nz-col nzSpan="4">
+                    <nz-input-number [nzMin]="1" [nzMax]="24">
+                    </nz-input-number>
+                    <!--    [ngModelOptions]="{standalone: true}" -->
+                </div>
+            </nz-row>
+        </nz-form-control>
+    </nz-form-item>
+</ng-container>

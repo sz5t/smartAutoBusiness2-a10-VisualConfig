@@ -55,7 +55,7 @@ export class CnStaticFormArrayCardComponent implements OnInit {
   set_formGroupControlName(data, Control) {
 
     let obj: any = {};
-    Control.object.forEach(item => {
+    Control.properties.forEach(item => {
       let value = null;
       let obj_key = item['name'];
       if (data && data.hasOwnProperty(obj_key)) {

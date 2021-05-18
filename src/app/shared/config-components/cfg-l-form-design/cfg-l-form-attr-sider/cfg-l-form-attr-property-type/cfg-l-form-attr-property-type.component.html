@@ -1,6 +1,3 @@
-<p>cfg-l-form-attr-property-type works!</p>
-
-
 <ng-container *ngIf="config">
     <nz-collapse>
         <nz-collapse-panel *ngFor="let panel of config" [nzActive]="panel.active" [nzHeader]="extraH"
@@ -8,9 +5,9 @@
 
             {{panel.code}}
 
-            [详细属性渲染器]
+            <!--             [详细属性渲染器] -->
             <ng-container CfgLFormAttrPropertyItemDirective [config]="panel" [sourceData]="configData"
-                [fromDataService]="fromDataService"></ng-container>
+                [fromDataService]="fromDataService" (updateValue)="valueChange($event)"></ng-container>
             <ng-template #extraTpl>
 
                 <i nz-icon nzType="setting" (click)="setting(panel)"></i>

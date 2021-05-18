@@ -2,10 +2,10 @@
     "SERVER_URL_333": "http://192.168.1.111:8405/",
     "SERVER_URL_erw": "dev/",
     "SERVER_URL_d": "http://192.168.1.111:8405/",
-    "SERVER_URL": "http://39.101.168.200:8304/",
-    "SERVER_URL1": "http://192.168.1.111:8401/",
+    "SERVER_URL1": "http://39.101.168.200:8304/",
+    "SERVER_URL33": "http://192.168.1.111:8401/",
     "SERVER_URL_11": "http://192.168.1.111:8402/",
-    "SERVER_URL33": "http://39.101.168.200:8304/",
+    "SERVER_URL": "http://39.101.168.200:8304/",
     "REPORT_SERVER_URL": "http://39.101.168.200:8079/ReportServerV2.ashx",
     "MSG_SERVER_URL": "ws://192.168.1.111:8420/api.push.message/websocket/message/push/abe76e78c469dd46a4d9252247848c6b/",
     "systemSettings": {
@@ -72,7 +72,7 @@
                         "name": "passWord",
                         "type": "componentValue",
                         "valueName": "password",
-                        "dataType": "MD5"
+                        "dataType1": "MD5"
                     },
                     {
                         "name": "attribute",

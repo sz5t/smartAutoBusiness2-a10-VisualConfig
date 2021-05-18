@@ -1,4 +1,3 @@
-<p>cn-static-form works!</p>
 <!-- <sf [schema]="schema" (formSubmit)="submit($event)"></sf> -->
 
 
@@ -61,16 +60,19 @@
 </form>
 
 <button (click)="save()">保存</button> -->
-<hr>
+
 
 <form [formGroup]="validateForm">
 
-    <ng-container *ngFor="let r of _form_config['properties']">
+    <ng-container *ngFor="let r of config['properties']">
 
 
+        <div [hidden]="r['hidden']">
+            <ng-container CnStaticFormItemDirective [validateForm]="validateForm" [config]="r"
+                [fromDataService]="fromDataService" (cascadeValue)="cascadeValue($event)">
+            </ng-container>
 
-        <ng-container CnStaticFormItemDirective [validateForm]="validateForm" [config]="r">
-        </ng-container>
+        </div>
 
     </ng-container>
 

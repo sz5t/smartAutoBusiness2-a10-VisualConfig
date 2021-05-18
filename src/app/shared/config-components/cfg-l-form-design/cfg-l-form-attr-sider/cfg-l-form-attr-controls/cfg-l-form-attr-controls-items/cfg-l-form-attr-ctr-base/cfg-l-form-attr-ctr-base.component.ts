@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, EventEmitter, Output } from '@angular/core';
 
 @Component({
   selector: 'app-cfg-l-form-attr-ctr-base',
@@ -9,10 +9,16 @@ import { Component, Input, OnInit } from '@angular/core';
 export class CfgLFormAttrCtrBaseComponent implements OnInit {
   @Input() public config;
   @Input() public configData;
+  @Output() public updateValue = new EventEmitter<any>(true);
 
   constructor() { }
 
   ngOnInit(): void {
+  }
+
+  valueChange(v) {
+    console.log('AttrProperty', v);
+    this.updateValue.emit(v);
   }
 
 }

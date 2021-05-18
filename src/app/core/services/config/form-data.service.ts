@@ -11,6 +11,7 @@ export class configFormDataServerService {
     public attrSiderInstance: any;
     public formParameter: any;
     public layoutSourceData: any = {};
+    public ajaxConfigData: any = [];
     constructor() { }
     public setComponentValue(id?: string, value?: any): void {
         console.log(`当前组件${id}值:`, value);

@@ -1,0 +1,33 @@
+<p>cn-static-form-ajax works!</p>
+
+<nz-card nzType="inner" [nzTitle]="config['title']">
+    <div nz-row>
+        <div nz-col [nzSm]="8" [nzXs]="24">
+            资源类型：
+        </div>
+        <div nz-col [nzSm]="16" [nzXs]="24">
+            <nz-select [(ngModel)]="ResourceType">
+                <nz-option [nzLabel]="'业务模型资源'" [nzValue]="'cfgBusiModel'"></nz-option>
+                <nz-option [nzLabel]="'SQL资源'" [nzValue]="'SQL'"></nz-option>
+                <nz-option [nzLabel]="'表资源'" [nzValue]="'TABLE'"></nz-option>
+            </nz-select>
+
+        </div>
+    </div>
+    <div nz-row>
+        <div nz-col [nzSm]="8" [nzXs]="24">
+            参考资源:
+        </div>
+        <div nz-col [nzSm]="16" [nzXs]="24">
+
+            <button nz-button [nzSize]="'small'" nzType="primary" (click)="selectResource()">
+                <i nz-icon nzType="folder-view" nzTheme="outline"></i>
+                参考资源</button>
+
+        </div>
+    </div>
+</nz-card>
+
+<app-cn-static-form #staticForm [config]="_form_config" [staticData]="staticData" [fromDataService]="fromDataService"
+    (updateValue)="valueChange($event)">
+</app-cn-static-form>

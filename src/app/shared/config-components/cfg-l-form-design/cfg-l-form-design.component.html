@@ -41,9 +41,8 @@
                 </ng-container>
             </div>
             <div nz-col nzFlex="auto" #content>
-
-
                 <div style="width: 100%;">
+
 
                     <nz-button-group>
                         <button nz-button [nzSize]="'small'" nzType="primary" nzTitle="预览页面结构" (click)="PreviewLayout()"
@@ -59,7 +58,7 @@
                     <nz-switch [(ngModel)]="showLayout" nzCheckedChildren="布局" nzUnCheckedChildren="组件"
                         style="margin-left: 7px;">
                     </nz-switch>
-                    缩放比例：
+                    缩放：
                     <nz-select [ngModel]="selectedValue" (ngModelChange)="sizeChange($event)" style="width: 70px;">
                         <nz-option nzValue="2" nzLabel="200%"></nz-option>
                         <nz-option nzValue="1.5" nzLabel="150%"></nz-option>
@@ -74,6 +73,8 @@
                         <nz-option nzValue="0.5" nzLabel="50%"></nz-option>
 
                     </nz-select>
+
+
 
                     设备：
                     <nz-button-group>
@@ -93,10 +94,9 @@
 
                 </div>
 
+
                 <!--    [nzTitle]="extraT" [nzExtra]="extraE" -->
-                <nz-card [nzBodyStyle]="{'padding':'1px 2px','overflow':'auto'
-                
-                }">
+                <nz-card [nzBodyStyle]="{'padding':'1px 2px','overflow':'auto'}">
                     <div [ngStyle]="div_style">
 
                         <div [ngStyle]="sizeStyle">
@@ -104,8 +104,8 @@
                             <div [ngStyle]="div_container_style">
 
                                 <!--     <app-config-l-layout #child0 [(selectedItem)]="selectedItem" [(showLayout)]="showLayout"
-                                    [(cmptState)]="cmptState" [fromDataService]="fromDataService">
-                                </app-config-l-layout> -->
+                                [(cmptState)]="cmptState" [fromDataService]="fromDataService">
+                            </app-config-l-layout> -->
                                 <cfg-form-layout #child0 [(selectedItem)]="selectedItem" [(showLayout)]="showLayout"
                                     [(cmptState)]="cmptState" [fromDataService]="fromDataService"></cfg-form-layout>
 
@@ -121,12 +121,12 @@
 
 
             </div>
+
             <div nz-col nzFlex="0 1 400px" style="max-height:680px;overflow:auto">
                 <app-cfg-l-form-attr-sider #child2 [(selectedItem)]="selectedItem" [fromDataService]="fromDataService">
                 </app-cfg-l-form-attr-sider>
 
             </div>
-
 
         </div>
     </nz-content>
@@ -137,4 +137,4 @@
 
 <app-cfg-l-form-select-parameter></app-cfg-l-form-select-parameter>
 
-<app-cn-static-form></app-cn-static-form>
+<!-- <app-cn-static-form></app-cn-static-form> -->

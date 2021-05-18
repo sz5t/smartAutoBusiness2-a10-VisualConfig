@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NzTreeNodeOptions } from 'ng-zorro-antd/tree';
 import { configFormDataServerService } from 'src/app/core/services/config/form-data.service';
@@ -34,7 +35,7 @@ export class CfgLFormDesignComponent implements OnInit {
   selectedItem: any = { item: null, cmptitem: null, rowitem: null, active: null };
   layout_nodes: NzTreeNodeOptions[];
   showLayout = true;
-  constructor(public fromDataService: configFormDataServerService) { }
+  constructor(public fromDataService: configFormDataServerService, private httpClient: HttpClient,) { }
   ngOnInit(): void {
 
 
@@ -138,6 +139,13 @@ export class CfgLFormDesignComponent implements OnInit {
 
 
 
+  }
+
+
+  // 配置读取json文件
+  async getDataConfig() {
+    const timestamp = new Date().getTime();
+    const data = await this.httpClient.get(`assets/tmp/webConfig.json?${timestamp}`).toPromise();
   }
 
 
