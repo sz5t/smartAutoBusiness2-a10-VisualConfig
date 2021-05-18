@@ -152,6 +152,30 @@ import { CfgAttributeAssembleResourceSelectComponent } from './components/cn-att
 import { CfgAttributeFormStateComponent } from './components/cn-attribute/cn-attribute-items/cfg-attribute-form-state/cfg-attribute-form-state.component';
 import { CfgAttributeValidationComponent } from './components/cn-attribute/cn-attribute-items/cfg-attribute-validation/cfg-attribute-validation.component';
 import { CfgCascadePropertyComponent } from './components/cn-attribute/cfg-attribute-items/cfg-cascade-property/cfg-cascade-property.component';
+import { CfgPageDesignComponent } from './config-components/cfg-page-design/cfg-page-design.component';
+import { CfgFormDesignComponent } from './config-components/cfg-form-design/cfg-form-design.component';
+import { CfgFormLayoutComponent } from './config-components/cfg-form-design/cfg-form-design-layout/cfg-form-layout/cfg-form-layout.component';
+import { CfgFormPropertyComponent } from './config-components/cfg-form-design/cfg-form-design-items/cfg-form-property/cfg-form-property.component';
+import { CfgFormSiderComponent } from './config-components/cfg-form-design/cfg-form-design-items/cfg-form-sider/cfg-form-sider.component';
+import { CfgPageSiderComponent } from './config-components/cfg-page-design/cfg-page-design-items/cfg-page-sider/cfg-page-sider.component';
+import { CfgPageViewComponent } from './config-components/cfg-page-design/cfg-page-design-items/cfg-page-view/cfg-page-view.component';
+import { CfgPagePropertyComponent } from './config-components/cfg-page-design/cfg-page-design-items/cfg-page-property/cfg-page-property.component';
+import { CfgFormViewComponent } from './config-components/cfg-form-design/cfg-form-design-items/cfg-form-view/cfg-form-view.component';
+import { CfgPageLayoutComponent } from './config-components/cfg-page-design/cfg-page-design-layout/cfg-page-layout/cfg-page-layout.component';
+import { CfgPageRowsComponent } from './config-components/cfg-page-design/cfg-page-design-layout/cfg-page-rows/cfg-page-rows.component';
+import { CfgPageRowComponent } from './config-components/cfg-page-design/cfg-page-design-layout/cfg-page-row/cfg-page-row.component';
+import { CfgPageColsComponent } from './config-components/cfg-page-design/cfg-page-design-layout/cfg-page-cols/cfg-page-cols.component';
+import { CfgPageColComponent } from './config-components/cfg-page-design/cfg-page-design-layout/cfg-page-col/cfg-page-col.component';
+import { CfgPageContainerComponent } from './config-components/cfg-page-design/cfg-page-design-layout/cfg-page-container/cfg-page-container.component';
+import { CfgPageCmptFormComponent } from './config-components/cfg-page-design/cfg-page-design-layout/cfg-page-cmpt-form/cfg-page-cmpt-form.component';
+import { CfgPageCmptTableComponent } from './config-components/cfg-page-design/cfg-page-design-layout/cfg-page-cmpt-table/cfg-page-cmpt-table.component';
+import { CfgPageCmptToolbarComponent } from './config-components/cfg-page-design/cfg-page-design-layout/cfg-page-cmpt-toolbar/cfg-page-cmpt-toolbar.component';
+import { CfgPageCmptTabsComponent } from './config-components/cfg-page-design/cfg-page-design-layout/cfg-page-cmpt-tabs/cfg-page-cmpt-tabs.component';
+import { CfgFormRowsComponent } from './config-components/cfg-form-design/cfg-form-design-layout/cfg-form-layout/cfg-form-rows/cfg-form-rows.component';
+import { CfgFormRowComponent } from './config-components/cfg-form-design/cfg-form-design-layout/cfg-form-layout/cfg-form-row/cfg-form-row.component';
+import { CfgFormColsComponent } from './config-components/cfg-form-design/cfg-form-design-layout/cfg-form-layout/cfg-form-cols/cfg-form-cols.component';
+import { CfgFormColComponent } from './config-components/cfg-form-design/cfg-form-design-layout/cfg-form-layout/cfg-form-col/cfg-form-col.component';
+import { CfgFormContainerComponent } from './config-components/cfg-form-design/cfg-form-design-layout/cfg-form-layout/cfg-form-container/cfg-form-container.component';
 
 
 // #region third libs
@@ -308,6 +332,26 @@ const COMPONENTS = [
   CfgAttributeRanksRowModalComponent,
   CfgAttributeFormStateComponent,
   CfgAttributeValidationComponent,
+
+  CfgPageDesignComponent,
+  CfgFormDesignComponent,
+  CfgFormLayoutComponent,
+  CfgFormPropertyComponent,
+  CfgFormSiderComponent,
+  CfgPageSiderComponent,
+  CfgPageViewComponent,
+  CfgPagePropertyComponent,
+  CfgFormViewComponent,
+  CfgPageLayoutComponent,
+  CfgPageRowsComponent,
+  CfgPageRowComponent,
+  CfgPageColsComponent,
+  CfgPageColComponent,
+  CfgPageContainerComponent,
+  CfgPageCmptFormComponent,
+  CfgPageCmptTableComponent,
+  CfgPageCmptToolbarComponent,
+  CfgPageCmptTabsComponent,
 ];
 const DIRECTIVES = [
   CnLayoutResolverDirective,
@@ -344,6 +388,12 @@ const DIRECTIVES = [
     CnTreeTransferComponent,
     SafeUrlPipe,
     CfgAttributeRanksRowModalComponent,
+    CfgFormRowsComponent,
+    CfgFormRowComponent,
+    CfgFormColsComponent,
+    CfgFormColComponent,
+    CfgFormContainerComponent,
+
 
   ],
   exports: [
