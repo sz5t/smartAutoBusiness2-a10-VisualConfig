@@ -42,10 +42,6 @@ import { CnFlowDesignComponent } from '../../components/work-flow/cn-flow-design
 import { CnFlowApprovalComponent } from '../../components/work-flow/cn-flow-items/cn-flow-approval/cn-flow-approval.component';
 import { CnFlowStartComponent } from '../../components/work-flow/cn-flow-items/cn-flow-start/cn-flow-start.component';
 import { CnFlowPreviewComponent } from '../../components/work-flow/cn-flow-preview/cn-flow-preview.component';
-import { CfgLFormDesignComponent } from '../../config-components/cfg-l-form-design/cfg-l-form-design.component';
-import { CfgViewLayoutComponent } from '../../config-components/config-attribute/cfg-view-layout/cfg-view-layout.component';
-import { CfgLayoutPageComponent } from '../../config-components/config-layout-page/cfg-layout-page/cfg-layout-page.component';
-
 const components: { [type: string]: Type<any> } = {
   cnDataTable: CnDataTableComponent,
   cnToolbar: CnToolbarComponent,
@@ -57,7 +53,6 @@ const components: { [type: string]: Type<any> } = {
   cnStatistic: CnStatisticComponent,
   cnProgress: CnProgressComponent,
   cnCalendar: CnCalendarComponent,
-  cfgLayoutPage: CfgLayoutPageComponent,
   cnCardList: CnCardListComponent,
   cnStaticTable: CnStaticTableComponent,
   cnTag: CnTagComponent,
@@ -76,8 +71,6 @@ const components: { [type: string]: Type<any> } = {
   cnWFDesignMore: CnFlowDesignMoreComponent,
   cnWFApproval: CnFlowApprovalComponent,
   cnWFStart: CnFlowStartComponent,
-  configForm: CfgLFormDesignComponent,
-  configPage: CfgViewLayoutComponent,
   cfgPropertyEditor: CfgPropertyEditorCascadeValueComponent,
   cfgCascadeSender: CfgAtrributeCascadeSenderComponent,
   cfgAssembleAjax: CfgAttributeAssembleAjaxComponent,

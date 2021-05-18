@@ -1,4 +1,3 @@
-import { CfgLayoutPageComponent } from '../../config-components/config-layout-page/cfg-layout-page/cfg-layout-page.component';
 import { Type, Component, OnInit, AfterViewInit, OnDestroy, Inject, Input, Output, EventEmitter } from '@angular/core';
 import { CnDataFormComponent } from '../data-form/cn-data-form.component';
 import { CnComponentBase } from '../cn-component.base';
@@ -23,7 +22,7 @@ import { BSN_DATAGRID_TRIGGER } from 'src/app/core/relations/bsn-trigger/data-gr
 // };
 const components: { [type: string]: Type<any> } = {
   form: CnDataFormComponent,
-  cfgLayoutPage: CfgLayoutPageComponent,
+  // cfgLayoutPage: CfgLayoutPageComponent,
   // label: ,
   // selectMultiple:,
   // datePicker:,

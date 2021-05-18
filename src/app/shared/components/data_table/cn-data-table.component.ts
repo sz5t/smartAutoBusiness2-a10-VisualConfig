@@ -1,4 +1,3 @@
-import { CfgLayoutPageComponent } from './../../config-components/config-layout-page/cfg-layout-page/cfg-layout-page.component';
 import { Type, Component, OnInit, AfterViewInit, OnDestroy, Inject, Input, Output, EventEmitter } from '@angular/core';
 import { CnDataFormComponent } from '../data-form/cn-data-form.component';
 import { CnComponentBase } from '../cn-component.base';
@@ -29,7 +28,7 @@ import { HttpHeaders } from '@angular/common/http';
 // };
 const components: { [type: string]: Type<any> } = {
   form: CnDataFormComponent,
-  cfgLayoutPage: CfgLayoutPageComponent,
+  // cfgLayoutPage: CfgLayoutPageComponent,
   DownXlsx: CnGridDownXlsxComponent,
   // label: ,
   // selectMultiple:,
@@ -51,8 +50,8 @@ const components: { [type: string]: Type<any> } = {
 export declare type _HttpHeaders =
   | HttpHeaders
   | {
-      [header: string]: string | string[];
-    };
+    [header: string]: string | string[];
+  };
 
 @Component({
   // tslint:disable-next-line:component-selector
@@ -225,7 +224,7 @@ export class CnDataTableComponent extends CnComponentBase implements OnInit, Aft
     this.initValue = { ...this.initValue, ...val };
   }
 
-  public ngAfterViewInit() {}
+  public ngAfterViewInit() { }
 
   public ngOnDestroy() {
     // 释放级联对象
@@ -1938,11 +1937,11 @@ export class CnDataTableComponent extends CnComponentBase implements OnInit, Aft
     console.log(this.config.id + '-------------cancelSearchRow');
   }
 
-  public export() {}
+  public export() { }
 
-  public import() {}
+  public import() { }
 
-  public download() {}
+  public download() { }
 
   /**
    *
@@ -1973,7 +1972,7 @@ export class CnDataTableComponent extends CnComponentBase implements OnInit, Aft
     // this.router.navigate(['../home'],{relativeTo:this.route});
   }
 
-  public linkTo(option) {}
+  public linkTo(option) { }
 
   /**
    * 内部子页面跳转【问题，参数传递、覆盖 changValue 和 普通参数传递】
@@ -2336,7 +2335,7 @@ export class CnDataTableComponent extends CnComponentBase implements OnInit, Aft
     dialog = this.componentService.modalService.create(dialogOptional);
   }
 
-  public showBatchDialog() {}
+  public showBatchDialog() { }
 
   /**
    * 显示消息框

@@ -1,6 +1,4 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { CfgLayoutComponent } from 'src/app/shared/config-components/config-layout/cfg-layout/cfg-layout.component';
-
 @Component({
   selector: 'cfg-layout-demo,[cfg-layout-demo]',
   templateUrl: './cfg-layout-demo.component.html',
@@ -149,17 +147,16 @@ export class CfgLayoutDemoComponent implements OnInit {
 
   public isCollapsed = false;
 
-  @ViewChild('child1', { static: true }) child1: CfgLayoutComponent;
-  constructor() {}
+  constructor() { }
 
-  ngOnInit() {}
+  ngOnInit() { }
 
   /**
    * showLayout
    */
   public showLayout() {
     console.log('showLayout', this.c_config, JSON.stringify(this.c_config));
-    this.child1.config = this.c_config;
+
   }
 
   /**

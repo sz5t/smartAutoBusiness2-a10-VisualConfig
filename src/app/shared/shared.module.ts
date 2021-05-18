@@ -102,40 +102,7 @@ import { CnCustomLayoutComponent } from './components/layout/cn-custom-layout.co
 import { CnDynamicLayoutComponent } from './components/layout/cn-dynamic-layout.component';
 import { CnDynamicPageHeaderComponent } from './components/layout/cn-dynamic-page-header.component';
 import { CnToolbarComponent } from './components/toolbar/cn-toolbar.component';
-import { CfgAttrAjaxConfigComponent } from './config-components/config-attribute/cfg-attribute-item/cfg-attr-ajax-config/cfg-attr-ajax-config.component';
-import { CfgAttrCascadeComponent } from './config-components/config-attribute/cfg-attribute-item/cfg-attr-cascade/cfg-attr-cascade.component';
-import { CfgAttributeArrayComponent } from './config-components/config-attribute/cfg-attribute-item/cfg-attribute-array/cfg-attribute-array.component';
-import { CfgAttributeFormComponent } from './config-components/config-attribute/cfg-attribute-item/cfg-attribute-form/cfg-attribute-form.component';
-import { CfgAttributeGridSelectComponent } from './config-components/config-attribute/cfg-attribute-item/cfg-attribute-grid-select/cfg-attribute-grid-select.component';
-import { CfgAttributeMasterDataComponent } from './config-components/config-attribute/cfg-attribute-item/cfg-attribute-master-data/cfg-attribute-master-data.component';
-import { CfgAttributeObjectComponent } from './config-components/config-attribute/cfg-attribute-item/cfg-attribute-object/cfg-attribute-object.component';
-import { CfgAttributeTableFormComponent } from './config-components/config-attribute/cfg-attribute-item/cfg-attribute-table-form/cfg-attribute-table-form.component';
-import { CfgAttributeTableComponent } from './config-components/config-attribute/cfg-attribute-item/cfg-attribute-table/cfg-attribute-table.component';
-import { CfgAttributeItemDirective } from './config-components/config-attribute/cfg-attribute/cfg-attribute-item.directive';
-import { CfgAttributeComponent } from './config-components/config-attribute/cfg-attribute/cfg-attribute.component';
-import { CfgFormInputComponent } from './config-components/config-form-layout/cfg-form-component/cfg-form-input/cfg-form-input.component';
-import { CfgFormSelectComponent } from './config-components/config-form-layout/cfg-form-component/cfg-form-select/cfg-form-select.component';
-import { CfgFormItemContentDirective } from './config-components/config-form-layout/cfg-form-item-content.directive';
-import { CfgFormItemComponent } from './config-components/config-form-layout/cfg-form-item/cfg-form-item.component';
-import { CfgFormLayoutColComponent } from './config-components/config-form-layout/cfg-form-layout-col/cfg-form-layout-col.component';
-import { CfgFormLayoutRowComponent } from './config-components/config-form-layout/cfg-form-layout-row/cfg-form-layout-row.component';
-import { CfgFormLayoutComponent } from './config-components/config-form-layout/cfg-form-layout/cfg-form-layout.component';
-import { CfgLayoutPageComponent } from './config-components/config-layout-page/cfg-layout-page/cfg-layout-page.component';
-import { CfgCustomLayoutComponent } from './config-components/config-layout/cfg-custom-layout/cfg-custom-layout.component';
-import { CfgLayoutCardComponent } from './config-components/config-layout/cfg-layout-card/cfg-layout-card.component';
-import { CfgLayoutColComponent } from './config-components/config-layout/cfg-layout-col/cfg-layout-col.component';
-import { CfgLayoutCollapseComponent } from './config-components/config-layout/cfg-layout-collapse/cfg-layout-collapse.component';
-import { CfgCalendarComponent } from './config-components/config-layout/cfg-layout-component/cfg-calendar/cfg-calendar.component';
-import { CfgCarouselComponent } from './config-components/config-layout/cfg-layout-component/cfg-carousel/cfg-carousel.component';
-import { CfgDataTableComponent } from './config-components/config-layout/cfg-layout-component/cfg-data-table/cfg-data-table.component';
-import { CfgFormComponent } from './config-components/config-layout/cfg-layout-component/cfg-form/cfg-form.component';
-import { CfgToolbarComponent } from './config-components/config-layout/cfg-layout-component/cfg-toolbar/cfg-toolbar.component';
-import { CfgTreeComponent } from './config-components/config-layout/cfg-layout-component/cfg-tree/cfg-tree.component';
-import { CfgLayoutItemContentDirective } from './config-components/config-layout/cfg-layout-item-content.directive';
-import { CfgLayoutItemComponent } from './config-components/config-layout/cfg-layout-item/cfg-layout-item.component';
-import { CfgLayoutRowComponent } from './config-components/config-layout/cfg-layout-row/cfg-layout-row.component';
-import { CfgLayoutTabsComponent } from './config-components/config-layout/cfg-layout-tabs/cfg-layout-tabs.component';
-import { CfgLayoutComponent } from './config-components/config-layout/cfg-layout/cfg-layout.component';
+
 import { CnDynamicLayoutResolverDirective } from './resolver/layout/dynamic-layout-resolver.directive';
 import { CnLayoutResolverDirective } from './resolver/layout/layout-resolver.directive';
 import { SHARED_DELON_MODULES } from './shared-delon.module';
@@ -170,41 +137,7 @@ import { CnFlowApprovalComponent } from './components/work-flow/cn-flow-items/cn
 import { CnFlowTableComponent } from './components/work-flow/cn-flow-items/cn-flow-table/cn-flow-table.component';
 import { CnFlowStartComponent } from './components/work-flow/cn-flow-items/cn-flow-start/cn-flow-start.component';
 import { CnFormObjectComponent } from './components/data-form/cn-form-items/cn-form-object/cn-form-object.component';
-import { CfgConditionComponent } from './config-components/config-attribute/cfg-condition/cfg-condition.component';
-import { CfgBracketsComponent } from './config-components/config-attribute/cfg-condition/cfg-brackets/cfg-brackets.component';
-import { CfgViewLayoutComponent } from './config-components/config-attribute/cfg-view-layout/cfg-view-layout.component';
-import { CfgInterfaceComponent } from './config-components/config-attribute/cfg-interface/cfg-interface.component';
-import { CfgInterfaceItemComponent } from './config-components/config-attribute/cfg-interface/cfg-interface-item/cfg-interface-item.component';
-import { CfgEventComponent } from './config-components/config-attribute/cfg-event/cfg-event.component';
-import { CfgEventItemComponent } from './config-components/config-attribute/cfg-event/cfg-event-item/cfg-event-item.component';
-import { CfgListensComponent } from './config-components/config-attribute/cfg-listens/cfg-listens.component';
-import { CfgMethodComponent } from './config-components/config-attribute/cfg-method/cfg-method.component';
-import { CfgRowActionComponent } from './config-components/config-attribute/cfg-row-action/cfg-row-action.component';
-import { CfgToolbarActionComponent } from './config-components/config-attribute/cfg-toolbar-action/cfg-toolbar-action.component';
-import { CfgToolbarActionItemComponent } from './config-components/config-attribute/cfg-toolbar-action/cfg-toolbar-action-item/cfg-toolbar-action-item.component';
-import { CfgToolbarActionDropdownComponent } from './config-components/config-attribute/cfg-toolbar-action/cfg-toolbar-action-dropdown/cfg-toolbar-action-dropdown.component';
-import { CfgCommandComponent } from './config-components/config-attribute/cfg-command/cfg-command.component';
-import { CfgLCascadeComponent } from './config-components/config-attribute/cfg-l-cascade/cfg-l-cascade.component';
-import { CfgLCascadeSendComponent } from './config-components/config-attribute/cfg-l-cascade/cfg-l-cascade-send/cfg-l-cascade-send.component';
-import { CfgLCascadeReceiveComponent } from './config-components/config-attribute/cfg-l-cascade/cfg-l-cascade-receive/cfg-l-cascade-receive.component';
-import { CfgLCascadeSendItemComponent } from './config-components/config-attribute/cfg-l-cascade/cfg-l-cascade-send-item/cfg-l-cascade-send-item.component';
-import { CfgLBaseComponent } from './config-components/config-attribute/cfg-l-base/cfg-l-base.component';
-import { CfgLBaseConfigComponent } from './config-components/config-attribute/cfg-l-base/cfg-l-base-config/cfg-l-base-config.component';
-import { CfgLBaseMainResourceComponent } from './config-components/config-attribute/cfg-l-base/cfg-l-base-main-resource/cfg-l-base-main-resource.component';
-import { ConfigLLayoutComponent } from './config-components/config-l-layout/config-l-layout.component';
-import { ConfigLRowComponent } from './config-components/config-l-layout/config-l-row/config-l-row.component';
-import { ConfigLColComponent } from './config-components/config-l-layout/config-l-col/config-l-col.component';
-import { ConfigLDragComponent } from './config-components/config-l-layout/config-l-drag/config-l-drag.component';
-import { ConfigLDragContainerComponent } from './config-components/config-l-layout/config-l-drag-container/config-l-drag-container.component';
-import { ConfigLRowsComponent } from './config-components/config-l-layout/config-l-rows/config-l-rows.component';
-import { ConfigLColsComponent } from './config-components/config-l-layout/config-l-cols/config-l-cols.component';
-import { CfgLFormDesignComponent } from './config-components/cfg-l-form-design/cfg-l-form-design.component';
-import { CfgLMainPageDesignComponent } from './config-components/cfg-l-main-page-design/cfg-l-main-page-design.component';
-import { CfgLSubPageDesignComponent } from './config-components/cfg-l-sub-page-design/cfg-l-sub-page-design.component';
-import { CfgLFormSiderComponent } from './config-components/cfg-l-form-design/cfg-l-form-sider/cfg-l-form-sider.component';
-import { CfgLFormAttrSiderComponent } from './config-components/cfg-l-form-design/cfg-l-form-attr-sider/cfg-l-form-attr-sider.component';
-import { CfgLFormAttrStyleComponent } from './config-components/cfg-l-form-design/cfg-l-form-attr-sider/cfg-l-form-attr-style/cfg-l-form-attr-style.component';
-import { CfgLFormAttrStyleColComponent } from './config-components/cfg-l-form-design/cfg-l-form-attr-sider/cfg-l-form-attr-style/cfg-l-form-attr-style-col/cfg-l-form-attr-style-col.component';
+
 import { CfgPropertyEditorCascadeValueComponent } from './components/cn-attribute/cn-attribute-items/cfg-property-editor-cascade-value/cfg-property-editor-cascade-value.component';
 import { CfgAtrributeCascadeSenderComponent } from './components/cn-attribute/cn-attribute-items/cfg-atrribute-cascade-sender/cfg-atrribute-cascade-sender.component';
 import { CfgAttributeCascadeReceiverComponent } from './components/cn-attribute/cn-attribute-items/cfg-attribute-cascade-receiver/cfg-attribute-cascade-receiver.component';
@@ -219,19 +152,7 @@ import { CfgAttributeAssembleResourceSelectComponent } from './components/cn-att
 import { CfgAttributeFormStateComponent } from './components/cn-attribute/cn-attribute-items/cfg-attribute-form-state/cfg-attribute-form-state.component';
 import { CfgAttributeValidationComponent } from './components/cn-attribute/cn-attribute-items/cfg-attribute-validation/cfg-attribute-validation.component';
 import { CfgCascadePropertyComponent } from './components/cn-attribute/cfg-attribute-items/cfg-cascade-property/cfg-cascade-property.component';
-import { CfgFormSelectDesignComponent } from './config-components/config-form-layout/cfg-form-component/cfg-form-select-design/cfg-form-select-design.component';
-import { CfgLControlDesignDirective } from './config-components/cfg-l-form-design/cfg-l-form-attr-sider/cfg-l-form-attr-controls/cfg-l-control-design.directive';
-import { CfgLFormAttrCtrBaseComponent } from './config-components/cfg-l-form-design/cfg-l-form-attr-sider/cfg-l-form-attr-controls/cfg-l-form-attr-controls-items/cfg-l-form-attr-ctr-base/cfg-l-form-attr-ctr-base.component';
-import { CfgLFormAttrCtrEditorComponent } from './config-components/cfg-l-form-design/cfg-l-form-attr-sider/cfg-l-form-attr-controls/cfg-l-form-attr-controls-items/cfg-l-form-attr-ctr-editor/cfg-l-form-attr-ctr-editor.component';
-import { CfgLFormAttrCtrLayoutComponent } from './config-components/cfg-l-form-design/cfg-l-form-attr-sider/cfg-l-form-attr-controls/cfg-l-form-attr-controls-items/cfg-l-form-attr-ctr-layout/cfg-l-form-attr-ctr-layout.component';
-import { CfgLFormAttrCtrSizeComponent } from './config-components/cfg-l-form-design/cfg-l-form-attr-sider/cfg-l-form-attr-controls/cfg-l-form-attr-controls-items/cfg-l-form-attr-ctr-size/cfg-l-form-attr-ctr-size.component';
-import { CfgLFormAttrCtrTextComponent } from './config-components/cfg-l-form-design/cfg-l-form-attr-sider/cfg-l-form-attr-controls/cfg-l-form-attr-controls-items/cfg-l-form-attr-ctr-text/cfg-l-form-attr-ctr-text.component';
-import { CfgLFormAttrCtrTitleComponent } from './config-components/cfg-l-form-design/cfg-l-form-attr-sider/cfg-l-form-attr-controls/cfg-l-form-attr-controls-items/cfg-l-form-attr-ctr-title/cfg-l-form-attr-ctr-title.component';
-import { CfgLFormAttrControlsComponent } from './config-components/cfg-l-form-design/cfg-l-form-attr-sider/cfg-l-form-attr-controls/cfg-l-form-attr-controls.component';
-import { CfgLFormSelectParameterComponent } from './config-components/cfg-l-form-design/cfg-l-form-select-parameter/cfg-l-form-select-parameter.component';
-import { CfgFormInputDesignComponent } from './config-components/config-form-layout/cfg-form-component/cfg-form-input-design/cfg-form-input-design.component';
-import { CfgFormLayoutColsComponent } from './config-components/config-form-layout/cfg-form-layout-cols/cfg-form-layout-cols.component';
-import { CfgFormLayoutRowsComponent } from './config-components/config-form-layout/cfg-form-layout-rows/cfg-form-layout-rows.component';
+
 
 // #region third libs
 
@@ -254,28 +175,6 @@ const COMPONENTS = [
   CnPageHeaderComponent,
 
   // --设计组件--
-  CfgLayoutPageComponent,
-  CfgCustomLayoutComponent,
-  CfgLayoutComponent,
-  CfgLayoutCardComponent,
-  CfgLayoutColComponent,
-  CfgLayoutCollapseComponent,
-  CfgLayoutRowComponent,
-  CfgLayoutTabsComponent,
-  CfgLayoutItemComponent,
-  CfgDataTableComponent,
-  CfgTreeComponent,
-  CfgFormComponent,
-  CfgCalendarComponent,
-  CfgCarouselComponent,
-
-  CfgFormItemComponent,
-  CfgFormLayoutComponent,
-  CfgFormLayoutColComponent,
-  CfgFormLayoutRowComponent,
-  CfgFormInputComponent,
-  CfgFormSelectComponent,
-
   CnDataFormComponent,
   CnFormInputComponent,
   CnFormSelectComponent,
@@ -327,14 +226,6 @@ const COMPONENTS = [
   CnGridCodeEditComponent,
   CnGridTextareaComponent,
   CnFormButtonComponent,
-  CfgToolbarComponent,
-  CfgAttributeComponent,
-  CfgAttributeFormComponent,
-  CfgAttributeTableComponent,
-  CfgAttributeObjectComponent,
-  CfgAttributeArrayComponent,
-  CfgAttributeTableFormComponent,
-  CfgAttributeGridSelectComponent,
   CnGridRadioComponent,
   CnGridCheckboxComponent,
   CnGridGridSelectComponent,
@@ -349,9 +240,6 @@ const COMPONENTS = [
   CnFormButtonComponent,
   CnFormSearchSelectComponent,
   CnCardListComponent,
-  CfgAttributeMasterDataComponent,
-  CfgAttrAjaxConfigComponent,
-  CfgAttrCascadeComponent,
   CnDynamicLayoutComponent,
   CnDynamicPageHeaderComponent,
   CnFormGroupComponent,
@@ -404,8 +292,6 @@ const COMPONENTS = [
   CnFlowStartComponent,
   CnFormObjectComponent,
   CnFormTransferComponent,
-  CfgConditionComponent,
-  CfgBracketsComponent,
   CfgPropertyEditorCascadeValueComponent,
   CfgAtrributeCascadeSenderComponent,
   CfgAttributeCascadeReceiverComponent,
@@ -418,45 +304,6 @@ const COMPONENTS = [
 
 
   // ------设计组件-----
-  CfgViewLayoutComponent,
-  CfgInterfaceComponent,
-  CfgInterfaceItemComponent,
-  CfgEventComponent,
-  CfgEventItemComponent,
-  CfgListensComponent,
-  CfgMethodComponent,
-  CfgRowActionComponent,
-  CfgToolbarActionComponent,
-  CfgToolbarActionItemComponent,
-  CfgToolbarActionDropdownComponent,
-  CfgCommandComponent,
-  CfgLCascadeComponent,
-  CfgLCascadeSendComponent,
-  CfgLCascadeReceiveComponent,
-  CfgLCascadeSendItemComponent,
-  CfgLBaseComponent,
-  CfgLBaseConfigComponent,
-  CfgLBaseMainResourceComponent,
-  ConfigLLayoutComponent,
-  ConfigLRowComponent,
-  ConfigLColComponent,
-  ConfigLDragComponent,
-  ConfigLDragContainerComponent,
-  ConfigLRowsComponent,
-  ConfigLColsComponent,
-  CfgLFormDesignComponent,
-  CfgLMainPageDesignComponent,
-  CfgLSubPageDesignComponent,
-  CfgLFormSiderComponent,
-  CfgLFormAttrSiderComponent,
-  CfgLFormAttrStyleComponent,
-  CfgLFormAttrStyleColComponent,
-  CfgLFormAttrCtrBaseComponent,
-  CfgLFormAttrCtrLayoutComponent,
-  CfgLFormAttrCtrSizeComponent,
-  CfgLFormAttrCtrTextComponent,
-  CfgLFormAttrCtrEditorComponent,
-  CfgLFormAttrCtrTitleComponent,
   CfgAttributeAssembleResourceSelectComponent,
   CfgAttributeRanksRowModalComponent,
   CfgAttributeFormStateComponent,
@@ -466,14 +313,10 @@ const DIRECTIVES = [
   CnLayoutResolverDirective,
   CnDynamicLayoutResolverDirective,
   CnComponentResolverDirective,
-  CfgFormItemContentDirective,
-  CfgLayoutItemContentDirective,
   CnFormItemDirective,
   CnGridItemDirective,
   CnAttributeItemDirective,
-  CfgAttributeItemDirective,
   CnChartsDirective,
-  CfgLControlDesignDirective,
 ];
 // #endregion
 
@@ -501,18 +344,6 @@ const DIRECTIVES = [
     CnTreeTransferComponent,
     SafeUrlPipe,
     CfgAttributeRanksRowModalComponent,
-    CfgLFormSelectParameterComponent,
-    CfgFormLayoutRowsComponent,
-    CfgFormLayoutColsComponent,
-    CfgLFormAttrControlsComponent,
-    CfgFormInputDesignComponent,
-    CfgFormSelectDesignComponent,
-
-
-
-
-
-
 
   ],
   exports: [
