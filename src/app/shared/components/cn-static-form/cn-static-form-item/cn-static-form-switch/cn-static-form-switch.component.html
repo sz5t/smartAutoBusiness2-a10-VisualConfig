@@ -1,0 +1,11 @@
+<ng-container *ngIf="config['formType'] === 'value'">
+    <nz-form-item>
+        <nz-form-label [nzSm]="8" [nzXs]="24" nzRequired>{{config['title']}}</nz-form-label>
+        <nz-form-control [nzSm]="16" [nzXs]="24" [formGroup]="validateForm">
+            <!-- <input nz-input [formControlName]="config['name']" /> -->
+            <nz-switch [formControlName]="config['name']" (ngModelChange)="log($event)" nzCheckedChildren="是"
+                nzUnCheckedChildren="否"></nz-switch>
+            <br />
+        </nz-form-control>
+    </nz-form-item>
+</ng-container>

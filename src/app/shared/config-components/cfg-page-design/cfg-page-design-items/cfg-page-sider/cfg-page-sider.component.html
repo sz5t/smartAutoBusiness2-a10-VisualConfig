@@ -1,1 +1,31 @@
-<p>cfg-page-sider works!</p>
+<nz-tabset nzTabPosition="top" [nzType]="'card'">
+    <nz-tab nzTitle="组件">
+        <nz-collapse>
+            <nz-collapse-panel *ngFor="let panel of left_panels" [nzHeader]="panel.name" [nzActive]="panel.active"
+                [nzDisabled]="panel.disabled">
+                <nz-card>
+
+
+                    <ng-container *ngFor="let r of panel['children']">
+                        <div nz-card-grid [ngStyle]="gridStyle" [draggable]="is_drag"
+                            (dragstart)="f_ondragstart($event,r['dropName'])"><i nz-icon [nzType]="r['icon']"
+                                nzTheme="outline"></i>
+                            <br>{{r['title']}}
+                        </div>
+                    </ng-container>
+
+                </nz-card>
+
+            </nz-collapse-panel>
+
+        </nz-collapse>
+    </nz-tab>
+    <nz-tab nzTitle="页面结构">
+        <nz-card nzType="inner" [nzBodyStyle]="{'padding':'1px 2px','max-height':'680px','overflow':'auto'}">
+
+            <nz-tree #nzLayoutTreeComponent [nzData]="layoutTree" nzMultiple="false" nzExpandAll="true"
+                (nzClick)="nzEvent($event)" nzShowLine="true" [nzSelectedKeys]="defaultSelectedKeys">
+            </nz-tree>
+        </nz-card>
+    </nz-tab>
+</nz-tabset>

@@ -3,13 +3,25 @@ import { CommonUtils } from '../../utils/common-utils';
 
 @Injectable()
 export class configFormDataServerService {
+
+
+    //=====设计======
+    public propertySiderInstance: any; // 属性实例
+    public layoutTreeInstance: any; // 布局树实例
+    public layoutViewInstance: any; // 布局视图实例
+    public layoutSourceData: any = {}; // 明细节点项（平层树节点，完整配置信息）
+
+
+
+
     public data: any = [];
     public componentInstance: any = {};
     public treeInstance: any;
     public layoutInstance: any;
     public controlsInstance: any;
     public formParameter: any;
-    public layoutSourceData: any = {};
+
+
     constructor() { }
     public setComponentValue(id?: string, value?: any): void {
         console.log(`当前组件${id}值:`, value);

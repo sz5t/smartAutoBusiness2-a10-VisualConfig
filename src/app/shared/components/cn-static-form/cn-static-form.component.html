@@ -1,0 +1,83 @@
+<!-- <sf [schema]="schema" (formSubmit)="submit($event)"></sf> -->
+
+
+<!-- 
+<form [formGroup]="validateForm1">
+
+    <ng-container *ngFor="let r of _form_config['properties']">
+
+        <ng-container *ngIf="r['formType'] === 'value'">
+            <nz-form-item>
+                <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired>{{r['title']}}</nz-form-label>
+                <nz-form-control [nzSm]="14" [nzXs]="24">
+                    <input nz-input [formControlName]="r['name']" />
+                </nz-form-control>
+            </nz-form-item>
+        </ng-container>
+
+        <div *ngIf="r['formType'] === 'object'" [formGroupName]="r['name']">
+            <ng-container *ngFor="let r_obj of r['object']">
+
+                <ng-container *ngIf="r_obj['formType'] === 'value'">
+                    <nz-form-item>
+                        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired>{{r_obj['title']}}</nz-form-label>
+                        <nz-form-control [nzSm]="14" [nzXs]="24">
+                            <input nz-input [formControlName]="r_obj['name']" />
+                        </nz-form-control>
+                    </nz-form-item>
+                </ng-container>
+            </ng-container>
+        </div>
+        <div *ngIf="r['formType'] === 'array'" [formArrayName]="r['name']">
+            <nz-card [nzTitle]="r['title']">
+                <div *ngFor="let item of ArrFormArray(r['name']).controls;let i = index;" [formGroupName]="i">
+
+
+                    <nz-card nzType="inner" [nzTitle]="r['title']+i">
+                        <div *ngFor="let r_arr of  r['object'];let i1 = index;">
+                            <ng-container *ngIf="r_arr['formType'] === 'value'">
+                                <nz-form-item>
+                                    <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired>{{r_arr['title']}}</nz-form-label>
+                                    <nz-form-control [nzSm]="14" [nzXs]="24">
+                                        <input nz-input [formControlName]="r_arr['name']" />
+                                    </nz-form-control>
+                                </nz-form-item>
+                            </ng-container>
+                        </div>
+                    </nz-card>
+
+                </div>
+
+            </nz-card>
+
+            <button (click)="add(r['name'],r)">新增</button>
+        </div>
+
+    </ng-container>
+
+
+
+</form>
+
+<button (click)="save()">保存</button> -->
+
+
+<form [formGroup]="validateForm">
+
+    <ng-container *ngFor="let r of config['properties']">
+
+
+        <div [hidden]="r['hidden']">
+            <ng-container CnStaticFormItemDirective [validateForm]="validateForm" [config]="r"
+                [fromDataService]="fromDataService" (cascadeValue)="cascadeValue($event)">
+            </ng-container>
+
+        </div>
+
+    </ng-container>
+
+
+
+</form>
+
+<button (click)="demo()">测试</button>

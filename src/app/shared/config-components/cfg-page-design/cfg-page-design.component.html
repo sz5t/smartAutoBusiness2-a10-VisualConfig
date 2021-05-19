@@ -1,1 +1,16 @@
 <p>cfg-page-design works!</p>
+<div nz-row>
+    <div nz-col nzFlex="0 1 250px">
+
+        <app-cfg-page-sider [fromDataService]="fromDataService"></app-cfg-page-sider>
+    </div>
+    <div nz-col nzFlex="auto">
+        <app-cfg-page-view [fromDataService]="fromDataService" [(selectedItem)]="selectedItem"></app-cfg-page-view>
+    </div>
+    <div nz-col nzFlex="0 1 400px">
+
+        <app-cfg-page-property [fromDataService]="fromDataService"></app-cfg-page-property>
+
+
+    </div>
+</div>

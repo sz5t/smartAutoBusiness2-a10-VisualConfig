@@ -1,0 +1,8 @@
+<div [formGroup]="validateForm">
+    <div *ngIf="config['formType'] === 'object'">
+        <ng-container *ngFor="let r_obj of config['properties']">
+            <ng-container CnStaticFormItemDirective [validateForm]="validateForm" [config]="r_obj">
+            </ng-container>
+        </ng-container>
+    </div>
+</div>

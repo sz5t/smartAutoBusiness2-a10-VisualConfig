@@ -42,6 +42,8 @@ import { CnFlowDesignComponent } from '../../components/work-flow/cn-flow-design
 import { CnFlowApprovalComponent } from '../../components/work-flow/cn-flow-items/cn-flow-approval/cn-flow-approval.component';
 import { CnFlowStartComponent } from '../../components/work-flow/cn-flow-items/cn-flow-start/cn-flow-start.component';
 import { CnFlowPreviewComponent } from '../../components/work-flow/cn-flow-preview/cn-flow-preview.component';
+import { CfgPageDesignComponent } from '../../config-components/cfg-page-design/cfg-page-design.component';
+import { CfgFormDesignComponent } from '../../config-components/cfg-form-design/cfg-form-design.component';
 const components: { [type: string]: Type<any> } = {
   cnDataTable: CnDataTableComponent,
   cnToolbar: CnToolbarComponent,
@@ -82,6 +84,8 @@ const components: { [type: string]: Type<any> } = {
   cfgFormState: CfgAttributeFormStateComponent,
   cfgFormValidation: CfgAttributeValidationComponent,
   cnCascadeProperty: CfgCascadePropertyComponent,
+  cfgPageDesign: CfgPageDesignComponent,
+  cfgFormDesign: CfgFormDesignComponent
 };
 
 @Directive({

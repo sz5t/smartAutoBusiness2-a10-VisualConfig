@@ -176,6 +176,26 @@ import { CfgFormRowComponent } from './config-components/cfg-form-design/cfg-for
 import { CfgFormColsComponent } from './config-components/cfg-form-design/cfg-form-design-layout/cfg-form-layout/cfg-form-cols/cfg-form-cols.component';
 import { CfgFormColComponent } from './config-components/cfg-form-design/cfg-form-design-layout/cfg-form-layout/cfg-form-col/cfg-form-col.component';
 import { CfgFormContainerComponent } from './config-components/cfg-form-design/cfg-form-design-layout/cfg-form-layout/cfg-form-container/cfg-form-container.component';
+import { CfgPropertyTypeComponent } from './config-components/cfg-property/cfg-property-type/cfg-property-type.component';
+import { CfgPropertyItemDirective } from './config-components/cfg-property/cfg-property-item.directive';
+import { CfgPropertyFormComponent } from './config-components/cfg-property/cfg-property-form/cfg-property-form.component';
+import { CfgPropertyConentComponent } from './config-components/cfg-property/cfg-property-conent/cfg-property-conent.component';
+import { CnStaticFormComponent } from './components/cn-static-form/cn-static-form.component';
+import { CnStaticFormItemDirective } from './components/cn-static-form/cn-static-form-item.directive';
+import { CnStaticFormInputComponent } from './components/cn-static-form/cn-static-form-item/cn-static-form-input/cn-static-form-input.component';
+import { CnStaticFormObjectCardComponent } from './components/cn-static-form/cn-static-form-item/cn-static-form-object-card/cn-static-form-object-card.component';
+import { CnStaticFormObjectEmptyComponent } from './components/cn-static-form/cn-static-form-item/cn-static-form-object-empty/cn-static-form-object-empty.component';
+import { CnStaticFormArrayCardComponent } from './components/cn-static-form/cn-static-form-item/cn-static-form-array-card/cn-static-form-array-card.component';
+import { CnStaticFormArrayListComponent } from './components/cn-static-form/cn-static-form-item/cn-static-form-array-list/cn-static-form-array-list.component';
+import { CnStaticFormArrayTableComponent } from './components/cn-static-form/cn-static-form-item/cn-static-form-array-table/cn-static-form-array-table.component';
+import { CnStaticFormSwitchComponent } from './components/cn-static-form/cn-static-form-item/cn-static-form-switch/cn-static-form-switch.component';
+import { CnStaticFormContainersComponent } from './components/cn-static-form/cn-static-form-item/cn-static-form-containers/cn-static-form-containers.component';
+import { CnStaticFormSelectComponent } from './components/cn-static-form/cn-static-form-item/cn-static-form-select/cn-static-form-select.component';
+import { CnStaticFormCheckComponent } from './components/cn-static-form/cn-static-form-item/cn-static-form-check/cn-static-form-check.component';
+import { CnStaticFormCheckboxComponent } from './components/cn-static-form/cn-static-form-item/cn-static-form-checkbox/cn-static-form-checkbox.component';
+import { CnStaticFormSliderComponent } from './components/cn-static-form/cn-static-form-item/cn-static-form-slider/cn-static-form-slider.component';
+import { CnStaticFormCustomSelectComponent } from './components/cn-static-form/cn-static-form-item/cn-static-form-custom-select/cn-static-form-custom-select.component';
+import { CnStaticFormAjaxComponent } from './components/cn-static-form/cn-static-form-cmpt/cn-static-form-ajax/cn-static-form-ajax.component';
 
 
 // #region third libs
@@ -352,6 +372,32 @@ const COMPONENTS = [
   CfgPageCmptTableComponent,
   CfgPageCmptToolbarComponent,
   CfgPageCmptTabsComponent,
+  CfgFormRowsComponent,
+  CfgFormRowComponent,
+  CfgFormColsComponent,
+  CfgFormColComponent,
+  CfgFormContainerComponent,
+  CfgPropertyTypeComponent,
+  CfgPropertyFormComponent,
+  CfgPropertyConentComponent,
+
+  //--静态表单--
+  CnStaticFormComponent,
+  CnStaticFormInputComponent,
+  CnStaticFormObjectCardComponent,
+  CnStaticFormObjectEmptyComponent,
+  CnStaticFormArrayCardComponent,
+  CnStaticFormArrayListComponent,
+  CnStaticFormArrayTableComponent,
+  CnStaticFormSwitchComponent,
+  CnStaticFormContainersComponent,
+  CnStaticFormSelectComponent,
+  CnStaticFormCheckComponent,
+  CnStaticFormCheckboxComponent,
+  CnStaticFormSliderComponent,
+  CnStaticFormCustomSelectComponent,
+  // --静态表单内特殊组件结构--
+  CnStaticFormAjaxComponent,
 ];
 const DIRECTIVES = [
   CnLayoutResolverDirective,
@@ -361,6 +407,8 @@ const DIRECTIVES = [
   CnGridItemDirective,
   CnAttributeItemDirective,
   CnChartsDirective,
+  CnStaticFormItemDirective,
+  CfgPropertyItemDirective,
 ];
 // #endregion
 
@@ -388,11 +436,7 @@ const DIRECTIVES = [
     CnTreeTransferComponent,
     SafeUrlPipe,
     CfgAttributeRanksRowModalComponent,
-    CfgFormRowsComponent,
-    CfgFormRowComponent,
-    CfgFormColsComponent,
-    CfgFormColComponent,
-    CfgFormContainerComponent,
+
 
 
   ],

@@ -1,0 +1,8 @@
+<nz-tabset *ngIf="attr_config" nzTabPosition="top" [nzType]="'card'">
+    <nz-tab *ngFor="let tab of attr_config['typeConent']" [nzTitle]="tab.title">
+        <!-- {{ tab.title}} -->
+        <app-cfg-property-type [config]="tab['propertyTypeConent']" [configData]="staticData"
+            [fromDataService]="fromDataService" (updateValue)="valueChange($event)">
+        </app-cfg-property-type>
+    </nz-tab>
+</nz-tabset>

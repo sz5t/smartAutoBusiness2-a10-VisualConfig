@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-cfg-form-design',
@@ -7,7 +7,7 @@ import { Component, OnInit } from '@angular/core';
   ]
 })
 export class CfgFormDesignComponent implements OnInit {
-
+  @Input() public config;
   constructor() { }
 
   ngOnInit(): void {

@@ -1,0 +1,32 @@
+<nz-collapse>
+    <nz-collapse-panel [nzHeader]="config['title']">
+        <button nz-button type="button" nzType="dashed" nzBlock="true" nzSize="default" style="margin-bottom: 3px;"
+            (click)="add()"><i nz-icon nzType="plus"></i>
+            添加</button>
+        <nz-table #basicTable [nzData]="dataList">
+            <thead>
+                <tr>
+                    <ng-container *ngFor="let r_arr of  config['properties'];let i1 = index;">
+
+                        <th>{{r_arr['title']}}</th>
+
+                    </ng-container>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of validateFormArray.controls;let i = index;">
+                    <ng-container *ngFor="let r_arr of  config['properties'];let i1 = index;">
+                        <td>
+                            <ng-container CnStaticFormItemDirective [validateForm]="item" [config]="r_arr">
+                            </ng-container>
+                        </td>
+                    </ng-container>
+                    <td>
+                        <button nz-button nzType="primary" (click)="delItem(i)">删除</button>
+                    </td>
+                </tr>
+            </tbody>
+        </nz-table>
+    </nz-collapse-panel>
+</nz-collapse>
