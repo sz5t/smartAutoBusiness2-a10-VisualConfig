@@ -103,6 +103,9 @@ export class CfgPropertyItemDirective implements OnInit, OnChanges, OnDestroy {
           if (!this.config['type']) {
             return;
           }
+          if (!components[this.config['type']]) {
+            return;
+          }
           const comp = this.resolver.resolveComponentFactory<any>(components[this.config['type']]);
           this.component = this.container.createComponent(comp);
           if (this.config.sourceData) {

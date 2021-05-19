@@ -100,20 +100,18 @@ export class configFormDataServerService {
      */
 
     // 结构树节点选中
-    treeNodeSelected() {
+    treeNodeSelected(node?) {
         // 判断手动选中 & 代码选中，交互方式不同
 
-
+        this.propertySiderInstance.load(node);
 
     }
 
     // 布局节点选中
     layoutNodeSelected(node?) {
 
-        this.treeInstance.defaultSelectedKeys = [node['id']];
-        // getTreeNodeByKey
-        // nzTreeComponent
-        this.controlsLoad(node);
+        this.layoutTreeInstance.defaultSelectedKeys = [node['id']];
+        this.propertySiderInstance.load(node);
         console.log('布局节点选中', node);
     }
 
@@ -186,6 +184,21 @@ export class configFormDataServerService {
         }
 
         return col_obj;
+
+    }
+    public l_createRow(pid) {
+        let row_id = CommonUtils.uuID(30);
+        let row_obj = {
+            "id": row_id,
+            "key": row_id,
+            "type": "row",
+            "title": "【新增】行",
+            "parentId": pid,
+            "expanded": true,
+            "container": "cols"
+        }
+
+        return row_obj;
 
     }
     CreateLayout_component(pid?) {

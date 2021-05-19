@@ -1,6 +1,6 @@
 <nz-card nzHoverable="true" *ngIf="showLayout || l_config['showTitle']" nzType="inner" nzTitle="行"
-    (click)="click($event)" style="width:100%;border: 1px solid #bfec1b;  padding-right: 4px;"
-    [nzBodyStyle]="{'padding':'1px 2px'}" [nzExtra]="extraTemplate"
+    (click)="click($event)" style="width:100%; padding-right: 4px;" [nzBodyStyle]="{'padding':'1px 2px'}"
+    [nzExtra]="extraTemplate"
     [ngStyle]="(selectedItem['item'] &&(selectedItem['active']==='row')&& (selectedItem['item']['id']===l_config['id']) )? body_style_selected: body_style">
 
 

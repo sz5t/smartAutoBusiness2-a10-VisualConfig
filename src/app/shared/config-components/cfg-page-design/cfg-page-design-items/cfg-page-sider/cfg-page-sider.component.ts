@@ -13,6 +13,8 @@ export class CfgPageSiderComponent implements OnInit {
   @Input() public layout_nodes: NzTreeNodeOptions[];
   @Input() public selectedItem: any;
   @Input() public fromDataService: configFormDataServerService;
+  @ViewChild('nzLayoutTreeComponent', { static: false }) nzLayoutTreeComponent!: NzTreeComponent;
+
   defaultSelectedKeys = [];
   is_drag = true;
   layoutTree = [];
@@ -102,7 +104,6 @@ export class CfgPageSiderComponent implements OnInit {
     console.log('拖动行临时值', ss);
   }
 
-  @ViewChild('nzLayoutTreeComponent', { static: false }) nzLayoutTreeComponent!: NzTreeComponent;
 
   addChildrenNode(id, node, index) {
 
@@ -116,6 +117,22 @@ export class CfgPageSiderComponent implements OnInit {
 
     let _node = this.nzLayoutTreeComponent.getTreeNodeByKey(id);
     _node['children'].splice(index, 1);
+
+  }
+
+  public nzEvent(v?) {
+
+    let selectNode = this.nzLayoutTreeComponent.getSelectedNodeList()
+    console.log('树节点选中', v, this.layout_nodes, this.selectedItem, '=select::=', selectNode);
+    if (v.node['origin']['type']) {
+      this.selectedItem['item'] = { id: v.node['key'] };
+      this.selectedItem['active'] = v.node['origin']['type'];
+    }
+
+    this.fromDataService.treeNodeSelected(selectNode);
+
+
+
 
   }
 

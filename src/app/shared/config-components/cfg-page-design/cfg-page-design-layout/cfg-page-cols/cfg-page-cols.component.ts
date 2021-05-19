@@ -56,7 +56,7 @@ export class CfgPageColsComponent implements OnInit {
     if (ss === 'col') {
       let node = this.fromDataService.l_createCol(this.l_config['id']);
       this.l_config['children'].splice(i, 0, node);
-      this.fromDataService.treeInstance.addChildrenNode(this.l_config['id'], node, i);
+      this.fromDataService.layoutTreeInstance.addChildrenNode(this.l_config['id'], node, i);
     }
 
 
@@ -100,7 +100,7 @@ export class CfgPageColsComponent implements OnInit {
         if (index > -1) {
           this.l_config['children'].splice(index, 1);
 
-          this.fromDataService.treeInstance.delChildrenNode(this.l_config['id'], {}, index);
+          this.fromDataService.layoutTreeInstance.delChildrenNode(this.l_config['id'], {}, index);
         }
 
       }

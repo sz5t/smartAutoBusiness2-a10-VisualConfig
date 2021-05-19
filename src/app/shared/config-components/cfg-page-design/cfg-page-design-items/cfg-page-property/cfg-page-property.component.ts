@@ -41,7 +41,7 @@ export class CfgPagePropertyComponent implements OnInit {
 
     if (this.selectedItem && this.selectedItem['active']) {
       if (this.selectedItem['active']) {
-        this.activeNode = this.selectedItem['cmptitem'];
+        this.activeNode = this.selectedItem['item'];
       }
 
 

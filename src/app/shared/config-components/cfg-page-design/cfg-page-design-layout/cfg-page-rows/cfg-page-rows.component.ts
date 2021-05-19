@@ -60,8 +60,12 @@ export class CfgPageRowsComponent implements OnInit {
       "container": "cols"
     }
 
-    if (ss === 'row')
-      this.l_config.splice(i, 0, c);
+    if (ss === 'row') {
+      let node = this.fromDataService.l_createRow(this.l_config['id']);
+      this.l_config.children.splice(i, 0, node);
+      this.fromDataService.layoutTreeInstance.addChildrenNode(this.l_config['id'], node, i);
+    }
+
   }
   public f_ondragleave(e, d) {
     console.log('离开当前领地++++');
@@ -96,7 +100,7 @@ export class CfgPageRowsComponent implements OnInit {
         const index = this.l_config['children'].findIndex((item) => item === v['data']);
         if (index > -1) {
           this.l_config['children'].splice(index, 1);
-          this.fromDataService.treeInstance.delChildrenNode(this.l_config['id'], {}, index);
+          this.fromDataService.layoutTreeInstance.delChildrenNode(this.l_config['id'], {}, index);
         }
       }
     }

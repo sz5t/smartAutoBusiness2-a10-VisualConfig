@@ -1,4 +1,3 @@
-<p>cfg-page-rows works!</p>
 <div *ngIf="showLayout">
     <ng-container *ngFor="let r of l_config['children']  let i=index">
         <div (drop)="f_ondrop($event,l_config,i)" (dragover)="f_ondragover($event,l_config)"

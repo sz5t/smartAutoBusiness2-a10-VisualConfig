@@ -38,7 +38,7 @@ export class CfgPageRowComponent implements OnInit {
 
     this.optionState = true;
     // 选中
-    this.selectedItem['rowitem'] = this.l_config;
+    this.selectedItem['item'] = this.l_config;
     this.selectedItem['active'] = 'row';
     this.fromDataService.layoutNodeSelected(this.l_config);
     console.log('选中当前行', this.selectedItem);
