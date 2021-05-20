@@ -15,8 +15,23 @@ export class CnStaticFormArrayCardComponent implements OnInit {
   @Output() public updateValue = new EventEmitter<any>(true);
   constructor(private fb: FormBuilder) { }
 
+  size = {
+    "sapn": 24,
+    "nzXs": 24,
+    "nzSm": 24,
+    "nzMd": 24,
+    "nzLg": 24,
+    "ngXl": 24,
+    "nzXXl": 24
+  }
+  span = 24;
   ngOnInit(): void {
 
+    if (this.config.componentConfig && this.config.componentConfig['size']) {
+      this.size = this.config.componentConfig['size'];
+      this.span = this.size['sapn'];
+    }
+    // console.log('array-card===>>>', this.config, this.size, this.span)
   }
 
   ArrFormArray(controlName) {

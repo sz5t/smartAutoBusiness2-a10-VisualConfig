@@ -48,7 +48,7 @@ export class CnStaticFormComponent implements OnInit {
     this.validateForm.valueChanges.subscribe(data => {
 
 
-      const backData = { name: this.config['backName'], data: data }
+      const backData = { name: this.config['backName'], backConfig: this.config['backConfig'] ? this.config['backConfig'] : null, data: data }
       this.updateValue.emit(backData);
       console.log('form', data)
     });
@@ -603,14 +603,33 @@ export class CnStaticFormComponent implements OnInit {
       }
 
     ],
+    enableLayout: true, // 启用布局
     layout: {  //允许递归
-      rows: [
+      "id": '001',
+      "type": "layout",
+      "container": "rows",
+      "rows": [
         {
-          formType: 'row',
-          cols: [
+          "id": 'r_001',
+          "type": "row",
+          "container": "cols",
+          "cols": [
             {
-              id: '',
-              formType: 'col'
+              id: 'c_001',
+              "type": "col",
+              "size": {
+                "span": 24,
+                "nzXs": 24,
+                "nzSm": 24,
+                "nzMd": 24,
+                "nzLg": 24,
+                "ngXl": 24,
+                "nzXXl": 24
+              },
+              "container": "control",
+              "controlName": 'email',
+              "controlIndex": 0,
+
             }
           ]
         }

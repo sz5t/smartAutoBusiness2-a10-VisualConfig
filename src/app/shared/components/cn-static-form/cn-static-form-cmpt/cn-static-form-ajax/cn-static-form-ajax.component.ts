@@ -58,6 +58,8 @@ export class CnStaticFormAjaxComponent implements OnInit {
           ],
           "labelName": "label",
           "valueName": "value",
+          "labelTooltipTitle": "资源访问来源",
+          "labelTooltipIcon": 'question-circle'
 
         },
         formType: 'value',
@@ -113,7 +115,9 @@ export class CnStaticFormAjaxComponent implements OnInit {
         name: 'params',
         type: 'arrayCard',
         componentConfig: {
-
+          size: {
+            "sapn": 12
+          }
         },
         formType: 'array',
         formName: 'formControlName',
@@ -168,7 +172,98 @@ export class CnStaticFormAjaxComponent implements OnInit {
             title: '静态值'
 
           }
-        ]
+        ],
+        enableLayout: true, // 启用布局
+        layout: {  //允许递归
+          "id": '001',
+          "type": "layout",
+          "container": "rows",
+          "rows": [
+            {
+              "id": 'r_001',
+              "type": "row",
+              "container": "cols",
+              "cols": [
+                {
+                  id: 'c_001',
+                  "type": "col",
+                  "size": {
+                    "span": 12,
+                    "nzXs": 12,
+                    "nzSm": 12,
+                    "nzMd": 12,
+                    "nzLg": 12,
+                    "ngXl": 12,
+                    "nzXXl": 12
+                  },
+                  "container": "control",
+                  "controlName": 'email',
+                  "controlIndex": 0,
+
+                },
+                {
+                  id: 'c_002',
+                  "type": "col",
+                  "size": {
+                    "span": 12,
+                    "nzXs": 12,
+                    "nzSm": 12,
+                    "nzMd": 12,
+                    "nzLg": 12,
+                    "ngXl": 12,
+                    "nzXXl": 12
+                  },
+                  "container": "control",
+                  "controlName": 'email',
+                  "controlIndex": 1,
+
+                }
+              ]
+            },
+            {
+              "id": 'r_002',
+              "type": "row",
+              "container": "cols",
+              "cols": [
+                {
+                  id: 'c_001',
+                  "type": "col",
+                  "size": {
+                    "span": 12,
+                    "nzXs": 12,
+                    "nzSm": 12,
+                    "nzMd": 12,
+                    "nzLg": 12,
+                    "ngXl": 12,
+                    "nzXXl": 12
+                  },
+                  "container": "control",
+                  "controlName": 'email',
+                  "controlIndex": 2,
+
+                },
+                {
+                  id: 'c_002',
+                  "type": "col",
+                  "size": {
+                    "span": 12,
+                    "nzXs": 12,
+                    "nzSm": 12,
+                    "nzMd": 12,
+                    "nzLg": 12,
+                    "ngXl": 12,
+                    "nzXXl": 12
+                  },
+                  "container": "control",
+                  "controlName": 'email',
+                  "controlIndex": 3,
+
+                }
+              ]
+            }
+          ]
+
+        }
 
       },
       {
@@ -236,7 +331,43 @@ export class CnStaticFormAjaxComponent implements OnInit {
             name: 'name',
             type: 'input',
             componentConfig: {
-
+              hiddenTitle: true,
+              "labelSize": {
+                "span": 8,
+                "nzXs": {
+                  "span": 7,
+                  "offset": 1
+                },
+                "nzSm": {
+                  "span": 7,
+                  "offset": 1
+                },
+                "nzMd": {
+                  "span": 7,
+                  "offset": 1
+                },
+                "nzLg": {
+                  "span": 7,
+                  "offset": 1
+                },
+                "ngXl": {
+                  "span": 7,
+                  "offset": 1
+                },
+                "nzXXl": {
+                  "span": 7,
+                  "offset": 1
+                }
+              },
+              "controlSize": {
+                "span": 24,
+                "nzXs": 24,
+                "nzSm": 24,
+                "nzMd": 24,
+                "nzLg": 24,
+                "ngXl": 24,
+                "nzXXl": 24
+              }
             },
             formType: 'value',
             formName: 'formControlName',
@@ -248,7 +379,7 @@ export class CnStaticFormAjaxComponent implements OnInit {
             name: 'type',
             type: 'input',
             componentConfig: {
-
+              hiddenTitle: true
             },
             formType: 'value',
             formName: 'formControlName',
@@ -260,7 +391,7 @@ export class CnStaticFormAjaxComponent implements OnInit {
             name: 'valueName',
             type: 'input',
             componentConfig: {
-
+              hiddenTitle: true
             },
             formType: 'value',
             formName: 'formControlName',
@@ -271,7 +402,132 @@ export class CnStaticFormAjaxComponent implements OnInit {
         ]
 
       }
-    ]
+    ],
+    enableLayout: true, // 启用布局
+    layout: {  //允许递归
+      "id": '001',
+      "type": "layout",
+      "container": "rows",
+      "rows": [
+        {
+          "id": 'r_001',
+          "type": "row",
+          "container": "cols",
+          "cols": [
+            {
+              id: 'c_001',
+              "type": "col",
+              "size": {
+                "span": 12,
+                "nzXs": 12,
+                "nzSm": 12,
+                "nzMd": 12,
+                "nzLg": 12,
+                "ngXl": 12,
+                "nzXXl": 12
+              },
+              "container": "control",
+              "controlName": 'email',
+              "controlIndex": 0,
+
+            },
+            {
+              id: 'c_002',
+              "type": "col",
+              "size": {
+                "span": 12,
+                "nzXs": 12,
+                "nzSm": 12,
+                "nzMd": 12,
+                "nzLg": 12,
+                "ngXl": 12,
+                "nzXXl": 12
+              },
+              "container": "control",
+              "controlName": 'email',
+              "controlIndex": 1,
+
+            },
+            {
+              id: 'c_003',
+              "type": "col",
+              "size": {
+                "span": 12,
+                "nzXs": 12,
+                "nzSm": 12,
+                "nzMd": 12,
+                "nzLg": 12,
+                "ngXl": 12,
+                "nzXXl": 12
+              },
+              "container": "control",
+              "controlName": 'email',
+              "controlIndex": 2,
+
+            }
+          ]
+        },
+        {
+          "id": 'r_002',
+          "type": "row",
+          "container": "cols",
+          "cols": [
+            {
+              id: 'c_001',
+              "type": "col",
+              "size": {
+                "span": 24,
+                "nzXs": 24,
+                "nzSm": 24,
+                "nzMd": 24,
+                "nzLg": 24,
+                "ngXl": 24,
+                "nzXXl": 24
+              },
+              "container": "control",
+              "controlName": 'email',
+              "controlIndex": 3,
+
+            },
+            {
+              id: 'c_002',
+              "type": "col",
+              "size": {
+                "span": 24,
+                "nzXs": 24,
+                "nzSm": 24,
+                "nzMd": 24,
+                "nzLg": 24,
+                "ngXl": 24,
+                "nzXXl": 24
+              },
+              "container": "control",
+              "controlName": 'email',
+              "controlIndex": 4,
+
+            },
+            {
+              id: 'c_003',
+              "type": "col",
+              "size": {
+                "span": 24,
+                "nzXs": 24,
+                "nzSm": 24,
+                "nzMd": 24,
+                "nzLg": 24,
+                "ngXl": 24,
+                "nzXXl": 24
+              },
+              "container": "control",
+              "controlName": 'email',
+              "controlIndex": 5,
+
+            }
+          ]
+        }
+      ]
+
+    }
   }
 
 

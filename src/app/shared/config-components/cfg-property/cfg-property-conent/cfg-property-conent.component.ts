@@ -20,9 +20,15 @@ export class CfgPropertyConentComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.attr_config = this.config['sourceConfig'];
-    // this.attr_config = this.gloab_config['cmpt'];
-    console.log('sssssssss', this.staticData);
+    if (this.staticData) {
+      this.attr_config = this.config['sourceConfig'];
+      // 【根据配置值，读取小组件配置】  根据type 值 组件标识 加载相应小组配置 
+      // this.attr_config = this.gloab_config['cmpt'];
+      console.log('sssssssss', this.staticData);
+    } else { // [暂时]
+      this.attr_config = this.config['sourceConfig'];
+    }
+
   }
 
   gloab_config = {

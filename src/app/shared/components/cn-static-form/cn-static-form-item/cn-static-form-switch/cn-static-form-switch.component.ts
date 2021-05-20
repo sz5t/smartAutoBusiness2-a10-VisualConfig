@@ -23,8 +23,9 @@ export class CnStaticFormSwitchComponent implements OnInit {
   log(v?) {
     console.log('switch', v, this.fromDataService, this.config);
 
-    this.text(v);
-
+    if (this.config['componentConfig']['casadeValue']) {
+      this.text(v);
+    }
   }
   public text(v) {
     let _c = {

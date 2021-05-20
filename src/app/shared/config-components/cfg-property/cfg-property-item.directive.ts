@@ -44,7 +44,12 @@ export class CfgPropertyItemDirective implements OnInit, OnChanges, OnDestroy {
 
     if (this.config.sourceData) {
       if (this.sourceData) {
-        this.component.instance.staticData = this.sourceData[this.config.sourceData['name']];
+
+        if (this.config.sourceData['type'] === 'root') {
+          this.component.instance.staticData = this.sourceData;
+        } else {
+          this.component.instance.staticData = this.sourceData[this.config.sourceData['name']];
+        }
         console.log('----------------->>>>>>', this.sourceData[this.config.sourceData['name']]);
       }
 
@@ -78,7 +83,11 @@ export class CfgPropertyItemDirective implements OnInit, OnChanges, OnDestroy {
           this.component = this.container.createComponent(comp);
           if (this.config.sourceData) {
             if (this.sourceData) {
-              this.component.instance.staticData = this.sourceData[this.config.sourceData['name']];
+              if (this.config.sourceData['type'] === 'root') {
+                this.component.instance.staticData = this.sourceData;
+              } else {
+                this.component.instance.staticData = this.sourceData[this.config.sourceData['name']];
+              }
             }
           }
           this.component.instance.config = this.config;
@@ -110,7 +119,11 @@ export class CfgPropertyItemDirective implements OnInit, OnChanges, OnDestroy {
           this.component = this.container.createComponent(comp);
           if (this.config.sourceData) {
             if (this.sourceData) {
-              this.component.instance.staticData = this.sourceData[this.config.sourceData['name']];
+              if (this.config.sourceData['type'] === 'root') {
+                this.component.instance.staticData = this.sourceData;
+              } else {
+                this.component.instance.staticData = this.sourceData[this.config.sourceData['name']];
+              }
             }
 
           }

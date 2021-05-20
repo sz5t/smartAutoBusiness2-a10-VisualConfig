@@ -1,9 +1,61 @@
 <nz-card nzType="inner" [nzTitle]="config['title']">
     <div [formGroup]="validateForm">
-        <div *ngIf="config['formType'] === 'object'">
-            <ng-container *ngFor="let r_obj of config['properties']">
+        <div *ngIf="config['formType']">
+            <!--             <ng-container *ngFor="let r_obj of config['properties']">
                 <ng-container CnStaticFormItemDirective [validateForm]="validateForm" [config]="r_obj">
                 </ng-container>
+            </ng-container> -->
+            <ng-container *ngIf="!config['enableLayout'] || !config['layout'] ">
+                <ng-container *ngFor="let r of config['properties']">
+
+
+                    <div [hidden]="r['hidden']">
+                        <ng-container CnStaticFormItemDirective [validateForm]="validateForm" [config]="r"
+                            [fromDataService]="fromDataService" (cascadeValue)="cascadeValueEmit($event)">
+                        </ng-container>
+
+                    </div>
+
+                </ng-container>
+            </ng-container>
+            <ng-container *ngIf="config['enableLayout'] && config['layout']">
+
+                <div nz-row [nzGutter]="12" *ngFor="let r of config['layout']['rows']">
+                    <div nz-col *ngFor="let c of r.cols" [nzSpan]="c.size.span" [nzSm]="c.size.nzSm"
+                        [nzXs]="c.size.nzXs" [nzMd]="c.size.nzMd" [nzLg]="c.size.nzLg" [nzXl]="c.size.nzXl"
+                        [ngStyle]="{'display': c.display ? c.display : null}">
+
+                        <ng-container *ngIf="c['container']==='control'">
+                            <div [hidden]="r['hidden']">
+                                <ng-container CnStaticFormItemDirective [validateForm]="validateForm"
+                                    [config]="config['properties'][c['controlIndex']]"
+                                    [fromDataService]="fromDataService" (cascadeValue)="cascadeValueEmit($event)">
+                                </ng-container>
+                            </div>
+
+                        </ng-container>
+                        <ng-container *ngIf="c['container']==='rows'">
+                            <div nz-row [nzGutter]="12" *ngFor="let c_r of c['rows']">
+                                <div nz-col *ngFor="let c_c of c_r.cols" [nzSpan]="c_c.size.span" [nzSm]="c_c.size.nzSm"
+                                    [nzXs]="c_c.size.nzXs" [nzMd]="c_c.size.nzMd" [nzLg]="c_c.size.nzLg"
+                                    [nzXl]="c_c.size.nzXl" [ngStyle]="{'display': c_c.display ? c_c.display : null}">
+
+                                    <ng-container *ngIf="c_c['container']==='control'">
+                                        <div [hidden]="r['hidden']">
+                                            <ng-container CnStaticFormItemDirective [validateForm]="validateForm"
+                                                [config]="config['properties'][c_c['controlIndex']]"
+                                                [fromDataService]="fromDataService"
+                                                (cascadeValue)="cascadeValueEmit($event)">
+                                            </ng-container>
+                                        </div>
+                                    </ng-container>
+                                </div>
+                            </div>
+                        </ng-container>
+
+
+                    </div>
+                </div>
             </ng-container>
         </div>
     </div>

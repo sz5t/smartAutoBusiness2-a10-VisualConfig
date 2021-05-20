@@ -71,7 +71,7 @@ export class CfgPagePropertyComponent implements OnInit {
             {
               code: 'style',
               title: '样式',
-              type: 'size',
+              type: 'style',
               active: true
             }
           ]
@@ -82,10 +82,68 @@ export class CfgPagePropertyComponent implements OnInit {
 
           propertyTypeConent: [
             {
-              code: 'privateProperty',
-              title: '私有属性',
-              type: 'size',
-              active: true
+              code: 'style',
+              title: '基本内容【测试】',
+              type: 'property',
+              active: true,
+              sourceConfig: {
+
+                type: 'staticForm',
+                backName: 'title',
+                backConfig: [
+                  {
+                    name: 'title'
+                  },
+                  {
+                    name: 'showTitle'
+                  }
+                ],
+                properties: [
+                  {
+                    name: 'id',
+                    type: 'input',
+                    componentConfig: {
+
+                    },
+                    formType: 'value',
+                    formName: 'formControlName',
+                    validations: [],
+                    title: '主键'
+
+                  },
+                  {
+                    name: 'title',
+                    type: 'input',
+                    componentConfig: {
+
+                    },
+                    formType: 'value',
+                    formName: 'formControlName',
+                    validations: [],
+                    title: '标题'
+
+                  },
+                  {
+                    name: 'showTitle',
+                    type: 'switch',
+                    componentConfig: {
+
+                    },
+                    formType: 'value',
+                    formName: 'formControlName',
+                    validations: [],
+                    title: '是否显示标题'
+
+                  }
+
+
+
+                ]
+              },
+              sourceData: {
+                type: 'root',
+                name: 'title'
+              }
             }
           ]
         }
@@ -93,7 +151,7 @@ export class CfgPagePropertyComponent implements OnInit {
       ]
 
     },
-    col: {
+    col1: {
       componentCode: 'form-row',
       typeConent: [
         {
@@ -160,7 +218,57 @@ export class CfgPagePropertyComponent implements OnInit {
                     ]
 
                   }
-                ]
+                ],
+                enableLayout: true, // 启用布局
+                layout: {  //允许递归
+                  "id": '001',
+                  "type": "layout",
+                  "container": "rows",
+                  "rows": [
+                    {
+                      "id": 'r_001',
+                      "type": "row",
+                      "container": "cols",
+                      "cols": [
+                        {
+                          id: 'c_001',
+                          "type": "col",
+                          "size": {
+                            "span": 12,
+                            "nzXs": 12,
+                            "nzSm": 12,
+                            "nzMd": 12,
+                            "nzLg": 12,
+                            "ngXl": 12,
+                            "nzXXl": 12
+                          },
+                          "container": "control",
+                          "controlName": 'email',
+                          "controlIndex": 0,
+
+                        },
+                        {
+                          id: 'c_002',
+                          "type": "col",
+                          "size": {
+                            "span": 12,
+                            "nzXs": 12,
+                            "nzSm": 12,
+                            "nzMd": 12,
+                            "nzLg": 12,
+                            "ngXl": 12,
+                            "nzXXl": 12
+                          },
+                          "container": "control",
+                          "controlName": 'email',
+                          "controlIndex": 1,
+
+                        }
+                      ]
+                    }
+                  ]
+
+                }
               },
               sourceData: {
                 name: 'style'
@@ -183,13 +291,47 @@ export class CfgPagePropertyComponent implements OnInit {
 
       ]
     },
-    cmpt: {
+    col: {
       componentCode: 'form-input',
       typeConent: [
         {
           code: 'style',
           title: '样式',
           propertyTypeConent: [
+            {
+              code: 'style',
+              title: '基本内容【测试】',
+              type: 'property',
+              active: true,
+              sourceConfig: {
+
+                type: 'staticForm',
+                backName: 'title',
+                backConfig: [
+                  {
+                    name: 'title'
+                  }
+                ],
+                properties: [
+                  {
+                    name: 'title',
+                    type: 'input',
+                    componentConfig: {
+
+                    },
+                    formType: 'value',
+                    formName: 'formControlName',
+                    validations: [],
+                    title: '标题'
+
+                  }
+                ]
+              },
+              sourceData: {
+                type: 'root',
+                name: 'title'
+              }
+            },
             {
               code: 'style',
               title: '样式',
@@ -953,11 +1095,20 @@ export class CfgPagePropertyComponent implements OnInit {
 
 
 
-
   valueChange(v) {
 
     console.log('属性编辑器返回', v, this.selectedItem, this.activeNode);
-    this.fromDataService.layoutSourceData[this.activeNode.id][v['name']] = v['data'];
+    if (v['backConfig'] && v['backConfig'].length > 0) {
+
+      v['backConfig'].forEach(element => {
+
+        this.fromDataService.layoutSourceData[this.activeNode.id][element['name']] = v['data'][element['name']]
+      });
+
+    } else {
+      this.fromDataService.layoutSourceData[this.activeNode.id][v['name']] = v['data'];
+    }
+
     console.log('====最终====>>>', this.fromDataService.layoutSourceData[this.activeNode.id]);
 
 
