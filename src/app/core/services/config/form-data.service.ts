@@ -183,7 +183,11 @@ export class configFormDataServerService {
             "component": this.CreateLayout_component(col_id)
         }
 
+        this.layoutSourceData[col_id] = col_obj;
+
         return col_obj;
+
+
 
     }
     public l_createRow(pid) {
@@ -195,9 +199,11 @@ export class configFormDataServerService {
             "title": "【新增】行",
             "parentId": pid,
             "expanded": true,
-            "container": "cols"
+            "container": "cols",
+            "cols": [],
+            "children": []
         }
-
+        this.layoutSourceData[row_id] = row_obj;
         return row_obj;
 
     }

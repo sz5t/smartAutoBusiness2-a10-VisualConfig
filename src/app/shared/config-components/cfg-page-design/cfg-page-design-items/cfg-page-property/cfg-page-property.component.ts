@@ -51,10 +51,6 @@ export class CfgPagePropertyComponent implements OnInit {
 
 
 
-    } else {
-      this.attr_config = this.gloab_config['cmpt'];
-      this.attr_typeConent = this.attr_config['typeConent'].filter(d => d !== '');
-      this.attr_config_data = {};
     }
     console.log('_sider', this.attr_config, this.attr_config_data);
   }
@@ -107,8 +103,68 @@ export class CfgPagePropertyComponent implements OnInit {
             {
               code: 'style',
               title: '样式',
-              type: 'size',
-              active: true
+              type: 'property',
+              active: true,
+              sourceConfig: {
+
+                type: 'staticForm',
+                backName: 'style',
+                properties: [
+                  {
+                    name: 'span',
+                    type: 'input',
+                    componentConfig: {
+
+                    },
+                    formType: 'value',
+                    formName: 'formControlName',
+                    validations: [],
+                    title: '栅格'
+
+                  },
+                  {
+                    name: 'nzXs',
+                    type: 'objectCard',
+                    componentConfig: {
+
+                    },
+                    formType: 'object',
+                    formName: 'formControlName',
+                    validations: [],
+                    title: 'nzXs 576px',
+                    properties: [
+                      {
+                        name: 'offset',
+                        type: 'input',
+                        componentConfig: {
+
+                        },
+                        formType: 'value',
+                        formName: 'formControlName',
+                        validations: [],
+                        title: '缩进'
+
+                      },
+                      {
+                        name: 'span',
+                        type: 'input',
+                        componentConfig: {
+
+                        },
+                        formType: 'value',
+                        formName: 'formControlName',
+                        validations: [],
+                        title: '栅格'
+
+                      }
+                    ]
+
+                  }
+                ]
+              },
+              sourceData: {
+                name: 'style'
+              }
             }
           ]
         },

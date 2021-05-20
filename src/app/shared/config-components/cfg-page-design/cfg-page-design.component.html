@@ -7,8 +7,8 @@
         <app-cfg-page-view [fromDataService]="fromDataService" [(selectedItem)]="selectedItem"
             [showLayout]="showLayout"></app-cfg-page-view>
     </div>
-    <div nz-col nzFlex="0 1 400px">
-
+    <div nz-col nzFlex="0 1 400px" [ngStyle]="style1">
+        <!-- style="max-height:80px;overflow:auto" -->
         <app-cfg-page-property [fromDataService]="fromDataService" [(selectedItem)]="selectedItem">
         </app-cfg-page-property>
 

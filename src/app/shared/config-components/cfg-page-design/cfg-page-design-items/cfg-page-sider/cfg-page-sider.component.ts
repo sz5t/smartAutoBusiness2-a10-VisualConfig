@@ -61,32 +61,38 @@ export class CfgPageSiderComponent implements OnInit {
     },
     {
       active: true,
-      name: '表单组件',
+      name: '数据组件',
       disabled: false,
       children: [
         {
           "id": "001",
           "dropName": "item_input",
           "icon": "edit",
-          "title": "输入框"
+          "title": "表单"
         },
         {
           "id": "002",
           "dropName": "item_select",
           "icon": "select",
-          "title": "下拉"
+          "title": "树"
         },
         {
           "id": "003",
           "dropName": "item_time",
           "icon": "field-time",
-          "title": "时间"
+          "title": "表格"
         },
         {
           "id": "004",
           "dropName": "item_check",
           "icon": "check-square",
-          "title": "勾选"
+          "title": "树表"
+        },
+        {
+          "id": "005",
+          "dropName": "item_check",
+          "icon": "check-square",
+          "title": "按钮组"
         }
 
 
