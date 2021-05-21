@@ -191,8 +191,8 @@ export class configFormDataServerService {
             "span": 24,
             "size": this.CreateLayout_col_size(24),
             "showTitle": false,
-            "container": "component",
-            "component": this.CreateLayout_component(col_id)
+            "container": "",
+            // "component": this.CreateLayout_component(col_id)
         }
 
         this.layoutSourceData[col_id] = col_obj;
