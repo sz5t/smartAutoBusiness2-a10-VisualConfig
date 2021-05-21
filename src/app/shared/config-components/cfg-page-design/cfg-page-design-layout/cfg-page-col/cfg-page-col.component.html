@@ -1,13 +1,21 @@
 <div style="width: 100%;" *ngIf="showLayout || config['showTitle']" (click)="click($event)">
-    <nz-card nzHoverable="true" draggable="false" [hidden]="draging" (dragstart)="f_ondragstart($event,'col')"
-        (dragend)="f_ondragend($event)" nzType="inner" [nzTitle]="config['title']"
+    <!-- (dragstart)="f_ondragstart($event,'col')" -->
+    <nz-card nzHoverable="true" draggable="false" [hidden]="draging" (dragend)="f_ondragend($event)" nzType="inner"
+        [nzTitle]="config['title']" (drop)="f_ondrop($event,l_config)"
         [ngStyle]="(selectedItem['item'] &&(selectedItem['active']==='col')&& (selectedItem['item']['id']===l_config['id']) )? body_style_selected: body_style"
         [nzBodyStyle]="{'padding':'1px 2px'}" [nzExtra]="extraTemplate">
         <!-- {{l_config['id']}} -->
-        内容
-        <!-- <app-config-l-drag-container [(l_config)]="l_config['component']" [(selectedItem)]="selectedItem"
-        [(cmptState)]="cmptState" [fromDataService]="fromDataService">
-      </app-config-l-drag-container> -->
+
+        <div *ngIf="l_config['container']">
+            <app-cfg-page-container [(l_config)]="l_config" [(selectedItem)]="selectedItem" [(cmptState)]="cmptState"
+                [fromDataService]="fromDataService" [showLayout]="showLayout"></app-cfg-page-container>
+
+        </div>
+        <div *ngIf="!l_config['container']" style="height: 200px;">
+            <p>可拖放数据【组件】或者布局【行】</p>
+
+        </div>
+
         <ng-template #extraTemplate>
             <ng-container
                 *ngIf="optionState &&(selectedItem['active']==='col') && (selectedItem['item'] && (selectedItem['item']['id']===l_config['id']) )">
