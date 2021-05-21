@@ -15,7 +15,7 @@
             </div>
         </div>
         <div *ngIf="l_config['children'].length === 0" nz-row [nzGutter]="6">
-            <div nz-col style="height: 50px;" (drop)="f_ondrop($event,l_config,0)"
+            <div nz-col style="height: 100px;" (drop)="f_ondrop($event,l_config,0)"
                 (dragover)="f_ondragover($event,l_config)" (dragenter)="f_ondragenter($event,0)"
                 (dragleave)="f_ondragleave($event,0)" nzSpan="24">
                 可添加列
@@ -38,7 +38,7 @@
 
         </div>
         <div *ngIf="!l_config['children'] || l_config['children'].length === 0" nz-row [nzGutter]="6">
-            <div style="height: 50px;" nz-col (drop)="f_ondrop($event,l_config,0)"
+            <div style="height: 100px;" nz-col (drop)="f_ondrop($event,l_config,0)"
                 (dragover)="f_ondragover($event,l_config)" (dragenter)="f_ondragenter($event,0)"
                 (dragleave)="f_ondragleave($event,0)" nzSpan="24">
                 可添加列

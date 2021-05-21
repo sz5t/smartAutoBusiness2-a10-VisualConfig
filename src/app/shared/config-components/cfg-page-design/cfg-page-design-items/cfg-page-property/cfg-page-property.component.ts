@@ -1117,6 +1117,126 @@ export class CfgPagePropertyComponent implements OnInit {
     },
     select: {
 
+    },
+    cnDataTable: {
+      componentCode: 'form-row',
+      typeConent: [
+        {
+          code: 'attr',
+          title: '属性',
+
+          propertyTypeConent: [
+            {
+              code: 'base',
+              title: '基本内容【测试】',
+              type: 'property',
+              active: true,
+              sourceConfig: {
+
+                type: 'staticForm',
+                backName: 'title',
+                backConfig: [
+                  {
+                    name: 'title'
+                  }
+                ],
+                properties: [
+                  {
+                    name: 'id',
+                    type: 'input',
+                    componentConfig: {
+
+                    },
+                    formType: 'value',
+                    formName: 'formControlName',
+                    validations: [],
+                    title: '主键'
+
+                  },
+                  {
+                    name: 'title',
+                    type: 'input',
+                    componentConfig: {
+
+                    },
+                    formType: 'value',
+                    formName: 'formControlName',
+                    validations: [],
+                    title: '标题'
+
+                  }
+                ]
+              },
+              sourceData: {
+                type: 'root',
+                name: 'title'
+              }
+            }
+          ]
+        }
+
+      ]
+
+    },
+    cnTabs: {
+      componentCode: 'form-row',
+      typeConent: [
+        {
+          code: 'attr',
+          title: '属性',
+
+          propertyTypeConent: [
+            {
+              code: 'base',
+              title: '基本内容【测试】',
+              type: 'property',
+              active: true,
+              sourceConfig: {
+
+                type: 'staticForm',
+                backName: 'title',
+                backConfig: [
+                  {
+                    name: 'title'
+                  }
+                ],
+                properties: [
+                  {
+                    name: 'id',
+                    type: 'input',
+                    componentConfig: {
+
+                    },
+                    formType: 'value',
+                    formName: 'formControlName',
+                    validations: [],
+                    title: '主键'
+
+                  },
+                  {
+                    name: 'title',
+                    type: 'input',
+                    componentConfig: {
+
+                    },
+                    formType: 'value',
+                    formName: 'formControlName',
+                    validations: [],
+                    title: '标题'
+
+                  }
+                ]
+              },
+              sourceData: {
+                type: 'root',
+                name: 'title'
+              }
+            }
+          ]
+        }
+
+      ]
+
     }
 
 

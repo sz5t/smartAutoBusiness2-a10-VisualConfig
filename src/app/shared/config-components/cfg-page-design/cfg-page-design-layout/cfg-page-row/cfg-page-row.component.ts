@@ -40,7 +40,7 @@ export class CfgPageRowComponent implements OnInit {
 
 
   click(e?) {
-
+    e.stopPropagation();
     this.optionState = true;
     // 选中
     this.selectedItem['item'] = this.l_config;

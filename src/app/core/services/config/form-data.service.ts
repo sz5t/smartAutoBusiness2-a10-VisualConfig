@@ -219,6 +219,23 @@ export class configFormDataServerService {
         return row_obj;
 
     }
+    public l_create_component(pid?, cmptObj?) {
+        let cmpt_id = CommonUtils.uuID(30);
+        let cmpt_obj = {
+            "id": cmpt_id,
+            "key": cmpt_id,
+            "type": cmptObj['type'],
+            "title": cmptObj['title'],
+            "container": cmptObj['container'],
+            "parentId": pid,
+            "expanded": true
+        }
+
+        this.layoutSourceData[cmpt_id] = cmpt_obj;
+        return cmpt_obj;
+
+
+    }
     CreateLayout_component(pid?) {
         let cmpt_id = CommonUtils.uuID(30);
         let cmpt_obj = {

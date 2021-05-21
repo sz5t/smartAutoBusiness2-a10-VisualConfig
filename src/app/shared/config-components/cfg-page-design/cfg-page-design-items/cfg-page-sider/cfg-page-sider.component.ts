@@ -125,6 +125,11 @@ export class CfgPageSiderComponent implements OnInit {
     _node['children'].splice(index, 1);
 
   }
+  clearChildrenByNode(id) {
+    let _node = this.nzLayoutTreeComponent.getTreeNodeByKey(id);
+    // _node.clearChildren();
+    _node['children'] = [];
+  }
 
   updateNode(id?, data?) {
     let _node = this.nzLayoutTreeComponent.getTreeNodeByKey(id);

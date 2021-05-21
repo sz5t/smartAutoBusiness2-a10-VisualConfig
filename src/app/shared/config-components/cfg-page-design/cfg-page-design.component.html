@@ -3,7 +3,7 @@
 
         <app-cfg-page-sider [fromDataService]="fromDataService" [(selectedItem)]="selectedItem"></app-cfg-page-sider>
     </div>
-    <div nz-col nzFlex="auto">
+    <div nz-col nzFlex="auto" [ngStyle]="style1">
         <app-cfg-page-view [fromDataService]="fromDataService" [(selectedItem)]="selectedItem"
             [showLayout]="showLayout"></app-cfg-page-view>
     </div>

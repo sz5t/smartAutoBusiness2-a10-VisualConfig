@@ -14,7 +14,6 @@ export class CnStaticFormObjectCardComponent implements OnInit {
   @Input() public fromDataService: configFormDataServerService;
   @Output() public updateValue = new EventEmitter<any>(true);
   @Output() public cascadeValue = new EventEmitter<any>(true);
-  @Input() public fromDataService: configFormDataServerService;
   constructor() { }
 
   ngOnInit(): void {

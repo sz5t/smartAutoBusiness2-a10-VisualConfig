@@ -1,1 +1,15 @@
-<p>cfg-page-cmpt-tabs works!</p>
+<nz-tabset [nzType]="'card'">
+    <nz-tab *ngFor="let tab of tabs" [nzTitle]="titleTemplate">
+        <ng-template #titleTemplate>
+            <div>
+                {{ tab.title }}
+
+                <i *ngIf="!designStatus" nz-icon nzType="close" (click)="closeTab(tab.id)" class="ant-tabs-close-x"></i>
+            </div>
+        </ng-template>
+        <div style="height: 100px;">
+            内容
+        </div>
+
+    </nz-tab>
+</nz-tabset>
