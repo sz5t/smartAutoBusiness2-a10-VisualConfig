@@ -1,17 +1,21 @@
-<p>cfg-page-container works!</p>
-<div *ngIf="testCmp['component']['type'] === 'cnDataTable'">
-    <app-cfg-page-cmpt-table></app-cfg-page-cmpt-table>
-</div>
+<!-- <p>cfg-page-container works!</p> -->
+
 <div *ngIf="l_config">
     <div *ngIf="l_config['container'] === 'rows'">
         <app-cfg-page-rows [(l_config)]="l_config" [showLayout]="showLayout" [(selectedItem)]="selectedItem"
             [(cmptState)]="cmptState" [fromDataService]="fromDataService">
         </app-cfg-page-rows>
     </div>
+    <div *ngIf="l_config['container'] === 'component'">
 
-    <div *ngIf="l_config['container'] === 'cols'">
-        <app-cfg-page-cols [(l_config)]="l_config" [showLayout]="showLayout" [(selectedItem)]="selectedItem"
-            [(cmptState)]="cmptState" [fromDataService]="fromDataService">
-        </app-cfg-page-cols>
+
+        <div *ngFor="let r of l_config['children']  let i=index">
+            <ng-container *ngIf="r['type']==='cnDataTable'">
+                <app-cfg-page-cmpt-table></app-cfg-page-cmpt-table>
+            </ng-container>
+            <ng-container *ngIf="r['type']==='cnTabs'">
+                <app-cfg-page-cmpt-tabs></app-cfg-page-cmpt-tabs>
+            </ng-container>
+        </div>
     </div>
 </div>

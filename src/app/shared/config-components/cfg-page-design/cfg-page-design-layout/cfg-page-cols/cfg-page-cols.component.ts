@@ -19,9 +19,23 @@ export class CfgPageColsComponent implements OnInit {
   @Output() public layoutOptions = new EventEmitter();
   constructor() { }
 
+  config: any = null;
   public testCmp;
 
   ngOnInit(): void {
+    this.load();
+
+  }
+
+  load() {
+
+    let newConfig = {}
+    this.l_config['children'].forEach(element => {
+
+      newConfig[element['id']] = this.fromDataService.layoutSourceData[element['id']];
+    });
+    this.config = newConfig;
+    console.log('cols 最终配置', this.config)
   }
 
   public f_ondrop(e?, d?, i?) {
@@ -34,37 +48,41 @@ export class CfgPageColsComponent implements OnInit {
     // console.log('拖拽JSON', dropData);
 
     if (ss === 'col') {
-      const colId = CommonUtils.uuID(36);
-      const cmpId = CommonUtils.uuID(36);
-      this.l_config['children'] = [];
-      this.l_config['container'] = 'cols';
-      this.l_config['children'].push({
-        children: [{
-          expanded: true,
-          id: cmpId,
-          key: cmpId,
-          parentId: colId,
-          title: "明细项",
-          type: "form"
-        }],
-        component: {
-          expanded: true,
-          id: cmpId,
-          key: cmpId,
-          parentId: colId,
-          title: "明细项",
-          type: "form"
-        },
-        container: "component",
-        expanded: true,
-        id: colId,
-        key: colId,
-        parentId: this.l_config['id'],
-        size: {},
-        span: 24,
-        title: "列",
-        type: "col"
-      })
+      let node = this.fromDataService.l_createCol(this.l_config['id']);
+      this.fromDataService.layoutTreeInstance.addChildrenNode(this.l_config['id'], node, i);
+      this.load();
+      // this.l_config['children'].splice(i, 0, node);
+      /*       const colId = CommonUtils.uuID(36);
+            const cmpId = CommonUtils.uuID(36);
+            this.l_config['children'] = [];
+            this.l_config['container'] = 'cols';
+            this.l_config['children'].push({
+              children: [{
+                expanded: true,
+                id: cmpId,
+                key: cmpId,
+                parentId: colId,
+                title: "明细项",
+                type: "form"
+              }],
+              component: {
+                expanded: true,
+                id: cmpId,
+                key: cmpId,
+                parentId: colId,
+                title: "明细项",
+                type: "form"
+              },
+              container: "component",
+              expanded: true,
+              id: colId,
+              key: colId,
+              parentId: this.l_config['id'],
+              size: {},
+              span: 24,
+              title: "列",
+              type: "col"
+            }) */
     }
 
     // if (ss === 'col') {

@@ -97,12 +97,13 @@ export class CfgPageViewComponent implements OnInit {
         "expanded": true,
         "span": this.layout_col_size,
         "size": this.CreateLayout_col_size(this.layout_col_size),
-        "container": "component",
-        "component": cmpt_obj
+        "container": "",
+        children: []
       }
       let c = {
         ...col_obj,
-        "children": [cmpt_obj]
+        children: []
+        // "children": [cmpt_obj]
       }
       this.layoutSourceData[col_id] = col_obj;
       cols.push(c);

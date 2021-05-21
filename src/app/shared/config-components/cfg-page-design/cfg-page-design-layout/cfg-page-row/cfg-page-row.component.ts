@@ -23,6 +23,11 @@ export class CfgPageRowComponent implements OnInit {
   body_style_selected: any = { 'padding': '1px 2px', 'border': "3px dashed red" }
   ngOnInit(): void {
 
+    this.load();
+    this.fromDataService.layoutStructInstance[this.l_config['id']] = this;
+  }
+
+  load() {
     this.config = this.fromDataService.layoutSourceData[this.l_config['id']];
   }
 
@@ -35,7 +40,7 @@ export class CfgPageRowComponent implements OnInit {
 
 
   click(e?) {
-
+    e.stopPropagation();
     this.optionState = true;
     // 选中
     this.selectedItem['item'] = this.l_config;

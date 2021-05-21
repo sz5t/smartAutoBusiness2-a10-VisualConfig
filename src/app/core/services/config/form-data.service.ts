@@ -10,7 +10,7 @@ export class configFormDataServerService {
     public layoutTreeInstance: any; // 布局树实例
     public layoutViewInstance: any; // 布局视图实例
     public layoutSourceData: any = {}; // 明细节点项（平层树节点，完整配置信息）
-
+    public layoutStructInstance: any = {}; // 布局结构明细实例
 
 
 
@@ -115,6 +115,18 @@ export class configFormDataServerService {
         console.log('布局节点选中', node);
     }
 
+    updateNode(node) {
+
+        // 【应该做数据格式转换】
+        this.layoutTreeInstance.updateNode(node.id, this.layoutSourceData[node.id]);
+        // 【同步更新画布内容】
+        if (this.layoutStructInstance[node.id]) {
+            console.log('当前实例', this.layoutStructInstance[node.id])
+            // this.layoutStructInstance[node.id]['load']();
+        }
+        //【布局树，只做结构，layoutSourceData 最终数据【】】
+    }
+
     // 传递小组件配置
     transferComponents() {
         // 组件信息修改，读取均从服务读取，保持数据一致
@@ -205,6 +217,23 @@ export class configFormDataServerService {
         }
         this.layoutSourceData[row_id] = row_obj;
         return row_obj;
+
+    }
+    public l_create_component(pid?, cmptObj?) {
+        let cmpt_id = CommonUtils.uuID(30);
+        let cmpt_obj = {
+            "id": cmpt_id,
+            "key": cmpt_id,
+            "type": cmptObj['type'],
+            "title": cmptObj['title'],
+            "container": cmptObj['container'],
+            "parentId": pid,
+            "expanded": true
+        }
+
+        this.layoutSourceData[cmpt_id] = cmpt_obj;
+        return cmpt_obj;
+
 
     }
     CreateLayout_component(pid?) {

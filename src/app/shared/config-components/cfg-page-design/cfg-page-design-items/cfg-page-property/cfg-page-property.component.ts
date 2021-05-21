@@ -65,24 +65,12 @@ export class CfgPagePropertyComponent implements OnInit {
       componentCode: 'form-row',
       typeConent: [
         {
-          code: 'style',
-          title: '样式row',
-          propertyTypeConent: [
-            {
-              code: 'style',
-              title: '样式',
-              type: 'style',
-              active: true
-            }
-          ]
-        },
-        {
           code: 'attr',
           title: '属性',
 
           propertyTypeConent: [
             {
-              code: 'style',
+              code: 'base',
               title: '基本内容【测试】',
               type: 'property',
               active: true,
@@ -151,7 +139,7 @@ export class CfgPagePropertyComponent implements OnInit {
       ]
 
     },
-    col1: {
+    col: {
       componentCode: 'form-row',
       typeConent: [
         {
@@ -281,17 +269,60 @@ export class CfgPagePropertyComponent implements OnInit {
           title: '属性col',
           propertyTypeConent: [
             {
-              code: 'privateProperty',
-              title: '私有属性',
-              type: 'size',
-              active: true
+              code: 'style',
+              title: '基本内容【测试】',
+              type: 'property',
+              active: true,
+              sourceConfig: {
+
+                type: 'staticForm',
+                backName: 'title',
+                backConfig: [
+                  {
+                    name: 'title'
+                  },
+                  {
+                    name: 'span'
+                  }
+                ],
+                properties: [
+                  {
+                    name: 'title',
+                    type: 'input',
+                    componentConfig: {
+
+                    },
+                    formType: 'value',
+                    formName: 'formControlName',
+                    validations: [],
+                    title: '标题'
+
+                  },
+                  {
+                    name: 'span',
+                    type: 'input',
+                    componentConfig: {
+
+                    },
+                    formType: 'value',
+                    formName: 'formControlName',
+                    validations: [],
+                    title: '栅格宽度'
+
+                  }
+                ]
+              },
+              sourceData: {
+                type: 'root',
+                name: 'title'
+              }
             }
           ]
         }
 
       ]
     },
-    col: {
+    col11: {
       componentCode: 'form-input',
       typeConent: [
         {
@@ -1086,6 +1117,126 @@ export class CfgPagePropertyComponent implements OnInit {
     },
     select: {
 
+    },
+    cnDataTable: {
+      componentCode: 'form-row',
+      typeConent: [
+        {
+          code: 'attr',
+          title: '属性',
+
+          propertyTypeConent: [
+            {
+              code: 'base',
+              title: '基本内容【测试】',
+              type: 'property',
+              active: true,
+              sourceConfig: {
+
+                type: 'staticForm',
+                backName: 'title',
+                backConfig: [
+                  {
+                    name: 'title'
+                  }
+                ],
+                properties: [
+                  {
+                    name: 'id',
+                    type: 'input',
+                    componentConfig: {
+
+                    },
+                    formType: 'value',
+                    formName: 'formControlName',
+                    validations: [],
+                    title: '主键'
+
+                  },
+                  {
+                    name: 'title',
+                    type: 'input',
+                    componentConfig: {
+
+                    },
+                    formType: 'value',
+                    formName: 'formControlName',
+                    validations: [],
+                    title: '标题'
+
+                  }
+                ]
+              },
+              sourceData: {
+                type: 'root',
+                name: 'title'
+              }
+            }
+          ]
+        }
+
+      ]
+
+    },
+    cnTabs: {
+      componentCode: 'form-row',
+      typeConent: [
+        {
+          code: 'attr',
+          title: '属性',
+
+          propertyTypeConent: [
+            {
+              code: 'base',
+              title: '基本内容【测试】',
+              type: 'property',
+              active: true,
+              sourceConfig: {
+
+                type: 'staticForm',
+                backName: 'title',
+                backConfig: [
+                  {
+                    name: 'title'
+                  }
+                ],
+                properties: [
+                  {
+                    name: 'id',
+                    type: 'input',
+                    componentConfig: {
+
+                    },
+                    formType: 'value',
+                    formName: 'formControlName',
+                    validations: [],
+                    title: '主键'
+
+                  },
+                  {
+                    name: 'title',
+                    type: 'input',
+                    componentConfig: {
+
+                    },
+                    formType: 'value',
+                    formName: 'formControlName',
+                    validations: [],
+                    title: '标题'
+
+                  }
+                ]
+              },
+              sourceData: {
+                type: 'root',
+                name: 'title'
+              }
+            }
+          ]
+        }
+
+      ]
+
     }
 
 
@@ -1109,6 +1260,7 @@ export class CfgPagePropertyComponent implements OnInit {
       this.fromDataService.layoutSourceData[this.activeNode.id][v['name']] = v['data'];
     }
 
+    this.fromDataService.updateNode(this.activeNode);
     console.log('====最终====>>>', this.fromDataService.layoutSourceData[this.activeNode.id]);
 
 

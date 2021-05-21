@@ -28,6 +28,11 @@ export class CfgPageColComponent implements OnInit, OnChanges {
   body_style: any = { 'padding': '1px 2px' }
   body_style_selected: any = { 'padding': '1px 2px', 'border': "3px dashed red" }
   ngOnInit(): void {
+    this.load();
+    this.fromDataService.layoutStructInstance[this.l_config['id']] = this;
+  }
+
+  load() {
     this.config = this.fromDataService.layoutSourceData[this.l_config['id']];
     console.log(this.config);
   }
@@ -71,7 +76,7 @@ export class CfgPageColComponent implements OnInit, OnChanges {
   }
 
   public f_ondrop(e?, d?) {
-    e.stopPropagation();
+
     e.preventDefault();
     console.log('拖动行ondrop', e, d);
     const ss = e.dataTransfer.getData('test');
@@ -83,29 +88,46 @@ export class CfgPageColComponent implements OnInit, OnChanges {
     if (ss === 'row') {
       const rowId = CommonUtils.uuID(36);
       this.l_config.children = [];
+      if (this.l_config['container'] === 'component') {
+        this.fromDataService.layoutTreeInstance.clearChildrenByNode(this.l_config['id']);
+      }
       this.l_config['container'] = 'rows';
-      this.l_config.children.push(
-        {
-          cols: [],
-          children: [],
-          container: "cols",
-          expanded: true,
-          id: rowId,
-          key: rowId,
-          parentId: this.l_config['id'],
-          title: "【表单主对象】布局",
-          type: "row"
-        }
-      )
+      // this.l_config.children.push(
+      //   {
+      //     cols: [],
+      //     children: [],
+      //     container: "cols",
+      //     expanded: true,
+      //     id: rowId,
+      //     key: rowId,
+      //     parentId: this.l_config['id'],
+      //     title: "【表单主对象】布局",
+      //     type: "row"
+      //   }
+      // )
 
       this.testRows = d;
-    } else {
+      let node = this.fromDataService.l_createRow(this.l_config['id']);
+      // this.l_config.children.splice(0, 0, node);
+      this.fromDataService.layoutTreeInstance.addChildrenNode(this.l_config['id'], node, 0);
+
+      e.stopPropagation();
+    } else if (ss === 'col') {
+
+    }
+    else {
       const cmpTypeMapping = {
         form: 'cnForm',
         table: 'cnDataTable',
         tree: 'cnTree',
         treeTable: 'cnTreeTable',
         button: 'cnButton',
+        tabs: 'cnTabs'
+      }
+
+      if (!cmpTypeMapping[ss]) {
+        e.stopPropagation();
+        return;
       }
 
       let c = {
@@ -133,6 +155,22 @@ export class CfgPageColComponent implements OnInit, OnChanges {
       }
 
       this.testCmp = c;
+
+      let cmptObj = {
+        "type": cmpTypeMapping[ss],
+        "title": "组件" + cmpTypeMapping[ss],
+        "container": cmpTypeMapping[ss]
+      }
+      this.l_config.children = [];
+      if (this.l_config['container'] === 'rows') {
+        this.fromDataService.layoutTreeInstance.clearChildrenByNode(this.l_config['id']);
+      }
+      this.l_config['container'] = 'component';
+      let node = this.fromDataService.l_create_component(this.l_config['id'], cmptObj);
+      // this.l_config.children.splice(0, 0, node);
+      this.fromDataService.layoutTreeInstance.addChildrenNode(this.l_config['id'], node, 0);
+
+      e.stopPropagation();
     }
   }
 
