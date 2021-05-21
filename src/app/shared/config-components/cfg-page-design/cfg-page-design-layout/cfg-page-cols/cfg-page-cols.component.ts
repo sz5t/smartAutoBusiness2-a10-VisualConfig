@@ -1,6 +1,7 @@
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { configFormDataServerService } from 'src/app/core/services/config/form-data.service';
 import { CommonUtils } from 'src/app/core/utils/common-utils';
+import { CnFormButtonComponent } from 'src/app/shared/components/data-form/cn-form-items/cn-form-button/cn-form-button.component';
 
 @Component({
   selector: 'app-cfg-page-cols',
@@ -18,10 +19,13 @@ export class CfgPageColsComponent implements OnInit {
   @Output() public layoutOptions = new EventEmitter();
   constructor() { }
 
+  public testCmp;
+
   ngOnInit(): void {
   }
 
   public f_ondrop(e?, d?, i?) {
+    e.stopPropagation();
     e.preventDefault();
     console.log('拖动行ondrop', e, d);
     const ss = e.dataTransfer.getData('test');
@@ -29,35 +33,45 @@ export class CfgPageColsComponent implements OnInit {
     //let dropData = JSON.stringify(ss);
     // console.log('拖拽JSON', dropData);
 
-    let c = {
-      "id": CommonUtils.uuID(30),
-      "col": "cc",
-      "type": "col",
-      "titlestate": 1,
-      "title": "列",
-      "span": 24,
-      "container": "component",
-      "size": {
-        "nzXs": 24,
-        "nzSm": 24,
-        "nzMd": 24,
-        "nzLg": 24,
-        "ngXl": 24,
-        "nzXXl": 24
-      },
-      "component": {
-        "id": CommonUtils.uuID(30),
-        "type": "form",
-        "title": "",
-        "container": "form"
-      }
+    if (ss === 'col') {
+      const colId = CommonUtils.uuID(36);
+      const cmpId = CommonUtils.uuID(36);
+      this.l_config['children'] = [];
+      this.l_config['container'] = 'cols';
+      this.l_config['children'].push({
+        children: [{
+          expanded: true,
+          id: cmpId,
+          key: cmpId,
+          parentId: colId,
+          title: "明细项",
+          type: "form"
+        }],
+        component: {
+          expanded: true,
+          id: cmpId,
+          key: cmpId,
+          parentId: colId,
+          title: "明细项",
+          type: "form"
+        },
+        container: "component",
+        expanded: true,
+        id: colId,
+        key: colId,
+        parentId: this.l_config['id'],
+        size: {},
+        span: 24,
+        title: "列",
+        type: "col"
+      })
     }
 
-    if (ss === 'col') {
-      let node = this.fromDataService.l_createCol(this.l_config['id']);
-      this.l_config['children'].splice(i, 0, node);
-      this.fromDataService.layoutTreeInstance.addChildrenNode(this.l_config['id'], node, i);
-    }
+    // if (ss === 'col') {
+    //   let node = this.fromDataService.l_createCol(this.l_config['id']);
+    //   this.l_config['children'].splice(i, 0, node);
+    //   this.fromDataService.layoutTreeInstance.addChildrenNode(this.l_config['id'], node, i);
+    // }
 
 
 

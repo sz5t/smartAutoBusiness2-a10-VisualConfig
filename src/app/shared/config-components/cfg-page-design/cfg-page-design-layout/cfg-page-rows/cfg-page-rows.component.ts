@@ -18,6 +18,7 @@ export class CfgPageRowsComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+    console.log(this.l_config);
   }
 
 
