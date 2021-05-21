@@ -196,6 +196,7 @@ import { CnStaticFormCheckboxComponent } from './components/cn-static-form/cn-st
 import { CnStaticFormSliderComponent } from './components/cn-static-form/cn-static-form-item/cn-static-form-slider/cn-static-form-slider.component';
 import { CnStaticFormCustomSelectComponent } from './components/cn-static-form/cn-static-form-item/cn-static-form-custom-select/cn-static-form-custom-select.component';
 import { CnStaticFormAjaxComponent } from './components/cn-static-form/cn-static-form-cmpt/cn-static-form-ajax/cn-static-form-ajax.component';
+import { CfgPageCmptTreeComponent } from './config-components/cfg-page-design/cfg-page-design-layout/cfg-page-cmpt-tree/cfg-page-cmpt-tree.component';
 
 
 // #region third libs
@@ -436,6 +437,7 @@ const DIRECTIVES = [
     CnTreeTransferComponent,
     SafeUrlPipe,
     CfgAttributeRanksRowModalComponent,
+    CfgPageCmptTreeComponent,
 
 
 
