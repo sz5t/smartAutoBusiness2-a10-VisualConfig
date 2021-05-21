@@ -97,8 +97,7 @@ export class CfgPageViewComponent implements OnInit {
         "expanded": true,
         "span": this.layout_col_size,
         "size": this.CreateLayout_col_size(this.layout_col_size),
-        "container": "component",
-        "component": cmpt_obj
+        "container": "component"
       }
       let c = {
         ...col_obj,

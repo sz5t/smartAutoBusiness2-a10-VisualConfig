@@ -18,7 +18,21 @@ export class CfgPageColsComponent implements OnInit {
   @Output() public layoutOptions = new EventEmitter();
   constructor() { }
 
+  config: any = null;
   ngOnInit(): void {
+    this.load();
+
+  }
+
+  load() {
+
+    let newConfig = {}
+    this.l_config['children'].forEach(element => {
+
+      newConfig[element['id']] = this.fromDataService.layoutSourceData[element['id']];
+    });
+    this.config = newConfig;
+    console.log('cols 最终配置', this.config)
   }
 
   public f_ondrop(e?, d?, i?) {
@@ -55,8 +69,9 @@ export class CfgPageColsComponent implements OnInit {
 
     if (ss === 'col') {
       let node = this.fromDataService.l_createCol(this.l_config['id']);
-      this.l_config['children'].splice(i, 0, node);
       this.fromDataService.layoutTreeInstance.addChildrenNode(this.l_config['id'], node, i);
+      this.load();
+      // this.l_config['children'].splice(i, 0, node);
     }
 
 

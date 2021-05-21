@@ -25,6 +25,11 @@ export class CfgPageColComponent implements OnInit, OnChanges {
   body_style: any = { 'padding': '1px 2px' }
   body_style_selected: any = { 'padding': '1px 2px', 'border': "3px dashed red" }
   ngOnInit(): void {
+    this.load();
+    this.fromDataService.layoutStructInstance[this.l_config['id']] = this;
+  }
+
+  load() {
     this.config = this.fromDataService.layoutSourceData[this.l_config['id']];
   }
   ngOnChanges(changes: SimpleChanges) {

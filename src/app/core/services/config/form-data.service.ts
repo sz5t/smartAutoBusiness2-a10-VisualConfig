@@ -10,7 +10,7 @@ export class configFormDataServerService {
     public layoutTreeInstance: any; // 布局树实例
     public layoutViewInstance: any; // 布局视图实例
     public layoutSourceData: any = {}; // 明细节点项（平层树节点，完整配置信息）
-
+    public layoutStructInstance: any = {}; // 布局结构明细实例
 
 
 
@@ -113,6 +113,18 @@ export class configFormDataServerService {
         this.layoutTreeInstance.defaultSelectedKeys = [node['id']];
         this.propertySiderInstance.load(node);
         console.log('布局节点选中', node);
+    }
+
+    updateNode(node) {
+
+        // 【应该做数据格式转换】
+        this.layoutTreeInstance.updateNode(node.id, this.layoutSourceData[node.id]);
+        // 【同步更新画布内容】
+        if (this.layoutStructInstance[node.id]) {
+            console.log('当前实例', this.layoutStructInstance[node.id])
+            // this.layoutStructInstance[node.id]['load']();
+        }
+        //【布局树，只做结构，layoutSourceData 最终数据【】】
     }
 
     // 传递小组件配置

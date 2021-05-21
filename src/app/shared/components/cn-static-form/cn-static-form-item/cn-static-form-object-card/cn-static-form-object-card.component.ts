@@ -1,5 +1,6 @@
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormGroup } from '@angular/forms';
+import { configFormDataServerService } from 'src/app/core/services/config/form-data.service';
 
 @Component({
   selector: 'app-cn-static-form-object-card',
@@ -12,6 +13,7 @@ export class CnStaticFormObjectCardComponent implements OnInit {
   @Input() config;
   @Output() public updateValue = new EventEmitter<any>(true);
   @Output() public cascadeValue = new EventEmitter<any>(true);
+  @Input() public fromDataService: configFormDataServerService;
   constructor() { }
 
   ngOnInit(): void {

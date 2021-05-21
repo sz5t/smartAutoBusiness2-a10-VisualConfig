@@ -126,6 +126,11 @@ export class CfgPageSiderComponent implements OnInit {
 
   }
 
+  updateNode(id?, data?) {
+    let _node = this.nzLayoutTreeComponent.getTreeNodeByKey(id);
+    _node['title'] = data['title'];
+  }
+
   public nzEvent(v?) {
 
     let selectNode = this.nzLayoutTreeComponent.getSelectedNodeList()
