@@ -1,0 +1,24 @@
+<nz-collapse>
+    <nz-collapse-panel [nzHeader]="config['title']">
+
+        <div nz-row [nzGutter]="8">
+            <div nz-col [nzSpan]="span" *ngFor="let item of validateFormArray.controls;let i = index;">
+
+
+                <nz-collapse>
+                    <nz-collapse-panel [nzHeader]="config['title']+(i+1)" [nzExtra]="delextraTemplate">
+                        <app-cn-static-form-object-empty [validateForm]="item" [config]="config">
+                        </app-cn-static-form-object-empty>
+                    </nz-collapse-panel>
+                </nz-collapse>
+                <ng-template #delextraTemplate let-i>
+                    <button nz-button nzType="primary" (click)="delItem(i,$event)">删除</button>
+                </ng-template>
+
+            </div>
+        </div>
+        <button nz-button type="button" nzType="dashed" nzBlock="true" nzSize="default" style="margin-bottom: 3px;"
+            (click)="add()"><i nz-icon nzType="plus"></i>
+            添加</button>
+    </nz-collapse-panel>
+</nz-collapse>

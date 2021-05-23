@@ -36,7 +36,7 @@ export class CfgPageViewComponent implements OnInit {
       "id": layout_id,
       "key": layout_id,
       "type": "layout",
-      "title": "【表单主对象】布局",
+      "title": "【页面】布局",
       "container": "rows",
       "expanded": true,
       "parentId": 'null'
@@ -87,7 +87,7 @@ export class CfgPageViewComponent implements OnInit {
     for (let i = 0; i < count; i++) {
 
       let col_id = CommonUtils.uuID(30);
-      let cmpt_obj = this.CreateLayout_component(col_id);
+      // let cmpt_obj = this.CreateLayout_component(col_id);
       let col_obj = {
         "id": col_id,
         "key": col_id,
@@ -139,6 +139,11 @@ export class CfgPageViewComponent implements OnInit {
     }
     return sizeObj;
 
+  }
+
+  printJson() {
+    console.log('当前页面结构json', this.fromDataService.layoutTreeInstance.layoutTree);
+    console.log('当前页面结构内容', this.fromDataService.layoutSourceData)
   }
 
 }

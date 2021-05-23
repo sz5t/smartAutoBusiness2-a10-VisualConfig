@@ -138,4 +138,10 @@ export class CfgPageDesignComponent extends CnComponentBase implements OnInit {
     }
   }
 
+  /*
+     1.加载配置
+     2.生成布局结构
+     3.递归结构
+  */
+
 }

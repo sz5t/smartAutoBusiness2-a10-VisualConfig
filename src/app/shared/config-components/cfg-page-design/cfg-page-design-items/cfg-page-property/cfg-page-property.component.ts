@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
 import { configFormDataServerService } from 'src/app/core/services/config/form-data.service';
 
@@ -11,7 +12,7 @@ export class CfgPagePropertyComponent implements OnInit {
 
   @Input() public selectedItem: any;
   @Input() public fromDataService: configFormDataServerService;
-  constructor() { }
+  constructor(private httpClient: HttpClient,) { }
 
   ngOnInit(): void {
     this.fromDataService.propertySiderInstance = this;
@@ -37,17 +38,27 @@ export class CfgPagePropertyComponent implements OnInit {
 
   activeNode: any;
 
-  load(node?) {
+  async load(node?) {
 
     if (this.selectedItem && this.selectedItem['active']) {
       if (this.selectedItem['active']) {
         this.activeNode = this.selectedItem['item'];
       }
+      let d;
+      if (this.selectedItem['active']) {
+        d = await this.loadConfig(this.selectedItem['active']);
+      }
+      if (d) {
+        this.attr_config = d;
+      } else {
+        this.attr_config = this.gloab_config[this.selectedItem['active']];
+      }
 
 
-      this.attr_config = this.gloab_config[this.selectedItem['active']];
       this.attr_typeConent = this.attr_config['typeConent'].filter(d => d !== '');
       this.attr_config_data = this.fromDataService.layoutSourceData[this.activeNode.id];
+
+
 
 
 
@@ -61,6 +72,83 @@ export class CfgPagePropertyComponent implements OnInit {
 
 
   gloab_config = {
+    layout: {
+      componentCode: 'layout',
+      typeConent: [
+        {
+          code: 'attr',
+          title: '属性',
+
+          propertyTypeConent: [
+            {
+              code: 'base',
+              title: '基本内容【测试】',
+              type: 'property',
+              active: true,
+              sourceConfig: {
+
+                type: 'staticForm',
+                backName: 'title',
+                backConfig: [
+                  {
+                    name: 'title'
+                  },
+                  {
+                    name: 'showTitle'
+                  }
+                ],
+                properties: [
+                  {
+                    name: 'id',
+                    type: 'input',
+                    componentConfig: {
+
+                    },
+                    formType: 'value',
+                    formName: 'formControlName',
+                    validations: [],
+                    title: '主键'
+
+                  },
+                  {
+                    name: 'title',
+                    type: 'input',
+                    componentConfig: {
+
+                    },
+                    formType: 'value',
+                    formName: 'formControlName',
+                    validations: [],
+                    title: '标题'
+
+                  },
+                  {
+                    name: 'showTitle',
+                    type: 'switch',
+                    componentConfig: {
+
+                    },
+                    formType: 'value',
+                    formName: 'formControlName',
+                    validations: [],
+                    title: '是否显示标题'
+
+                  }
+
+
+
+                ]
+              },
+              sourceData: {
+                type: 'root',
+                name: 'title'
+              }
+            }
+          ]
+        }
+
+      ]
+    },
     row: {
       componentCode: 'form-row',
       typeConent: [
@@ -322,7 +410,7 @@ export class CfgPagePropertyComponent implements OnInit {
 
       ]
     },
-    col11: {
+    cnDataTable: {
       componentCode: 'form-input',
       typeConent: [
         {
@@ -1118,7 +1206,7 @@ export class CfgPagePropertyComponent implements OnInit {
     select: {
 
     },
-    cnDataTable: {
+    cnDataTable1: {
       componentCode: 'form-row',
       typeConent: [
         {
@@ -1178,7 +1266,67 @@ export class CfgPagePropertyComponent implements OnInit {
       ]
 
     },
-    cnTabs: {
+    tabs: {
+      componentCode: 'form-row',
+      typeConent: [
+        {
+          code: 'attr',
+          title: '属性',
+
+          propertyTypeConent: [
+            {
+              code: 'base',
+              title: '基本内容【测试】',
+              type: 'property',
+              active: true,
+              sourceConfig: {
+
+                type: 'staticForm',
+                backName: 'title',
+                backConfig: [
+                  {
+                    name: 'title'
+                  }
+                ],
+                properties: [
+                  {
+                    name: 'id',
+                    type: 'input',
+                    componentConfig: {
+
+                    },
+                    formType: 'value',
+                    formName: 'formControlName',
+                    validations: [],
+                    title: '主键'
+
+                  },
+                  {
+                    name: 'title',
+                    type: 'input',
+                    componentConfig: {
+
+                    },
+                    formType: 'value',
+                    formName: 'formControlName',
+                    validations: [],
+                    title: '标题'
+
+                  }
+                ]
+              },
+              sourceData: {
+                type: 'root',
+                name: 'title'
+              }
+            }
+          ]
+        }
+
+      ]
+
+    },
+    tab: {
       componentCode: 'form-row',
       typeConent: [
         {
@@ -1243,7 +1391,21 @@ export class CfgPagePropertyComponent implements OnInit {
   }
 
 
+  async loadConfig(cmpt) {
+    // 加载出当前组件的详细配置，根据数据读取配置，构建页面
 
+    // 例如 input——》 加载input 配置 
+    let backData = null;
+    const timestamp = new Date().getTime();
+    const data = await this.httpClient.get(`assets/vc/page/${cmpt}.json?${timestamp}`).toPromise();
+    if (data && data.hasOwnProperty('propertyconfig')) {
+      backData = data['propertyconfig'];
+    }
+    console.log('加载配置', data);
+    return backData;
+
+
+  }
 
 
   valueChange(v) {

@@ -2,6 +2,7 @@ import { Directive, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges, 
 import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
 import { configFormDataServerService } from 'src/app/core/services/config/form-data.service';
 import { CnStaticFormArrayCardComponent } from './cn-static-form-item/cn-static-form-array-card/cn-static-form-array-card.component';
+import { CnStaticFormArrayCollapseComponent } from './cn-static-form-item/cn-static-form-array-collapse/cn-static-form-array-collapse.component';
 import { CnStaticFormArrayTableComponent } from './cn-static-form-item/cn-static-form-array-table/cn-static-form-array-table.component';
 import { CnStaticFormCustomSelectComponent } from './cn-static-form-item/cn-static-form-custom-select/cn-static-form-custom-select.component';
 import { CnStaticFormInputComponent } from './cn-static-form-item/cn-static-form-input/cn-static-form-input.component';
@@ -21,6 +22,7 @@ const components: { [type: string]: Type<any> } = {
   arrayTable: CnStaticFormArrayTableComponent,
   slider: CnStaticFormSliderComponent,
   customSelect: CnStaticFormCustomSelectComponent,
+  arrayCollapse: CnStaticFormArrayCollapseComponent
 
 }
 @Directive({

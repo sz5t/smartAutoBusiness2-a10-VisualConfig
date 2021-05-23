@@ -196,6 +196,8 @@ import { CnStaticFormCheckboxComponent } from './components/cn-static-form/cn-st
 import { CnStaticFormSliderComponent } from './components/cn-static-form/cn-static-form-item/cn-static-form-slider/cn-static-form-slider.component';
 import { CnStaticFormCustomSelectComponent } from './components/cn-static-form/cn-static-form-item/cn-static-form-custom-select/cn-static-form-custom-select.component';
 import { CnStaticFormAjaxComponent } from './components/cn-static-form/cn-static-form-cmpt/cn-static-form-ajax/cn-static-form-ajax.component';
+import { CfgPageDesignLayoutItemDirective } from './config-components/cfg-page-design/cfg-page-design-layout/cfg-page-design-layout-item.directive';
+import { CnStaticFormArrayCollapseComponent } from './components/cn-static-form/cn-static-form-item/cn-static-form-array-collapse/cn-static-form-array-collapse.component';
 
 
 // #region third libs
@@ -396,6 +398,7 @@ const COMPONENTS = [
   CnStaticFormCheckboxComponent,
   CnStaticFormSliderComponent,
   CnStaticFormCustomSelectComponent,
+  CnStaticFormArrayCollapseComponent,
   // --静态表单内特殊组件结构--
   CnStaticFormAjaxComponent,
 ];
@@ -409,6 +412,7 @@ const DIRECTIVES = [
   CnChartsDirective,
   CnStaticFormItemDirective,
   CfgPropertyItemDirective,
+  CfgPageDesignLayoutItemDirective,
 ];
 // #endregion
 
@@ -436,6 +440,8 @@ const DIRECTIVES = [
     CnTreeTransferComponent,
     SafeUrlPipe,
     CfgAttributeRanksRowModalComponent,
+
+
 
 
 

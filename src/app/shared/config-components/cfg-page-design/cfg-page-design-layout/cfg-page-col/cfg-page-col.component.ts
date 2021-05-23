@@ -122,39 +122,13 @@ export class CfgPageColComponent implements OnInit, OnChanges {
         tree: 'cnTree',
         treeTable: 'cnTreeTable',
         button: 'cnButton',
-        tabs: 'cnTabs'
+        tabs: 'tabs'
       }
 
       if (!cmpTypeMapping[ss]) {
         e.stopPropagation();
         return;
       }
-
-      let c = {
-        "id": CommonUtils.uuID(30),
-        "col": "cc",
-        "type": "col",
-        "titlestate": 1,
-        "title": "列",
-        "span": 24,
-        "container": "component",
-        "size": {
-          "nzXs": 24,
-          "nzSm": 24,
-          "nzMd": 24,
-          "nzLg": 24,
-          "ngXl": 24,
-          "nzXXl": 24
-        },
-        "component": {
-          "id": CommonUtils.uuID(30),
-          "type": cmpTypeMapping[ss],
-          "title": "组件" + cmpTypeMapping[ss],
-          "container": cmpTypeMapping[ss]
-        }
-      }
-
-      this.testCmp = c;
 
       let cmptObj = {
         "type": cmpTypeMapping[ss],
@@ -163,6 +137,9 @@ export class CfgPageColComponent implements OnInit, OnChanges {
       }
       this.l_config.children = [];
       if (this.l_config['container'] === 'rows') {
+        this.fromDataService.layoutTreeInstance.clearChildrenByNode(this.l_config['id']);
+      }
+      if (this.l_config['container'] === 'component') {
         this.fromDataService.layoutTreeInstance.clearChildrenByNode(this.l_config['id']);
       }
       this.l_config['container'] = 'component';

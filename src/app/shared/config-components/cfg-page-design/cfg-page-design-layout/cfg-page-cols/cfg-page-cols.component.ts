@@ -110,7 +110,7 @@ export class CfgPageColsComponent implements OnInit {
     // 进入，就设置可以拖放进来（设置不执行默认：【默认的是不可以拖动进来】）
     //if (this.is_drag)
     var data = e.dataTransfer.getData("test");
-    console.log('++++++++++++++++', data)
+    // console.log('++++++++++++++++', data)
     //  e.target.style.color = 'blue';
     e.preventDefault();
     // --05--设置具体效果copy

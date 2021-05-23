@@ -21,7 +21,8 @@
         </nz-collapse>
     </nz-tab>
     <nz-tab nzTitle="页面结构">
-        <nz-card nzType="inner" [nzBodyStyle]="{'padding':'1px 2px','max-height':'680px','overflow':'auto'}">
+        <nz-card nzType="inner"
+            [nzBodyStyle]="{'padding':'1px 2px','max-whidth':'250px','max-height':'780px','overflow':'auto'}">
 
             <nz-tree #nzLayoutTreeComponent [nzData]="layoutTree" nzMultiple="false" nzExpandAll="true"
                 (nzClick)="nzEvent($event)" nzShowLine="true" [nzSelectedKeys]="defaultSelectedKeys">
