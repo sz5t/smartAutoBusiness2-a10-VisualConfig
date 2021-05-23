@@ -28,9 +28,7 @@
 
 <nz-collapse>
     <nz-collapse-panel [nzHeader]="config['title']">
-        <button nz-button type="button" nzType="dashed" nzBlock="true" nzSize="default" style="margin-bottom: 3px;"
-            (click)="add()"><i nz-icon nzType="plus"></i>
-            添加</button>
+
         <div nz-row [nzGutter]="8">
             <div nz-col [nzSpan]="span" *ngFor="let item of validateFormArray.controls;let i = index;">
 
@@ -50,6 +48,8 @@
 
             </div>
         </div>
-
+        <button nz-button type="button" nzType="dashed" nzBlock="true" nzSize="default" style="margin-bottom: 3px;"
+            (click)="add()"><i nz-icon nzType="plus"></i>
+            添加</button>
     </nz-collapse-panel>
 </nz-collapse>

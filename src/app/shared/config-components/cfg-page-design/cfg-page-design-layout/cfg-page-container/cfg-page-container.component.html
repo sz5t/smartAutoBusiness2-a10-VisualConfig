@@ -10,12 +10,15 @@
 
 
         <div *ngFor="let r of l_config['children']  let i=index">
-            <ng-container *ngIf="r['type']==='cnDataTable'">
+            <!--     <ng-container *ngIf="r['type']==='cnDataTable'">
                 <app-cfg-page-cmpt-table></app-cfg-page-cmpt-table>
             </ng-container>
             <ng-container *ngIf="r['type']==='cnTabs'">
                 <app-cfg-page-cmpt-tabs></app-cfg-page-cmpt-tabs>
-            </ng-container>
+            </ng-container> -->
+            <div appCfgPageDesignLayoutItem [l_config]="r" [showLayout]="showLayout" [(selectedItem)]="selectedItem"
+                [(cmptState)]="cmptState" [fromDataService]="fromDataService">
+
+            </div>
         </div>
     </div>
-</div>

@@ -66,6 +66,7 @@ export class CfgPageRowsComponent implements OnInit {
       this.l_config.children.splice(i, 0, node);
       this.fromDataService.layoutTreeInstance.addChildrenNode(this.l_config['id'], node, i);
     }
+    e.stopPropagation();
 
   }
   public f_ondragleave(e, d) {
@@ -82,7 +83,7 @@ export class CfgPageRowsComponent implements OnInit {
     // 进入，就设置可以拖放进来（设置不执行默认：【默认的是不可以拖动进来】）
     //if (this.is_drag)
     var data = e.dataTransfer.getData("test");
-    console.log('++++++++++++++++', data)
+    // console.log('++++++++++++++++', data)
     // e.target.style.color = 'blue';
     e.preventDefault();
     // --05--设置具体效果copy

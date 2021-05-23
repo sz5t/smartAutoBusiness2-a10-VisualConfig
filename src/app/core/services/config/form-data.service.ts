@@ -228,7 +228,8 @@ export class configFormDataServerService {
             "title": cmptObj['title'],
             "container": cmptObj['container'],
             "parentId": pid,
-            "expanded": true
+            "expanded": true,
+            "children": []
         }
 
         this.layoutSourceData[cmpt_id] = cmpt_obj;
@@ -236,6 +237,58 @@ export class configFormDataServerService {
 
 
     }
+    public l_create_component_tabs(pid?, cmptObj?) {
+        let cmpt_id = CommonUtils.uuID(30);
+        let cmpt_obj = {
+            "id": cmpt_id,
+            "key": cmpt_id,
+            "type": cmptObj['type'],
+            "title": cmptObj['title'],
+            "container": cmptObj['container'],
+            "parentId": pid,
+            "expanded": true,
+            "children": []
+        }
+
+        this.layoutSourceData[cmpt_id] = cmpt_obj;
+        return cmpt_obj;
+
+    }
+    public l_create_component_tab(pid?) {
+        let cmpt_id = CommonUtils.uuID(30);
+        let cmpt_obj = {
+            "id": cmpt_id,
+            "key": cmpt_id,
+            "type": 'tab',
+            "title": 'newtab',
+            "container": 'layout',
+            "parentId": pid,
+            "expanded": true,
+            "children": [this.l_create_Layout(cmpt_id)]
+        }
+        this.layoutSourceData[cmpt_id] = cmpt_obj;
+        return cmpt_obj;
+    }
+
+    public l_create_Layout(pid?) {
+
+        let layout_id = CommonUtils.uuID(30);
+        let layout_obj = {
+            "id": layout_id,
+            "key": layout_id,
+            "type": "layout",
+            "title": "布局",
+            "container": "rows",
+            "expanded": true,
+            "parentId": pid,
+            "children": []
+        }
+        this.layoutSourceData[layout_id] = layout_obj;
+        return layout_obj;
+
+    }
+
+
     CreateLayout_component(pid?) {
         let cmpt_id = CommonUtils.uuID(30);
         let cmpt_obj = {
