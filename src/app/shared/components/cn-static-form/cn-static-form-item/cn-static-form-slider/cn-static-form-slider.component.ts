@@ -13,6 +13,7 @@ export class CnStaticFormSliderComponent implements OnInit {
   @Output() public updateValue = new EventEmitter<any>(true);
   componentConfig: any;
   selectValue: any;
+  showValue: any;
   constructor() { }
 
   ngOnInit(): void {
@@ -22,12 +23,20 @@ export class CnStaticFormSliderComponent implements OnInit {
       this.componentConfig = this.config['componentConfig'];
 
     }
+    this.loadShowValue();
+  }
+  loadShowValue() {
+    let d = this.validateForm.controls[this.config['name']].value;
+
+    this.showValue = d;
+
   }
   log(v) {
     console.log('sider', v);
-    this.selectValue = v;
     this.validateForm.controls[this.config['name']].markAsDirty();
-    // this.valueChange(v);
+    if (v !== this.showValue) {
+      this.loadShowValue();
+    }
   }
   valueChange(v?) {
     this.validateForm.get(this.config['name'])!.setValue(v);

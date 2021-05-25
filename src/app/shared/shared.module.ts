@@ -198,6 +198,11 @@ import { CnStaticFormCustomSelectComponent } from './components/cn-static-form/c
 import { CnStaticFormAjaxComponent } from './components/cn-static-form/cn-static-form-cmpt/cn-static-form-ajax/cn-static-form-ajax.component';
 import { CfgPageDesignLayoutItemDirective } from './config-components/cfg-page-design/cfg-page-design-layout/cfg-page-design-layout-item.directive';
 import { CnStaticFormArrayCollapseComponent } from './components/cn-static-form/cn-static-form-item/cn-static-form-array-collapse/cn-static-form-array-collapse.component';
+import { CnStaticFormGridItemComponent } from './components/cn-static-form/cn-static-form-cmpt/cn-static-form-grid-item/cn-static-form-grid-item.component';
+import { CnStaticFormFormItemComponent } from './components/cn-static-form/cn-static-form-cmpt/cn-static-form-form-item/cn-static-form-form-item.component';
+import { CnStaticFormCustomInputSelectComponent } from './components/cn-static-form/cn-static-form-item/cn-static-form-custom-input-select/cn-static-form-custom-input-select.component';
+import { ToolAttrJsonComponent } from './tools/tool-attr-json/tool-attr-json.component';
+import { CnStaticFormLabelComponent } from './components/cn-static-form/cn-static-form-item/cn-static-form-label/cn-static-form-label.component';
 
 
 // #region third libs
@@ -399,8 +404,12 @@ const COMPONENTS = [
   CnStaticFormSliderComponent,
   CnStaticFormCustomSelectComponent,
   CnStaticFormArrayCollapseComponent,
+  CnStaticFormCustomInputSelectComponent,
+  CnStaticFormLabelComponent,
   // --静态表单内特殊组件结构--
   CnStaticFormAjaxComponent,
+  CnStaticFormFormItemComponent,
+  CnStaticFormGridItemComponent,
 ];
 const DIRECTIVES = [
   CnLayoutResolverDirective,
@@ -440,6 +449,10 @@ const DIRECTIVES = [
     CnTreeTransferComponent,
     SafeUrlPipe,
     CfgAttributeRanksRowModalComponent,
+    ToolAttrJsonComponent,
+
+
+
 
 
 

@@ -1,0 +1,26 @@
+<p>tool-attr-json works!</p>
+<nz-card nzType="inner" nzTitle="操作" style="width:100%;border: 1px solid #0ddaf5;  padding-right: 4px;"
+    [nzBodyStyle]="{'padding':'1px 2px'}">
+    <button nz-button style="margin-left: 8px;" [nzSize]="'small'" nzType="primary" (click)="CreateLayout()">
+        生成属性编辑器</button>
+    <button nz-button style="margin-left: 8px;" [nzSize]="'small'" nzType="primary" (click)="printJson()">
+        输出json</button>
+</nz-card>
+<nz-collapse>
+    <nz-collapse-panel nzHeader="页面JSON">
+        <cn-data-form #settingform [config]="formConfig" [changeValue]="changeValue">
+        </cn-data-form>
+    </nz-collapse-panel>
+</nz-collapse>
+<nz-collapse>
+    <nz-collapse-panel nzHeader="属性编辑器">
+        <nz-tabset *ngIf="attr_config" nzTabPosition="top" [nzType]="'card'">
+            <nz-tab *ngFor="let tab of attr_typeConent" [nzTitle]="tab.title">
+                <!-- {{ tab.title}} -->
+                <app-cfg-property-type [config]="tab['propertyTypeConent']" [configData]="attr_config_data"
+                    [fromDataService]="fromDataService" (updateValue)="valueChange($event)">
+                </app-cfg-property-type>
+            </nz-tab>
+        </nz-tabset>
+    </nz-collapse-panel>
+</nz-collapse>

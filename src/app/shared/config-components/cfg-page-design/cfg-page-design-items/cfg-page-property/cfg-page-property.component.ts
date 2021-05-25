@@ -388,7 +388,7 @@ export class CfgPagePropertyComponent implements OnInit {
                   },
                   {
                     name: 'span',
-                    type: 'input',
+                    type: 'slider',
                     componentConfig: {
 
                     },

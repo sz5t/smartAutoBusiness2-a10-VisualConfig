@@ -27,7 +27,7 @@
                   "properties": [
                     {
                       "name": "id",
-                      "type": "input",
+                      "type": "label",
                       "componentConfig": {
   
                       },
