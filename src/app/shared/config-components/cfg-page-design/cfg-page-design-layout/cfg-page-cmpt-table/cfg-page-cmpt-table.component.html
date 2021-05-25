@@ -1,8 +1,7 @@
 <p>cfg-page-cmpt-table works!</p>
 <nz-table #basicTable [nzData]="dataList" [nzTotal]="total" [(nzPageIndex)]="pageIndex" [(nzPageSize)]="pageSize"
-    (nzPageIndexChange)="searchData()" (nzPageSizeChange)="searchData(true)" [nzPageSizeOptions]="pageSizeOptions"
-    [nzShowTotal]="showTotal" [nzBordered]="isBordered" [nzSize]="size" [nzTitle]="title ? title : null"
-    [nzScroll]="scroll ? scroll : null">
+    (nzPageIndexChange)="searchData()" [nzPageSizeOptions]="pageSizeOptions" [nzShowTotal]="showTotal"
+    [nzBordered]="isBordered" [nzSize]="size" [nzTitle]="title ? title : null" [nzScroll]="scroll ? scroll : null">
     <thead>
         <!-- <tr>
             <th>字段一</th>
@@ -14,9 +13,9 @@
             <th [nzWidth]="(config.showCheckBoxConfig && config.showCheckBoxConfig.hasOwnProperty('width'))?config.showCheckBoxConfig['width']:'50px'"
                 [nzLeft]="(config.showCheckBoxConfig && config.showCheckBoxConfig.hasOwnProperty('offsetLeft'))?config.showCheckBoxConfig.offsetLeft:false"
                 *ngIf="config.showCheckBox" [nzShowCheckbox]="config.showCheckBox" [(nzChecked)]="isAllChecked"
-                [nzIndeterminate]="indeterminate" (nzCheckedChange)="checkAll($event)"></th>
+                [nzIndeterminate]="indeterminate"></th>
 
-            <ng-template ngFor let-header [ngForOf]="tableColumns">
+            <ng-template ngFor let-header [ngForOf]="config.columns">
                 <th [nzAlign]="header.titleAlign?header.titleAlign:'left'"
                     [nzLeft]="header.hasOwnProperty('offsetLeft')?header.offsetLeft:false"
                     [nzRight]="header.hasOwnProperty('offsetRight')?header.offsetRight:false" [nzWidth]="header.width"

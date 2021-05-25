@@ -66,31 +66,31 @@ export class CfgPageSiderComponent implements OnInit {
       children: [
         {
           "id": "001",
-          "dropName": "form",
+          "dropName": "cnForm",
           "icon": "edit",
           "title": "表单"
         },
         {
           "id": "002",
-          "dropName": "tree",
+          "dropName": "cnTree",
           "icon": "select",
           "title": "树"
         },
         {
           "id": "003",
-          "dropName": "table",
+          "dropName": "cnTable",
           "icon": "field-time",
           "title": "表格"
         },
         {
           "id": "004",
-          "dropName": "treeTable",
+          "dropName": "cnTreeTable",
           "icon": "check-square",
           "title": "树表"
         },
         {
           "id": "005",
-          "dropName": "button",
+          "dropName": "cnButton",
           "icon": "check-square",
           "title": "按钮组"
         }

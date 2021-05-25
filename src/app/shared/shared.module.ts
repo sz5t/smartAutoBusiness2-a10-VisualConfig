@@ -375,6 +375,7 @@ const COMPONENTS = [
   CfgPageCmptTableComponent,
   CfgPageCmptToolbarComponent,
   CfgPageCmptTabsComponent,
+  CfgPageCmptTreeComponent,
   CfgFormRowsComponent,
   CfgFormRowComponent,
   CfgFormColsComponent,
@@ -440,8 +441,6 @@ const DIRECTIVES = [
     ...DIRECTIVES,
     CnTreeTransferComponent,
     SafeUrlPipe,
-    CfgAttributeRanksRowModalComponent,
-    CfgPageCmptTreeComponent,
 
 
 

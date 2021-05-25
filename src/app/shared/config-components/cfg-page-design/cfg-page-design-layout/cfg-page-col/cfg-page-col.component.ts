@@ -117,11 +117,11 @@ export class CfgPageColComponent implements OnInit, OnChanges {
     }
     else {
       const cmpTypeMapping = {
-        form: 'cnForm',
-        table: 'cnDataTable',
-        tree: 'cnTree',
-        treeTable: 'cnTreeTable',
-        button: 'cnButton',
+        cnForm: 'cnForm',
+        cnTable: 'cnDataTable',
+        cnTree: 'cnTree',
+        cnTreeTable: 'cnTreeTable',
+        cnButton: 'cnButton',
         tabs: 'tabs'
       }
 
