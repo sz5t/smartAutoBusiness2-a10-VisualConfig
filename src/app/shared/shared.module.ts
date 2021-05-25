@@ -196,6 +196,7 @@ import { CnStaticFormCheckboxComponent } from './components/cn-static-form/cn-st
 import { CnStaticFormSliderComponent } from './components/cn-static-form/cn-static-form-item/cn-static-form-slider/cn-static-form-slider.component';
 import { CnStaticFormCustomSelectComponent } from './components/cn-static-form/cn-static-form-item/cn-static-form-custom-select/cn-static-form-custom-select.component';
 import { CnStaticFormAjaxComponent } from './components/cn-static-form/cn-static-form-cmpt/cn-static-form-ajax/cn-static-form-ajax.component';
+import { CfgPageCmptTreeComponent } from './config-components/cfg-page-design/cfg-page-design-layout/cfg-page-cmpt-tree/cfg-page-cmpt-tree.component';
 import { CfgPageDesignLayoutItemDirective } from './config-components/cfg-page-design/cfg-page-design-layout/cfg-page-design-layout-item.directive';
 import { CnStaticFormArrayCollapseComponent } from './components/cn-static-form/cn-static-form-item/cn-static-form-array-collapse/cn-static-form-array-collapse.component';
 import { CnStaticFormGridItemComponent } from './components/cn-static-form/cn-static-form-cmpt/cn-static-form-grid-item/cn-static-form-grid-item.component';
@@ -453,6 +454,7 @@ const DIRECTIVES = [
 
 
 
+    CfgPageCmptTreeComponent,
 
 
 

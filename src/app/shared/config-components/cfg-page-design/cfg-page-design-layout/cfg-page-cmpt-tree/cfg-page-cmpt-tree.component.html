@@ -1,0 +1,4 @@
+<p>cfg-page-cmpt-tree works!</p>
+<nz-tree #treeObj [nzData]="nodes" [nzExpandAll]="config.expandAll" [nzBlockNode]="true"
+    [nzCheckable]="config.showCheckBox" (nzExpandChange)="expandNode($event)">
+</nz-tree>
