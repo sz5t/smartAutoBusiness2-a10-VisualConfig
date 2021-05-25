@@ -168,6 +168,16 @@
                                     },
                                     "formType": "array",
                                     "properties": [
+                                        
+                                        {
+                                            "name": "id",
+                                            "type": "label",
+                                            "componentConfig": {},
+                                            "formType": "value",
+                                            "formName": "formControlName",
+                                            "validations": [],
+                                            "title": "主键"
+                                        },
                                         {
                                             "name": "title",
                                             "type": "input",
@@ -237,7 +247,53 @@
                                             "formName": "formControlName",
                                             "validations": [],
                                             "title": "列宽"
+                                        },
+                                        {
+                                            "name": "text",
+                                            "type": "customSelect",
+                                            "componentConfig": {
+                                                "customPage":{
+                                                    "title": "",
+                                                    "width": "90%",
+                                                    "style": null,
+                                                    "maskClosable": true,
+                                                    "cancelText": "取消",
+                                                    "okText": "确定",
+                                                    "footerButton": null,
+                                                    "customAction": [],
+                                                    "customContent":""
+                                                  },
+                                                  "showConfig":{
+                                                      "showString":[
+                                                          {
+                                                              "name":"style",
+                                                              "children":[
+                                                                  {
+                                                                      "name":"span"
+                                                                  }
+                                                              ]
+                                                          }
+
+                                                      ]
+
+                                                  }
+                                            },
+                                            "formType": "value",
+                                            "formName": "formControlName",
+                                            "validations": [],
+                                            "title": "展示"
+                                        },
+                                        {
+                                            "name": "edit",
+                                            "type": "customInputSelect",
+                                            "componentConfig": {},
+                                            "formType": "value",
+                                            "formName": "formControlName",
+                                            "validations": [],
+                                            "title": "编辑"
                                         }
+
+                                        
                                     ],
                                     "formName": "formControlName",
                                     "validations": [],

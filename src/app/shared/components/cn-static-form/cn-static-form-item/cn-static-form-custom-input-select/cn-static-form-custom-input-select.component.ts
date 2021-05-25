@@ -1,95 +1,32 @@
-import { Component, Input, OnInit, Output, EventEmitter, Type } from '@angular/core';
+import { Component, Input, OnInit, Output, Type, EventEmitter } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { NzModalService } from 'ng-zorro-antd/modal';
 import { configFormDataServerService } from 'src/app/core/services/config/form-data.service';
-import { CnStaticFormAjaxComponent } from '../../cn-static-form-cmpt/cn-static-form-ajax/cn-static-form-ajax.component';
 import { CnStaticFormGridItemComponent } from '../../cn-static-form-cmpt/cn-static-form-grid-item/cn-static-form-grid-item.component';
 const components: { [type: string]: Type<any> } = {
-  ajax: CnStaticFormAjaxComponent,
+  // ajax: CnStaticFormAjaxComponent,
   gridItem: CnStaticFormGridItemComponent,
 
 };
 @Component({
-  selector: 'app-cn-static-form-custom-select',
-  templateUrl: './cn-static-form-custom-select.component.html',
+  selector: 'app-cn-static-form-custom-input-select',
+  templateUrl: './cn-static-form-custom-input-select.component.html',
   styles: [
   ]
 })
-export class CnStaticFormCustomSelectComponent implements OnInit {
+export class CnStaticFormCustomInputSelectComponent implements OnInit {
+
   @Input() validateForm: FormGroup;
   @Input() config;
   @Input() public fromDataService: configFormDataServerService;
   @Output() public updateValue = new EventEmitter<any>(true);
   constructor(private modal: NzModalService,) { }
-  showValue: any;
-  itemConfig: any = {
-    customPage: {
-      title: '',
-      width: '90%',
-      style: null,
-      maskClosable: true,
-      cancelText: '取消',
-      okText: '确定',
-      footerButton: null,
-      customAction: [],
-      customContent: ''
-    },
-    "showConfig": {
-      "showString": [
-        {
-          "name": "size",
-          "children": [
-            {
-              "name": "span"
-            }
-          ]
-        }
 
-      ]
-
-    }
-  };
+  selectValue;
   ngOnInit(): void {
 
-    if (this.config.componentConfig) {
-      if (!this.config.componentConfig['customPage']) {
-        this.config.componentConfig['customPage'] = this.itemConfig['customPage'];
-      }
-      if (!this.config.componentConfig['showConfig']) {
-        this.config.componentConfig['showConfig'] = this.itemConfig['showConfig'];
-      }
-    }
-    this.loadShowValue();
-
+    this.selectValue = this.validateForm.controls[this.config['name']].value;
   }
-
-  loadShowValue() {
-    let d = this.validateForm.controls[this.config['name']].value;
-    if (d) {
-      let _valueStrConfig = this.config.componentConfig['showConfig']['showString'];
-
-      this.showValue = this.getStringByshow(d, _valueStrConfig);
-
-      // this.showValue = d['style']['span'];
-    }
-  }
-
-  getStringByshow(_value, _config) {
-    let str: any;
-    _config.forEach(element => {
-      if (_value && _value.hasOwnProperty(element['name'])) {
-        str = _value[element['name']];
-        if (element['children'] && element['children'].length > 0) {
-          str = this.getStringByshow(str, element['children'])
-        }
-      }
-
-    });
-
-    return str;
-
-  }
-
 
   windowDialog
   setting() {
@@ -131,8 +68,8 @@ export class CnStaticFormCustomSelectComponent implements OnInit {
           label: dialogCfg.okText ? dialogCfg.okText : 'OK',
           onClick: (componentInstance) => {
             console.log('当前弹出表单值：', componentInstance)
-            this.validateForm.controls[this.config['name']].setValue(componentInstance['sourceData']);
-            this.loadShowValue();
+            // this.validateForm.controls[this.config['name']].setValue(componentInstance['sourceData']);
+
             // console.log('当前弹出表单值：', componentInstance['staticForm']['validateForm']['value'])
             dialog.close();
           },
