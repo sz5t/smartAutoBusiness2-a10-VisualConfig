@@ -1,1 +1,34 @@
 <p>cfg-page-cmpt-toolbar works!</p>
+<div *ngFor="let toolbar of config['toolbar']">
+    <div nz-row>
+        <ng-container *ngIf="toolbar['dropdown']">
+            <button nz-button nz-dropdown [nzDropdownMenu]="menu">{{ toolbar['text'] }}</button>
+            <nz-dropdown-menu #menu="nzDropdownMenu">
+                <div *ngFor="let button of toolbar['dropdown']">
+                    <ul nz-menu>
+                        <li nz-menu-item>{{button['text']}}</li>
+                    </ul>
+                </div>
+            </nz-dropdown-menu>
+        </ng-container>
+        <ng-container *ngIf="toolbar['group']">
+            <div *ngFor="let button of toolbar['group']">
+                <ng-container *ngIf="button['dropdown']">
+                    <button nz-button nz-dropdown [nzDropdownMenu]="menu">{{ button['text'] }}</button>
+                    <nz-dropdown-menu #menu="nzDropdownMenu">
+                        <div *ngFor="let b of button['dropdown']">
+                            <ul nz-menu>
+                                <li nz-menu-item>{{b['text']}}</li>
+                            </ul>
+                        </div>
+                    </nz-dropdown-menu>
+                </ng-container>
+
+                <ng-container *ngIf="!button['dropdown']">
+                    <button nz-button nzType="button['color']"
+                        *ngIf="button['hidden'] === false">{{button['text']}}</button>
+                </ng-container>
+            </div>
+        </ng-container>
+    </div>
+</div>

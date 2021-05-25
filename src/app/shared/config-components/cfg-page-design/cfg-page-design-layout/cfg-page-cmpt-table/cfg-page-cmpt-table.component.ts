@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { configFormDataServerService } from 'src/app/core/services/config/form-data.service';
 
 @Component({
   selector: 'app-cfg-page-cmpt-table',
@@ -8,6 +9,10 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class CfgPageCmptTableComponent implements OnInit {
   @Input() public l_config;
+  @Input() public showLayout: any;
+  @Input() public selectedItem: any;
+  @Input() public cmptState: any;
+  @Input() public fromDataService: configFormDataServerService;
 
   constructor() { }
 
@@ -18,7 +23,12 @@ export class CfgPageCmptTableComponent implements OnInit {
   public pageSizeOptions = [10, 20]
   public showTotal: any;
   public isBordered: boolean = true;
+  public title;
+  public scroll;
   public size: string = 'default';
+  public isAllChecked = false;
+  public indeterminate;
+  public checkedNumber;
 
   public config = {
     columns: [
@@ -49,7 +59,11 @@ export class CfgPageCmptTableComponent implements OnInit {
         "hidden": false,
         "width": "30%",
       }
-    ]
+    ],
+    showCheckBox: false,
+    showCheckBoxConfig: {
+      offsetLeft: false
+    }
   }
 
   public dataList = [{
@@ -59,8 +73,9 @@ export class CfgPageCmptTableComponent implements OnInit {
   }]
 
   ngOnInit(): void {
-    this._buildColumns(this.config.columns);
     this.load();
+
+
   }
 
   /**
@@ -117,6 +132,12 @@ export class CfgPageCmptTableComponent implements OnInit {
 
   // 根据传入配置读取表格内容方法
   public load() {
+    this.config = this.fromDataService.layoutSourceData[this.l_config['id']].length > 0 ? this.fromDataService.layoutSourceData[this.l_config['id']] : this.config;
+    this._buildColumns(this.config.columns);
+    console.log('tableConfig', this.config);
+  }
+
+  public searchData() {
 
   }
 

@@ -380,6 +380,7 @@ const COMPONENTS = [
   CfgPageCmptTableComponent,
   CfgPageCmptToolbarComponent,
   CfgPageCmptTabsComponent,
+  CfgPageCmptTreeComponent,
   CfgFormRowsComponent,
   CfgFormRowComponent,
   CfgFormColsComponent,
@@ -388,6 +389,7 @@ const COMPONENTS = [
   CfgPropertyTypeComponent,
   CfgPropertyFormComponent,
   CfgPropertyConentComponent,
+  ToolAttrJsonComponent,
 
   //--静态表单--
   CnStaticFormComponent,
@@ -455,10 +457,6 @@ const DIRECTIVES = [
 
 
     CfgPageCmptTreeComponent,
-
-
-
-
 
   ],
   exports: [
