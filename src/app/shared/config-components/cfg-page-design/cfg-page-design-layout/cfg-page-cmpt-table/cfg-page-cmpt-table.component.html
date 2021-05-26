@@ -1,58 +1,95 @@
-<p>cfg-page-cmpt-table works!</p>
-<nz-table #basicTable [nzData]="dataList" [nzTotal]="total" [(nzPageIndex)]="pageIndex" [(nzPageSize)]="pageSize"
-    (nzPageIndexChange)="searchData()" [nzPageSizeOptions]="pageSizeOptions" [nzShowTotal]="showTotal"
-    [nzBordered]="isBordered" [nzSize]="size" [nzTitle]="title ? title : null" [nzScroll]="scroll ? scroll : null">
-    <thead>
-        <!-- <tr>
+<div (click)="click($event)" (drop)="f_ondrop($event,l_config)"
+    [ngStyle]="(selectedItem['item'] &&(selectedItem['active']==='cnDataTable')&& (selectedItem['item']['id']===l_config['id']) )? body_style_selected: body_style">
+
+    <div>
+        <ng-container *ngFor="let cmpt of l_config['children']">
+            <ng-container *ngIf="cmpt['type']==='cnToolbar'">
+                <div appCfgPageDesignLayoutItem [l_config]="cmpt" [showLayout]="showLayout"
+                    [(selectedItem)]="selectedItem" [(cmptState)]="cmptState" [fromDataService]="fromDataService">
+
+                </div>
+            </ng-container>
+        </ng-container>
+    </div>
+    <nz-table #basicTable [nzData]="dataList" [nzTotal]="total" [(nzPageIndex)]="pageIndex" [(nzPageSize)]="pageSize"
+        (nzPageIndexChange)="searchData()" [nzPageSizeOptions]="pageSizeOptions" [nzShowTotal]="showTotal"
+        [nzBordered]="isBordered" [nzSize]="size" [nzTitle]="title ? title : null" [nzScroll]="scroll ? scroll : null">
+        <thead>
+            <!-- <tr>
             <th>字段一</th>
             <th>字段二</th>
             <th>字段三</th>
             <th>字段四</th>
         </tr> -->
-        <tr [ngClass]="{tableHeader: true}">
-            <th [nzWidth]="(config.showCheckBoxConfig && config.showCheckBoxConfig.hasOwnProperty('width'))?config.showCheckBoxConfig['width']:'50px'"
-                [nzLeft]="(config.showCheckBoxConfig && config.showCheckBoxConfig.hasOwnProperty('offsetLeft'))?config.showCheckBoxConfig.offsetLeft:false"
-                *ngIf="config.showCheckBox" [nzShowCheckbox]="config.showCheckBox" [(nzChecked)]="isAllChecked"
-                [nzIndeterminate]="indeterminate"></th>
+            <tr [ngClass]="{tableHeader: true}">
+                <th [nzWidth]="(config.showCheckBoxConfig && config.showCheckBoxConfig.hasOwnProperty('width'))?config.showCheckBoxConfig['width']:'50px'"
+                    [nzLeft]="(config.showCheckBoxConfig && config.showCheckBoxConfig.hasOwnProperty('offsetLeft'))?config.showCheckBoxConfig.offsetLeft:false"
+                    *ngIf="config.showCheckBox" [nzShowCheckbox]="config.showCheckBox" [(nzChecked)]="isAllChecked"
+                    [nzIndeterminate]="indeterminate"></th>
 
-            <ng-template ngFor let-header [ngForOf]="config.columns">
-                <th [nzAlign]="header.titleAlign?header.titleAlign:'left'"
-                    [nzLeft]="header.hasOwnProperty('offsetLeft')?header.offsetLeft:false"
-                    [nzRight]="header.hasOwnProperty('offsetRight')?header.offsetRight:false" [nzWidth]="header.width"
-                    *ngIf="header.hasOwnProperty('titleHidden')? !header.titleHidden :!header.hidden"
-                    [nzShowSort]="header.showSort" attr.rowspan="{{ header.rowspan?header.rowspan:1 }}"
-                    attr.colspan="{{ header.colspan?header.colspan:1 }}">
-                    <!--   [attr.rowspan]="header.rowspan?:header.rowspan:1"
+                <ng-template ngFor let-header [ngForOf]="config.columns">
+                    <th [nzAlign]="header.titleAlign?header.titleAlign:'left'"
+                        [nzLeft]="header.hasOwnProperty('offsetLeft')?header.offsetLeft:false"
+                        [nzRight]="header.hasOwnProperty('offsetRight')?header.offsetRight:false"
+                        [nzWidth]="header.width"
+                        *ngIf="header.hasOwnProperty('titleHidden')? !header.titleHidden :!header.hidden"
+                        [nzShowSort]="header.showSort" attr.rowspan="{{ header.rowspan?header.rowspan:1 }}"
+                        attr.colspan="{{ header.colspan?header.colspan:1 }}">
+                        <!--   [attr.rowspan]="header.rowspan?:header.rowspan:1"
               [attr.colspan]="header.colspan?header.colspan:1"
               header.hasOwnProperty('titleHidden')? !header.titleHidden :  -->
-                    {{ header.title }}
-                </th>
-            </ng-template>
-        </tr>
-    </thead>
-    <tbody>
-        <tr *ngFor="let rowData of dataList">
-            <ng-template ngFor let-col [ngForOf]="tableColumns">
-                <td>
-                    {{rowData[col.field]}}
-                </td>
-            </ng-template>
-        </tr>
-    </tbody>
-    <tfoot>
-        <ng-template #showTotal style="text-align: left">
-            <span>
-                已选中
+                        {{ header.title }}
+                    </th>
+                </ng-template>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let rowData of dataList">
+                <ng-template ngFor let-col [ngForOf]="config.columns">
+                    <td *ngIf="col.hasOwnProperty('titleHidden')? !col.titleHidden :!col.hidden">
+
+                        <ng-container *ngIf="col['type']==='field'">
+                            #{{col.field}}
+                        </ng-container>
+                        <div *ngIf="col['type']==='action'">
+
+                            <ng-container *ngIf="getRowToolbar(col)">
+                                <button nz-button style="margin-left: 8px;" [nzSize]="'small'" nzType="primary"
+                                    (click)="addRowToolbar(col)">
+                                    【行内操作】</button>
+                            </ng-container>
+
+                            <ng-container *ngFor="let cmpt of l_config['children']">
+                                <ng-container *ngIf="cmpt['type']==='cnRowToolbar' && cmpt['positionId']===col['id']">
+                                    <div appCfgPageDesignLayoutItem [l_config]="cmpt" [showLayout]="showLayout"
+                                        [(selectedItem)]="selectedItem" [(cmptState)]="cmptState"
+                                        [fromDataService]="fromDataService">
+
+                                    </div>
+                                </ng-container>
+                            </ng-container>
+                        </div>
+
+                    </td>
+                </ng-template>
+            </tr>
+        </tbody>
+        <tfoot>
+            <ng-template #showTotal style="text-align: left">
+                <span>
+                    已选中
+                    <span class="count" nz-text>
+                        <code>{{ checkedNumber }}</code>
+                    </span>
+                    条记录
+                </span>
+                共
                 <span class="count" nz-text>
-                    <code>{{ checkedNumber }}</code>
+                    <code>{{ total }}</code>
                 </span>
                 条记录
-            </span>
-            共
-            <span class="count" nz-text>
-                <code>{{ total }}</code>
-            </span>
-            条记录
-        </ng-template>
-    </tfoot>
-</nz-table>
+            </ng-template>
+        </tfoot>
+    </nz-table>
+
+</div>

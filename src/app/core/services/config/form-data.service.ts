@@ -227,6 +227,7 @@ export class configFormDataServerService {
             "type": cmptObj['type'],
             "title": cmptObj['title'],
             "container": cmptObj['container'],
+            "positionId": cmptObj['positionId'],
             "parentId": pid,
             "expanded": true,
             "children": []
@@ -268,6 +269,23 @@ export class configFormDataServerService {
         }
         this.layoutSourceData[cmpt_id] = cmpt_obj;
         return cmpt_obj;
+    }
+    public l_create_component_conent_button(pid?, cmptObj?) {
+        let cmpt_id = CommonUtils.uuID(30);
+        let cmpt_obj = {
+            "id": cmpt_id,
+            "key": cmpt_id,
+            "type": cmptObj['type'],
+            "title": cmptObj['title'],
+            "container": cmptObj['container'],
+            "parentId": pid,
+            "expanded": true,
+            "children": []
+        }
+
+        this.layoutSourceData[cmpt_id] = cmpt_obj;
+        return cmpt_obj;
+
     }
 
     public l_create_Layout(pid?) {

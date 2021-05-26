@@ -90,10 +90,17 @@ export class CfgPageSiderComponent implements OnInit {
         },
         {
           "id": "005",
-          "dropName": "cnButton",
+          "dropName": "cnToolbar",
           "icon": "check-square",
           "title": "按钮组"
+        },
+        {
+          "id": "006",
+          "dropName": "cnRowToolbar",
+          "icon": "check-square",
+          "title": "行内按钮"
         }
+
 
 
       ]

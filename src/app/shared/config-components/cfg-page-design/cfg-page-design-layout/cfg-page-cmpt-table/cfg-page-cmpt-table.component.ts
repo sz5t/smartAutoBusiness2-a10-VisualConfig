@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { configFormDataServerService } from 'src/app/core/services/config/form-data.service';
+import { CommonUtils } from 'src/app/core/utils/common-utils';
 
 @Component({
   selector: 'app-cfg-page-cmpt-table',
@@ -71,12 +72,15 @@ export class CfgPageCmptTableComponent implements OnInit {
     age: "age",
     sex: "sex",
   }]
-
+  body_style: any = { 'padding': '1px 2px' }
+  body_style_selected: any = { 'padding': '1px 2px', 'border': "3px dashed red" }
   ngOnInit(): void {
     this.load();
-
+    this.fromDataService.layoutStructInstance[this.l_config['id']] = this;
 
   }
+
+
 
   /**
    * 构建表格列集合
@@ -131,14 +135,115 @@ export class CfgPageCmptTableComponent implements OnInit {
   }
 
   // 根据传入配置读取表格内容方法
-  public load() {
-    this.config = this.fromDataService.layoutSourceData[this.l_config['id']].length > 0 ? this.fromDataService.layoutSourceData[this.l_config['id']] : this.config;
-    this._buildColumns(this.config.columns);
-    console.log('tableConfig', this.config);
+
+  load() {
+    this.config = this.fromDataService.layoutSourceData[this.l_config['id']];
+    if (this.config && this.config.columns) {
+      this._buildColumns(this.config.columns);
+      console.log('tableConfig', this.config);
+    }
+
   }
 
   public searchData() {
 
+  }
+
+  click(e?) {
+    e.stopPropagation();
+    // this.optionState = true;
+    // 选中
+    this.selectedItem['item'] = this.l_config;
+    this.selectedItem['active'] = 'cnDataTable';
+    this.fromDataService.layoutNodeSelected(this.l_config);
+    console.log('选中当前tabs', this.selectedItem);
+
+  }
+
+  public f_ondrop(e?, d?) {
+
+    e.preventDefault();
+    console.log('拖动行ondrop', e, d);
+    const ss = e.dataTransfer.getData('test');
+    console.log('拖动行ondrop临时值', ss);
+    //let dropData = JSON.stringify(ss);
+    // console.log('拖拽JSON', dropData);
+
+
+    if (ss === 'cnToolbar') {
+      const cmpTypeMapping = {
+        cnForm: 'cnForm',
+        cnTable: 'cnDataTable',
+        cnTree: 'cnTree',
+        cnTreeTable: 'cnTreeTable',
+        cnToolbar: 'cnToolbar',
+        tabs: 'tabs'
+      }
+
+      if (!cmpTypeMapping[ss]) {
+        e.stopPropagation();
+        return;
+      }
+
+      let cmptObj = {
+        "type": cmpTypeMapping[ss],
+        "title": "组件" + cmpTypeMapping[ss],
+        "container": cmpTypeMapping[ss],
+        "positionId": this.l_config['id']
+      }
+
+      // this.l_config.children = [];
+
+      this.l_config['container'] = 'component';
+      let node = this.fromDataService.l_create_component(this.l_config['id'], cmptObj);
+      // this.l_config.children.splice(0, 0, node);
+      this.fromDataService.layoutTreeInstance.addChildrenNode(this.l_config['id'], node, 0);
+
+      e.stopPropagation();
+    }
+  }
+
+  addRowToolbar(d?) {
+
+
+    let ss = 'cnRowToolbar';
+    if (ss === 'cnRowToolbar') {
+      const cmpTypeMapping = {
+        cnRowToolbar: 'cnRowToolbar'
+      }
+
+      if (!cmpTypeMapping[ss]) {
+
+        return;
+      }
+
+      let cmptObj = {
+        "type": cmpTypeMapping[ss],
+        "title": "组件" + cmpTypeMapping[ss],
+        "container": cmpTypeMapping[ss],
+        "positionId": d['id']
+      }
+
+      // this.l_config.children = [];
+
+      this.l_config['container'] = 'component';
+      let node = this.fromDataService.l_create_component(this.l_config['id'], cmptObj);
+      // this.l_config.children.splice(0, 0, node);
+      this.fromDataService.layoutTreeInstance.addChildrenNode(this.l_config['id'], node, 0);
+
+
+    }
+
+  }
+
+  getRowToolbar(col) {
+    let back = true;
+
+    const index = this.l_config['children'].findIndex((item) => item['positionId'] === col.id);
+    if (index > -1) {
+      back = false;
+    }
+    return back;
   }
 
 }

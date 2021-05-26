@@ -121,7 +121,7 @@ export class CfgPageColComponent implements OnInit, OnChanges {
         cnTable: 'cnDataTable',
         cnTree: 'cnTree',
         cnTreeTable: 'cnTreeTable',
-        cnButton: 'cnButton',
+        cnToolbar: 'cnToolbar',
         tabs: 'tabs'
       }
 

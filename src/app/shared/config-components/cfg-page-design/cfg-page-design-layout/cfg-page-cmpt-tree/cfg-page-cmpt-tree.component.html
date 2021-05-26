@@ -1,4 +1,7 @@
-<p>cfg-page-cmpt-tree works!</p>
-<nz-tree #treeObj [nzData]="nodes" [nzExpandAll]="config.expandAll" [nzBlockNode]="true"
-    [nzCheckable]="config.showCheckBox">
-</nz-tree>
+<div (click)="click($event)"
+    [ngStyle]="(selectedItem['item'] &&(selectedItem['active']==='cnTree')&& (selectedItem['item']['id']===l_config['id']) )? body_style_selected: body_style">
+
+    <nz-tree #treeObj [nzData]="nodes" [nzExpandAll]="config.expandAll" [nzBlockNode]="true"
+        [nzCheckable]="config.showCheckBox">
+    </nz-tree>
+</div>

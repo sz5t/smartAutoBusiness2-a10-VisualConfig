@@ -109,13 +109,25 @@ export class CfgPageCmptFormComponent implements OnInit {
   }
 
   // body_style: any = { 'padding': '1px 2px' }
-
+  body_style: any = { 'padding': '1px 2px' }
+  body_style_selected: any = { 'padding': '1px 2px', 'border': "3px dashed red" }
   ngOnInit(): void {
     this.config = this.fromDataService.layoutSourceData[this.l_config['id']].length > 0 ? this.fromDataService.layoutSourceData[this.l_config['id']] : this.config;
     this.load(this.config);
   }
 
   public load(config) {
+
+  }
+
+  click(e?) {
+    e.stopPropagation();
+    // this.optionState = true;
+    // 选中
+    this.selectedItem['item'] = this.l_config;
+    this.selectedItem['active'] = 'cnForm';
+    this.fromDataService.layoutNodeSelected(this.l_config);
+    console.log('选中当前tabs', this.selectedItem);
 
   }
 

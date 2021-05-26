@@ -17,6 +17,13 @@ export class CnStaticFormSwitchComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+
+    if (this.validateForm.controls[this.config['name']]) {
+      let d = this.validateForm.controls[this.config['name']].value;
+      if (this.config['componentConfig']['casadeValue']) {
+        this.text(d);
+      }
+    }
   }
 
 

@@ -10,9 +10,10 @@ const components: { [type: string]: Type<any> } = {
   cnForm: CfgPageCmptFormComponent,
   cnDataTable: CfgPageCmptTableComponent,
   cnTree: CfgPageCmptTreeComponent,
-  // treeTable: 'cnTreeTable',
-  cnButton: CfgPageCmptToolbarComponent,
-  cnTabs: CfgPageCmptTabsComponent
+  // cnTreeTable: 'cnTreeTable',
+  cnToolbar: CfgPageCmptToolbarComponent,
+  cnRowToolbar: CfgPageCmptToolbarComponent,
+  tabs: CfgPageCmptTabsComponent
 
 
 };

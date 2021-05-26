@@ -1,5 +1,6 @@
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { CommonUtils } from 'src/app/core/utils/common-utils';
 import { CustomValidator } from '../../../data-form/form-validator/CustomValidator';
 
 @Component({
@@ -14,6 +15,13 @@ export class CnStaticFormArrayCollapseComponent implements OnInit {
   @Input() config;
   @Output() public updateValue = new EventEmitter<any>(true);
   constructor(private fb: FormBuilder) { }
+
+  staticDefaultValueConfig: any = [
+    {
+      "name": "id",
+      "type": "GUID"
+    }
+  ]
 
   size = {
     "sapn": 24,
@@ -31,6 +39,11 @@ export class CnStaticFormArrayCollapseComponent implements OnInit {
       this.size = this.config.componentConfig['size'];
       this.span = this.size['sapn'];
     }
+    if (this.config.componentConfig && this.config.componentConfig['staticDefaultValueConfig']) {
+      this.staticDefaultValueConfig = this.config.componentConfig['staticDefaultValueConfig'];
+    }
+
+
     // console.log('array-card===>>>', this.config, this.size, this.span)
   }
 
@@ -43,8 +56,12 @@ export class CnStaticFormArrayCollapseComponent implements OnInit {
   }
 
   add() {
+    let _data = {};
+    if (this.staticDefaultValueConfig) {
+      _data = this.getStaticDefaultValue(this.staticDefaultValueConfig);
+    }
 
-    this.validateFormArray.push(this.set_formGroupControlName({}, this.config));
+    this.validateFormArray.push(this.set_formGroupControlName(_data, this.config));
     // this.validateFormArray.push(this.creatRow());
     this.validateFormArray.controls.forEach(item => {
       item.markAsPristine();
@@ -58,6 +75,42 @@ export class CnStaticFormArrayCollapseComponent implements OnInit {
 
     // console.log('', this.validateForm)
 
+
+  }
+
+  getStaticDefaultValue(defaultValueConfig) {
+    let objValue = {};
+    defaultValueConfig.forEach(element => {
+
+      objValue[element['name']] = this.getDefaultValue(element);
+    });
+    return objValue;
+
+
+  }
+
+  getDefaultValue(option) {
+    let value = null;
+    switch (option['type']) {
+      case 'value':
+        value = option['value'];
+        break;
+      case 'componentValue':
+        value = this.validateForm.value[option['valueName']];
+        break;
+      case 'GUID':
+        value = CommonUtils.uuID(36);
+        break;
+
+
+
+      // ......多种取值方式
+      default:
+        value = option['value'];
+        break;
+    }
+
+    return value;
 
   }
   //刪除组合

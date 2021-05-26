@@ -1,48 +1,52 @@
-<nz-card nzHoverable="true" nzTitle="表单">
-    <div *ngFor="let layout of config['formLayout']">
-        <div nz-row [nzGutter]="2" *ngFor="let r of layout['children']">
-            <div nz-col *ngFor="let c of r['children']" [nzSpan]="c.span">
-                <ng-container *ngIf="c['container']==='component'">
-                    <!-- <div [hidden]="r['hidden']">
+<div (click)="click($event)"
+    [ngStyle]="(selectedItem['item'] &&(selectedItem['active']==='cnForm')&& (selectedItem['item']['id']===l_config['id']) )? body_style_selected: body_style">
+
+    <nz-card nzHoverable="true" nzTitle="表单">
+        <div *ngFor="let layout of config['formLayout']">
+            <div nz-row [nzGutter]="2" *ngFor="let r of layout['children']">
+                <div nz-col *ngFor="let c of r['children']" [nzSpan]="c.span">
+                    <ng-container *ngIf="c['container']==='component'">
+                        <!-- <div [hidden]="r['hidden']">
                             <ng-container CnStaticFormItemDirective [validateForm]="validateForm"
                                 [config]="config['properties'][c['controlIndex']]" [fromDataService]="fromDataService"
                                 (cascadeValue)="cascadeValue($event)">
                             </ng-container>
                         </div> -->
-                    <div *ngFor="let cmpt of c['children']">
-                        {{cmpt['title'] ? cmpt['title'] : '可以填充行布局或者是表单组件'}}
-                    </div>
-                    <div *ngIf="c['children'].length === 0">
-                        可以填充行布局或者是表单组件
-                    </div>
+                        <div *ngFor="let cmpt of c['children']">
+                            {{cmpt['title'] ? cmpt['title'] : '可以填充行布局或者是表单组件'}}
+                        </div>
+                        <div *ngIf="c['children'].length === 0">
+                            可以填充行布局或者是表单组件
+                        </div>
 
-                </ng-container>
+                    </ng-container>
 
-                <ng-container *ngIf="c['container']==='rows'">
-                    <div nz-row [nzGutter]="2" *ngFor="let c_r of c['children']">
-                        <div nz-col *ngFor="let c_c of c_r['children']" [nzSpan]="c_c.span" [nzSm]="c_c.size.nzSm"
-                            [nzXs]="c_c.size.nzXs" [nzMd]="c_c.size.nzMd" [nzLg]="c_c.size.nzLg" [nzXl]="c_c.size.nzXl"
-                            [ngStyle]="{'display': c_c.display ? c_c.display : null}">
+                    <ng-container *ngIf="c['container']==='rows'">
+                        <div nz-row [nzGutter]="2" *ngFor="let c_r of c['children']">
+                            <div nz-col *ngFor="let c_c of c_r['children']" [nzSpan]="c_c.span" [nzSm]="c_c.size.nzSm"
+                                [nzXs]="c_c.size.nzXs" [nzMd]="c_c.size.nzMd" [nzLg]="c_c.size.nzLg"
+                                [nzXl]="c_c.size.nzXl" [ngStyle]="{'display': c_c.display ? c_c.display : null}">
 
-                            <ng-container *ngIf="c_c['container']==='component'">
-                                <!-- <div [hidden]="r['hidden']">
+                                <ng-container *ngIf="c_c['container']==='component'">
+                                    <!-- <div [hidden]="r['hidden']">
                                         <ng-container CnStaticFormItemDirective [validateForm]="validateForm"
                                             [config]="config['properties'][c_c['controlIndex']]"
                                             [fromDataService]="fromDataService" (cascadeValue)="cascadeValue($event)">
                                         </ng-container>
                                         </div> -->
-                                <div *ngFor="let cmpt of c['children']">
-                                    {{cmpt['title'] ? cmpt['title'] : '可以填充行布局或者是表单组件'}}
-                                </div>
-                                <div *ngIf="c['children'].length === 0">
-                                    可以填充行布局或者是表单组件
-                                </div>
-                            </ng-container>
+                                    <div *ngFor="let cmpt of c['children']">
+                                        {{cmpt['title'] ? cmpt['title'] : '可以填充行布局或者是表单组件'}}
+                                    </div>
+                                    <div *ngIf="c['children'].length === 0">
+                                        可以填充行布局或者是表单组件
+                                    </div>
+                                </ng-container>
+                            </div>
                         </div>
-                    </div>
-                </ng-container>
+                    </ng-container>
 
+                </div>
             </div>
         </div>
-    </div>
-</nz-card>
+    </nz-card>
+</div>
