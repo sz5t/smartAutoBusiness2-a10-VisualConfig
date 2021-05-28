@@ -4,9 +4,12 @@ import { NzModalService } from 'ng-zorro-antd/modal';
 import { configFormDataServerService } from 'src/app/core/services/config/form-data.service';
 import { CnStaticFormAjaxComponent } from '../../cn-static-form-cmpt/cn-static-form-ajax/cn-static-form-ajax.component';
 import { CnStaticFormGridItemComponent } from '../../cn-static-form-cmpt/cn-static-form-grid-item/cn-static-form-grid-item.component';
+import { CnStaticFormStaticFormComponent } from '../../cn-static-form-cmpt/cn-static-form-static-form/cn-static-form-static-form.component';
+import { CnStaticFormComponent } from '../../cn-static-form.component';
 const components: { [type: string]: Type<any> } = {
   ajax: CnStaticFormAjaxComponent,
   gridItem: CnStaticFormGridItemComponent,
+  staticForm: CnStaticFormStaticFormComponent
 
 };
 @Component({
@@ -32,7 +35,10 @@ export class CnStaticFormCustomSelectComponent implements OnInit {
       okText: '确定',
       footerButton: null,
       customAction: [],
-      customContent: ''
+      customContent: '',
+      customPageConfig: {
+
+      }
     },
     "showConfig": {
       "showString": [
@@ -96,18 +102,21 @@ export class CnStaticFormCustomSelectComponent implements OnInit {
     console.log('');
     let dialog;
     // 根据按钮类型初始化表单状态
-    const dialogCfg = {
-      title: '',
-      width: '90%',
-      style: null,
-      maskClosable: true,
-      cancelText: '取消',
-      okText: '确定',
-      footerButton: null,
-      customAction: []
+    const dialogCfg = this.config.componentConfig['customPage'];
+    if (!dialogCfg) {
+      return;
+    }
 
-    };
-
+    let staticData;
+    if (dialogCfg['sourceData']) {
+      if (dialogCfg['sourceData']['type'] === 'root') {
+        staticData = this.validateForm.value;
+      } else {
+        staticData = this.validateForm.controls[dialogCfg['sourceData']['name']].value;
+      }
+    } else {
+      staticData = this.validateForm.controls[this.config['name']].value;
+    }
 
 
     const dialogOptional = {
@@ -115,10 +124,10 @@ export class CnStaticFormCustomSelectComponent implements OnInit {
       nzWidth: dialogCfg.width ? dialogCfg.width : '600px',
       nzStyle: dialogCfg.style ? dialogCfg.style : null, // style{top:'1px'},
       nzMaskClosable: dialogCfg.hasOwnProperty('maskClosable') ? dialogCfg.maskClosable : false,
-      nzContent: components['gridItem'],
+      nzContent: components[dialogCfg['customContent']],
       nzComponentParams: {
-        config: {},
-        sourceData: this.validateForm.controls[this.config['name']].value
+        config: dialogCfg['customPageConfig'],
+        sourceData: staticData
       },
       nzFooter: [
         {

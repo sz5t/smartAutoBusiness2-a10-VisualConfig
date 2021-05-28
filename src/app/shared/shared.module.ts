@@ -206,6 +206,7 @@ import { ToolAttrJsonComponent } from './tools/tool-attr-json/tool-attr-json.com
 import { CnStaticFormLabelComponent } from './components/cn-static-form/cn-static-form-item/cn-static-form-label/cn-static-form-label.component';
 import { CnStaticFormPopFormComponent } from './components/cn-static-form/cn-static-form-item/cn-static-form-pop-form/cn-static-form-pop-form.component';
 import { CnStaticFormSwitchConentComponent } from './components/cn-static-form/cn-static-form-item/cn-static-form-switch-conent/cn-static-form-switch-conent.component';
+import { CnStaticFormStaticFormComponent } from './components/cn-static-form/cn-static-form-cmpt/cn-static-form-static-form/cn-static-form-static-form.component';
 
 
 // #region third libs
@@ -415,6 +416,7 @@ const COMPONENTS = [
   CnStaticFormAjaxComponent,
   CnStaticFormFormItemComponent,
   CnStaticFormGridItemComponent,
+  CnStaticFormStaticFormComponent,
 ];
 const DIRECTIVES = [
   CnLayoutResolverDirective,
@@ -467,6 +469,10 @@ const DIRECTIVES = [
 
 
     CnStaticFormSwitchConentComponent,
+
+
+
+
 
   ],
   exports: [

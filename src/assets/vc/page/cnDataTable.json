@@ -272,17 +272,15 @@
                                                     "okText": "确定",
                                                     "footerButton": null,
                                                     "customAction": [],
-                                                    "customContent":""
+                                                    "customContent":"gridItem",
+                                                    "customPageConfig":{
+
+                                                    }
                                                   },
                                                   "showConfig":{
                                                       "showString":[
                                                           {
-                                                              "name":"style",
-                                                              "children":[
-                                                                  {
-                                                                      "name":"span"
-                                                                  }
-                                                              ]
+                                                              "name":"type"
                                                           }
 
                                                       ]
@@ -302,6 +300,236 @@
                                             "formName": "formControlName",
                                             "validations": [],
                                             "title": "编辑"
+                                        },
+                                        {
+                                            "name": "liuedit",
+                                            "type": "customSelect",
+                                            "componentConfig": {
+                                                "customPage":{
+                                                    "title": "",
+                                                    "width": "90%",
+                                                    "style": null,
+                                                    "maskClosable": true,
+                                                    "cancelText": "取消",
+                                                    "okText": "确定",
+                                                    "footerButton": null,
+                                                    "customAction": [],
+                                                    "customContent":"staticForm",
+                                                    "customPageConfig": {
+                                                        "type": "staticForm",
+                                                        "backName": "title",
+                                                        "backConfig": [
+                                                            {
+                                                                "name": "title"
+                                                            },
+                                                            {
+                                                                "name": "showTitle"
+                                                            }
+                                                        ],
+                                                        "properties": [
+                                                            {
+                                                                "name": "id",
+                                                                "type": "input",
+                                                                "componentConfig": {},
+                                                                "formType": "value",
+                                                                "formName": "formControlName",
+                                                                "validations": [],
+                                                                "title": "主键"
+                                                            },
+                                                            {
+                                                                "name": "title",
+                                                                "type": "input",
+                                                                "componentConfig": {},
+                                                                "formType": "value",
+                                                                "formName": "formControlName",
+                                                                "validations": [],
+                                                                "title": "标题"
+                                                            },
+                                                            {
+                                                                "name": "showTitle",
+                                                                "type": "switch",
+                                                                "componentConfig": {},
+                                                                "formType": "value",
+                                                                "formName": "formControlName",
+                                                                "validations": [],
+                                                                "title": "是否显示标题"
+                                                            },
+                                                            {
+                                                                "name": "keyId",
+                                                                "type": "input",
+                                                                "componentConfig": {},
+                                                                "formType": "value",
+                                                                "formName": "formControlName",
+                                                                "validations": [],
+                                                                "title": "绑定主键"
+                                                            },
+                                                            {
+                                                                "name": "size",
+                                                                "type": "select",
+                                                                "componentConfig": {
+                                                                    "options": [
+                                                                        {
+                                                                            "label": "正常",
+                                                                            "value": "default"
+                                                                        },
+                                                                        {
+                                                                            "label": "紧凑",
+                                                                            "value": "middle"
+                                                                        },
+                                                                        {
+                                                                            "label": "迷你",
+                                                                            "value": "small"
+                                                                        }
+                                                                    ],
+                                                                    "labelName": "label",
+                                                                    "valueName": "value"
+                                                                },
+                                                                "formType": "value",
+                                                                "formName": "formControlName",
+                                                                "validations": [],
+                                                                "title": "表格类型"
+                                                            },
+                                                            {
+                                                                "name": "isBordered",
+                                                                "type": "switch",
+                                                                "componentConfig": {},
+                                                                "formType": "value",
+                                                                "formName": "formControlName",
+                                                                "validations": [],
+                                                                "title": "是否展示边框"
+                                                            },
+                                                            {
+                                                                "name": "isFrontPagination",
+                                                                "type": "switch",
+                                                                "componentConfig": {},
+                                                                "formType": "value",
+                                                                "formName": "formControlName",
+                                                                "validations": [],
+                                                                "title": "是否前端分页"
+                                                            },
+                                                            {
+                                                                "name": "isPagination",
+                                                                "type": "switch",
+                                                                "componentConfig": {},
+                                                                "formType": "value",
+                                                                "formName": "formControlName",
+                                                                "validations": [],
+                                                                "title": "是否分页"
+                                                            },
+                                                            {
+                                                                "name": "showTotal",
+                                                                "type": "switch",
+                                                                "componentConfig": {},
+                                                                "formType": "value",
+                                                                "formName": "formControlName",
+                                                                "validations": [],
+                                                                "title": "是否展示总条数"
+                                                            },
+                                                            {
+                                                                "name": "pageSize",
+                                                                "type": "input",
+                                                                "componentConfig": {},
+                                                                "formType": "value",
+                                                                "formName": "formControlName",
+                                                                "validations": [],
+                                                                "title": "页大小"
+                                                            },
+                                                            {
+                                                                "name": "showCheckBox",
+                                                                "type": "switch",
+                                                                "componentConfig": {},
+                                                                "formType": "value",
+                                                                "formName": "formControlName",
+                                                                "validations": [],
+                                                                "title": "是否可勾选"
+                                                            }
+                                                        ]
+                                                    },
+                                                    "sourceData": {
+                                                        "type": "_root",
+                                                        "name": "liuedit"
+                                                    }
+                                                  },
+                                                  "showConfig":{
+                                                      "showString":[
+                                                          {
+                                                              "name":"type"
+                                                          }
+
+                                                      ]
+
+                                                  }
+                                            },
+                                            "formType": "value",
+                                            "formName": "formControlName",
+                                            "validations": [],
+                                            "title": "测试弹出"
+                                        },
+                                        {
+                                            "name": "arrayliu",
+                                            "type": "customSelect",
+                                            "componentConfig": {
+                                                "customPage":{
+                                                    "title": "",
+                                                    "width": "90%",
+                                                    "style": null,
+                                                    "maskClosable": true,
+                                                    "cancelText": "取消",
+                                                    "okText": "确定",
+                                                    "footerButton": null,
+                                                    "customAction": [],
+                                                    "customContent":"staticForm",
+                                                    "customPageConfig": {
+                                                        "type": "staticForm",
+                                                        "backName": "arrayliu",
+                                                        "backConfig": [
+                                                            {
+                                                                "name": "arrayliu"
+                                                            }
+                                                        ],
+                                                        "properties": [
+                                                            {
+                                                                "name": "arrayliu",
+                                                                "type": "arrayCard",
+                                                                "componentConfig": {},
+                                                                "formType": "array",
+                                                                "formName": "formControlName",
+                                                                "validations": [],
+                                                                "title": "主键",
+                                                                "properties":[
+                                                                    {
+                                                                        "name": "title",
+                                                                        "type": "input",
+                                                                        "componentConfig": {},
+                                                                        "formType": "value",
+                                                                        "formName": "formControlName",
+                                                                        "validations": [],
+                                                                        "title": "标题"
+                                                                    }
+                                                                ]
+                                                            }
+                                                           
+                                                        ]
+                                                    },
+                                                    "sourceData": {
+                                                        "type": "root",
+                                                        "name": "title"
+                                                    }
+                                                  },
+                                                  "showConfig":{
+                                                      "showString":[
+                                                          {
+                                                              "name":"type"
+                                                          }
+
+                                                      ]
+
+                                                  }
+                                            },
+                                            "formType": "value",
+                                            "formName": "formControlName",
+                                            "validations": [],
+                                            "title": "测试弹出数组"
                                         }
 
                                         

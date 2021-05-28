@@ -17,6 +17,8 @@ export class CnStaticFormObjectCardComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+    this.config = JSON.parse(JSON.stringify(this.config));
+
   }
 
   cascadeValueEmit(back?) {
