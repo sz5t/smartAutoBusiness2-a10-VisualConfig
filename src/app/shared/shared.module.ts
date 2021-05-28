@@ -204,6 +204,8 @@ import { CnStaticFormFormItemComponent } from './components/cn-static-form/cn-st
 import { CnStaticFormCustomInputSelectComponent } from './components/cn-static-form/cn-static-form-item/cn-static-form-custom-input-select/cn-static-form-custom-input-select.component';
 import { ToolAttrJsonComponent } from './tools/tool-attr-json/tool-attr-json.component';
 import { CnStaticFormLabelComponent } from './components/cn-static-form/cn-static-form-item/cn-static-form-label/cn-static-form-label.component';
+import { CnStaticFormPopFormComponent } from './components/cn-static-form/cn-static-form-item/cn-static-form-pop-form/cn-static-form-pop-form.component';
+import { CnStaticFormSwitchConentComponent } from './components/cn-static-form/cn-static-form-item/cn-static-form-switch-conent/cn-static-form-switch-conent.component';
 
 
 // #region third libs
@@ -457,6 +459,14 @@ const DIRECTIVES = [
 
 
     CfgPageCmptTreeComponent,
+
+
+
+    CnStaticFormPopFormComponent,
+
+
+
+    CnStaticFormSwitchConentComponent,
 
   ],
   exports: [

@@ -71,6 +71,80 @@
                       "validations": [],
                       "title": "类型"
   
+                    },
+                    {
+                      "name": "eventConent",
+                      "type": "arrayTable",
+                      "componentConfig": {
+              
+                      },
+                      "formType": "array",
+                      "formName": "formControlName",
+                      "validations": [],
+                      "title": "事件内容",
+                      "properties": [
+                        {
+                          "name": "targetViewId",
+                          "type": "input",
+                          "componentConfig": {
+                            "hiddenTitle": true,
+                            "labelSize": {
+                              "span": 8,
+                              "nzXs": {
+                                "span": 7,
+                                "offset": 1
+                              },
+                              "nzSm": {
+                                "span": 7,
+                                "offset": 1
+                              },
+                              "nzMd": {
+                                "span": 7,
+                                "offset": 1
+                              },
+                              "nzLg": {
+                                "span": 7,
+                                "offset": 1
+                              },
+                              "ngXl": {
+                                "span": 7,
+                                "offset": 1
+                              },
+                              "nzXXl": {
+                                "span": 7,
+                                "offset": 1
+                              }
+                            },
+                            "controlSize": {
+                              "span": 16,
+                              "nzXs": 16,
+                              "nzSm": 16,
+                              "nzMd": 16,
+                              "nzLg": 16,
+                              "ngXl": 16,
+                              "nzXXl": 16
+                            }
+                          },
+                          "formType": "value",
+                          "formName": "formControlName",
+                          "validations": [],
+                          "title": "关联组件"
+              
+                        },
+                        {
+                          "name": "command",
+                          "type": "input",
+                          "componentConfig": {
+                            "hiddenTitle": true
+                          },
+                          "formType": "value",
+                          "formName": "formControlName",
+                          "validations": [],
+                          "title": "发出命令名称"
+              
+                        }
+                      ]
+              
                     }
   
   

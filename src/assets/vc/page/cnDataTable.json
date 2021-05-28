@@ -164,6 +164,17 @@
                                     "name": "columns",
                                     "type": "arrayCollapse",
                                     "componentConfig": {
+                                        "staticDefaultValueConfig":[
+                                            {
+                                               "name":"id",
+                                               "type":"GUID"
+                                            },
+                                             {
+                                               "name":"type",
+                                               "type":"value",
+                                               "value":"field"
+                                            }
+                                         ]
 
                                     },
                                     "formType": "array",

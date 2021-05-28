@@ -676,7 +676,12 @@ export class CnStaticFormGridItemComponent implements OnInit {
             {
               "label": "开关",
               "value": "cnGridSwitch"
+            },
+            {
+              "label": "下拉选择",
+              "value": "cnGridSelect"
             }
+
           ],
           "labelName": "label",
           "valueName": "value",

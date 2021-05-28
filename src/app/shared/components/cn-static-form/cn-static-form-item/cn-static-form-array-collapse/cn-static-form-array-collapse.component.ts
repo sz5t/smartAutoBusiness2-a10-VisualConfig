@@ -17,10 +17,7 @@ export class CnStaticFormArrayCollapseComponent implements OnInit {
   constructor(private fb: FormBuilder) { }
 
   staticDefaultValueConfig: any = [
-    {
-      "name": "id",
-      "type": "GUID"
-    }
+
   ]
 
   size = {

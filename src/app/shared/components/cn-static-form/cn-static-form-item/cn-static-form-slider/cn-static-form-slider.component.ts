@@ -11,7 +11,7 @@ export class CnStaticFormSliderComponent implements OnInit {
   @Input() validateForm: FormGroup;
   @Input() config;
   @Output() public updateValue = new EventEmitter<any>(true);
-  componentConfig: any;
+  componentConfig: any = {};
   selectValue: any;
   showValue: any;
   constructor() { }
@@ -22,6 +22,12 @@ export class CnStaticFormSliderComponent implements OnInit {
     if (this.config['componentConfig']) {
       this.componentConfig = this.config['componentConfig'];
 
+    }
+    if (!this.componentConfig.hasOwnProperty('min')) {
+      this.componentConfig['min'] = 0;
+    }
+    if (!this.componentConfig.hasOwnProperty('max')) {
+      this.componentConfig['max'] = 100;
     }
     this.loadShowValue();
   }

@@ -3,7 +3,9 @@
         <div *ngIf="l_config['children'].length >0" nz-row [nzGutter]="6">
             <!-- [nzSm]="config[r['id']].size.nzSm" [nzXs]="config[r['id']].size.nzXs" [nzMd]="config[r['id']].size.nzMd"
             [nzLg]="config[r['id']].size.nzLg" [nzXl]="config[r['id']].size.nzXl" -->
-            <div nz-col *ngFor="let r of l_config['children']  let i=index" [nzSpan]="config[r['id']].span">
+            <div nz-col *ngFor="let r of l_config['children']  let i=index" [nzSm]="config[r['id']].size.nzSm"
+                [nzXs]="config[r['id']].size.nzXs" [nzMd]="config[r['id']].size.nzMd" [nzLg]="config[r['id']].size.nzLg"
+                [nzXl]="config[r['id']].size.nzXl" [nzSpan]="config[r['id']].span">
                 <div [ngStyle]="r['style']" (drop)="f_ondrop($event,l_config,i)"
                     (dragover)="f_ondragover($event,l_config)" (dragenter)="f_ondragenter($event,i)"
                     (dragleave)="f_ondragleave($event,i)">

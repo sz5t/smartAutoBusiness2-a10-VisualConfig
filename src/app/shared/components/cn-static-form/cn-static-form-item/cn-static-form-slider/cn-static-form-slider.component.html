@@ -5,12 +5,13 @@
             <!--  <input nz-input [formControlName]="config['name']" (ngModelChange)="log($event)" /> -->
             <nz-row>
                 <nz-col nzSpan="12">
-                    <nz-slider [nzMin]="1" [nzMax]="24" [formControlName]="config['name']"
-                        (ngModelChange)="log($event)"></nz-slider>
+                    <nz-slider [nzMin]="componentConfig['min']" [nzMax]="componentConfig['max']"
+                        [formControlName]="config['name']" (ngModelChange)="log($event)"></nz-slider>
                 </nz-col>
                 <div nz-col nzSpan="12">
-                    <nz-input-number [nzMin]="1" [nzMax]="24" [(ngModel)]="showValue"
-                        (ngModelChange)="valueChange($event)" [ngModelOptions]="{standalone: true}">
+                    <nz-input-number [nzMin]="componentConfig['min']" [nzMax]="componentConfig['max']"
+                        [(ngModel)]="showValue" (ngModelChange)="valueChange($event)"
+                        [ngModelOptions]="{standalone: true}">
                     </nz-input-number>
                     <!--    [ngModelOptions]="{standalone: true}" -->
                 </div>
