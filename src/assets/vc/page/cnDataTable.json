@@ -514,7 +514,12 @@
                                                     "sourceData": {
                                                         "type": "root",
                                                         "name": "title"
+                                                    },
+                                                    "saveData":{
+                                                        "type":"_root",
+                                                        "name": "arrayliu"
                                                     }
+                                                  
                                                   },
                                                   "showConfig":{
                                                       "showString":[

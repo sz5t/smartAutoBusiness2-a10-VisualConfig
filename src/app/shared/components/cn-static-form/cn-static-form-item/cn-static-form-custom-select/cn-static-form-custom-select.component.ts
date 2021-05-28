@@ -140,7 +140,20 @@ export class CnStaticFormCustomSelectComponent implements OnInit {
           label: dialogCfg.okText ? dialogCfg.okText : 'OK',
           onClick: (componentInstance) => {
             console.log('当前弹出表单值：', componentInstance)
-            this.validateForm.controls[this.config['name']].setValue(componentInstance['sourceData']);
+            // saveData
+
+            let saveStaticData;
+            if (dialogCfg['saveData']) {
+              if (dialogCfg['saveData']['type'] === 'root') {
+                saveStaticData = componentInstance['sourceData'];
+              } else {
+                saveStaticData = componentInstance['sourceData'][dialogCfg['saveData']['name']];
+              }
+            } else {
+              saveStaticData = componentInstance['sourceData'];
+            }
+
+            this.validateForm.controls[this.config['name']].setValue(saveStaticData);
             this.loadShowValue();
             // console.log('当前弹出表单值：', componentInstance['staticForm']['validateForm']['value'])
             dialog.close();
