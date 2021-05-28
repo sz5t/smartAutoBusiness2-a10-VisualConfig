@@ -25,14 +25,21 @@
                                     "name": "placeholder"
                                 },
                                 {
-                                    "name": "ajaxConfig"
+                                    "name": "showTime"
                                 }
                             ],
                             "properties": [
                                 {
                                     "name": "field",
                                     "type": "input",
-                                    "componentConfig": {},
+                                    "componentConfig": {
+                                        "labelSize": {                
+                                            "span": 4
+                                          },
+                                          "controlSize": {             
+                                            "span": 20
+                                          }
+                                    },
                                     "formType": "value",
                                     "formName": "formControlName",
                                     "validations": [],
@@ -41,7 +48,14 @@
                                 {
                                     "name": "type",
                                     "type": "input",
-                                    "componentConfig": {},
+                                    "componentConfig": {
+                                        "labelSize": {                
+                                            "span": 4
+                                          },
+                                          "controlSize": {             
+                                            "span": 20
+                                          }
+                                    },
                                     "formType": "value",
                                     "formName": "formControlName",
                                     "validations": [],
@@ -50,20 +64,34 @@
                                 {
                                     "name": "placeholder",
                                     "type": "input",
-                                    "componentConfig": {},
+                                    "componentConfig": {
+                                        "labelSize": {                
+                                            "span": 4
+                                          },
+                                          "controlSize": {             
+                                            "span": 20
+                                          }
+                                    },
                                     "formType": "value",
                                     "formName": "formControlName",
                                     "validations": [],
                                     "title": "默认填充文本"
                                 },
                                 {
-                                    "name": "ajaxConfig",
-                                    "type": "input",
-                                    "componentConfig": {},
+                                    "name": "showTime",
+                                    "type": "switch",
+                                    "componentConfig": {
+                                        "labelSize": {                
+                                            "span": 4
+                                          },
+                                          "controlSize": {             
+                                            "span": 20
+                                          }
+                                    },
                                     "formType": "value",
                                     "formName": "formControlName",
                                     "validations": [],
-                                    "title": "数据源配置"
+                                    "title": "是否展示具体时间"
                                 }
                             ]
                         },

@@ -678,8 +678,60 @@ export class CnStaticFormGridItemComponent implements OnInit {
               "value": "cnGridSwitch"
             },
             {
+              "label": "收缩展示文本",
+              "value": "cnGridShowSpanText"
+            },
+            {
+              "label": "标签",
+              "value": "cnGridTag"
+            },
+            {
+              "label": "多选下拉列表",
+              "value": "cnGridSelectMultiple"
+            },
+            {
+              "label": "下拉树",
+              "value": "cnGridTreeSelect"
+            },
+            {
               "label": "下拉选择",
               "value": "cnGridSelect"
+            },
+            {
+              "label": "下拉表格",
+              "value": "cnGridGridSelect"
+            },
+            {
+              "label": "大文本",
+              "value": "cnGridTextArea"
+            },
+            {
+              "label": "单选",
+              "value": "cnGridRadio"
+            },
+            {
+              "label": "下拉日期",
+              "value": "cnGridDatePicker"
+            },
+            {
+              "label": "下拉日期时间",
+              "value": "cnGridDateTimePicker"
+            },
+            {
+              "label": "下拉选择年",
+              "value": "cnGridYearPicker"
+            },
+            {
+              "label": "下拉选择周",
+              "value": "cnGridWeekPicker"
+            },
+            {
+              "label": "下拉选择月",
+              "value": "cnGridMonthPicker"
+            },
+            {
+              "label": "下拉选择日期范围",
+              "value": "cnGridRangePicker"
             }
 
           ],
