@@ -1,6 +1,6 @@
 {
     "propertyconfig": {
-        "componentCode": "cnGridSelect",
+        "componentCode": "row",
         "typeConent": [
             {
                 "code": "attr",
@@ -34,10 +34,7 @@
                                     "name": "valueName"
                                 },
                                 {
-                                    "name": "showSearch"
-                                },
-                                {
-                                    "name": "serverSearch"
+                                    "name": "sourceData"
                                 }
                             ],
                             "properties": [
@@ -87,7 +84,7 @@
                                     "formType": "value",
                                     "formName": "formControlName",
                                     "validations": [],
-                                    "title": "默认提示信息"
+                                    "title": "默认展示文本"
                                 },
                                 {
                                     "name": "defaultValue",
@@ -138,8 +135,8 @@
                                     "title": "真实值"
                                 },
                                 {
-                                    "name": "showSearch",
-                                    "type": "switch",
+                                    "name": "sourceData",
+                                    "type": "objectEmpty",
                                     "componentConfig": {
                                         "labelSize": {                
                                             "span": 4
@@ -148,86 +145,38 @@
                                             "span": 20
                                           }
                                     },
-                                    "formType": "value",
-                                    "formName": "formControlName",
-                                    "validations": [],
-                                    "title": "是否查询"
-                                },
-                                {
-                                    "name": "serverSearch",
-                                    "type": "switch",
-                                    "componentConfig": {
-                                        "labelSize": {                
-                                            "span": 4
-                                          },
-                                          "controlSize": {             
-                                            "span": 20
-                                          }
-                                    },
-                                    "formType": "value",
-                                    "formName": "formControlName",
-                                    "validations": [],
-                                    "title": "服务端校验"
-                                }
-                            ]
-                        },
-                        "sourceData": {
-                            "type": "root",
-                            "name": "title"
-                        }
-                    }
-                ]
-            },
-            {
-                "code": "dataSource",
-                "title": "数据源",
-                "propertyTypeConent": [
-                    {
-                        "code": "data",
-                        "title": "静态数据集",
-                        "type": "property",
-                        "active": true,
-                        "sourceConfig": {
-                            "type": "staticForm",
-                            "backName": "options",
-                            "backConfig": [
-                                {
-                                    "name": "options"
-                                }
-                            ],
-                            "properties": [
-                                {
-                                    "name": "options",
-                                    "type": "arrayCollapse",
-                                    "componentConfig": {
-                                        "labelSize": {                
-                                            "span": 4
-                                          },
-                                          "controlSize": {             
-                                            "span": 20
-                                          }
-                                    },
-                                    "formType": "array",
                                     "properties": [
                                         {
-                                            "name": "label",
-                                            "type": "input",
+                                            "name": "sourceDataType",
+                                            "type": "select",
                                             "componentConfig": {
-                                        "labelSize": {                
-                                            "span": 4
-                                          },
-                                          "controlSize": {             
-                                            "span": 20
-                                          }
-                                    },
+                                                "labelSize": {                
+                                                    "span": 4
+                                                  },
+                                                  "controlSize": {             
+                                                    "span": 20
+                                                  },
+                                                "options": [
+                                                    {
+                                                        "label": "静态数据",
+                                                        "value": "static"
+                                                    },
+                                                    {
+                                                        "label": "API数据",
+                                                        "value": "api"
+                                                    }
+                                                ],
+                                                "labelName": "label",
+                                                "valueName": "value"
+                                            },
                                             "formType": "value",
                                             "formName": "formControlName",
                                             "validations": [],
-                                            "title": "展示值"
+                                            "title": "数据来源"
                                         },
                                         {
-                                            "name": "value",
-                                            "type": "input",
+                                            "name": "options",
+                                            "type": "arrayTable",
                                             "componentConfig": {
                                         "labelSize": {                
                                             "span": 4
@@ -236,15 +185,100 @@
                                             "span": 20
                                           }
                                     },
-                                            "formType": "value",
+                                            "formType": "array",
                                             "formName": "formControlName",
                                             "validations": [],
-                                            "title": "真实值"
+                                            "properties": [
+                                                {
+                                                    "name": "label",
+                                                    "type": "input",
+                                                    "componentConfig": {
+                                                        "hiddenTitle": true,
+                                                        "labelSize": {
+                                                            "span": 8,
+                                                            "nzXs": {
+                                                                "span": 7,
+                                                                "offset": 1
+                                                            },
+                                                            "nzSm": {
+                                                                "span": 7,
+                                                                "offset": 1
+                                                            },
+                                                            "nzMd": {
+                                                                "span": 7,
+                                                                "offset": 1
+                                                            },
+                                                            "nzLg": {
+                                                                "span": 7,
+                                                                "offset": 1
+                                                            },
+                                                            "ngXl": {
+                                                                "span": 7,
+                                                                "offset": 1
+                                                            },
+                                                            "nzXXl": {
+                                                                "span": 7,
+                                                                "offset": 1
+                                                            }
+                                                        },
+                                                        "controlSize": {
+                                                            "span": 24,
+                                                            "nzXs": 24,
+                                                            "nzSm": 24,
+                                                            "nzMd": 24,
+                                                            "nzLg": 24,
+                                                            "ngXl": 24,
+                                                            "nzXXl": 24
+                                                        }
+                                                    },
+                                                    "formType": "value",
+                                                    "formName": "formControlName",
+                                                    "validations": [],
+                                                    "title": "展示值"
+                                                },
+                                                {
+                                                    "name": "value",
+                                                    "type": "input",
+                                                    "componentConfig": {
+                                                        "labelSize": {                
+                                                            "span": 4
+                                                          },
+                                                          "controlSize": {             
+                                                            "span": 20
+                                                          },
+                                                        "hiddenTitle": true
+                                                    },
+                                                    "formType": "value",
+                                                    "formName": "formControlName",
+                                                    "validations": [],
+                                                    "title": "真实值"
+                                                }
+                                            ],
+                                            "title": "静态数据"
+                                        },
+                                        {
+                                            "name": "loadingConfig",
+                                            "type": "objectEmpty",
+                                            "componentConfig": {
+                                        "labelSize": {                
+                                            "span": 4
+                                          },
+                                          "controlSize": {             
+                                            "span": 20
+                                          }
+                                    },
+                                            "properties": [
+                                            ],
+                                            "formType": "object",
+                                            "formName": "formControlName",
+                                            "validations": [],
+                                            "title": "数据源配置"
                                         }
                                     ],
+                                    "formType": "object",
                                     "formName": "formControlName",
                                     "validations": [],
-                                    "title": "下拉选项"
+                                    "title": "组件数据"
                                 }
                             ]
                         },
@@ -255,7 +289,6 @@
                     }
                 ]
             }
-           
         ]
     }
 }

@@ -23,6 +23,12 @@
                                 },
                                 {
                                     "name": "placeholder"
+                                },
+                                {
+                                    "name": "showTime"
+                                },
+                                {
+                                    "name": "showFormat"
                                 }
                             ],
                             "properties": [
@@ -73,6 +79,38 @@
                                     "formName": "formControlName",
                                     "validations": [],
                                     "title": "默认填充文本"
+                                },
+                                {
+                                    "name": "showTime",
+                                    "type": "switch",
+                                    "componentConfig": {
+                                        "labelSize": {                
+                                            "span": 4
+                                          },
+                                          "controlSize": {             
+                                            "span": 20
+                                          }
+                                    },
+                                    "formType": "value",
+                                    "formName": "formControlName",
+                                    "validations": [],
+                                    "title": "是否展示具体时间"
+                                },
+                                {
+                                    "name": "showFormat",
+                                    "type": "input",
+                                    "componentConfig": {
+                                        "labelSize": {                
+                                            "span": 4
+                                          },
+                                          "controlSize": {             
+                                            "span": 20
+                                          }
+                                    },
+                                    "formType": "value",
+                                    "formName": "formControlName",
+                                    "validations": [],
+                                    "title": "展示类型"
                                 }
                             ]
                         },

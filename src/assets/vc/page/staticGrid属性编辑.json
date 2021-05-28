@@ -25,7 +25,10 @@
                                     "name": "placeholder"
                                 },
                                 {
-                                    "name": "ajaxConfig"
+                                    "name": "layoutName"
+                                },
+                                {
+                                    "name": "validations"
                                 }
                             ],
                             "properties": [
@@ -57,13 +60,22 @@
                                     "title": "默认填充文本"
                                 },
                                 {
-                                    "name": "ajaxConfig",
+                                    "name": "layoutName",
                                     "type": "input",
                                     "componentConfig": {},
                                     "formType": "value",
                                     "formName": "formControlName",
                                     "validations": [],
-                                    "title": "数据源配置"
+                                    "title": "关联页面"
+                                },
+                                {
+                                    "name": "validations",
+                                    "type": "input",
+                                    "componentConfig": {},
+                                    "formType": "value",
+                                    "formName": "formControlName",
+                                    "validations": [],
+                                    "title": "验证"
                                 }
                             ]
                         },
