@@ -207,6 +207,7 @@ import { CnStaticFormLabelComponent } from './components/cn-static-form/cn-stati
 import { CnStaticFormPopFormComponent } from './components/cn-static-form/cn-static-form-item/cn-static-form-pop-form/cn-static-form-pop-form.component';
 import { CnStaticFormSwitchConentComponent } from './components/cn-static-form/cn-static-form-item/cn-static-form-switch-conent/cn-static-form-switch-conent.component';
 import { CnStaticFormStaticFormComponent } from './components/cn-static-form/cn-static-form-cmpt/cn-static-form-static-form/cn-static-form-static-form.component';
+import { SmtLayoutComponent } from './components/smt-layout/smt-layout/smt-layout.component';
 
 
 // #region third libs
@@ -469,6 +470,10 @@ const DIRECTIVES = [
 
 
     CnStaticFormSwitchConentComponent,
+
+
+
+    SmtLayoutComponent,
 
 
 
