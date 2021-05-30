@@ -106,6 +106,8 @@ export class CfgFormSiderComponent implements OnInit {
 
     let _node = this.nzLayoutTreeComponent.getTreeNodeByKey(id);
     _node['children'].splice(index, 1);
+    _node.update();
+    _node.setExpanded(true);
 
   }
 

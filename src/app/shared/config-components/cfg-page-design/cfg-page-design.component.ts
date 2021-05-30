@@ -19,7 +19,7 @@ export class CfgPageDesignComponent extends CnComponentBase implements OnInit {
   @Input() changeValue: any;
   @Input() initData;
   @Input() tempData;
-
+  layoutTree = [];
 
   style1 = { "height": (window.document.body.clientHeight - 160).toString() + 'px', "max-height": (window.document.body.clientHeight - 160).toString() + 'px', "overflow": "auto" }
   selectedItem: any = { item: null, active: null };
@@ -31,11 +31,43 @@ export class CfgPageDesignComponent extends CnComponentBase implements OnInit {
     super(componentService);
   }
   ngOnInit(): void {
+    this._initInnerValue();
     this.setChangeValue(this.changeValue);
+    this.load();
 
   }
+  private _initInnerValue() {
+    if (this.tempData) {
+      this.tempValue = this.tempData;
+    } else {
+      this.tempValue = {};
+    }
+    if (this.initData) {
+      this.initValue = this.initData;
+    } else {
+      this.initValue = {};
+    }
+  }
 
+  loadJson() {
+    this.load();
+  }
   async load() {
+    let load_config = {
+      "id": "tree_add_func",
+      "url": "resource/SMT_SETTING_LAYOUT/query",
+      "urlType": "inner",
+      "ajaxType": "get",
+      "params": [
+        {
+          "name": "ID",
+          "type": "tempValue",
+          "valueName": "ID"
+
+        }
+      ]
+    }
+    this.config['loadingConfig'] = load_config;
     if (!this.config.loadingConfig) {
       return;
     }
@@ -57,6 +89,24 @@ export class CfgPageDesignComponent extends CnComponentBase implements OnInit {
     if (response && response.data.hasOwnProperty('_procedure_resultset_1')) {
       response.data['resultDatas'] = response.data['_procedure_resultset_1'];
     }
+
+    if (response.data && response.data.length > 0) {
+      const backjosn = response.data[0]['JSON'];
+      if (backjosn) {
+        const pageJosn = JSON.parse(backjosn);
+        this.layoutTree = pageJosn['layoutJson'];
+        this.fromDataService.layoutSourceData = pageJosn['componentsJson'];
+      } else {
+        this.layoutTree = [];
+        this.fromDataService.layoutSourceData = {};
+      }
+
+
+    }
+
+
+
+    console.log('===可视化页面加载===', response)
   }
   public buildParameters(paramsCfg, data?, isArray = false) {
     let parameterResult: any | any[];
@@ -64,7 +114,7 @@ export class CfgPageDesignComponent extends CnComponentBase implements OnInit {
       parameterResult = ParameterResolver.resolve({
         params: paramsCfg,
         tempValue: this.tempValue,
-        //  componentValue: this.COMPONENT_VALUE,
+        componentValue: this.getComponentValue(),
         item: data,
         initValue: this.initValue,
         cacheValue: this.cacheValue,
@@ -136,6 +186,73 @@ export class CfgPageDesignComponent extends CnComponentBase implements OnInit {
         }
       });
     }
+  }
+
+  getComponentValue() {
+    let obj = {};
+    let configjson = {};
+    if (this.fromDataService.layoutTreeInstance) {
+      configjson = {
+        layoutJson: this.fromDataService.layoutTreeInstance['layoutTree'],
+        componentsJson: this.fromDataService.layoutSourceData
+      }
+    }
+    obj['configjson'] = configjson;
+    return obj;
+
+  }
+
+  createMessageInfo(type: string, messageInfo: string): void {
+    this.componentService.msgService.create(type, `${messageInfo}`);
+  }
+
+
+  async saveJson() {
+    console.log('保存json', this.tempValue, this.fromDataService);
+    console.log('保存json 页面结构树', this.fromDataService.layoutTreeInstance['layoutTree'])
+
+    console.log('页面最终结构', this.getComponentValue());
+    if (!this.tempValue["ID"]) {
+      this.createMessageInfo('warning', '未指定页面，不能保存');
+      return;
+    }
+    let save_config = {
+      "id": "tree_add_func",
+      "url": "resource/SMT_SETTING_LAYOUT/update",
+      "urlType": "inner",
+      "ajaxType": "post",
+      "params": [
+        {
+          "name": "ID",
+          "type": "tempValue",
+          "valueName": "ID"
+
+        },
+        {
+          "name": "JSON",
+          "type": "componentValue",
+          "valueName": "configjson"
+        }
+      ]
+    }
+
+    const url = save_config.url;
+    const method = save_config.ajaxType;
+
+    const params = {
+      ...this.buildParameters(save_config.params)
+    };
+
+    // const response: any = await this.componentService.apiService[method](url, method, { params }).toPromise();
+    let response = await this.executeHttpRequest(url, method, params).toPromise();
+    if (response && response['success'] === 1) {
+      this.createMessageInfo('success', '保存成功');
+    } else {
+      this.createMessageInfo('warning', `保存失败${response['error']}`);
+    }
+
+    console.log('保存结果', response);
+
   }
 
   /*

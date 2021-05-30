@@ -1,57 +1,20 @@
-<span style="display: none;">
-    <div *ngFor="let toolbar of config['toolbar']" style="float: left;">
-
-        <ng-container *ngIf="toolbar['dropdown']">
-            <button nz-button nz-dropdown [nzDropdownMenu]="menu">{{ toolbar['text'] }}</button>
-            <nz-dropdown-menu #menu="nzDropdownMenu">
-                <div *ngFor="let button of toolbar['dropdown']">
-                    <ul nz-menu>
-                        <li nz-menu-item>{{button['text']}}</li>
-                    </ul>
-                </div>
-            </nz-dropdown-menu>
-        </ng-container>
-        <ng-container *ngIf="toolbar['group']">
-            <div *ngFor="let button of toolbar['group']" style="float: left; margin-left: 2px;">
-                <ng-container *ngIf="button['dropdown']">
-                    <button nz-button nz-dropdown [nzDropdownMenu]="menu">{{ button['text'] }}</button>
-                    <nz-dropdown-menu #menu="nzDropdownMenu">
-                        <div *ngFor="let b of button['dropdown']">
-                            <ul nz-menu>
-                                <li nz-menu-item>{{b['text']}}</li>
-                            </ul>
-                        </div>
-                    </nz-dropdown-menu>
-                </ng-container>
-
-                <ng-container *ngIf="!button['dropdown']">
-                    <button nz-button nzType="button['color']"
-                        *ngIf="button['hidden'] === false">{{button['text']}}</button>
-                </ng-container>
-            </div>
-        </ng-container>
-
-    </div>
-</span>
-
-
 <div (click)="click($event)"
     [ngStyle]="(selectedItem['item'] &&(selectedItem['active']==='cnToolbar')&& (selectedItem['item']['id']===l_config['id']) )? body_style_selected: body_style">
 
     <div>
         <ng-container *ngFor="let toolbar of l_config['children']">
 
-            <button (click)="clickItem($event,toolbar)" *ngIf="toolbar['type']==='button'"
+            <button (click)="clickItem($event,toolbar)" *ngIf="buttonConfig[toolbar['id']]['type']==='button'"
                 nz-button>{{toolbar['title']}}
                 <i *ngIf="selectedItem['item'] && selectedItem['item']['id']===toolbar['id']" nz-icon nzType="close"
-                    (click)="closebutton(toolbar.id)" class="ant-tabs-close-x"></i>
+                    (click)="closebutton(toolbar,l_config)" class="ant-tabs-close-x"></i>
             </button>
-            <ng-container *ngIf="toolbar['type']==='dropdown'">
+            <ng-container *ngIf="buttonConfig[toolbar['id']]['type']==='dropdown'">
                 <button nz-button nz-dropdown nzClickHide="false" [nzDropdownMenu]="menu"
                     (click)="clickItem($event,toolbar)">{{ toolbar['title']
                     }} <i nz-icon nzType="down"></i>
                     <i *ngIf="selectedItem['item'] && selectedItem['item']['id']===toolbar['id']" nz-icon nzType="close"
-                        (click)="closebutton(toolbar.id)" class="ant-tabs-close-x"></i>
+                        (click)="closebutton(toolbar,l_config)" class="ant-tabs-close-x"></i>
                 </button>
                 <nz-dropdown-menu #menu="nzDropdownMenu">
                     <ul nz-menu>
@@ -61,7 +24,7 @@
                                     [nzTheme]="btn.theme ? btn.theme : 'outline'" [nzTwotoneColor]="'#A5A5B8'"></i>
                                 {{btn.title}}
                                 <i *ngIf="selectedItem['item'] && selectedItem['item']['id']===btn['id']" nz-icon
-                                    nzType="close" (click)="closebutton(btn.id)" class="ant-tabs-close-x"></i>
+                                    nzType="close" (click)="closebutton(btn,toolbar)" class="ant-tabs-close-x"></i>
                             </li>
                         </ng-template>
                         <li nz-menu-divider></li>

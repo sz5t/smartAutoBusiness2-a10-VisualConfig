@@ -8,5 +8,7 @@
     <button nz-button style="margin-left: 8px;" [nzSize]="'small'" nzType="primary" (click)="printJson()">
         输出json</button>
 </nz-card>
-<app-cfg-page-layout [l_config]="l_config" [(selectedItem)]="selectedItem" [(showLayout)]="showLayout"
-    [(cmptState)]="cmptState" [fromDataService]="fromDataService"></app-cfg-page-layout>
+<div *ngFor="let r of l_config  let i=index">
+    <app-cfg-page-layout [l_config]="l_config[i]" [(selectedItem)]="selectedItem" [(showLayout)]="showLayout"
+        [(cmptState)]="cmptState" [fromDataService]="fromDataService"></app-cfg-page-layout>
+</div>

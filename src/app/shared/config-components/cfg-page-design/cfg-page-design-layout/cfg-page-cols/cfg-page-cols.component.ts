@@ -129,10 +129,14 @@ export class CfgPageColsComponent implements OnInit {
       if (v['type'] === 'del') {
         // this.l_config = this.l_config.filter(d => d !== v['data']);
         const index = this.l_config['children'].findIndex((item) => item === v['data']);
+
         if (index > -1) {
+          const node = this.l_config['children'][index];
           this.l_config['children'].splice(index, 1);
 
           this.fromDataService.layoutTreeInstance.delChildrenNode(this.l_config['id'], {}, index);
+
+          this.fromDataService.deleteLayoutSourceData(node['id']);
         }
 
       }

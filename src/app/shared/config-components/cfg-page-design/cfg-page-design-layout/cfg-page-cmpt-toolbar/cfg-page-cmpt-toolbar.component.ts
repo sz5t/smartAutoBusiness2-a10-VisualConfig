@@ -20,78 +20,30 @@ export class CfgPageCmptToolbarComponent implements OnInit {
   constructor(private modal: NzModalService, private message: NzMessageService) { }
 
 
-  public config = {
-    toolbar: [
-      {
-        "id": "dropdown_01",
-        "targetViewId": "tree_page",
-        "text": "设置",
-        "dropdown": [
-          {
-            "id": "M_refresh",
-            "text": "刷新",
-            "icon": "reload",
-            "color": "text-primary",
-            "hidden": false,
-            "disabled": false,
-            "execute": [
-              {
-                "triggerType": "BEHAVIOR",
-                "trigger": "REFRESH"
-              }
-            ]
-          }
-        ]
-      },
-      {
-        "targetViewId": "view_01",
-        "group": [
-          {
-            "id": "M_addRow",
-            "text": "新增",
-            "icon": "plus",
-            "color": "text-primary",
-            "hidden": false,
-            "disabled": false,
-            "execute": [
-              {
-                "triggerType": "STATE",
-                "trigger": "ADD_ROW",
-                "conditionId": "add_state_1"
-              }
-            ]
-          },
-          {
-            "id": "dropdown_02",
-            "text": "设置2",
-            "dropdown": [
-              {
-                "id": "M_refresh2",
-                "text": "刷新",
-                "icon": "reload",
-                "color": "text-primary",
-                "hidden": false,
-                "disabled": false,
-                "execute": [
-                  {
-                    "triggerType": "BEHAVIOR",
-                    "trigger": "REFRESH"
-                  }
-                ]
-              }
-            ]
-          }]
-      }
-    ]
-  }
+  public config = {};
+  public buttonConfig = {};
   body_style: any = { 'padding': '1px 2px', 'min-height': '40px' }
   body_style_selected: any = { 'padding': '1px 2px', 'border': "3px dashed red", 'min-height': '40px' }
   ngOnInit(): void {
     this.config = this.fromDataService.layoutSourceData[this.l_config['id']].length > 0 ? this.fromDataService.layoutSourceData[this.l_config['id']] : this.config;
-    this.load(this.config);
+    this.load();
   }
 
-  public load(config) {
+  public load() {
+
+    let newConfig = {}
+    this.l_config['children'].forEach(element => {
+
+      newConfig[element['id']] = this.fromDataService.layoutSourceData[element['id']];
+      if (element['children'] && element['children'].length > 0) {
+        this.l_config['children'].forEach(item => {
+          newConfig[item['id']] = this.fromDataService.layoutSourceData[item['id']];
+        })
+
+      }
+
+    });
+    this.buttonConfig = newConfig;
 
   }
 
@@ -129,6 +81,7 @@ export class CfgPageCmptToolbarComponent implements OnInit {
     // this.l_config.children.splice(0, 0, node);
     this.fromDataService.layoutTreeInstance.addChildrenNode(this.l_config['id'], node, this.selectedIndex + 1);
     console.log('当前按钮配置', this.toolbarArray, this.l_config);
+    this.load();
   }
 
   addDropdownItem(btn) {
@@ -159,27 +112,32 @@ export class CfgPageCmptToolbarComponent implements OnInit {
 
   }
 
-  closebutton(btn) {
+  closebutton(btn, pconfig) {
     this.modal.confirm({
       nzTitle: '提示',
       nzContent: '确定要删除按钮？',
       nzOkText: '确定',
       nzCancelText: '取消',
       nzOnOk: () => {
-        /*         let deleteIndex;
-        
-                for (let i = 0; i < this.l_config['children'].length; i++) {
-                  if (this.l_config['children'][i]['id'] === tab) {
-                    deleteIndex = i;
-                  }
-                }
-                
-                this.l_config['children'].splice(deleteIndex, 1);
-                this.fromDataService.layoutTreeInstance.delChildrenNode(this.l_config['id'], {}, deleteIndex);
-         */
+        let deleteIndex;
+
+        for (let i = 0; i < pconfig['children'].length; i++) {
+          if (pconfig['children'][i]['id'] === btn['id']) {
+            deleteIndex = i;
+          }
+        }
+
+        pconfig['children'].splice(deleteIndex, 1);
+        this.fromDataService.layoutTreeInstance.delChildrenNode(pconfig['id'], {}, deleteIndex);
+        this.fromDataService.deleteLayoutSourceData(btn['id']);
+        /* */
       }
     });
     console.log('删除', btn);
+  }
+
+  getButonConfig(btn) {
+    return this.fromDataService.layoutSourceData[btn['id']];
   }
 
 

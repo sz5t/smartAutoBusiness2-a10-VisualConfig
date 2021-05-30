@@ -127,6 +127,14 @@ export class configFormDataServerService {
         //【布局树，只做结构，layoutSourceData 最终数据【】】
     }
 
+    // 删除某一节点内容
+    deleteLayoutSourceData(id) {
+        if (this.layoutSourceData.hasOwnProperty(id)) {
+            delete this.layoutSourceData[id];
+        }
+    }
+
+
     // 传递小组件配置
     transferComponents() {
         // 组件信息修改，读取均从服务读取，保持数据一致

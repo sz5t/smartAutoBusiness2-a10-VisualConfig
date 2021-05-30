@@ -25,6 +25,7 @@ export class CnStaticFormCustomSelectComponent implements OnInit {
   @Output() public updateValue = new EventEmitter<any>(true);
   constructor(private modal: NzModalService,) { }
   showValue: any;
+
   itemConfig: any = {
     customPage: {
       title: '',
@@ -53,6 +54,43 @@ export class CnStaticFormCustomSelectComponent implements OnInit {
 
       ]
 
+    },
+    hiddenTitle: false,
+    "labelSize": {
+      "span": 8,
+      "nzXs": {
+        "span": 8,
+        "offset": 0
+      },
+      "nzSm": {
+        "span": 8,
+        "offset": 0
+      },
+      "nzMd": {
+        "span": 8,
+        "offset": 0
+      },
+      "nzLg": {
+        "span": 8,
+        "offset": 0
+      },
+      "ngXl": {
+        "span": 8,
+        "offset": 0
+      },
+      "nzXXl": {
+        "span": 8,
+        "offset": 0
+      }
+    },
+    "controlSize": {
+      "span": 16,
+      "nzXs": 16,
+      "nzSm": 16,
+      "nzMd": 16,
+      "nzLg": 16,
+      "ngXl": 16,
+      "nzXXl": 16
     }
   };
   ngOnInit(): void {
@@ -64,6 +102,14 @@ export class CnStaticFormCustomSelectComponent implements OnInit {
       if (!this.config.componentConfig['showConfig']) {
         this.config.componentConfig['showConfig'] = this.itemConfig['showConfig'];
       }
+      if (!this.config.componentConfig['labelSize']) {
+        this.config.componentConfig['labelSize'] = this.itemConfig['labelSize'];
+      }
+      if (!this.config.componentConfig['controlSize']) {
+        this.config.componentConfig['controlSize'] = this.itemConfig['controlSize'];
+      }
+
+
     }
     this.loadShowValue();
 

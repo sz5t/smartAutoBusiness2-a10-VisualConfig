@@ -55,7 +55,7 @@ export class CfgPageCmptTabsComponent implements OnInit {
         // this.tabs.splice(deleteIndex, 1);
         this.l_config['children'].splice(deleteIndex, 1);
         this.fromDataService.layoutTreeInstance.delChildrenNode(this.l_config['id'], {}, deleteIndex);
-
+        this.fromDataService.deleteLayoutSourceData(tab);
       }
     });
 

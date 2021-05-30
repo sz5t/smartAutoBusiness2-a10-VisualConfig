@@ -1,11 +1,18 @@
+<nz-switch [(ngModel)]="showLayout" nzCheckedChildren="布局" nzUnCheckedChildren="组件" style="margin-left: 7px;">
+</nz-switch>
+<button nz-button style="margin-left: 8px;" [nzSize]="'small'" nzType="primary" (click)="saveJson()">
+    保存json</button>
+<button nz-button style="margin-left: 8px;" [nzSize]="'small'" nzType="primary" (click)="loadJson()">
+    测试加载json</button>
 <div nz-row>
     <div nz-col nzFlex="0 1 250px">
 
-        <app-cfg-page-sider [fromDataService]="fromDataService" [(selectedItem)]="selectedItem"></app-cfg-page-sider>
+        <app-cfg-page-sider [fromDataService]="fromDataService" [layoutTree]="layoutTree"
+            [(selectedItem)]="selectedItem"></app-cfg-page-sider>
     </div>
     <div nz-col nzFlex="auto" [ngStyle]="style1">
-        <app-cfg-page-view [fromDataService]="fromDataService" [(selectedItem)]="selectedItem"
-            [showLayout]="showLayout"></app-cfg-page-view>
+        <app-cfg-page-view [fromDataService]="fromDataService" [(selectedItem)]="selectedItem" [showLayout]="showLayout"
+            [l_config]="layoutTree"></app-cfg-page-view>
     </div>
     <div nz-col nzFlex="0 1 400px" [ngStyle]="style1">
         <!-- style="max-height:80px;overflow:auto" -->

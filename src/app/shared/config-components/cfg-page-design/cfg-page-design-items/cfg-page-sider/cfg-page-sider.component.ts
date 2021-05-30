@@ -13,11 +13,12 @@ export class CfgPageSiderComponent implements OnInit {
   @Input() public layout_nodes: NzTreeNodeOptions[];
   @Input() public selectedItem: any;
   @Input() public fromDataService: configFormDataServerService;
+  @Input() public layoutTree = [];
   @ViewChild('nzLayoutTreeComponent', { static: false }) nzLayoutTreeComponent!: NzTreeComponent;
 
   defaultSelectedKeys = [];
   is_drag = true;
-  layoutTree = [];
+  //  layoutTree = [];
   constructor() { }
 
   ngOnInit(): void {
@@ -130,7 +131,6 @@ export class CfgPageSiderComponent implements OnInit {
 
     let _node = this.nzLayoutTreeComponent.getTreeNodeByKey(id);
     _node['children'].splice(index, 1);
-
   }
   clearChildrenByNode(id) {
     let _node = this.nzLayoutTreeComponent.getTreeNodeByKey(id);
@@ -141,6 +141,8 @@ export class CfgPageSiderComponent implements OnInit {
   updateNode(id?, data?) {
     let _node = this.nzLayoutTreeComponent.getTreeNodeByKey(id);
     _node['title'] = data['title'];
+    _node['origin']['title'] = data['title'];
+    _node.update();
   }
 
   public nzEvent(v?) {
