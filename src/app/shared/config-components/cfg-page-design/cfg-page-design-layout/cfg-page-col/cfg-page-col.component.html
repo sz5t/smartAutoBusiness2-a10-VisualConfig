@@ -31,9 +31,9 @@
     </nz-card>
 </div>
 
-<div *ngIf="!showLayout && !l_config['showTitle']" (drop)="f_ondrop($event,l_config)">
+<div *ngIf="!showLayout && !config['showTitle']" (drop)="f_ondrop($event,l_config)">
     <!-- {{l_config['id']}} -->
-    内容
+
     <div *ngIf="l_config['container']">
         <app-cfg-page-container [(l_config)]="l_config" [(selectedItem)]="selectedItem" [(cmptState)]="cmptState"
             [fromDataService]="fromDataService" [showLayout]="showLayout"></app-cfg-page-container>
