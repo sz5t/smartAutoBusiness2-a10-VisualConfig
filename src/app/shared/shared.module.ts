@@ -208,6 +208,11 @@ import { CnStaticFormPopFormComponent } from './components/cn-static-form/cn-sta
 import { CnStaticFormSwitchConentComponent } from './components/cn-static-form/cn-static-form-item/cn-static-form-switch-conent/cn-static-form-switch-conent.component';
 import { CnStaticFormStaticFormComponent } from './components/cn-static-form/cn-static-form-cmpt/cn-static-form-static-form/cn-static-form-static-form.component';
 import { SmtLayoutComponent } from './components/smt-layout/smt-layout/smt-layout.component';
+import { CnStaticFormParameterStructComponent } from './components/cn-static-form/cn-static-form-cmpt/cn-static-form-parameter-struct/cn-static-form-parameter-struct.component';
+import { SmtDynamicLayoutResolverDirective } from './resolver/smt-layout/smt-dynamic-layout-resolver.directive';
+import { SmtPageComponent } from './components/smt-layout/smt-page/smt-page.component';
+import { SmtComponentResolverDirective } from './resolver/smt-component/smt-component-resolver.directive';
+import { SmtDataTableComponent } from './smt-components/smt-data-table/smt-data-table.component';
 
 
 // #region third libs
@@ -418,6 +423,9 @@ const COMPONENTS = [
   CnStaticFormFormItemComponent,
   CnStaticFormGridItemComponent,
   CnStaticFormStaticFormComponent,
+  // 解析布局组件
+  SmtPageComponent,
+  SmtLayoutComponent,
 ];
 const DIRECTIVES = [
   CnLayoutResolverDirective,
@@ -430,6 +438,8 @@ const DIRECTIVES = [
   CnStaticFormItemDirective,
   CfgPropertyItemDirective,
   CfgPageDesignLayoutItemDirective,
+  SmtDynamicLayoutResolverDirective,
+  SmtComponentResolverDirective
 ];
 // #endregion
 
@@ -470,10 +480,8 @@ const DIRECTIVES = [
 
 
     CnStaticFormSwitchConentComponent,
-
-
-
-    SmtLayoutComponent,
+    CnStaticFormParameterStructComponent,
+    SmtDataTableComponent,
 
 
 

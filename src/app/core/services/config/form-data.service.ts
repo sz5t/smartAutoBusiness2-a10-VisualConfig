@@ -11,7 +11,7 @@ export class configFormDataServerService {
     public layoutViewInstance: any; // 布局视图实例
     public layoutSourceData: any = {}; // 明细节点项（平层树节点，完整配置信息）
     public layoutStructInstance: any = {}; // 布局结构明细实例
-
+    public layoutSourceDataMore: any = {}; // 明细节点组件的其他信息【参数等可互选信息】??不一定会独立构建可合并
 
 
     public data: any = [];

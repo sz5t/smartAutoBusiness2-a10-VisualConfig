@@ -1,0 +1,19 @@
+<p>cn-static-form-parameter-struct works!</p>
+
+<nz-card nzType="inner" nzTitle="参数取值信息" style="width:100%;border: 1px solid #0ddaf5;  padding-right: 4px;"
+    [nzBodyStyle]="{'padding':'1px 2px'}">
+    参数类型：<input nz-input placeholder="参数类型" readonly="readonly" [(ngModel)]="p_type" style="width: 260px;" />
+    参数取值：<input nz-input placeholder="取值名称" [(ngModel)]="p_valueName" style="width: 260px;" />
+    默认值：<input nz-input placeholder="默认值" [(ngModel)]="p_value" style="width: 260px;" />
+
+    <app-cn-static-form #staticForm [config]="_form_config" [staticData]="sourceData"
+        [fromDataService]="fromDataService" (updateValue)="staticFormValueChange($event)">
+    </app-cn-static-form>
+</nz-card>
+<nz-card nzType="inner" [nzBodyStyle]="{'padding':'1px 2px','max-height':'680px','overflow':'auto'}">
+    <nz-tree #nzTreeComponent nzShowLine="true" [nzData]="nodes" [nzCheckedKeys]="defaultCheckedKeys"
+        [nzExpandAll]="'true'" [nzSelectedKeys]="defaultSelectedKeys" (nzClick)="nzClick($event)"
+        (nzContextMenu)="nzClick($event)" (nzCheckBoxChange)="nzCheck($event)" (nzExpandChange)="nzCheck($event)">
+    </nz-tree>
+
+</nz-card>

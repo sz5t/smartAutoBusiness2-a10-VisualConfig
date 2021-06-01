@@ -1,7 +1,14 @@
-<nz-card nzType="inner" nzTitle="布局" style="width:100%;border: 1px solid #0ddaf5;  padding-right: 4px;"
-    [nzBodyStyle]="{'padding':'1px 2px'}">
+<div style="width: 100%;" *ngIf="showLayout || config['showTitle']">
+    <nz-card nzType="inner" nzTitle="布局" style="width:100%;padding-right: 4px;" [nzBodyStyle]="{'padding':'1px 2px'}">
+        <app-cfg-page-rows *ngIf="l_config && l_config['children']" [(l_config)]="l_config" [showLayout]="showLayout"
+            [(selectedItem)]="selectedItem" [(cmptState)]="cmptState" [fromDataService]="fromDataService">
+        </app-cfg-page-rows>
+
+    </nz-card>
+</div>
+
+<div *ngIf="!showLayout && !config['showTitle']">
     <app-cfg-page-rows *ngIf="l_config && l_config['children']" [(l_config)]="l_config" [showLayout]="showLayout"
         [(selectedItem)]="selectedItem" [(cmptState)]="cmptState" [fromDataService]="fromDataService">
     </app-cfg-page-rows>
-
-</nz-card>
+</div>
