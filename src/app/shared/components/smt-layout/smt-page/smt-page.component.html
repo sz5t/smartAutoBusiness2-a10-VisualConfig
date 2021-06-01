@@ -1,0 +1,4 @@
+<p>smt-page works!</p>
+<button nz-button nzType="primary" (click)="showLayout($event)">展示布局</button>
+
+<ng-container *ngIf="isShow === true" SmtDynamicLayoutResolverDirective [config]="configdemo"></ng-container>

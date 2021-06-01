@@ -25,7 +25,7 @@
                                     "name": "placeholder"
                                 },
                                 {
-                                    "name": "ajaxConfig"
+                                    "name": "sourceData"
                                 }
                             ],
                             "properties": [
@@ -40,7 +40,7 @@
                                 },
                                 {
                                     "name": "type",
-                                    "type": "input",
+                                    "type": "label",
                                     "componentConfig": {},
                                     "formType": "value",
                                     "formName": "formControlName",
@@ -57,19 +57,1050 @@
                                     "title": "默认填充文本"
                                 },
                                 {
-                                    "name": "ajaxConfig",
-                                    "type": "input",
-                                    "componentConfig": {},
+                                    "name": "sourceData",
+                                    "type": "customSelect",
+                                    "componentConfig": {
+                                        "customPage": {
+                                            "title": "",
+                                            "width": "90%",
+                                            "style": null,
+                                            "maskClosable": true,
+                                            "cancelText": "取消",
+                                            "okText": "确定",
+                                            "footerButton": null,
+                                            "customAction": [],
+                                            "customContent": "staticForm",
+                                            "customPageConfig": {
+                                                "type": "staticForm",
+                                                "backName": "title",
+                                                "backConfig": [
+                                                    {
+                                                        "name": "sourceDataType"
+                                                    },
+                                                    {
+                                                        "name": "options"
+                                                    },
+                                                    {
+                                                        "name": "loadingConfig"
+                                                    },
+                                                    {
+                                                        "name": "expandConfig"
+                                                    },
+                                                    {
+                                                        "name": "loadingItemConfig"
+                                                    }
+                                                ],
+                                                "properties": [
+                                                    {
+                                                        "name": "sourceDataType",
+                                                        "type": "select",
+                                                        "componentConfig": {
+                                                            "casadeValue": [
+                                                                {
+                                                                    "cascadeName": "options",
+                                                                    "cascadeItems": [
+                                                                        {
+                                                                            "type": "condition",
+                                                                            "condition": [
+                                                                                {
+                                                                                    "conditionType": "and",
+                                                                                    "type": "expression",
+                                                                                    "centent": [],
+                                                                                    "expression": {
+                                                                                        "comput": "regular",
+                                                                                        "leftExpression": {
+                                                                                            "type": "componentValue",
+                                                                                            "value": "0",
+                                                                                            "valueName": "sourceDataType"
+                                                                                        },
+                                                                                        "righitExpression": {
+                                                                                            "type": "value",
+                                                                                            "value": "^static$"
+                                                                                        }
+                                                                                    }
+                                                                                }
+                                                                            ],
+                                                                            "content": {
+                                                                                "type": "display",
+                                                                                "data": {
+                                                                                    "option": [
+                                                                                        {
+                                                                                            "name": "display",
+                                                                                            "type": "value",
+                                                                                            "value": false,
+                                                                                            "valueName": ""
+                                                                                        }
+                                                                                    ]
+                                                                                }
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "condition",
+                                                                            "condition": [
+                                                                                {
+                                                                                    "conditionType": "and",
+                                                                                    "type": "expression",
+                                                                                    "centent": [],
+                                                                                    "expression": {
+                                                                                        "comput": "regular",
+                                                                                        "leftExpression": {
+                                                                                            "type": "componentValue",
+                                                                                            "value": "0",
+                                                                                            "valueName": "sourceDataType"
+                                                                                        },
+                                                                                        "righitExpression": {
+                                                                                            "type": "value",
+                                                                                            "value": "^api$"
+                                                                                        }
+                                                                                    }
+                                                                                }
+                                                                            ],
+                                                                            "content": {
+                                                                                "type": "display",
+                                                                                "data": {
+                                                                                    "option": [
+                                                                                        {
+                                                                                            "name": "display",
+                                                                                            "type": "value",
+                                                                                            "value": true,
+                                                                                            "valueName": ""
+                                                                                        }
+                                                                                    ]
+                                                                                }
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                },
+                                                                {
+                                                                    "cascadeName": "loadingConfig",
+                                                                    "cascadeItems": [
+                                                                        {
+                                                                            "type": "condition",
+                                                                            "condition": [
+                                                                                {
+                                                                                    "conditionType": "and",
+                                                                                    "type": "expression",
+                                                                                    "centent": [],
+                                                                                    "expression": {
+                                                                                        "comput": "regular",
+                                                                                        "leftExpression": {
+                                                                                            "type": "componentValue",
+                                                                                            "value": "0",
+                                                                                            "valueName": "sourceDataType"
+                                                                                        },
+                                                                                        "righitExpression": {
+                                                                                            "type": "value",
+                                                                                            "value": "^static$"
+                                                                                        }
+                                                                                    }
+                                                                                }
+                                                                            ],
+                                                                            "content": {
+                                                                                "type": "display",
+                                                                                "data": {
+                                                                                    "option": [
+                                                                                        {
+                                                                                            "name": "display",
+                                                                                            "type": "value",
+                                                                                            "value": true,
+                                                                                            "valueName": ""
+                                                                                        }
+                                                                                    ]
+                                                                                }
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "condition",
+                                                                            "condition": [
+                                                                                {
+                                                                                    "conditionType": "and",
+                                                                                    "type": "expression",
+                                                                                    "centent": [],
+                                                                                    "expression": {
+                                                                                        "comput": "regular",
+                                                                                        "leftExpression": {
+                                                                                            "type": "componentValue",
+                                                                                            "value": "0",
+                                                                                            "valueName": "sourceDataType"
+                                                                                        },
+                                                                                        "righitExpression": {
+                                                                                            "type": "value",
+                                                                                            "value": "^api$"
+                                                                                        }
+                                                                                    }
+                                                                                }
+                                                                            ],
+                                                                            "content": {
+                                                                                "type": "display",
+                                                                                "data": {
+                                                                                    "option": [
+                                                                                        {
+                                                                                            "name": "display",
+                                                                                            "type": "value",
+                                                                                            "value": false,
+                                                                                            "valueName": ""
+                                                                                        }
+                                                                                    ]
+                                                                                }
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            ],
+                                                            "options": [
+                                                                {
+                                                                    "label": "静态数据",
+                                                                    "value": "static"
+                                                                },
+                                                                {
+                                                                    "label": "API数据",
+                                                                    "value": "api"
+                                                                }
+                                                            ],
+                                                            "labelName": "label",
+                                                            "valueName": "value"
+                                                        },
+                                                        "formType": "value",
+                                                        "formName": "formControlName",
+                                                        "validations": [],
+                                                        "title": "数据来源"
+                                                    },
+                                                    {
+                                                        "name": "options",
+                                                        "type": "arrayTable",
+                                                        "componentConfig": {},
+                                                        "formType": "array",
+                                                        "formName": "formControlName",
+                                                        "validations": [],
+                                                        "properties": [
+                                                            {
+                                                                "name": "label",
+                                                                "type": "input",
+                                                                "componentConfig": {
+                                                                    "hiddenTitle": true,
+                                                                    "labelSize": {
+                                                                        "span": 8,
+                                                                        "nzXs": {
+                                                                            "span": 7,
+                                                                            "offset": 1
+                                                                        },
+                                                                        "nzSm": {
+                                                                            "span": 7,
+                                                                            "offset": 1
+                                                                        },
+                                                                        "nzMd": {
+                                                                            "span": 7,
+                                                                            "offset": 1
+                                                                        },
+                                                                        "nzLg": {
+                                                                            "span": 7,
+                                                                            "offset": 1
+                                                                        },
+                                                                        "ngXl": {
+                                                                            "span": 7,
+                                                                            "offset": 1
+                                                                        },
+                                                                        "nzXXl": {
+                                                                            "span": 7,
+                                                                            "offset": 1
+                                                                        }
+                                                                    },
+                                                                    "controlSize": {
+                                                                        "span": 24,
+                                                                        "nzXs": 24,
+                                                                        "nzSm": 24,
+                                                                        "nzMd": 24,
+                                                                        "nzLg": 24,
+                                                                        "ngXl": 24,
+                                                                        "nzXXl": 24
+                                                                    }
+                                                                },
+                                                                "formType": "value",
+                                                                "formName": "formControlName",
+                                                                "validations": [],
+                                                                "title": "展示值"
+                                                            },
+                                                            {
+                                                                "name": "value",
+                                                                "type": "input",
+                                                                "componentConfig": {
+                                                                    "hiddenTitle": true
+                                                                },
+                                                                "formType": "value",
+                                                                "formName": "formControlName",
+                                                                "validations": [],
+                                                                "title": "真实值"
+                                                            }
+                                                        ],
+                                                        "title": "静态数据"
+                                                    },
+                                                    {
+                                                        "name": "loadingConfig",
+                                                        "type": "objectCard",
+                                                        "componentConfig": {},
+                                                        "properties": [
+                                                            {
+                                                                "name": "id",
+                                                                "type": "input",
+                                                                "componentConfig": {},
+                                                                "formType": "value",
+                                                                "formName": "formControlName",
+                                                                "validations": [],
+                                                                "title": "标识"
+                                                            },
+                                                            {
+                                                                "name": "urlType",
+                                                                "type": "select",
+                                                                "componentConfig": {
+                                                                    "casadeValue": [
+                                                                        {
+                                                                            "cascadeName": "urlContent",
+                                                                            "cascadeItems": [
+                                                                                {
+                                                                                    "type": "condition",
+                                                                                    "condition": [
+                                                                                        {
+                                                                                            "conditionType": "and",
+                                                                                            "type": "expression",
+                                                                                            "centent": [],
+                                                                                            "expression": {
+                                                                                                "comput": "regular",
+                                                                                                "leftExpression": {
+                                                                                                    "type": "componentValue",
+                                                                                                    "value": "0",
+                                                                                                    "valueName": "urlType"
+                                                                                                },
+                                                                                                "righitExpression": {
+                                                                                                    "type": "value",
+                                                                                                    "value": "^out$"
+                                                                                                }
+                                                                                            }
+                                                                                        }
+                                                                                    ],
+                                                                                    "content": {
+                                                                                        "type": "display",
+                                                                                        "data": {
+                                                                                            "option": [
+                                                                                                {
+                                                                                                    "name": "display",
+                                                                                                    "type": "value",
+                                                                                                    "value": false,
+                                                                                                    "valueName": ""
+                                                                                                }
+                                                                                            ]
+                                                                                        }
+                                                                                    }
+                                                                                },
+                                                                                {
+                                                                                    "type": "condition",
+                                                                                    "condition": [
+                                                                                        {
+                                                                                            "conditionType": "and",
+                                                                                            "type": "expression",
+                                                                                            "centent": [],
+                                                                                            "expression": {
+                                                                                                "comput": "regular",
+                                                                                                "leftExpression": {
+                                                                                                    "type": "componentValue",
+                                                                                                    "value": "0",
+                                                                                                    "valueName": "urlType"
+                                                                                                },
+                                                                                                "righitExpression": {
+                                                                                                    "type": "value",
+                                                                                                    "value": "^inner$"
+                                                                                                }
+                                                                                            }
+                                                                                        }
+                                                                                    ],
+                                                                                    "content": {
+                                                                                        "type": "display",
+                                                                                        "data": {
+                                                                                            "option": [
+                                                                                                {
+                                                                                                    "name": "display",
+                                                                                                    "type": "value",
+                                                                                                    "value": true,
+                                                                                                    "valueName": ""
+                                                                                                }
+                                                                                            ]
+                                                                                        }
+                                                                                    }
+                                                                                }
+                                                                            ]
+                                                                        }
+                                                                    ],
+                                                                    "options": [
+                                                                        {
+                                                                            "label": "内部数据源",
+                                                                            "value": "inner"
+                                                                        },
+                                                                        {
+                                                                            "label": "外部数据源",
+                                                                            "value": "out"
+                                                                        }
+                                                                    ],
+                                                                    "labelName": "label",
+                                                                    "valueName": "value"
+                                                                },
+                                                                "formType": "value",
+                                                                "formName": "formControlName",
+                                                                "validations": [],
+                                                                "title": "请求地址类型"
+                                                            },
+                                                            {
+                                                                "name": "urlContent",
+                                                                "type": "objectCard",
+                                                                "componentConfig": {},
+                                                                "properties": [
+                                                                    {
+                                                                        "name": "name",
+                                                                        "type": "input",
+                                                                        "componentConfig": {},
+                                                                        "formType": "value",
+                                                                        "formName": "formControlName",
+                                                                        "validations": [],
+                                                                        "title": "外部资源名"
+                                                                    },
+                                                                    {
+                                                                        "name": "title",
+                                                                        "type": "input",
+                                                                        "componentConfig": {},
+                                                                        "formType": "value",
+                                                                        "formName": "formControlName",
+                                                                        "validations": [],
+                                                                        "title": "外部资源标题"
+                                                                    }
+                                                                ],
+                                                                "formType": "object",
+                                                                "formName": "formControlName",
+                                                                "validations": [],
+                                                                "title": "外部请求适配"
+                                                            },
+                                                            {
+                                                                "name": "url",
+                                                                "type": "input",
+                                                                "componentConfig": {},
+                                                                "formType": "value",
+                                                                "formName": "formControlName",
+                                                                "validations": [],
+                                                                "title": "请求资源API"
+                                                            },
+                                                            {
+                                                                "name": "ajaxType",
+                                                                "type": "select",
+                                                                "componentConfig": {
+                                                                    "options": [
+                                                                        {
+                                                                            "label": "post",
+                                                                            "value": "post"
+                                                                        },
+                                                                        {
+                                                                            "label": "put",
+                                                                            "value": "put"
+                                                                        },
+                                                                        {
+                                                                            "label": "get",
+                                                                            "value": "get"
+                                                                        },
+                                                                        {
+                                                                            "label": "delete",
+                                                                            "value": "delete"
+                                                                        }
+                                                                    ],
+                                                                    "labelName": "label",
+                                                                    "valueName": "value"
+                                                                },
+                                                                "formType": "value",
+                                                                "formName": "formControlName",
+                                                                "validations": [],
+                                                                "title": "请求资源方式"
+                                                            },
+                                                            {
+                                                                "name": "headParams",
+                                                                "type": "arrayTable",
+                                                                "componentConfig": {},
+                                                                "formType": "array",
+                                                                "formName": "formControlName",
+                                                                "validations": [],
+                                                                "title": "请求头参数",
+                                                                "properties": [
+                                                                    {
+                                                                        "name": "name",
+                                                                        "type": "input",
+                                                                        "componentConfig": {
+                                                                            "hiddenTitle": true
+                                                                        },
+                                                                        "formType": "value",
+                                                                        "formName": "formControlName",
+                                                                        "validations": [],
+                                                                        "title": "参数名称"
+                                                                    },
+                                                                    {
+                                                                        "name": "type",
+                                                                        "type": "input",
+                                                                        "componentConfig": {
+                                                                            "hiddenTitle": true
+                                                                        },
+                                                                        "formType": "value",
+                                                                        "formName": "formControlName",
+                                                                        "validations": [],
+                                                                        "title": "参数类型"
+                                                                    },
+                                                                    {
+                                                                        "name": "valueName",
+                                                                        "type": "input",
+                                                                        "componentConfig": {
+                                                                            "hiddenTitle": true
+                                                                        },
+                                                                        "formType": "value",
+                                                                        "formName": "formControlName",
+                                                                        "validations": [],
+                                                                        "title": "参数取值名称"
+                                                                    }
+                                                                ]
+                                                            },
+                                                            {
+                                                                "name": "pathParams",
+                                                                "type": "arrayTable",
+                                                                "componentConfig": {},
+                                                                "formType": "array",
+                                                                "formName": "formControlName",
+                                                                "validations": [],
+                                                                "title": "地址参数",
+                                                                "properties": [
+                                                                    {
+                                                                        "name": "name",
+                                                                        "type": "input",
+                                                                        "componentConfig": {
+                                                                            "hiddenTitle": true
+                                                                        },
+                                                                        "formType": "value",
+                                                                        "formName": "formControlName",
+                                                                        "validations": [],
+                                                                        "title": "参数名称"
+                                                                    },
+                                                                    {
+                                                                        "name": "type",
+                                                                        "type": "input",
+                                                                        "componentConfig": {
+                                                                            "hiddenTitle": true
+                                                                        },
+                                                                        "formType": "value",
+                                                                        "formName": "formControlName",
+                                                                        "validations": [],
+                                                                        "title": "参数类型"
+                                                                    },
+                                                                    {
+                                                                        "name": "valueName",
+                                                                        "type": "input",
+                                                                        "componentConfig": {
+                                                                            "hiddenTitle": true
+                                                                        },
+                                                                        "formType": "value",
+                                                                        "formName": "formControlName",
+                                                                        "validations": [],
+                                                                        "title": "参数取值名称"
+                                                                    }
+                                                                ]
+                                                            },
+                                                            {
+                                                                "name": "bodyParams",
+                                                                "type": "arrayTable",
+                                                                "componentConfig": {},
+                                                                "formType": "array",
+                                                                "formName": "formControlName",
+                                                                "validations": [],
+                                                                "title": "请求体参数",
+                                                                "properties": [
+                                                                    {
+                                                                        "name": "name",
+                                                                        "type": "input",
+                                                                        "componentConfig": {
+                                                                            "hiddenTitle": true
+                                                                        },
+                                                                        "formType": "value",
+                                                                        "formName": "formControlName",
+                                                                        "validations": [],
+                                                                        "title": "参数名称"
+                                                                    },
+                                                                    {
+                                                                        "name": "type",
+                                                                        "type": "input",
+                                                                        "componentConfig": {
+                                                                            "hiddenTitle": true
+                                                                        },
+                                                                        "formType": "value",
+                                                                        "formName": "formControlName",
+                                                                        "validations": [],
+                                                                        "title": "参数类型"
+                                                                    },
+                                                                    {
+                                                                        "name": "valueName",
+                                                                        "type": "input",
+                                                                        "componentConfig": {
+                                                                            "hiddenTitle": true
+                                                                        },
+                                                                        "formType": "value",
+                                                                        "formName": "formControlName",
+                                                                        "validations": [],
+                                                                        "title": "参数取值名称"
+                                                                    }
+                                                                ]
+                                                            },
+                                                            {
+                                                                "name": "queryParams",
+                                                                "type": "arrayTable",
+                                                                "componentConfig": {},
+                                                                "formType": "array",
+                                                                "formName": "formControlName",
+                                                                "validations": [],
+                                                                "title": "查询参数",
+                                                                "properties": [
+                                                                    {
+                                                                        "name": "name",
+                                                                        "type": "input",
+                                                                        "componentConfig": {
+                                                                            "hiddenTitle": true
+                                                                        },
+                                                                        "formType": "value",
+                                                                        "formName": "formControlName",
+                                                                        "validations": [],
+                                                                        "title": "参数名称"
+                                                                    },
+                                                                    {
+                                                                        "name": "type",
+                                                                        "type": "input",
+                                                                        "componentConfig": {
+                                                                            "hiddenTitle": true
+                                                                        },
+                                                                        "formType": "value",
+                                                                        "formName": "formControlName",
+                                                                        "validations": [],
+                                                                        "title": "参数类型"
+                                                                    },
+                                                                    {
+                                                                        "name": "valueName",
+                                                                        "type": "input",
+                                                                        "componentConfig": {
+                                                                            "hiddenTitle": true
+                                                                        },
+                                                                        "formType": "value",
+                                                                        "formName": "formControlName",
+                                                                        "validations": [],
+                                                                        "title": "参数取值名称"
+                                                                    }
+                                                                ]
+                                                            }
+                                                        ],
+                                                        "formType": "object",
+                                                        "formName": "formControlName",
+                                                        "validations": [],
+                                                        "title": "数据源配置"
+                                                    },
+                                                    {
+                                                        "name": "expandConfig",
+                                                        "type": "objectCard",
+                                                        "componentConfig": {},
+                                                        "properties": [
+                                                            {
+                                                                "name": "url",
+                                                                "type": "input",
+                                                                "componentConfig": {
+                                                                    "hiddenTitle": true
+                                                                },
+                                                                "formType": "value",
+                                                                "formName": "formControlName",
+                                                                "validations": [],
+                                                                "title": "请求资源API"
+                                                            },
+                                                            {
+                                                                "name": "headParams",
+                                                                "type": "arrayTable",
+                                                                "componentConfig": {
+                                                                    "hiddenTitle": true
+                                                                },
+                                                                "formType": "array",
+                                                                "formName": "formControlName",
+                                                                "validations": [],
+                                                                "title": "请求头参数",
+                                                                "properties": [
+                                                                    {
+                                                                        "name": "name",
+                                                                        "type": "input",
+                                                                        "componentConfig": {
+                                                                            "hiddenTitle": true
+                                                                        },
+                                                                        "formType": "value",
+                                                                        "formName": "formControlName",
+                                                                        "validations": [],
+                                                                        "title": "参数名称"
+                                                                    },
+                                                                    {
+                                                                        "name": "type",
+                                                                        "type": "input",
+                                                                        "componentConfig": {
+                                                                            "hiddenTitle": true
+                                                                        },
+                                                                        "formType": "value",
+                                                                        "formName": "formControlName",
+                                                                        "validations": [],
+                                                                        "title": "参数类型"
+                                                                    },
+                                                                    {
+                                                                        "name": "valueName",
+                                                                        "type": "input",
+                                                                        "componentConfig": {
+                                                                            "hiddenTitle": true
+                                                                        },
+                                                                        "formType": "value",
+                                                                        "formName": "formControlName",
+                                                                        "validations": [],
+                                                                        "title": "参数取值名称"
+                                                                    }
+                                                                ]
+                                                            },
+                                                            {
+                                                                "name": "pathParams",
+                                                                "type": "arrayTable",
+                                                                "componentConfig": {},
+                                                                "formType": "array",
+                                                                "formName": "formControlName",
+                                                                "validations": [],
+                                                                "title": "地址参数",
+                                                                "properties": [
+                                                                    {
+                                                                        "name": "name",
+                                                                        "type": "input",
+                                                                        "componentConfig": {
+                                                                            "hiddenTitle": true
+                                                                        },
+                                                                        "formType": "value",
+                                                                        "formName": "formControlName",
+                                                                        "validations": [],
+                                                                        "title": "参数名称"
+                                                                    },
+                                                                    {
+                                                                        "name": "type",
+                                                                        "type": "input",
+                                                                        "componentConfig": {
+                                                                            "hiddenTitle": true
+                                                                        },
+                                                                        "formType": "value",
+                                                                        "formName": "formControlName",
+                                                                        "validations": [],
+                                                                        "title": "参数类型"
+                                                                    },
+                                                                    {
+                                                                        "name": "valueName",
+                                                                        "type": "input",
+                                                                        "componentConfig": {
+                                                                            "hiddenTitle": true
+                                                                        },
+                                                                        "formType": "value",
+                                                                        "formName": "formControlName",
+                                                                        "validations": [],
+                                                                        "title": "参数取值名称"
+                                                                    }
+                                                                ]
+                                                            },
+                                                            {
+                                                                "name": "bodyParams",
+                                                                "type": "arrayTable",
+                                                                "componentConfig": {},
+                                                                "formType": "array",
+                                                                "formName": "formControlName",
+                                                                "validations": [],
+                                                                "title": "请求体参数",
+                                                                "properties": [
+                                                                    {
+                                                                        "name": "name",
+                                                                        "type": "input",
+                                                                        "componentConfig": {
+                                                                            "hiddenTitle": true
+                                                                        },
+                                                                        "formType": "value",
+                                                                        "formName": "formControlName",
+                                                                        "validations": [],
+                                                                        "title": "参数名称"
+                                                                    },
+                                                                    {
+                                                                        "name": "type",
+                                                                        "type": "input",
+                                                                        "componentConfig": {
+                                                                            "hiddenTitle": true
+                                                                        },
+                                                                        "formType": "value",
+                                                                        "formName": "formControlName",
+                                                                        "validations": [],
+                                                                        "title": "参数类型"
+                                                                    },
+                                                                    {
+                                                                        "name": "valueName",
+                                                                        "type": "input",
+                                                                        "componentConfig": {
+                                                                            "hiddenTitle": true
+                                                                        },
+                                                                        "formType": "value",
+                                                                        "formName": "formControlName",
+                                                                        "validations": [],
+                                                                        "title": "参数取值名称"
+                                                                    }
+                                                                ]
+                                                            },
+                                                            {
+                                                                "name": "queryParams",
+                                                                "type": "arrayTable",
+                                                                "componentConfig": {},
+                                                                "formType": "array",
+                                                                "formName": "formControlName",
+                                                                "validations": [],
+                                                                "title": "查询参数",
+                                                                "properties": [
+                                                                    {
+                                                                        "name": "name",
+                                                                        "type": "input",
+                                                                        "componentConfig": {
+                                                                            "hiddenTitle": true
+                                                                        },
+                                                                        "formType": "value",
+                                                                        "formName": "formControlName",
+                                                                        "validations": [],
+                                                                        "title": "参数名称"
+                                                                    },
+                                                                    {
+                                                                        "name": "type",
+                                                                        "type": "input",
+                                                                        "componentConfig": {
+                                                                            "hiddenTitle": true
+                                                                        },
+                                                                        "formType": "value",
+                                                                        "formName": "formControlName",
+                                                                        "validations": [],
+                                                                        "title": "参数类型"
+                                                                    },
+                                                                    {
+                                                                        "name": "valueName",
+                                                                        "type": "input",
+                                                                        "componentConfig": {
+                                                                            "hiddenTitle": true
+                                                                        },
+                                                                        "formType": "value",
+                                                                        "formName": "formControlName",
+                                                                        "validations": [],
+                                                                        "title": "参数取值名称"
+                                                                    }
+                                                                ]
+                                                            }
+                                                        ],
+                                                        "formType": "object",
+                                                        "formName": "formControlName",
+                                                        "validations": [],
+                                                        "title": "展开节点配置"
+                                                    },
+                                                    {
+                                                        "name": "loadingItemConfig",
+                                                        "type": "objectCard",
+                                                        "componentConfig": {},
+                                                        "properties": [
+                                                            {
+                                                                "name": "url",
+                                                                "type": "input",
+                                                                "componentConfig": {},
+                                                                "formType": "value",
+                                                                "formName": "formControlName",
+                                                                "validations": [],
+                                                                "title": "请求资源API"
+                                                            },
+                                                            {
+                                                                "name": "headParams",
+                                                                "type": "arrayTable",
+                                                                "componentConfig": {},
+                                                                "formType": "array",
+                                                                "formName": "formControlName",
+                                                                "validations": [],
+                                                                "title": "请求头参数",
+                                                                "properties": [
+                                                                    {
+                                                                        "name": "name",
+                                                                        "type": "input",
+                                                                        "componentConfig": {},
+                                                                        "formType": "value",
+                                                                        "formName": "formControlName",
+                                                                        "validations": [],
+                                                                        "title": "参数名称"
+                                                                    },
+                                                                    {
+                                                                        "name": "type",
+                                                                        "type": "input",
+                                                                        "componentConfig": {},
+                                                                        "formType": "value",
+                                                                        "formName": "formControlName",
+                                                                        "validations": [],
+                                                                        "title": "参数类型"
+                                                                    },
+                                                                    {
+                                                                        "name": "valueName",
+                                                                        "type": "input",
+                                                                        "componentConfig": {},
+                                                                        "formType": "value",
+                                                                        "formName": "formControlName",
+                                                                        "validations": [],
+                                                                        "title": "参数取值名称"
+                                                                    }
+                                                                ]
+                                                            },
+                                                            {
+                                                                "name": "pathParams",
+                                                                "type": "arrayTable",
+                                                                "componentConfig": {},
+                                                                "formType": "array",
+                                                                "formName": "formControlName",
+                                                                "validations": [],
+                                                                "title": "地址参数",
+                                                                "properties": [
+                                                                    {
+                                                                        "name": "name",
+                                                                        "type": "input",
+                                                                        "componentConfig": {},
+                                                                        "formType": "value",
+                                                                        "formName": "formControlName",
+                                                                        "validations": [],
+                                                                        "title": "参数名称"
+                                                                    },
+                                                                    {
+                                                                        "name": "type",
+                                                                        "type": "input",
+                                                                        "componentConfig": {},
+                                                                        "formType": "value",
+                                                                        "formName": "formControlName",
+                                                                        "validations": [],
+                                                                        "title": "参数类型"
+                                                                    },
+                                                                    {
+                                                                        "name": "valueName",
+                                                                        "type": "input",
+                                                                        "componentConfig": {},
+                                                                        "formType": "value",
+                                                                        "formName": "formControlName",
+                                                                        "validations": [],
+                                                                        "title": "参数取值名称"
+                                                                    }
+                                                                ]
+                                                            },
+                                                            {
+                                                                "name": "bodyParams",
+                                                                "type": "arrayTable",
+                                                                "componentConfig": {},
+                                                                "formType": "array",
+                                                                "formName": "formControlName",
+                                                                "validations": [],
+                                                                "title": "请求体参数",
+                                                                "properties": [
+                                                                    {
+                                                                        "name": "name",
+                                                                        "type": "input",
+                                                                        "componentConfig": {},
+                                                                        "formType": "value",
+                                                                        "formName": "formControlName",
+                                                                        "validations": [],
+                                                                        "title": "参数名称"
+                                                                    },
+                                                                    {
+                                                                        "name": "type",
+                                                                        "type": "input",
+                                                                        "componentConfig": {},
+                                                                        "formType": "value",
+                                                                        "formName": "formControlName",
+                                                                        "validations": [],
+                                                                        "title": "参数类型"
+                                                                    },
+                                                                    {
+                                                                        "name": "valueName",
+                                                                        "type": "input",
+                                                                        "componentConfig": {},
+                                                                        "formType": "value",
+                                                                        "formName": "formControlName",
+                                                                        "validations": [],
+                                                                        "title": "参数取值名称"
+                                                                    }
+                                                                ]
+                                                            },
+                                                            {
+                                                                "name": "queryParams",
+                                                                "type": "arrayTable",
+                                                                "componentConfig": {},
+                                                                "formType": "array",
+                                                                "formName": "formControlName",
+                                                                "validations": [],
+                                                                "title": "查询参数",
+                                                                "properties": [
+                                                                    {
+                                                                        "name": "name",
+                                                                        "type": "input",
+                                                                        "componentConfig": {},
+                                                                        "formType": "value",
+                                                                        "formName": "formControlName",
+                                                                        "validations": [],
+                                                                        "title": "参数名称"
+                                                                    },
+                                                                    {
+                                                                        "name": "type",
+                                                                        "type": "input",
+                                                                        "componentConfig": {},
+                                                                        "formType": "value",
+                                                                        "formName": "formControlName",
+                                                                        "validations": [],
+                                                                        "title": "参数类型"
+                                                                    },
+                                                                    {
+                                                                        "name": "valueName",
+                                                                        "type": "input",
+                                                                        "componentConfig": {},
+                                                                        "formType": "value",
+                                                                        "formName": "formControlName",
+                                                                        "validations": [],
+                                                                        "title": "参数取值名称"
+                                                                    }
+                                                                ]
+                                                            }
+                                                        ],
+                                                        "formType": "object",
+                                                        "formName": "formControlName",
+                                                        "validations": [],
+                                                        "title": "子节点数据源配置"
+                                                    }
+                                                ]
+                                            },
+                                            "sourceData": {
+                                                "type": "root",
+                                                "name": "sourceData"
+                                            }
+                                        },
+                                        "showConfig": {
+                                            "showString": [
+                                                {
+                                                    "name": "sourceDataType"
+                                                }
+                                            ]
+                                        }
+                                    },
                                     "formType": "value",
                                     "formName": "formControlName",
                                     "validations": [],
-                                    "title": "数据源配置"
+                                    "title": "数据源设置"
                                 }
                             ]
                         },
                         "sourceData": {
                             "type": "root",
                             "name": "title"
+                        },
+                        "showConfig": {
+                            "showString": [
+                                {
+                                    "name": "type"
+                                }
+                            ]
                         }
                     }
                 ]

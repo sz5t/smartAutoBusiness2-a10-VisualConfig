@@ -46,8 +46,10 @@ import { CfgPageDesignComponent } from '../../config-components/cfg-page-design/
 import { CfgFormDesignComponent } from '../../config-components/cfg-form-design/cfg-form-design.component';
 import { SmtLayoutComponent } from '../../components/smt-layout/smt-layout/smt-layout.component';
 import { SmtPageComponent } from '../../components/smt-layout/smt-page/smt-page.component';
+import { SmtDataTable } from './smt-table';
+import { SmtDataTableComponent } from '../../smt-components/smt-data-table/smt-data-table.component';
 const components: { [type: string]: Type<any> } = {
-  cnDataTable: CnDataTableComponent,
+  cnDataTable: SmtDataTableComponent,
   cnToolbar: CnToolbarComponent,
   form: CnDataFormComponent,
   cnTree: CnTreeComponent,
@@ -94,14 +96,14 @@ const components: { [type: string]: Type<any> } = {
 
 @Directive({
   // tslint:disable-next-line: directive-selector
-  selector: ' [cnComponentResolverDirective]',
+  selector: ' [smtComponentResolverDirective]',
 })
-export class CnComponentResolverDirective implements OnInit, OnDestroy {
+export class SmtComponentResolverDirective implements OnInit, OnDestroy {
   @Input() config;
   @Input() initData;
   @Input() tempData;
   @Input() dataServe;
-  @Input() layoutId;
+  @Input() originData; // 配置数据
 
   private _componentRef: ComponentRef<any>;
   constructor(
@@ -112,7 +114,7 @@ export class CnComponentResolverDirective implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
-    this.resolve();
+    this.assembleCmptConfig();
   }
 
   ngOnDestroy(): void {
@@ -121,43 +123,65 @@ export class CnComponentResolverDirective implements OnInit, OnDestroy {
     //  console.log('销毁后',  this.componentService.com);
   }
 
-  private resolve() {
-    if (this.config) {
-      if (this.config.component && components[this.config.component]) {
-        this._buildComponent(this.config);
+  private resolve(config) {
+    if (config.component && components[config.component]) {
+      this._buildComponent(config);
+    } else {
+      // const cmptObj: any = this._getComponentObjectById(this.config.id);
+
+      // 2020.11.21
+      const cmptObj: any = this._getMenuComponentObjectById(config.id);
+
+      cmptObj.component = config.container;
+      if (!components[cmptObj.component]) {
+        const supportedTypes = Object.keys(components).join(', ');
+        throw new Error(`Trying to use an unsupported types (${this.config.component}).Supported types: ${supportedTypes}`);
       } else {
-        // const cmptObj: any = this._getComponentObjectById(this.config.id);
-
-        // 2020.11.21
-        const cmptObj: any = this._getMenuComponentObjectById(this.config.id);
-
-        cmptObj.component = this.config.container;
-        if (!components[cmptObj.component]) {
-          const supportedTypes = Object.keys(components).join(', ');
-          throw new Error(`Trying to use an unsupported types (${this.config.component}).Supported types: ${supportedTypes}`);
-        } else {
-          this._buildComponent(cmptObj);
-        }
+        this._buildComponent(cmptObj);
       }
     }
+  }
 
-    // const comp = this._resolver.resolveComponentFactory<any>(
-    //     components[this.config.component]
-    // );
+  private assembleCmptConfig() {
+    this.config;
+    this.originData;
+    const componentType = this.config.container
+    const componentConfig = this.generateCmptConfig(componentType);
+    // console.log('componentConfig', componentConfig);
+    this.resolve(componentConfig);
+  }
 
-    // this._componentRef = this._container.createComponent(comp);
-    // console.log(this.config);
-    // if (this.config.component) {
-    //     this._componentRef.instance.config = this.config;
-    // } else {
-    //     this._componentRef.instance.config = this.getComponentObjectById(this.config.id);
-    // }
+  private generateCmptConfig(cmptType) {
+    let cmptConfig;
+    switch (cmptType) {
+      case 'cnDataTable':
+        cmptConfig = this.getDataTableConfig();
+        break;
+    }
+    return cmptConfig;
+  }
 
-    // this._componentRef.instance.initData = this.initData;
-    // this._componentRef.instance.tempData = this.tempData;
-    // console.log('创建创建创建', this._componentRef );
-    //  this.componentService.com.push({[this.config.id]:this._componentRef});
-    //  console.log('创建创建创建+++', this.componentService.com );
+  private getDataTableConfig() {
+    const configData = this.originData[this.config.id]
+    const config = new SmtDataTable();
+    config.id = configData['id'];
+    config.title = configData['title'];
+    config.keyId = configData['keyId'] ? configData['keyId'] : 'ID';
+    config.size = configData['size'] ? configData['size'] : 'deafult';
+    config.pageSize = configData['pageSize'] ? configData['pageSize'] : 5;
+    config.isBordered = configData['isBordered'] ? configData['isBordered'] : false;
+    config.isFrontPagination = configData['isFrontPagination'] ? configData['isFrontPagination'] : false;
+    config.isPagination = configData['isPagination'] ? configData['isPagination'] : true;
+    config.isShowSizeChanger = configData['isShowSizeChanger'] ? configData['isShowSizeChanger'] : false;
+    config.showTotal = configData['showTotal'] ? configData['showTotal'] : false;
+    config.showCheckBox = configData['showCheckBox'] ? configData['showCheckBox'] : false;
+    config.enableColSummary = configData['enableColSummary'] ? configData['enableColSummary'] : false;
+    config.loadingOnInit = configData['loadingOnInit'] ? configData['loadingOnInit'] : false;
+    config.isSelected = configData['isSelected'] ? configData['isSelected'] : false;
+    config.pageSizeOptions = configData['pageSizeOptions'] ? configData['pageSizeOptions'] : [];
+    config.scroll = configData['scroll'] ? configData['scroll'] : {};
+    config.columns = configData['columns'] ? configData['columns'] : [];
+    return config;
   }
 
   private _buildComponent(componentObj) {
