@@ -1,27 +1,50 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { NzFormatEmitEvent } from 'ng-zorro-antd/tree';
 import { configFormDataServerService } from 'src/app/core/services/config/form-data.service';
+import { CnStaticFormComponent } from '../../cn-static-form.component';
 
 @Component({
   selector: 'app-cn-static-form-parameter-struct',
   templateUrl: './cn-static-form-parameter-struct.component.html',
   styles: [
+    `
+    .selectedRow {
+      color: #000;
+      background-color: rgba(232, 249, 243);
+    }
+    `
   ]
 })
 export class CnStaticFormParameterStructComponent implements OnInit {
   public sourceData: any;
   public config: any;
   @Input() public fromDataService: configFormDataServerService;
+  @ViewChild('staticForm', { static: true }) public staticForm: CnStaticFormComponent;
+
   selectCmpt: any = 'notSet';
   staticData: any;
-  constructor() { }
+  constructor(private httpClient: HttpClient,) { }
+
   defaultCheckedKeys = [];
   defaultSelectedKeys = [];
   defaultExpandedKeys = [];
-  p_valueName: any;
-  p_type: any;
-  p_value: any;
   ngOnInit(): void {
+    if (!this.sourceData) {
+      this.sourceData = {
+        type: null,
+        valueName: null,
+        value: null
+      }
+    } else {
+      this.sourceData = {
+        type: this.sourceData['type'],
+        valueName: this.sourceData['valueName'],
+        value: this.sourceData['value']
+      }
+    }
+
+
   }
 
   nodes: any[] = [
@@ -35,13 +58,52 @@ export class CnStaticFormParameterStructComponent implements OnInit {
           title: '主资源参数[main]',
           key: '0001',
           parameterType: 'item',
-          isLeaf: true
+          isLeaf: true,
+          loadConfig: {
+            // 加载全局配置 【用户信息，系统参数】
+            global: false,
+            path: "vc/config/userValue.json",
+            local: true, // 加载局部配置 【从当前组件节点读取数据】
+            localConfig: [  // 从当前节点，可向上，也可向下取参数，页面初始参数 可合并
+              {
+                nodeType: "root",
+                enableParameter: true, // 取当前节点参数
+                parameterType: "mainParameters",
+                parent: { // 可向上
+
+                },
+                children: [
+                  {
+                  }
+                ]
+              },
+              {
+                nodeType: "sub",
+                enableParameter: true, // 取当前节点参数
+                parameterType: "mainParameters",
+                parent: { // 可向上
+
+                },
+                children: [
+                  {
+                  }
+                ]
+              }
+            ]
+
+
+
+          }
         },
         {
           title: '固定值[value]',
           key: '0002',
           parameterType: 'value',
-          isLeaf: true
+          isLeaf: true,
+          loadConfig: {
+            // 加载全局配置 【用户信息，系统参数】
+            // 加载局部配置 【从当前组件节点读取数据】
+          }
         },
         {
           title: '组件参数[componentValue]',
@@ -52,8 +114,22 @@ export class CnStaticFormParameterStructComponent implements OnInit {
             { title: '选中行[selectedRow]', key: '10010', parameterType: 'selectedRow', isLeaf: true },
             { title: '勾选行[checkedRow]', key: '10011', parameterType: 'checkedRow', isLeaf: true },
             { title: '当前行[currentRow]', key: '10012', parameterType: 'currentRow', isLeaf: true },
-            { title: '当前列[currentCol]', key: '10013', parameterType: 'currentCol', isLeaf: true }
-          ]
+            {
+              title: '当前单元格[currentCell]', key: '10013', parameterType: 'currentCell', isLeaf: true,
+              loadConfig: {
+                // 加载全局配置 【用户信息，系统参数】
+                // 加载局部配置 【从当前组件节点读取数据】
+                global: true,
+                path: "vc/config/currentCell.json"
+              }
+            }
+          ],
+          loadConfig: {
+            // 加载全局配置 【用户信息，系统参数】
+            // 加载局部配置 【从当前组件节点读取数据】
+            global: true,
+            path: "vc/config/gridComponentValue.json"
+          }
         },
         {
           title: '当前执行[item]',
@@ -83,29 +159,71 @@ export class CnStaticFormParameterStructComponent implements OnInit {
           title: '用户信息[userValue]',
           parameterType: 'userValue',
           key: '1006',
-          isLeaf: true
+          isLeaf: true,
+          loadConfig: {
+            // 加载全局配置 【用户信息，系统参数】
+            // 加载局部配置 【从当前组件节点读取数据】
+            global: true,
+            path: "vc/config/userValue.json"
+          }
         },
         {
           title: '系统参数[sysValue]',
           parameterType: 'sysValue',
           key: '1007',
-          isLeaf: true
+          isLeaf: true,
+          loadConfig: {
+            // 加载全局配置 【用户信息，系统参数】
+            // 加载局部配置 【从当前组件节点读取数据】
+            global: true,
+            path: "vc/config/sysValue.json"
+          }
         },
       ]
     }
   ];
-
-  nzClick(event: NzFormatEmitEvent): void {
+  listOfData: any[] = [];
+  Parameter = {
+    tempValue: [
+      { id: '001', name: 'pid', title: '父id', type: 'tempValue', source: '[消息]', description: '', dataType: '' }
+    ],
+    initValue: [
+      { id: '002', name: 'pageId', title: '页id', type: 'initValue', source: '[初始化]', description: '', dataType: '' }
+    ],
+    userValue1: [
+      { id: '004', name: 'userId', title: '用户id', type: 'componentValue', source: '[组件值]', description: '', dataType: '' },
+      { id: '005', name: 'userName', title: '用户名称', type: 'componentValue', source: '[组件值]', description: '', dataType: '' },
+      { id: '006', name: 'realName', title: '姓名', type: 'componentValue', source: '[组件值]', description: '', dataType: '' }
+    ]
+  }
+  async nzClick(event: NzFormatEmitEvent): Promise<void> {
     console.log(event);
+    console.log('======选中节点信息=======', this.fromDataService.selectedItem);
     let _pname = event['node']['origin']['parameterType'];
-    this.p_type = _pname;
-    if (_pname) {
 
-      /*  if (this.Parameter.hasOwnProperty(_pname)) {
-         this.listOfData = this.Parameter[_pname];
-       } else {
-         this.listOfData = [];
-       } */
+
+    this.sourceData['type'] = _pname;
+    this.staticForm.validateForm.setValue(this.sourceData);
+    if (_pname) {
+      if (event['node']['origin'].hasOwnProperty('loadConfig')) {
+        const _loadConfig = event['node']['origin']['loadConfig'];
+        if (_loadConfig['global']) {
+          this.listOfData = await this.loadConfig(_loadConfig['path']);
+        }
+        if (_loadConfig['local']) {
+          this.listOfData = this.fromDataService.getParameters(_loadConfig['localConfig'])
+        }
+
+
+      } else {
+        // 读取组件测试值
+        if (this.Parameter.hasOwnProperty(_pname)) {
+          this.listOfData = this.Parameter[_pname];
+        } else {
+          this.listOfData = [];
+        }
+      }
+
 
 
 
@@ -114,6 +232,15 @@ export class CnStaticFormParameterStructComponent implements OnInit {
 
   nzCheck(event: NzFormatEmitEvent): void {
     console.log(event);
+  }
+
+  selectRow = {}
+  setSelectRow(rowData?, e?) {
+    console.log('选中行', rowData);
+    this.selectRow = rowData;
+    let _pname = rowData['name'];
+    this.sourceData['valueName'] = _pname;
+    this.staticForm.validateForm.setValue(this.sourceData);
   }
 
   _form_config = {
@@ -134,7 +261,7 @@ export class CnStaticFormParameterStructComponent implements OnInit {
     properties: [
       {
         name: 'type',
-        type: 'select',
+        type: 'input',
         componentConfig: {
           "options": [
             {
@@ -270,6 +397,22 @@ export class CnStaticFormParameterStructComponent implements OnInit {
     }
 
     console.log('====static最终====>>>', this.sourceData);
+  }
+
+  async loadConfig(cmpt): Promise<any[]> {
+    // 加载出当前组件的详细配置，根据数据读取配置，构建页面
+
+    // 例如 input——》 加载input 配置 
+    let backData = [];
+    const timestamp = new Date().getTime();
+    const data = await this.httpClient.get(`assets/${cmpt}?${timestamp}`).toPromise();
+    if (data && data.hasOwnProperty('data')) {
+      backData = data['data'];
+    }
+    console.log('加载配置', data);
+    return backData;
+
+
   }
 
 }

@@ -11,7 +11,7 @@
             [nzSm]="config.componentConfig.controlSize.nzSm" [nzXs]="config.componentConfig.controlSize.nzXs"
             [nzMd]="config.componentConfig.controlSize.nzMd" [nzLg]="config.componentConfig.controlSize.nzLg"
             [nzXl]="config.componentConfig.controlSize.nzXl" [formGroup]="validateForm">
-            <input nz-input [formControlName]="config['name']" type="hidden" />
+            <input nz-input [formControlName]="config['name']" type="hidden" (ngModelChange)="valueChange($event)" />
             {{showValue}}
         </nz-form-control>
     </nz-form-item>

@@ -4,39 +4,108 @@ import { CommonUtils } from 'src/app/core/utils/common-utils';
 import { CustomValidator } from '../../../data-form/form-validator/CustomValidator';
 
 @Component({
-  selector: 'app-cn-static-form-array-table',
-  templateUrl: './cn-static-form-array-table.component.html',
+  selector: 'app-cn-static-form-tree-object',
+  templateUrl: './cn-static-form-tree-object.component.html',
   styles: [
   ]
 })
-export class CnStaticFormArrayTableComponent implements OnInit {
+export class CnStaticFormTreeObjectComponent implements OnInit {
+
   @Input() validateForm: FormGroup;
   @Input() validateFormArray: FormArray;
   @Input() config;
+  @Input() globalConfig;
   @Input() public fromDataService;
   @Output() public updateValue = new EventEmitter<any>(true);
-
-  dataList = [];
   constructor(private fb: FormBuilder) { }
   staticDefaultValueConfig: any = [
 
   ]
+  size = {
+    "sapn": 24,
+    "nzXs": 24,
+    "nzSm": 24,
+    "nzMd": 24,
+    "nzLg": 24,
+    "ngXl": 24,
+    "nzXXl": 24
+  }
+  span = 24;
+
+  _config = {
+    subFeild: 'children',
+    subProperties: {
+      add1: {
+        properties: [
+          {
+            "name": "title",
+            "type": "input",
+            "componentConfig": {},
+            "formType": "value",
+            "formName": "formControlName",
+            "validations": [],
+            "title": "标题1"
+          },
+          {
+            "name": "type",
+            "type": "label",
+            "componentConfig": {},
+            "formType": "value",
+            "formName": "formControlName",
+            "validations": [],
+            "title": "类型1"
+          }
+        ],
+        staticDefaultValueConfig: []
+      },
+      add2: {
+        properties: [
+          {
+            "name": "title",
+            "type": "input",
+            "componentConfig": {},
+            "formType": "value",
+            "formName": "formControlName",
+            "validations": [],
+            "title": "标题2"
+          },
+          {
+            "name": "type",
+            "type": "label",
+            "componentConfig": {},
+            "formType": "value",
+            "formName": "formControlName",
+            "validations": [],
+            "title": "类型2"
+          }
+        ],
+        staticDefaultValueConfig: []
+      }
+    }
+  }
   ngOnInit(): void {
     if (this.config.componentConfig && this.config.componentConfig['staticDefaultValueConfig']) {
       this.staticDefaultValueConfig = this.config.componentConfig['staticDefaultValueConfig'];
     }
-    this.dataList = this.setDataList();
-
+    if (this.config.componentConfig && this.config.componentConfig['size']) {
+      this.size = this.config.componentConfig['size'];
+      this.span = this.size['sapn'];
+    }
+    // console.log('array-card===>>>', this.config, this.size, this.span)
   }
 
-  setDataList() {
-    let list = [];
-    let obj = {};
-    this.validateFormArray.controls.forEach((element, index) => {
-      obj['key'] = index;
-      list.push(obj);
-    });
-    return list;
+  ArrFormArray(controlName) {
+    return this.validateForm.controls[controlName] as FormArray;
+  }
+  ArrFormArray1(i, controlName) {
+    //return this.validateForm.controls[controlName] as FormArray;
+    let _validateFormArray1 = this.validateFormArray.controls[i] as FormGroup;
+    let _validateFormArray = _validateFormArray1.controls[controlName] as FormArray;
+    return _validateFormArray;
+  }
+
+  demo() {
+    console.log('内容', this.validateFormArray);
   }
 
   add() {
@@ -60,7 +129,26 @@ export class CnStaticFormArrayTableComponent implements OnInit {
 
     // console.log('', this.validateForm)
 
-    this.dataList = this.setDataList();
+
+  }
+
+  add1(i?) {
+    let _data = {};
+    if (this.staticDefaultValueConfig) {
+      _data = this.getStaticDefaultValue(this.staticDefaultValueConfig);
+    }
+
+    let _validateFormArray1 = this.validateFormArray.controls[i] as FormGroup;
+    let _validateFormArray = _validateFormArray1.controls['children'] as FormArray;
+
+
+    _validateFormArray.push(this.set_formGroupControlName(_data, this.config));
+
+    _validateFormArray.controls.forEach(item => {
+      item.markAsPristine();
+      // pristine
+    })
+
   }
 
   getStaticDefaultValue(defaultValueConfig) {
@@ -101,16 +189,9 @@ export class CnStaticFormArrayTableComponent implements OnInit {
   //刪除组合
   delItem(i) {
     this.validateFormArray.removeAt(i);
-    this.dataList = this.setDataList();
   }
 
 
-  creatRow() {
-    return this.fb.group({
-      namet1: [null, [Validators.required]],
-      namet2: ['xxxx', [Validators.required]]
-    });
-  }
 
   set_formGroupControlName(data, Control) {
 
@@ -136,6 +217,29 @@ export class CnStaticFormArrayTableComponent implements OnInit {
       }
 
     });
+    Control.expendProperties && Control.expendProperties.forEach(item => {
+      let value = null;
+      let obj_key = item['name'];
+      if (data && data.hasOwnProperty(obj_key)) {
+        value = data[obj_key];
+      }
+      if (item.formType === 'object') {
+        obj[obj_key] = this.set_formGroupControlName(value, item);
+      }
+      if (item.formType === 'array') {
+        obj[obj_key] = this.set_formArrayControlName(value, item);
+      }
+      if (item.formType === 'value') {
+        obj[obj_key] = new FormControl(
+          value,
+          this.getValidations(item.validations),
+          this.getValidations1(item.validations),
+        );
+      }
+
+    });
+
+
     return this.fb.group(obj);
   }
   set_formArrayControlName(data, Control) {

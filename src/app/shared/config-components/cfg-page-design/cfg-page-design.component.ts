@@ -34,6 +34,7 @@ export class CfgPageDesignComponent extends CnComponentBase implements OnInit {
     this._initInnerValue();
     this.setChangeValue(this.changeValue);
     this.load();
+    this.fromDataService.selectedItem = this.selectedItem;
 
   }
   private _initInnerValue() {

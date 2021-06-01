@@ -1,0 +1,9 @@
+{
+    "data":[
+        { "id": "sys_001", "name": "GUID", "title": "随机标识", "type": "sysValue", "source": "[内置]", "description": "", "dataType": "string"},
+        { "id": "sys_002", "name": "currentTime", "title": "当前时间【yyyy-mm-dd:mm:ss】", "type": "sysValue", "source": "[内置]", "description": "", "dataType": "string"},
+        { "id": "sys_003", "name": "currentYear", "title": "当前年【yyyy】", "type": "sysValue", "source": "[内置]", "description": "", "dataType": "string" },
+        { "id": "sys_004", "name": "currentMonth", "title": "当前月【yyyy-mm】", "type": "sysValue", "source": "[内置]", "description": "", "dataType": "string" },
+        { "id": "sys_005", "name": "currentday", "title": "当前日期【yyyy-mm-dd】", "type": "sysValue", "source": "[内置]", "description": "", "dataType": "string" }
+    ]
+}

@@ -208,6 +208,9 @@ import { CnStaticFormPopFormComponent } from './components/cn-static-form/cn-sta
 import { CnStaticFormSwitchConentComponent } from './components/cn-static-form/cn-static-form-item/cn-static-form-switch-conent/cn-static-form-switch-conent.component';
 import { CnStaticFormStaticFormComponent } from './components/cn-static-form/cn-static-form-cmpt/cn-static-form-static-form/cn-static-form-static-form.component';
 import { CnStaticFormParameterStructComponent } from './components/cn-static-form/cn-static-form-cmpt/cn-static-form-parameter-struct/cn-static-form-parameter-struct.component';
+import { CnStaticFormPopSelectParameterComponent } from './components/cn-static-form/cn-static-form-item/cn-static-form-pop-select-parameter/cn-static-form-pop-select-parameter.component';
+import { CnStaticFormTreeObjectComponent } from './components/cn-static-form/cn-static-form-cmpt/cn-static-form-tree-object/cn-static-form-tree-object.component';
+import { CnStaticFormChildArrayComponent } from './components/cn-static-form/cn-static-form-item/cn-static-form-child-array/cn-static-form-child-array.component';
 
 
 // #region third libs
@@ -413,11 +416,15 @@ const COMPONENTS = [
   CnStaticFormArrayCollapseComponent,
   CnStaticFormCustomInputSelectComponent,
   CnStaticFormLabelComponent,
+  CnStaticFormPopSelectParameterComponent,
+  CnStaticFormChildArrayComponent,
   // --静态表单内特殊组件结构--
   CnStaticFormAjaxComponent,
   CnStaticFormFormItemComponent,
   CnStaticFormGridItemComponent,
   CnStaticFormStaticFormComponent,
+  CnStaticFormParameterStructComponent,
+  CnStaticFormTreeObjectComponent,
 ];
 const DIRECTIVES = [
   CnLayoutResolverDirective,
@@ -458,27 +465,9 @@ const DIRECTIVES = [
     SafeUrlPipe,
     CfgAttributeRanksRowModalComponent,
     ToolAttrJsonComponent,
-
-
-
     CfgPageCmptTreeComponent,
-
-
-
     CnStaticFormPopFormComponent,
-
-
-
     CnStaticFormSwitchConentComponent,
-
-
-
-    CnStaticFormParameterStructComponent,
-
-
-
-
-
   ],
   exports: [
     CommonModule,

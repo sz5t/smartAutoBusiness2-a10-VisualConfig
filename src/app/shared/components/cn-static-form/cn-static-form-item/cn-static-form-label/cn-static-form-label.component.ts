@@ -12,7 +12,7 @@ export class CnStaticFormLabelComponent implements OnInit {
 
   @Input() validateForm: FormGroup;
   @Input() config;
-  @Input() public fromDataService: configFormDataServerService;
+  @Input() public fromDataService;
   @Output() public updateValue = new EventEmitter<any>(true);
   @Output() public cascadeValue = new EventEmitter<any>(true);
   itemConfig: any = {
@@ -77,6 +77,9 @@ export class CnStaticFormLabelComponent implements OnInit {
 
     this.showValue = d;
 
+  }
+  valueChange(v?) {
+    this.loadShowValue();
   }
 
 }

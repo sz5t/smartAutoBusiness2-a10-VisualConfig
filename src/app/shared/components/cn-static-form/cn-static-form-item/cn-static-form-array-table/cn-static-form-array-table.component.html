@@ -18,7 +18,8 @@
                 <tr *ngFor="let item of validateFormArray.controls;let i = index;">
                     <ng-container *ngFor="let r_arr of  config['properties'];let i1 = index;">
                         <td>
-                            <ng-container CnStaticFormItemDirective [validateForm]="item" [config]="r_arr">
+                            <ng-container CnStaticFormItemDirective [validateForm]="item" [config]="r_arr"
+                                [fromDataService]="fromDataService">
                             </ng-container>
                         </td>
                     </ng-container>

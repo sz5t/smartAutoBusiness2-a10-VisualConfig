@@ -10,6 +10,7 @@ import { FormGroup } from '@angular/forms';
 export class CnStaticFormSliderComponent implements OnInit {
   @Input() validateForm: FormGroup;
   @Input() config;
+  @Input() public fromDataService;
   @Output() public updateValue = new EventEmitter<any>(true);
   componentConfig: any = {};
   selectValue: any;

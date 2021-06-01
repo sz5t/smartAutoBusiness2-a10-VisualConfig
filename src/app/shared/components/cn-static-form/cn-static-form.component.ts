@@ -16,7 +16,7 @@ export class CnStaticFormComponent implements OnInit {
 
   @Input() public config;
   @Input() public staticData;
-  @Input() public fromDataService: configFormDataServerService;
+  @Input() public fromDataService;
   @Output() public updateValue = new EventEmitter<any>(true);
   validateForm: FormGroup;
   validateForm1: FormGroup;

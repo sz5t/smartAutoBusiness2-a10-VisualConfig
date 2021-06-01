@@ -1,0 +1,28 @@
+<p>cn-static-form-tree-object works!</p>
+
+<div nz-row [nzGutter]="8">
+    <div nz-col [nzSpan]="span" *ngFor="let item of validateFormArray.controls;let i = index;">
+
+
+        <nz-card nzType="inner" [nzTitle]="config['title']+i" [nzExtra]="delextraTemplate">
+            <!--                 <div *ngFor="let r_arr of  config['properties'];let i1 = index;">
+                            <ng-container CnStaticFormItemDirective [validateForm]="item" [config]="r_arr">
+                            </ng-container>
+                        </div> -->
+            <app-cn-static-form-object-empty [validateForm]="item" [config]="config"
+                [fromDataService]="fromDataService">
+            </app-cn-static-form-object-empty>
+            <!--      <app-cn-static-form-tree-object [validateForm]="item" [validateFormArray]="this.ArrFormArray1(i,'children')"
+                [config]="config" [fromDataService]="fromDataService"> 
+            </app-cn-static-form-tree-object>-->
+        </nz-card>
+
+        <ng-template #delextraTemplate>
+            <button nz-button nzType="primary" (click)="delItem(i)">删除</button>
+        </ng-template>
+
+    </div>
+</div>
+<button nz-button type="button" nzType="dashed" nzBlock="true" nzSize="default" style="margin-bottom: 3px;"
+    (click)="add()"><i nz-icon nzType="plus"></i>
+    添加</button>
