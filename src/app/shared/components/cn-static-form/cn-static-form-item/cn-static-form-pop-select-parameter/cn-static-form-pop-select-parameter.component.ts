@@ -1,26 +1,19 @@
-import { Component, Input, OnInit, Output, EventEmitter, Type } from '@angular/core';
+import { Component, OnInit, Type, EventEmitter, Output, Input } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { NzModalService } from 'ng-zorro-antd/modal';
-import { configFormDataServerService } from 'src/app/core/services/config/form-data.service';
-import { CnStaticFormAjaxComponent } from '../../cn-static-form-cmpt/cn-static-form-ajax/cn-static-form-ajax.component';
-import { CnStaticFormGridItemComponent } from '../../cn-static-form-cmpt/cn-static-form-grid-item/cn-static-form-grid-item.component';
 import { CnStaticFormParameterStructComponent } from '../../cn-static-form-cmpt/cn-static-form-parameter-struct/cn-static-form-parameter-struct.component';
-import { CnStaticFormStaticFormComponent } from '../../cn-static-form-cmpt/cn-static-form-static-form/cn-static-form-static-form.component';
-import { CnStaticFormComponent } from '../../cn-static-form.component';
 const components: { [type: string]: Type<any> } = {
-  ajax: CnStaticFormAjaxComponent,
-  gridItem: CnStaticFormGridItemComponent,
-  staticForm: CnStaticFormStaticFormComponent,
   parameterStruct: CnStaticFormParameterStructComponent
 
 };
 @Component({
-  selector: 'app-cn-static-form-custom-select',
-  templateUrl: './cn-static-form-custom-select.component.html',
+  selector: 'app-cn-static-form-pop-select-parameter',
+  templateUrl: './cn-static-form-pop-select-parameter.component.html',
   styles: [
   ]
 })
-export class CnStaticFormCustomSelectComponent implements OnInit {
+export class CnStaticFormPopSelectParameterComponent implements OnInit {
+
   @Input() validateForm: FormGroup;
   @Input() config;
   @Input() public fromDataService;
@@ -38,7 +31,7 @@ export class CnStaticFormCustomSelectComponent implements OnInit {
       okText: '确定',
       footerButton: null,
       customAction: [],
-      customContent: '',
+      customContent: 'parameterStruct',
       customPageConfig: {
 
       }
@@ -202,41 +195,27 @@ export class CnStaticFormCustomSelectComponent implements OnInit {
               saveStaticData = componentInstance['sourceData'];
             }
 
-            this.validateForm.controls[this.config['name']].setValue(saveStaticData);
-            this.loadShowValue();
+            if (dialogCfg['updateData']) {
+
+              dialogCfg['updateData'].forEach(element => {
+                this.validateForm.controls[element['name']].setValue(saveStaticData[element['name']]);
+              });
+            } else {
+
+              this.validateForm.controls[this.config['name']].setValue(saveStaticData);
+            }
+
+            // this.loadShowValue();
             // console.log('当前弹出表单值：', componentInstance['staticForm']['validateForm']['value'])
             dialog.close();
           },
         },
       ],
     };
-    // 自定义 操作按钮
-    if (dialogCfg.footerButton && dialogCfg.footerButton.length > 0) {
-      dialogOptional.nzFooter = [];
-
-      dialogCfg.footerButton.forEach((_button) => {
-        dialogOptional.nzFooter.push({
-          label: _button.text,
-          onClick: (componentInstance) => {
-            // dialog.close();
-            // customAction
-            let customAction;
-            if (dialogCfg.customAction && dialogCfg.customAction.length > 0) {
-              const customActionList = dialogCfg.customAction.filter((item) => item.id === _button.customActionId);
-              if (customActionList && customActionList.length > 0) {
-                customAction = customActionList[0];
-              }
-            }
-
-            // 【执行】
-            //  this.execCustomAction(customAction, dialog, componentInstance);
-          },
-        });
-      });
-    }
 
     dialog = this.modal.create(dialogOptional);
     this.windowDialog = dialog;
   }
+
 
 }

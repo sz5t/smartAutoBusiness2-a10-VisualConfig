@@ -1,5 +1,6 @@
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { configFormDataServerService } from 'src/app/core/services/config/form-data.service';
 import { CommonUtils } from 'src/app/core/utils/common-utils';
 import { CustomValidator } from '../../../data-form/form-validator/CustomValidator';
 
@@ -13,6 +14,7 @@ export class CnStaticFormArrayCardComponent implements OnInit {
   @Input() validateForm: FormGroup;
   @Input() validateFormArray: FormArray;
   @Input() config;
+  @Input() public fromDataService;
   @Output() public updateValue = new EventEmitter<any>(true);
   constructor(private fb: FormBuilder) { }
   staticDefaultValueConfig: any = [

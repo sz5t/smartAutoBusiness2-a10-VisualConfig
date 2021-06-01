@@ -213,6 +213,9 @@ import { SmtDynamicLayoutResolverDirective } from './resolver/smt-layout/smt-dyn
 import { SmtPageComponent } from './components/smt-layout/smt-page/smt-page.component';
 import { SmtComponentResolverDirective } from './resolver/smt-component/smt-component-resolver.directive';
 import { SmtDataTableComponent } from './smt-components/smt-data-table/smt-data-table.component';
+import { CnStaticFormPopSelectParameterComponent } from './components/cn-static-form/cn-static-form-item/cn-static-form-pop-select-parameter/cn-static-form-pop-select-parameter.component';
+import { CnStaticFormTreeObjectComponent } from './components/cn-static-form/cn-static-form-cmpt/cn-static-form-tree-object/cn-static-form-tree-object.component';
+import { CnStaticFormChildArrayComponent } from './components/cn-static-form/cn-static-form-item/cn-static-form-child-array/cn-static-form-child-array.component';
 
 
 // #region third libs
@@ -418,14 +421,22 @@ const COMPONENTS = [
   CnStaticFormArrayCollapseComponent,
   CnStaticFormCustomInputSelectComponent,
   CnStaticFormLabelComponent,
+  CnStaticFormPopSelectParameterComponent,
+  CnStaticFormChildArrayComponent,
   // --静态表单内特殊组件结构--
   CnStaticFormAjaxComponent,
   CnStaticFormFormItemComponent,
   CnStaticFormGridItemComponent,
   CnStaticFormStaticFormComponent,
+  CnStaticFormParameterStructComponent,
+  CnStaticFormTreeObjectComponent,
+  CnStaticFormPopFormComponent,
+  CnStaticFormSwitchConentComponent,
   // 解析布局组件
   SmtPageComponent,
   SmtLayoutComponent,
+  // 可视化生成配置解析出的组件
+  SmtDataTableComponent,
 ];
 const DIRECTIVES = [
   CnLayoutResolverDirective,
@@ -468,25 +479,6 @@ const DIRECTIVES = [
     SafeUrlPipe,
     CfgAttributeRanksRowModalComponent,
     ToolAttrJsonComponent,
-
-
-
-    CfgPageCmptTreeComponent,
-
-
-
-    CnStaticFormPopFormComponent,
-
-
-
-    CnStaticFormSwitchConentComponent,
-    CnStaticFormParameterStructComponent,
-    SmtDataTableComponent,
-
-
-
-
-
   ],
   exports: [
     CommonModule,

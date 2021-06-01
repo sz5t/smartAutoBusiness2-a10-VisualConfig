@@ -3,9 +3,11 @@ import { FormGroup } from '@angular/forms';
 import { NzModalService } from 'ng-zorro-antd/modal';
 import { configFormDataServerService } from 'src/app/core/services/config/form-data.service';
 import { CnStaticFormGridItemComponent } from '../../cn-static-form-cmpt/cn-static-form-grid-item/cn-static-form-grid-item.component';
+import { CnStaticFormParameterStructComponent } from '../../cn-static-form-cmpt/cn-static-form-parameter-struct/cn-static-form-parameter-struct.component';
 const components: { [type: string]: Type<any> } = {
   // ajax: CnStaticFormAjaxComponent,
   gridItem: CnStaticFormGridItemComponent,
+  parameterStruct: CnStaticFormParameterStructComponent
 
 };
 @Component({
@@ -18,7 +20,7 @@ export class CnStaticFormCustomInputSelectComponent implements OnInit {
 
   @Input() validateForm: FormGroup;
   @Input() config;
-  @Input() public fromDataService: configFormDataServerService;
+  @Input() public fromDataService;
   @Output() public updateValue = new EventEmitter<any>(true);
   constructor(private modal: NzModalService,) { }
 
@@ -31,19 +33,12 @@ export class CnStaticFormCustomInputSelectComponent implements OnInit {
   windowDialog
   setting() {
     console.log('');
+    const dialogCfg = this.config.componentConfig['customPage'];
+    if (!dialogCfg) {
+      return;
+    }
     let dialog;
     // 根据按钮类型初始化表单状态
-    const dialogCfg = {
-      title: '',
-      width: '90%',
-      style: null,
-      maskClosable: true,
-      cancelText: '取消',
-      okText: '确定',
-      footerButton: null,
-      customAction: []
-
-    };
 
 
 
@@ -55,7 +50,8 @@ export class CnStaticFormCustomInputSelectComponent implements OnInit {
       nzContent: components['gridItem'],
       nzComponentParams: {
         config: {},
-        sourceData: this.validateForm.controls[this.config['name']].value
+        sourceData: this.validateForm.controls[this.config['name']].value,
+        fromDataService: this.fromDataService
       },
       nzFooter: [
         {
@@ -68,7 +64,7 @@ export class CnStaticFormCustomInputSelectComponent implements OnInit {
           label: dialogCfg.okText ? dialogCfg.okText : 'OK',
           onClick: (componentInstance) => {
             console.log('当前弹出表单值：', componentInstance)
-            // this.validateForm.controls[this.config['name']].setValue(componentInstance['sourceData']);
+            this.validateForm.controls[this.config['name']].setValue(componentInstance['sourceData']);
 
             // console.log('当前弹出表单值：', componentInstance['staticForm']['validateForm']['value'])
             dialog.close();
@@ -76,31 +72,6 @@ export class CnStaticFormCustomInputSelectComponent implements OnInit {
         },
       ],
     };
-    // 自定义 操作按钮
-    if (dialogCfg.footerButton && dialogCfg.footerButton.length > 0) {
-      dialogOptional.nzFooter = [];
-
-      dialogCfg.footerButton.forEach((_button) => {
-        dialogOptional.nzFooter.push({
-          label: _button.text,
-          onClick: (componentInstance) => {
-            // dialog.close();
-            // customAction
-            let customAction;
-            if (dialogCfg.customAction && dialogCfg.customAction.length > 0) {
-              const customActionList = dialogCfg.customAction.filter((item) => item.id === _button.customActionId);
-              if (customActionList && customActionList.length > 0) {
-                customAction = customActionList[0];
-              }
-            }
-
-            // 【执行】
-            //  this.execCustomAction(customAction, dialog, componentInstance);
-          },
-        });
-      });
-    }
-
     dialog = this.modal.create(dialogOptional);
     this.windowDialog = dialog;
   }

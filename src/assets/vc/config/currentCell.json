@@ -1,0 +1,7 @@
+{
+    "data":[
+        { "id": "cell_001", "name": "rowId", "title": "行标识", "type": "currentCell", "source": "[内置]", "description": "", "dataType": "string"},
+        { "id": "cell_002", "name": "cellName", "title": "单元格标识", "type": "currentCell", "source": "[内置]", "description": "", "dataType": "string"},
+        { "id": "cell_003", "name": "cellValue", "title": "单元格值", "type": "currentCell", "source": "[内置]", "description": "", "dataType": "string" }
+    ]
+}

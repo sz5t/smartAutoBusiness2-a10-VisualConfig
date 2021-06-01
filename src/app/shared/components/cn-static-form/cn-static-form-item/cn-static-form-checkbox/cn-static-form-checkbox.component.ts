@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-cn-static-form-checkbox',
@@ -7,7 +7,7 @@ import { Component, OnInit } from '@angular/core';
   ]
 })
 export class CnStaticFormCheckboxComponent implements OnInit {
-
+  @Input() public fromDataService;
   constructor() { }
 
   ngOnInit(): void {

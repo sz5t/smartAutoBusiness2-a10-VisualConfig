@@ -1,5 +1,6 @@
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { configFormDataServerService } from 'src/app/core/services/config/form-data.service';
 import { CommonUtils } from 'src/app/core/utils/common-utils';
 import { CustomValidator } from '../../../data-form/form-validator/CustomValidator';
 
@@ -7,12 +8,19 @@ import { CustomValidator } from '../../../data-form/form-validator/CustomValidat
   selector: 'app-cn-static-form-array-collapse',
   templateUrl: './cn-static-form-array-collapse.component.html',
   styles: [
+    `
+    .ant-card-type-inner .ant-card-body {
+      padding: 2px 2px;
+    }
+    `
   ]
 })
 export class CnStaticFormArrayCollapseComponent implements OnInit {
   @Input() validateForm: FormGroup;
   @Input() validateFormArray: FormArray;
   @Input() config;
+  @Input() globalConfig;
+  @Input() public fromDataService;
   @Output() public updateValue = new EventEmitter<any>(true);
   constructor(private fb: FormBuilder) { }
 

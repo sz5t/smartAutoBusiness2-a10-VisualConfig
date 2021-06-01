@@ -164,22 +164,21 @@
                                     "name": "columns",
                                     "type": "arrayCollapse",
                                     "componentConfig": {
-                                        "staticDefaultValueConfig":[
+                                        "mode": "empty",
+                                        "staticDefaultValueConfig": [
                                             {
-                                               "name":"id",
-                                               "type":"GUID"
+                                                "name": "id",
+                                                "type": "GUID"
                                             },
-                                             {
-                                               "name":"type",
-                                               "type":"value",
-                                               "value":"field"
+                                            {
+                                                "name": "type",
+                                                "type": "value",
+                                                "value": "field"
                                             }
-                                         ]
-
+                                        ]
                                     },
                                     "formType": "array",
                                     "properties": [
-                                        
                                         {
                                             "name": "id",
                                             "type": "label",
@@ -247,9 +246,6 @@
                                             "validations": [],
                                             "title": "是否排序"
                                         },
-                                        
-                                      
-                                    
                                         {
                                             "name": "width",
                                             "type": "input",
@@ -263,7 +259,7 @@
                                             "name": "text",
                                             "type": "customSelect",
                                             "componentConfig": {
-                                                "customPage":{
+                                                "customPage": {
                                                     "title": "",
                                                     "width": "90%",
                                                     "style": null,
@@ -272,20 +268,16 @@
                                                     "okText": "确定",
                                                     "footerButton": null,
                                                     "customAction": [],
-                                                    "customContent":"gridItem",
-                                                    "customPageConfig":{
-
-                                                    }
-                                                  },
-                                                  "showConfig":{
-                                                      "showString":[
-                                                          {
-                                                              "name":"type"
-                                                          }
-
-                                                      ]
-
-                                                  }
+                                                    "customContent": "gridItem",
+                                                    "customPageConfig": {}
+                                                },
+                                                "showConfig": {
+                                                    "showString": [
+                                                        {
+                                                            "name": "type"
+                                                        }
+                                                    ]
+                                                }
                                             },
                                             "formType": "value",
                                             "formName": "formControlName",
@@ -294,18 +286,9 @@
                                         },
                                         {
                                             "name": "edit",
-                                            "type": "customInputSelect",
-                                            "componentConfig": {},
-                                            "formType": "value",
-                                            "formName": "formControlName",
-                                            "validations": [],
-                                            "title": "编辑"
-                                        },
-                                        {
-                                            "name": "liuedit",
                                             "type": "customSelect",
                                             "componentConfig": {
-                                                "customPage":{
+                                                "customPage": {
                                                     "title": "",
                                                     "width": "90%",
                                                     "style": null,
@@ -314,7 +297,36 @@
                                                     "okText": "确定",
                                                     "footerButton": null,
                                                     "customAction": [],
-                                                    "customContent":"staticForm",
+                                                    "customContent": "parameterStruct",
+                                                    "customPageConfig": {}
+                                                },
+                                                "showConfig": {
+                                                    "showString": [
+                                                        {
+                                                            "name": "type"
+                                                        }
+                                                    ]
+                                                }
+                                            },
+                                            "formType": "value",
+                                            "formName": "formControlName",
+                                            "validations": [],
+                                            "title": "编辑参数"
+                                        },
+                                        {
+                                            "name": "liuedit",
+                                            "type": "customSelect",
+                                            "componentConfig": {
+                                                "customPage": {
+                                                    "title": "",
+                                                    "width": "90%",
+                                                    "style": null,
+                                                    "maskClosable": true,
+                                                    "cancelText": "取消",
+                                                    "okText": "确定",
+                                                    "footerButton": null,
+                                                    "customAction": [],
+                                                    "customContent": "staticForm",
                                                     "customPageConfig": {
                                                         "type": "staticForm",
                                                         "backName": "title",
@@ -449,16 +461,14 @@
                                                         "type": "_root",
                                                         "name": "liuedit"
                                                     }
-                                                  },
-                                                  "showConfig":{
-                                                      "showString":[
-                                                          {
-                                                              "name":"type"
-                                                          }
-
-                                                      ]
-
-                                                  }
+                                                },
+                                                "showConfig": {
+                                                    "showString": [
+                                                        {
+                                                            "name": "type"
+                                                        }
+                                                    ]
+                                                }
                                             },
                                             "formType": "value",
                                             "formName": "formControlName",
@@ -469,7 +479,7 @@
                                             "name": "arrayliu",
                                             "type": "customSelect",
                                             "componentConfig": {
-                                                "customPage":{
+                                                "customPage": {
                                                     "title": "",
                                                     "width": "90%",
                                                     "style": null,
@@ -478,7 +488,7 @@
                                                     "okText": "确定",
                                                     "footerButton": null,
                                                     "customAction": [],
-                                                    "customContent":"staticForm",
+                                                    "customContent": "staticForm",
                                                     "customPageConfig": {
                                                         "type": "staticForm",
                                                         "backName": "arrayliu",
@@ -496,7 +506,7 @@
                                                                 "formName": "formControlName",
                                                                 "validations": [],
                                                                 "title": "主键",
-                                                                "properties":[
+                                                                "properties": [
                                                                     {
                                                                         "name": "title",
                                                                         "type": "input",
@@ -505,45 +515,177 @@
                                                                         "formName": "formControlName",
                                                                         "validations": [],
                                                                         "title": "标题"
+                                                                    },
+                                                                    {
+                                                                        "name": "type",
+                                                                        "type": "label",
+                                                                        "componentConfig": {},
+                                                                        "formType": "value",
+                                                                        "formName": "formControlName",
+                                                                        "validations": [],
+                                                                        "title": "类型"
+                                                                    },
+                                                                    {
+                                                                        "name": "valueName",
+                                                                        "type": "popSelectParameter",
+                                                                        "componentConfig": {
+                                                                            "customPage": {
+                                                                                "title": "",
+                                                                                "width": "90%",
+                                                                                "style": null,
+                                                                                "maskClosable": true,
+                                                                                "cancelText": "取消",
+                                                                                "okText": "确定",
+                                                                                "footerButton": null,
+                                                                                "customAction": [],
+                                                                                "customContent": "parameterStruct",
+                                                                                "customPageConfig": {
+                                                                                    "type": "popSelectParameter",
+                                                                                    "backName": "title",
+                                                                                    "backConfig": [
+                                                                                        {
+                                                                                            "name": "title"
+                                                                                        },
+                                                                                        {
+                                                                                            "name": "showTitle"
+                                                                                        }
+                                                                                    ]
+                                                                                },
+                                                                                "sourceData": {
+                                                                                    "type": "root",
+                                                                                    "name": "liuedit"
+                                                                                },
+                                                                                "updateData": [
+                                                                                    {
+                                                                                        "name": "type"
+                                                                                    },
+                                                                                    {
+                                                                                        "name": "valueName"
+                                                                                    },
+                                                                                    {
+                                                                                        "name": "value"
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        },
+                                                                        "formType": "value",
+                                                                        "formName": "formControlName",
+                                                                        "validations": [],
+                                                                        "title": "参数名称"
+                                                                    },
+                                                                    {
+                                                                        "name": "value",
+                                                                        "type": "input",
+                                                                        "componentConfig": {},
+                                                                        "formType": "value",
+                                                                        "formName": "formControlName",
+                                                                        "validations": [],
+                                                                        "title": "默认值"
                                                                     }
                                                                 ]
                                                             }
-                                                           
                                                         ]
                                                     },
                                                     "sourceData": {
                                                         "type": "root",
                                                         "name": "title"
                                                     },
-                                                    "saveData":{
-                                                        "type":"_root",
+                                                    "saveData": {
+                                                        "type": "_root",
                                                         "name": "arrayliu"
                                                     }
-                                                  
-                                                  },
-                                                  "showConfig":{
-                                                      "showString":[
-                                                          {
-                                                              "name":"type"
-                                                          }
-
-                                                      ]
-
-                                                  }
+                                                },
+                                                "showConfig": {
+                                                    "showString": [
+                                                        {
+                                                            "name": "type"
+                                                        }
+                                                    ]
+                                                }
                                             },
                                             "formType": "value",
                                             "formName": "formControlName",
                                             "validations": [],
                                             "title": "测试弹出数组"
                                         }
-
-                                        
                                     ],
                                     "formName": "formControlName",
                                     "validations": [],
                                     "title": "列"
                                 }
-                        
+                            ]
+                        },
+                        "sourceData": {
+                            "type": "root",
+                            "name": "title"
+                        }
+                    },
+                    {
+                        "code": "base",
+                        "title": "测试树",
+                        "type": "property",
+                        "active": true,
+                        "sourceConfig": {
+                            "type": "staticForm",
+                            "backName": "columnstree",
+                            "backConfig": [
+                                {
+                                    "name": "columnstree"
+                                }
+                            ],
+                            "properties": [
+                                {
+                                    "name": "columnstree",
+                                    "type": "arrayCollapse",
+                                    "componentConfig": {
+                                        "mode": "card",
+                                        "staticDefaultValueConfig": [
+                                            {
+                                                "name": "id",
+                                                "type": "GUID"
+                                            }
+                                        ]
+                                    },
+                                    "formType": "array",
+                                    "properties": [
+                                        {
+                                            "name": "id",
+                                            "type": "label",
+                                            "componentConfig": {},
+                                            "formType": "value",
+                                            "formName": "formControlName",
+                                            "validations": [],
+                                            "title": "主键"
+                                        },
+                                        {
+                                            "name": "title",
+                                            "type": "input",
+                                            "componentConfig": {},
+                                            "formType": "value",
+                                            "formName": "formControlName",
+                                            "validations": [],
+                                            "title": "标题"
+                                        },
+                                        {
+                                            "name": "children",
+                                            "type": "childArray",
+                                            "componentConfig": {},
+                                            "formType": "array",
+                                            "properties":[],
+                                            "formName": "formControlName",
+                                            "validations": [],
+                                            "title": "子内容"
+                                        }
+                                        
+                                      
+                                    ],
+                                    "expendProperties":[
+                                     
+                                    ],
+                                    "formName": "formControlName",
+                                    "validations": [],
+                                    "title": "表达式"
+                                }
                             ]
                         },
                         "sourceData": {
@@ -551,6 +693,9 @@
                             "name": "title"
                         }
                     }
+
+
+                    
                 ]
             }
         ]

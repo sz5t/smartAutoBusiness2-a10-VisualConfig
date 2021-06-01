@@ -6,6 +6,7 @@ import { configFormDataServerService } from 'src/app/core/services/config/form-d
   selector: 'app-cn-static-form-static-form',
   templateUrl: './cn-static-form-static-form.component.html',
   styles: [
+
   ]
 })
 export class CnStaticFormStaticFormComponent implements OnInit {

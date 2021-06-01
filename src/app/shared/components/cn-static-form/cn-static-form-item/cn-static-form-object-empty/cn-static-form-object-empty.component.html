@@ -6,7 +6,8 @@
 
                 <div [hidden]="r['hidden']">
                     <ng-container CnStaticFormItemDirective [validateForm]="validateForm" [config]="r"
-                        [fromDataService]="fromDataService" (cascadeValue)="cascadeValueEmit($event)">
+                        [fromDataService]="fromDataService" [globalConfig]="config"
+                        (cascadeValue)="cascadeValueEmit($event)">
                     </ng-container>
 
                 </div>
@@ -23,8 +24,8 @@
                     <ng-container *ngIf="c['container']==='control'">
                         <div [hidden]="r['hidden']">
                             <ng-container CnStaticFormItemDirective [validateForm]="validateForm"
-                                [config]="config['properties'][c['controlIndex']]" [fromDataService]="fromDataService"
-                                (cascadeValue)="cascadeValueEmit($event)">
+                                [config]="config['properties'][c['controlIndex']]" [globalConfig]="config"
+                                [fromDataService]="fromDataService" (cascadeValue)="cascadeValueEmit($event)">
                             </ng-container>
                         </div>
 
@@ -38,7 +39,7 @@
                                 <ng-container *ngIf="c_c['container']==='control'">
                                     <div [hidden]="r['hidden']">
                                         <ng-container CnStaticFormItemDirective [validateForm]="validateForm"
-                                            [config]="config['properties'][c_c['controlIndex']]"
+                                            [config]="config['properties'][c_c['controlIndex']]" [globalConfig]="config"
                                             [fromDataService]="fromDataService"
                                             (cascadeValue)="cascadeValueEmit($event)">
                                         </ng-container>
