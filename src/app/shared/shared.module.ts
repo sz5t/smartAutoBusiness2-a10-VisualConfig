@@ -211,6 +211,7 @@ import { CnStaticFormParameterStructComponent } from './components/cn-static-for
 import { CnStaticFormPopSelectParameterComponent } from './components/cn-static-form/cn-static-form-item/cn-static-form-pop-select-parameter/cn-static-form-pop-select-parameter.component';
 import { CnStaticFormTreeObjectComponent } from './components/cn-static-form/cn-static-form-cmpt/cn-static-form-tree-object/cn-static-form-tree-object.component';
 import { CnStaticFormChildArrayComponent } from './components/cn-static-form/cn-static-form-item/cn-static-form-child-array/cn-static-form-child-array.component';
+import { SmtLayoutComponent } from './components/smt-layout/smt-layout/smt-layout.component';
 
 
 // #region third libs
@@ -468,6 +469,8 @@ const DIRECTIVES = [
     CfgPageCmptTreeComponent,
     CnStaticFormPopFormComponent,
     CnStaticFormSwitchConentComponent,
+    SmtLayoutComponent,
+
   ],
   exports: [
     CommonModule,
