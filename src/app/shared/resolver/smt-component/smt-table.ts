@@ -24,6 +24,7 @@ export class SmtDataTable implements ILayout {
     private _pageSizeOptions: any[];
     private _scroll: any;
     private _columns: any[];
+    private _children: any[];
 
     public get id(): string {
         return this._id;
@@ -156,6 +157,13 @@ export class SmtDataTable implements ILayout {
     }
     public set columns(value: any[]) {
         this._columns = value;
+    }
+
+    public get children(): any[] {
+        return this._children;
+    }
+    public set children(value: any[]) {
+        this._children = value;
     }
 
     public add(row: any) {

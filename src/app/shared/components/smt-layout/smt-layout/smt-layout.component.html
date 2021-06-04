@@ -6,12 +6,6 @@
                     [nzXs]="col.size.nzXs" [nzMd]="col.size.nzMd" [nzLg]="col.size.nzLg" [nzXl]="col.size.nzXl"
                     [ngSwitch]="col.container">
 
-                    <nz-card *ngSwitchCase="'tabs'">
-                        <ng-container SmtDynamicLayoutResolverDirective [config]="col.children" [tempData]="tempData"
-                            [initData]="initData">
-                        </ng-container>
-                    </nz-card>
-
                     <nz-card *ngSwitchCase="'component'" [nzBodyStyle]="col.bodyStyle"
                         [nzBordered]="col.noBorder ? false : true" [nzTitle]="col.header ? titleTmpl : false"
                         [nzExtra]="col.header ? extraTemplate : false">
@@ -22,7 +16,7 @@
                         </ng-template>
 
                         <ng-template #extraTemplate>
-                            <ng-container cnComponentResolverDirective *ngIf="col.header.toolbar"
+                            <ng-container smtComponentResolverDirective *ngIf="col.header.toolbar"
                                 [config]="col.header.toolbar" [tempData]="tempData" [initData]="initData"
                                 [dataServe]="dataServe">
                             </ng-container>
@@ -42,7 +36,7 @@
                     </ng-container>
                     <!-- </nz-card> -->
 
-                    <nz-card *ngSwitchDefault style="height:150px;">
+                    <nz-card *ngSwitchDefault [nzBodyStyle]="col.bodyStyle ? col.bodyStyle : {height:'300px'}">
                         <!-- <ng-container  SmtDynamicLayoutResolverDirective [config]="col.children"
                             [tempData]="tempData" [initData]="initData">
                         </ng-container> -->

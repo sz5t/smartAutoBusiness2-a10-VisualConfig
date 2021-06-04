@@ -178,7 +178,7 @@ export class ButtonOperationResolver {
         break;
       // 操作触发
       case BSN_TRIGGER_TYPE.OPERATION:
-        debugger;
+        // debugger;
         // 获取ajax操作配置
         // 获取条件状配置
         // 获取前置条件配置
@@ -297,7 +297,7 @@ export class ButtonOperationResolver {
     }
   }
 
-  private setTogglePropertyValue() {}
+  private setTogglePropertyValue() { }
 
   private findAjaxConfig(ajaxId) {
     const ApprovalAjax: any = this.componentService.cacheService.getNone('ApprovalInitiateAjax')

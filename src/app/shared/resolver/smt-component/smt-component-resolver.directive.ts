@@ -48,12 +48,18 @@ import { SmtLayoutComponent } from '../../components/smt-layout/smt-layout/smt-l
 import { SmtPageComponent } from '../../components/smt-layout/smt-page/smt-page.component';
 import { SmtDataTable } from './smt-table';
 import { SmtDataTableComponent } from '../../smt-components/smt-data-table/smt-data-table.component';
+import { SmtTabsComponent } from '../../smt-components/smt-tabs/smt-tabs.component';
+import { SmtTabs } from './smt-tabs';
+import { SmtToolbar } from './smt-toolbar';
+import { SmtToolbarComponent } from '../../smt-components/smt-toolbar/smt-toolbar.component';
+import { SmtTreeTableComponent } from '../../smt-components/smt-tree-table/smt-tree-table.component';
 const components: { [type: string]: Type<any> } = {
   cnDataTable: SmtDataTableComponent,
-  cnToolbar: CnToolbarComponent,
+  tabs: SmtTabsComponent,
+  cnToolbar: SmtToolbarComponent,
+  cnTreeTable: SmtTreeTableComponent,
   form: CnDataFormComponent,
   cnTree: CnTreeComponent,
-  cnTreeTable: CnTreeTableComponent,
   cnDescription: CnDescriptionsComponent,
   cnSteps: CnStepsComponent,
   cnStatistic: CnStatisticComponent,
@@ -145,10 +151,12 @@ export class SmtComponentResolverDirective implements OnInit, OnDestroy {
   private assembleCmptConfig() {
     this.config;
     this.originData;
-    const componentType = this.config.container
+    const componentType = this.config.container === 'component' ? this.config.type : this.config.container
     const componentConfig = this.generateCmptConfig(componentType);
     // console.log('componentConfig', componentConfig);
-    this.resolve(componentConfig);
+    if (componentConfig) {
+      this.resolve(componentConfig);
+    }
   }
 
   private generateCmptConfig(cmptType) {
@@ -156,6 +164,15 @@ export class SmtComponentResolverDirective implements OnInit, OnDestroy {
     switch (cmptType) {
       case 'cnDataTable':
         cmptConfig = this.getDataTableConfig();
+        break;
+      case 'tabs':
+        cmptConfig = this.getTabsConfig();
+        break;
+      case 'cnToolbar':
+        cmptConfig = this.getToolbarConfig();
+        break;
+      case 'cnRowToolbar':
+        cmptConfig = this.getRowToolbarConfig();
         break;
     }
     return cmptConfig;
@@ -181,12 +198,44 @@ export class SmtComponentResolverDirective implements OnInit, OnDestroy {
     config.pageSizeOptions = configData['pageSizeOptions'] ? configData['pageSizeOptions'] : [];
     config.scroll = configData['scroll'] ? configData['scroll'] : {};
     config.columns = configData['columns'] ? configData['columns'] : [];
+    config.children = this.config['children'] ? this.config['children'] : [];
+    return config;
+  }
+
+  private getTabsConfig() {
+    const configData = this.originData[this.config.id]
+    const config = new SmtTabs();
+    config.id = configData['id'];
+    config.title = configData['title'];
+    config.children = this.config['children'] ? this.config['children'] : [];
+    config.originData = this.originData;
+    return config;
+  }
+
+  private getToolbarConfig() {
+    let configData;
+    if (this.originData) {
+      configData = this.originData[this.config.id];
+    }
+    const config = new SmtToolbar();
+    config.id = configData ? configData['id'] : this.config['id'];
+    config.title = configData ? configData['title'] : this.config['title'];
+    config.children = this.config['children'] ? this.config['children'] : [];
+    config.originData = this.originData;
+    return config;
+  }
+
+  private getRowToolbarConfig() {
+    const config = new SmtToolbar();
+    config.id = this.config['id'];
+    config.title = this.config['title'];
+    config.children = this.config['children'] ? this.config['children'] : [];
+    config.originData = null;
     return config;
   }
 
   private _buildComponent(componentObj) {
     const comp = this._resolver.resolveComponentFactory<any>(components[componentObj.component]);
-
     this._componentRef = this._container.createComponent(comp);
     this._componentRef.instance.config = componentObj;
     const _initValue_new = { ...this.initData };

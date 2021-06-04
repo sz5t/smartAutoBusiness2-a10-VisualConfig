@@ -18,10 +18,16 @@
                   "backName": "title",
                   "backConfig": [
                     {
+                      "name": "id"
+                    },
+                    {
                       "name": "title"
                     },
                     {
                       "name": "type"
+                    },
+                    {
+                      "name": "eventConent"
                     }
                   ],
                   "properties": [

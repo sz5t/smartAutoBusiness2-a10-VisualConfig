@@ -18,10 +18,19 @@
                   "backName": "title",
                   "backConfig": [
                     {
+                      "name": "id"
+                    },
+                    {
                       "name": "title"
                     },
                     {
+                      "name": "icon"
+                    },
+                    {
                       "name": "type"
+                    },
+                    {
+                      "name": "eventConent"
                     }
                   ],
                   "properties": [
@@ -47,7 +56,17 @@
                       "formName": "formControlName",
                       "validations": [],
                       "title": "标题"
+                    },
+                    {
+                      "name": "icon",
+                      "type": "input",
+                      "componentConfig": {
   
+                      },
+                      "formType": "value",
+                      "formName": "formControlName",
+                      "validations": [],
+                      "title": "图标"
                     },
                     {
                       "name": "type",

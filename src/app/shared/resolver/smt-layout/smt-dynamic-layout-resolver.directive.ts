@@ -4,7 +4,7 @@ import { Subject, Subscription } from 'rxjs';
 import { CN_LAYOUT_DIRECTIVE_RESOLVER_METHOD } from 'src/app/core/relations/bsn-methods/layout-directive-resolver-methods';
 import { BSN_COMPONENT_SERVICES } from 'src/app/core/relations/bsn-relatives';
 import { ComponentServiceProvider } from 'src/app/core/services/components/component.service';
-import { configFormDataServerService } from 'src/app/core/services/config/form-data.service';
+import { pageServerService } from 'src/app/core/services/page/page.service';
 import { CnComponentBase } from '../../components/cn-component.base';
 import { CnCustomLayoutComponent } from '../../components/layout/cn-custom-layout.component';
 import { CnDynamicLayoutComponent } from '../../components/layout/cn-dynamic-layout.component';
@@ -12,6 +12,7 @@ import { CnDynamicLayoutComponent } from '../../components/layout/cn-dynamic-lay
 // import { CnPageHeaderComponent } from '../../components/layout/cn-page-header.component';
 import { CnTabsComponent } from '../../components/layout/cn-tabs.component';
 import { SmtLayoutComponent } from '../../components/smt-layout/smt-layout/smt-layout.component';
+import { SmtTabsComponent } from '../../smt-components/smt-tabs/smt-tabs.component';
 import { RelationResolver } from '../relation/relation.resolver';
 import { LayoutBase, LayoutSize } from './layout.base';
 import { LayoutColumn } from './layout.column';
@@ -22,7 +23,7 @@ import { LayoutTabs } from './layout.tabs';
 @Directive({
     // tslint:disable-next-line: directive-selector
     selector: ' [SmtDynamicLayoutResolverDirective]',
-    providers: [configFormDataServerService]
+    providers: [pageServerService]
 })
 export class SmtDynamicLayoutResolverDirective extends CnComponentBase implements OnInit, OnDestroy {
     /**
@@ -56,7 +57,7 @@ export class SmtDynamicLayoutResolverDirective extends CnComponentBase implement
     constructor(
         private _resolver: ComponentFactoryResolver,
         private _container: ViewContainerRef,
-        private fromDataService: configFormDataServerService,
+        private pageService: pageServerService,
         @Inject(BSN_COMPONENT_SERVICES)
         public componentService: ComponentServiceProvider,
     ) {
@@ -110,9 +111,9 @@ export class SmtDynamicLayoutResolverDirective extends CnComponentBase implement
                 case 'col':
                     this.buildLayout(configObj);
                     break;
-                case 'tabs':
-                    this.buildTabsLayout(configObj);
-                    break;
+                // case 'tabs':
+                //     this.buildTabsLayout(configObj);
+                //     break;
                 // case 'pageHeader':
                 //   this.buildPageHeader(configObj);
                 //   break;
@@ -204,7 +205,7 @@ export class SmtDynamicLayoutResolverDirective extends CnComponentBase implement
         if (this.initValue) {
             this._layoutObj.instance.initData = this.initData;
         }
-        this._layoutObj.instance.dataServe = this.dataServe ? this.dataServe : this.fromDataService;
+        this._layoutObj.instance.dataServe = this.dataServe ? this.dataServe : this.pageService;
     }
 
     private buildLayoutRows(layoutObj: any) {
@@ -219,23 +220,23 @@ export class SmtDynamicLayoutResolverDirective extends CnComponentBase implement
         if (this.initValue) {
             this._rowsObj.instance.initData = this.initData;
         }
-        this._rowsObj.instance.dataServe = this.dataServe ? this.dataServe : this.fromDataService;
+        this._rowsObj.instance.dataServe = this.dataServe ? this.dataServe : this.pageService;
     }
 
-    private buildTabsLayout(tabsObj: any) {
-        // console.log('tabsObj Receive message --', this.initData, this.tempData);
-        const cmpt = this._resolver.resolveComponentFactory<any>(CnTabsComponent);
-        this._container.clear();
-        this._tabObj = this._container.createComponent(cmpt);
-        this._tabObj.instance.tabsObj = tabsObj;
-        if (this.tempValue) {
-            this._tabObj.instance.tempData = this.tempData;
-        }
-        if (this.initValue) {
-            this._tabObj.instance.initData = this.initData;
-        }
-        this._tabObj.instance.dataServe = this.dataServe ? this.dataServe : this.fromDataService;
-    }
+    // private buildTabsLayout(tabsObj: any) {
+    //     // console.log('tabsObj Receive message --', this.initData, this.tempData);
+    //     const cmpt = this._resolver.resolveComponentFactory<any>(SmtTabsComponent);
+    //     this._container.clear();
+    //     this._tabObj = this._container.createComponent(cmpt);
+    //     this._tabObj.instance.tabsObj = tabsObj;
+    //     if (this.tempValue) {
+    //         this._tabObj.instance.tempData = this.tempData;
+    //     }
+    //     if (this.initValue) {
+    //         this._tabObj.instance.initData = this.initData;
+    //     }
+    //     this._tabObj.instance.dataServe = this.dataServe ? this.dataServe : this.pageService;
+    // }
 
     // private buildCustomerLayout(customLayoutObj: any) {
     //     // console.log('customLayoutObj Receive message --', this.initValue, this.tempValue);
@@ -267,8 +268,8 @@ export class SmtDynamicLayoutResolverDirective extends CnComponentBase implement
                 return this.buildLayoutObj(layoutMapping, componentMapping);
             // case 'customLayout':
             //     return this.buildCustomerObj(cfg);
-            case 'tabs':
-                return this.buildTabsObj(layoutMapping);
+            // case 'tab':
+            //     return this.buildTabsObj(layoutMapping);
             //   case 'pageHeader':
             //     return this.buildPageHeaderObj(cfg.pageHeader);
             case 'layout':
@@ -316,11 +317,11 @@ export class SmtDynamicLayoutResolverDirective extends CnComponentBase implement
         newLayout.layoutStructure = cfg;
         newLayout.type = cfg.type;
         newLayout.rows = [];
-        if (Array.isArray(cfg.children) && cfg.children.length > 0) {
+        if (Array.isArray(cfg.children)) {
             for (const row of cfg.children) {
                 const newRow = new LayoutRow(row.id, row.type, row.title, cfg.children.find(e => e.id === row.id));
                 newRow.cols = [];
-                if (Array.isArray(row.children) && row.children.length > 0) {
+                if (Array.isArray(row.children)) {
                     for (const c of row.children) {
                         const data = newLayout.originData[c.id];
                         const newCol = new LayoutColumn();
@@ -328,11 +329,27 @@ export class SmtDynamicLayoutResolverDirective extends CnComponentBase implement
                         newCol.type = data.type;
                         newCol.title = data.title;
                         newCol.noBorder = data.noBorder ? true : false;
-                        newCol.bodyStyle = data.bodyStyle ? c.bodyStyle : { height: '150px' };
+                        newCol.bodyStyle = data.bodyStyle ? c.bodyStyle : { height: '300px' };
                         newCol.size = new LayoutSize(data.size);
                         newCol.span = data.span;
                         newCol.container = c.container;
-                        newCol.layoutStructure = row['children'].find(e => e.id === c.id)
+                        if (c.container === 'component') {
+                            newCol['header'] = {};
+                            if (c['children'].length > 0) {
+                                c['children'].map(e => {
+                                    newCol['header']['title'] = e.title;
+                                    newCol['header']['toolbar'] = {};
+                                    if (e['children'].length > 0) {
+                                        e['children'].map(h => {
+                                            if (h['container'] === 'cnToolbar') {
+                                                newCol['header']['toolbar'] = h;
+                                            }
+                                        })
+                                    }
+                                })
+                            }
+                        }
+                        newCol.layoutStructure = row['children'].find(e => e.id === c.id);
                         // this.setContainer(newCol, c);
                         newRow.add(newCol);
                     }
@@ -396,30 +413,30 @@ export class SmtDynamicLayoutResolverDirective extends CnComponentBase implement
     //     return newLayout;
     // }
 
-    private buildTabsObj(cfg): any {
-        const newTabs = new LayoutTabs();
-        newTabs.tabType = cfg.tabType;
-        newTabs.tabPosition = cfg.tabPosition;
-        newTabs.container = cfg.container;
-        newTabs.tabContent = cfg.tabContent;
-        newTabs.tabActiveMapping = cfg.tabActiveMapping;
-        // if (Array.isArray(cfg.container) && cfg.container.length > 0) {
-        //     for (const tab of cfg.container) {
-        //         const newTab = new LayoutTab();
-        //         newTab.active = tab.active;
-        //         newTab.id = tab.id;
-        //         newTab.title = tab.title;
-        //         newTab.type = tab.type;
-        //         newTab.container = tab.container;
-        //         if(tab.tabContent) {
-        //             newTab.tabContent = tab.tabContent;
-        //         }
-        //         newTab.layout = this.resolver(tab.layout);
-        //         newTabs.add(newTab);
-        //     }
-        // }
-        return newTabs;
-    }
+    // private buildTabsObj(cfg): any {
+    //     const newTabs = new LayoutTabs();
+    //     newTabs.tabType = cfg.tabType;
+    //     newTabs.tabPosition = cfg.tabPosition;
+    //     newTabs.container = cfg.container;
+    //     newTabs.tabContent = cfg.tabContent;
+    //     newTabs.tabActiveMapping = cfg.tabActiveMapping;
+    //     // if (Array.isArray(cfg.container) && cfg.container.length > 0) {
+    //     //     for (const tab of cfg.container) {
+    //     //         const newTab = new LayoutTab();
+    //     //         newTab.active = tab.active;
+    //     //         newTab.id = tab.id;
+    //     //         newTab.title = tab.title;
+    //     //         newTab.type = tab.type;
+    //     //         newTab.container = tab.container;
+    //     //         if(tab.tabContent) {
+    //     //             newTab.tabContent = tab.tabContent;
+    //     //         }
+    //     //         newTab.layout = this.resolver(tab.layout);
+    //     //         newTabs.add(newTab);
+    //     //     }
+    //     // }
+    //     return newTabs;
+    // }
 
     //   private buildPageHeaderObj(cfg): any {
     //     const newPageHeader = new LayoutPageHeader();

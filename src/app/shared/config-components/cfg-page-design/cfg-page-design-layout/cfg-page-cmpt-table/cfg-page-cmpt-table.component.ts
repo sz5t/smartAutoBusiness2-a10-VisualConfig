@@ -87,7 +87,7 @@ export class CfgPageCmptTableComponent implements OnInit {
    * @param columns
    */
   private _buildColumns(columns) {
-    debugger;
+    // debugger;
     if (Array.isArray(columns) && columns.length > 0) {
       const colIndex = columns.filter((item) => item.type === 'index');
       const colObjs = columns.filter((item) => item.type === 'field');

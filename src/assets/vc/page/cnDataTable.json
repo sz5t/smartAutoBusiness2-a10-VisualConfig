@@ -16,10 +16,37 @@
                             "backName": "title",
                             "backConfig": [
                                 {
+                                    "name": "id"
+                                },
+                                {
                                     "name": "title"
                                 },
                                 {
                                     "name": "showTitle"
+                                },
+                                {
+                                    "name": "keyId"
+                                },
+                                {
+                                    "name": "size"
+                                },
+                                {
+                                    "name": "isBordered"
+                                },
+                                {
+                                    "name": "isFrontPagination"
+                                },
+                                {
+                                    "name": "isPagination"
+                                },
+                                {
+                                    "name": "showTotal"
+                                },
+                                {
+                                    "name": "pageSize"
+                                },
+                                {
+                                    "name": "showCheckBox"
                                 }
                             ],
                             "properties": [

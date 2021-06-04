@@ -1,1 +1,197 @@
-<p>smt-data-table works!</p>
+<nz-table #dataTable [nzData]="dataList"
+    [nzShowSizeChanger]="config.isShowSizeChanger ? config.isShowSizeChanger : true" [nzLoadingDelay]="300"
+    [nzFrontPagination]="config.isFrontPagination ? config.isFrontPagination : false"
+    [nzShowPagination]="config.isPagination ? config.isPagination : true" [nzTotal]="total" [(nzPageIndex)]="pageIndex"
+    [(nzPageSize)]="pageSize" (nzPageIndexChange)="searchData()" (nzPageSizeChange)="searchData(true)"
+    [nzPageSizeOptions]="config.pageSizeOptions ? config.pageSizeOptions : []" [nzShowTotal]="showTotal"
+    [nzBordered]="config.isBordered ? config.isBordered : false" [nzSize]="config.size ? config.size: 'default'"
+    [nzScroll]="config.scroll ? config.scroll : null">
+    <thead>
+        <tr>
+            <th [nzWidth]="(config.showCheckBoxConfig && config.showCheckBoxConfig.hasOwnProperty('width'))?config.showCheckBoxConfig['width']:'50px'"
+                [nzLeft]="(config.showCheckBoxConfig && config.showCheckBoxConfig.hasOwnProperty('offsetLeft'))?config.showCheckBoxConfig.offsetLeft:false"
+                *ngIf="config.showCheckBox" [nzShowCheckbox]="config.showCheckBox" [(nzChecked)]="isAllChecked"
+                [nzIndeterminate]="indeterminate" (nzCheckedChange)="checkAll($event)"></th>
+            <ng-template ngFor let-col [ngForOf]="config.columns">
+                <th>
+                    {{ col.title }}
+                </th>
+            </ng-template>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let rowData of dataTable.data" (click)="setSelectRow(rowData, $event)"
+            [ngClass]="{ selectedRow: mapOfDataState[rowData[KEY_ID]] ? mapOfDataState[rowData[KEY_ID]]['selected'] : true, validationError: !mapOfDataState[rowData[KEY_ID]]['validation']}"
+            [ngStyle]="mapOfDataState[rowData[KEY_ID]] ? mapOfDataState[rowData[KEY_ID]]['style']:null">
+            <td *ngIf="config.showCheckBox" [nzShowCheckbox]="config.showCheckBox"
+                [nzLeft]="(config.showCheckBoxConfig && config.showCheckBoxConfig.hasOwnProperty('offsetLeft'))?true:false"
+                [(nzChecked)]="mapOfDataState[rowData[KEY_ID]]['checked']"
+                (nzCheckedChange)="dataCheckedStatusChange()"></td>
+            <ng-template ngFor let-col [ngForOf]="tableColumns">
+                <ng-container [ngSwitch]="col.type" *ngIf="!col.hidden">
+                    <ng-container *ngSwitchCase="'index'">
+                        <td [nzAlign]="col.align?col.align:'left'"
+                            [nzLeft]="col.hasOwnProperty('offsetLeft')?true:false"
+                            [nzRight]="col.hasOwnProperty('offsetRight')?true:false">
+                            {{ mapOfDataState[rowData[KEY_ID]]['originData'][col.field] }}
+                        </td>
+                    </ng-container>
+
+                    <ng-container *ngSwitchCase="'field'">
+                        <ng-container [ngSwitch]="mapOfDataState[rowData[KEY_ID]]['state']">
+                            <ng-container *ngIf="col.editor">
+                                <ng-container *ngSwitchCase="'new'">
+                                    <td nzBreakWord [nzAlign]="col.align?col.align:'left'"
+                                        [nzLeft]="col.hasOwnProperty('offsetLeft')?col.offsetLeft:false"
+                                        [nzRight]="col.hasOwnProperty('offsetRight')?col.offsetRight:false"
+                                        [attr.rowspan]="mapOfDataState[rowData[KEY_ID]]['mergeData'][col.field]?(mapOfDataState[rowData[KEY_ID]]['mergeData'][col.field].groupIndex===1 ? mapOfDataState[rowData[KEY_ID]]['mergeData'][col.field]['groupNum'] : 1):1"
+                                        [attr.colspan]="mapOfDataState[rowData[KEY_ID]]['mergeData'][col.field]?(mapOfDataState[rowData[KEY_ID]]['mergeData'][col.field]['colgroupIndex']===1 ? mapOfDataState[rowData[KEY_ID]]['mergeData'][col.field]['colgroupNum'] : 1):1"
+                                        *ngIf="!mapOfDataState[rowData[KEY_ID]]['mergeData'][col.field] || ( mapOfDataState[rowData[KEY_ID]]['mergeData'][col.field]['groupIndex'] === 1 && mapOfDataState[rowData[KEY_ID]]['mergeData'][col.field]['colgroupIndex'] === 1 )">
+                                        <!-- <ng-container CnGridItemDirective [state]="'new'" *ngIf="col.editor ; else t1"
+                                            [config]="col.editor" [rowData]="mapOfDataState[rowData[KEY_ID]]['data']"
+                                            [initData]="initData" [tempData]="tempData"
+                                            [valueConfig]="{'id':rowData[KEY_ID],'value':mapOfDataState[rowData[KEY_ID]]['data'][col.editor.field]}"
+                                            (updateValue)="valueChange($event)"
+                                            [formCascade]="formCascade[rowData[KEY_ID]]?formCascade[rowData[KEY_ID]][col.editor.field]:null">
+                                        </ng-container> -->
+                                        <ng-template #t1>
+                                            <ng-container [ngSwitch]="mapOfDataState[rowData[KEY_ID]]['state']">
+                                                <ng-container *ngSwitchCase="'new'">
+                                                    {{ mapOfDataState[rowData[KEY_ID]]['data'][col.field] }}
+                                                </ng-container>
+                                                <ng-container *ngSwitchCase="'edit'">
+                                                    {{ mapOfDataState[rowData[KEY_ID]]['data'][col.field] }}
+                                                </ng-container>
+                                                <ng-container *ngSwitchDefault>
+                                                    {{ mapOfDataState[rowData[KEY_ID]]['originData'][col.field] }}
+                                                </ng-container>
+                                            </ng-container>
+                                        </ng-template>
+                                    </td>
+                                </ng-container>
+
+                                <ng-container *ngSwitchCase="'edit'">
+                                    <td nzBreakWord [nzAlign]="col.align?col.align:'left'"
+                                        [nzLeft]="col.hasOwnProperty('offsetLeft')?col.offsetLeft:false"
+                                        [nzRight]="col.hasOwnProperty('offsetRight')?col.offsetRight:false"
+                                        [attr.rowspan]="mapOfDataState[rowData[KEY_ID]]['mergeData'][col.field]?(mapOfDataState[rowData[KEY_ID]]['mergeData'][col.field].groupIndex===1 ? mapOfDataState[rowData[KEY_ID]]['mergeData'][col.field]['groupNum'] : 1):1"
+                                        [attr.colspan]="mapOfDataState[rowData[KEY_ID]]['mergeData'][col.field]?(mapOfDataState[rowData[KEY_ID]]['mergeData'][col.field]['colgroupIndex']===1 ? mapOfDataState[rowData[KEY_ID]]['mergeData'][col.field]['colgroupNum'] : 1):1"
+                                        *ngIf="!mapOfDataState[rowData[KEY_ID]]['mergeData'][col.field] || ( mapOfDataState[rowData[KEY_ID]]['mergeData'][col.field]['groupIndex'] === 1 && mapOfDataState[rowData[KEY_ID]]['mergeData'][col.field]['colgroupIndex'] === 1 )">
+
+                                        <!-- <ng-container CnGridItemDirective [state]="'edit'" *ngIf="col.editor ; else t2"
+                                            [config]="col.editor" [rowData]="mapOfDataState[rowData[KEY_ID]]['data']"
+                                            [initData]="initData" [tempData]="tempData"
+                                            [valueConfig]="{'id':rowData[KEY_ID],'value':mapOfDataState[rowData[KEY_ID]]['data'][col.editor.field]}"
+                                            (updateValue)="valueChange($event)"
+                                            [formCascade]="formCascade[rowData[KEY_ID]]?formCascade[rowData[KEY_ID]][col.editor.field]:null">
+                                        </ng-container> -->
+                                        <ng-template #t2>
+                                            <ng-container [ngSwitch]="mapOfDataState[rowData[KEY_ID]]['state']">
+                                                <ng-container *ngSwitchCase="'new'">
+                                                    {{ mapOfDataState[rowData[KEY_ID]]['data'][col.field] }}
+                                                </ng-container>
+                                                <ng-container *ngSwitchCase="'edit'">
+                                                    {{ mapOfDataState[rowData[KEY_ID]]['data'][col.field] }}
+                                                </ng-container>
+                                                <ng-container *ngSwitchDefault>
+                                                    {{ mapOfDataState[rowData[KEY_ID]]['originData'][col.field] }}
+                                                </ng-container>
+                                            </ng-container>
+                                        </ng-template>
+                                    </td>
+                                </ng-container>
+
+                                <ng-container *ngSwitchDefault>
+                                    <td [nzAlign]="col.align?col.align:'left'"
+                                        [nzLeft]="col.hasOwnProperty('offsetLeft')?col.offsetLeft:false"
+                                        [nzRight]="col.hasOwnProperty('offsetRight')?col.offsetRight:false" nzBreakWord
+                                        [attr.rowspan]="mapOfDataState[rowData[KEY_ID]]['mergeData'][col.field]?(mapOfDataState[rowData[KEY_ID]]['mergeData'][col.field].groupIndex===1 ? mapOfDataState[rowData[KEY_ID]]['mergeData'][col.field]['groupNum'] : 1):1"
+                                        [attr.colspan]="mapOfDataState[rowData[KEY_ID]]['mergeData'][col.field]?(mapOfDataState[rowData[KEY_ID]]['mergeData'][col.field]['colgroupIndex']===1 ? mapOfDataState[rowData[KEY_ID]]['mergeData'][col.field]['colgroupNum'] : 1):1"
+                                        *ngIf="!mapOfDataState[rowData[KEY_ID]]['mergeData'][col.field] || ( mapOfDataState[rowData[KEY_ID]]['mergeData'][col.field]['groupIndex'] === 1 && mapOfDataState[rowData[KEY_ID]]['mergeData'][col.field]['colgroupIndex'] === 1 )">
+
+                                        <!-- <ng-container CnGridItemDirective *ngIf="col.custom; else innerText"
+                                            [state]="'edit'" [config]="col.custom"
+                                            [rowData]="mapOfDataState[rowData[KEY_ID]]['data']" [initData]="initData"
+                                            [tempData]="tempData"
+                                            [valueConfig]="{'id':rowData[KEY_ID],'value':mapOfDataState[rowData[KEY_ID]]['data']}"
+                                            (updateValue)="valueChange($event)"
+                                            [formCascade]="formCascade[rowData[KEY_ID]]?formCascade[rowData[KEY_ID]][col.custom.field]:null">
+                                        </ng-container> -->
+                                        <ng-template #innerText>{{
+                                            mapOfDataState[rowData[KEY_ID]]['originData'][col.field]
+                                            }}
+                                        </ng-template>
+                                    </td>
+                                </ng-container>
+
+                            </ng-container>
+                            <ng-container *ngIf="!col.editor">
+                                <td nzBreakWord [nzAlign]="col.align?col.align:'left'"
+                                    [nzLeft]="col.hasOwnProperty('offsetLeft')?col.offsetLeft:false"
+                                    [nzRight]="col.hasOwnProperty('offsetRight')?col.offsetRight:false">
+                                    <!-- <ng-container CnGridItemDirective *ngIf="col.custom; else t3" [state]="'edit'"
+                                        [config]="col.custom" [rowData]="mapOfDataState[rowData[KEY_ID]]['data']"
+                                        [initData]="initData" [tempData]="tempData"
+                                        [valueConfig]="{'id':rowData[KEY_ID],'value':mapOfDataState[rowData[KEY_ID]]['data']}"
+                                        (updateValue)="valueChange($event)"
+                                        [formCascade]="formCascade[rowData[KEY_ID]]?formCascade[rowData[KEY_ID]][col.custom.field]:null">
+                                    </ng-container> -->
+                                    <!-- <ng-template #t3> -->
+                                    <ng-container [ngSwitch]="mapOfDataState[rowData[KEY_ID]]['state']">
+                                        <ng-container *ngSwitchCase="'new'">
+                                            {{ mapOfDataState[rowData[KEY_ID]]['data'][col.field] }}
+                                        </ng-container>
+                                        <ng-container *ngSwitchCase="'edit'">
+                                            {{ mapOfDataState[rowData[KEY_ID]]['data'][col.field] }}
+                                        </ng-container>
+                                        <ng-container *ngSwitchDefault>
+                                            {{ mapOfDataState[rowData[KEY_ID]]['originData'][col.field] }}
+                                        </ng-container>
+                                    </ng-container>
+                                    <!-- </ng-template> -->
+                                </td>
+
+                            </ng-container>
+
+                        </ng-container>
+                        <!-- <ng-container *ngIf="mapOfDataState[rowData[KEY_ID]]['state'] === 'edit'; else rowTextTemplate">
+                    <td><input type="text" nz-input [(ngModel)]="mapOfDataState[rowData[KEY_ID]]['data'][col.field]" /></td>
+                  </ng-container>
+                  <ng-template #rowTextTemplate>
+                    <td>{{ rowData[col.field] }}</td>
+                  </ng-template> -->
+                    </ng-container>
+
+                    <ng-container *ngSwitchCase="'action'">
+                        <td>
+                            <ng-container *ngIf="col['children'].length>0">
+                                <ng-container *ngFor="let child of col['children']">
+                                    <ng-container smtComponentResolverDirective [config]="child"
+                                        [dataServe]="dataServe">
+                                    </ng-container>
+                                </ng-container>
+                            </ng-container>
+                        </td>
+                    </ng-container>
+                </ng-container>
+            </ng-template>
+        </tr>
+    </tbody>
+
+    <tfoot>
+        <ng-template #showTotal style="text-align: left">
+            <span>
+                已选中
+                <span class="count" nz-text>
+                    <code>{{ checkedNumber }}</code>
+                </span>
+                条记录
+            </span>
+            共
+            <span class="count" nz-text>
+                <code>{{ total }}</code>
+            </span>
+            条记录
+        </ng-template>
+    </tfoot>
+</nz-table>

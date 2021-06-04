@@ -216,6 +216,9 @@ import { SmtDataTableComponent } from './smt-components/smt-data-table/smt-data-
 import { CnStaticFormPopSelectParameterComponent } from './components/cn-static-form/cn-static-form-item/cn-static-form-pop-select-parameter/cn-static-form-pop-select-parameter.component';
 import { CnStaticFormTreeObjectComponent } from './components/cn-static-form/cn-static-form-cmpt/cn-static-form-tree-object/cn-static-form-tree-object.component';
 import { CnStaticFormChildArrayComponent } from './components/cn-static-form/cn-static-form-item/cn-static-form-child-array/cn-static-form-child-array.component';
+import { SmtTabsComponent } from './smt-components/smt-tabs/smt-tabs.component';
+import { SmtToolbarComponent } from './smt-components/smt-toolbar/smt-toolbar.component';
+import { SmtTreeTableComponent } from './smt-components/smt-tree-table/smt-tree-table.component';
 
 
 // #region third libs
@@ -435,8 +438,11 @@ const COMPONENTS = [
   // 解析布局组件
   SmtPageComponent,
   SmtLayoutComponent,
+  SmtTabsComponent,
   // 可视化生成配置解析出的组件
   SmtDataTableComponent,
+  SmtToolbarComponent,
+  SmtTreeTableComponent,
 ];
 const DIRECTIVES = [
   CnLayoutResolverDirective,
