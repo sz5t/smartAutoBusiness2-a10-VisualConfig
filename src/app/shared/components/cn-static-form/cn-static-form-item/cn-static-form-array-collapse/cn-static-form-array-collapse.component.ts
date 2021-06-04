@@ -1,19 +1,32 @@
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { configFormDataServerService } from 'src/app/core/services/config/form-data.service';
+import { CommonUtils } from 'src/app/core/utils/common-utils';
 import { CustomValidator } from '../../../data-form/form-validator/CustomValidator';
 
 @Component({
   selector: 'app-cn-static-form-array-collapse',
   templateUrl: './cn-static-form-array-collapse.component.html',
   styles: [
+    `
+    .ant-card-type-inner .ant-card-body {
+      padding: 2px 2px;
+    }
+    `
   ]
 })
 export class CnStaticFormArrayCollapseComponent implements OnInit {
   @Input() validateForm: FormGroup;
   @Input() validateFormArray: FormArray;
   @Input() config;
+  @Input() globalConfig;
+  @Input() public fromDataService;
   @Output() public updateValue = new EventEmitter<any>(true);
   constructor(private fb: FormBuilder) { }
+
+  staticDefaultValueConfig: any = [
+
+  ]
 
   size = {
     "sapn": 24,
@@ -31,6 +44,11 @@ export class CnStaticFormArrayCollapseComponent implements OnInit {
       this.size = this.config.componentConfig['size'];
       this.span = this.size['sapn'];
     }
+    if (this.config.componentConfig && this.config.componentConfig['staticDefaultValueConfig']) {
+      this.staticDefaultValueConfig = this.config.componentConfig['staticDefaultValueConfig'];
+    }
+
+
     // console.log('array-card===>>>', this.config, this.size, this.span)
   }
 
@@ -43,8 +61,12 @@ export class CnStaticFormArrayCollapseComponent implements OnInit {
   }
 
   add() {
+    let _data = {};
+    if (this.staticDefaultValueConfig) {
+      _data = this.getStaticDefaultValue(this.staticDefaultValueConfig);
+    }
 
-    this.validateFormArray.push(this.set_formGroupControlName({}, this.config));
+    this.validateFormArray.push(this.set_formGroupControlName(_data, this.config));
     // this.validateFormArray.push(this.creatRow());
     this.validateFormArray.controls.forEach(item => {
       item.markAsPristine();
@@ -58,6 +80,76 @@ export class CnStaticFormArrayCollapseComponent implements OnInit {
 
     // console.log('', this.validateForm)
 
+
+  }
+
+  getobjectTitle(i?) {
+
+    let showValue;
+    let _validateFormArray1 = this.validateFormArray.controls[i] as FormGroup;
+    let d = _validateFormArray1.value;
+    if (d) {
+      if (this.config.componentConfig['showConfig']) {
+        let _valueStrConfig = this.config.componentConfig['showConfig']['showString'];
+        showValue = this.getStringByshow(d, _valueStrConfig);
+      }
+    }
+    if (!showValue) {
+      showValue = this.config['title'] + (i + 1);
+    }
+    return showValue;;
+  }
+
+
+  getStringByshow(_value, _config) {
+    let str: any;
+    _config.forEach(element => {
+      if (_value && _value.hasOwnProperty(element['name'])) {
+        str = _value[element['name']];
+        if (element['children'] && element['children'].length > 0) {
+          str = this.getStringByshow(str, element['children'])
+        }
+      }
+
+    });
+
+    return str;
+
+  }
+
+  getStaticDefaultValue(defaultValueConfig) {
+    let objValue = {};
+    defaultValueConfig.forEach(element => {
+
+      objValue[element['name']] = this.getDefaultValue(element);
+    });
+    return objValue;
+
+
+  }
+
+  getDefaultValue(option) {
+    let value = null;
+    switch (option['type']) {
+      case 'value':
+        value = option['value'];
+        break;
+      case 'componentValue':
+        value = this.validateForm.value[option['valueName']];
+        break;
+      case 'GUID':
+        value = CommonUtils.uuID(36);
+        break;
+
+
+
+      // ......多种取值方式
+      default:
+        value = option['value'];
+        break;
+    }
+
+    return value;
 
   }
   //刪除组合

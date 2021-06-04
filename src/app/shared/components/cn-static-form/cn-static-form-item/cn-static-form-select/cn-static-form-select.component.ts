@@ -11,7 +11,7 @@ import { configFormDataServerService } from 'src/app/core/services/config/form-d
 export class CnStaticFormSelectComponent implements OnInit {
   @Input() validateForm: FormGroup;
   @Input() config;
-  @Input() public fromDataService: configFormDataServerService;
+  @Input() public fromDataService;
   @Output() public updateValue = new EventEmitter<any>(true);
   @Output() public cascadeValue = new EventEmitter<any>(true);
   selectValue: any;
@@ -69,11 +69,21 @@ export class CnStaticFormSelectComponent implements OnInit {
       }
     }
 
+    if (this.validateForm.controls[this.config['name']]) {
+      let d = this.validateForm.controls[this.config['name']].value;
+      if (this.config['componentConfig']['casadeValue']) {
+        this.text(d);
+      }
+    }
+
+
   }
 
   log(v?) {
     this.selectValue = v;
-    this.text(v);
+    if (this.config['componentConfig']['casadeValue']) {
+      this.text(v);
+    }
     console.log('选择中：', v);
   }
 

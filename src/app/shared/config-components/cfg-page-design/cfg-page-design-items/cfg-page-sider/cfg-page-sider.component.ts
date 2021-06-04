@@ -13,11 +13,12 @@ export class CfgPageSiderComponent implements OnInit {
   @Input() public layout_nodes: NzTreeNodeOptions[];
   @Input() public selectedItem: any;
   @Input() public fromDataService: configFormDataServerService;
+  @Input() public layoutTree = [];
   @ViewChild('nzLayoutTreeComponent', { static: false }) nzLayoutTreeComponent!: NzTreeComponent;
 
   defaultSelectedKeys = [];
   is_drag = true;
-  layoutTree = [];
+  //  layoutTree = [];
   constructor() { }
 
   ngOnInit(): void {
@@ -66,34 +67,41 @@ export class CfgPageSiderComponent implements OnInit {
       children: [
         {
           "id": "001",
-          "dropName": "form",
+          "dropName": "cnForm",
           "icon": "edit",
           "title": "表单"
         },
         {
           "id": "002",
-          "dropName": "tree",
+          "dropName": "cnTree",
           "icon": "select",
           "title": "树"
         },
         {
           "id": "003",
-          "dropName": "table",
+          "dropName": "cnTable",
           "icon": "field-time",
           "title": "表格"
         },
         {
           "id": "004",
-          "dropName": "treeTable",
+          "dropName": "cnTreeTable",
           "icon": "check-square",
           "title": "树表"
         },
         {
           "id": "005",
-          "dropName": "button",
+          "dropName": "cnToolbar",
           "icon": "check-square",
           "title": "按钮组"
+        },
+        {
+          "id": "006",
+          "dropName": "cnRowToolbar",
+          "icon": "check-square",
+          "title": "行内按钮"
         }
+
 
 
       ]
@@ -123,7 +131,6 @@ export class CfgPageSiderComponent implements OnInit {
 
     let _node = this.nzLayoutTreeComponent.getTreeNodeByKey(id);
     _node['children'].splice(index, 1);
-
   }
   clearChildrenByNode(id) {
     let _node = this.nzLayoutTreeComponent.getTreeNodeByKey(id);
@@ -134,6 +141,8 @@ export class CfgPageSiderComponent implements OnInit {
   updateNode(id?, data?) {
     let _node = this.nzLayoutTreeComponent.getTreeNodeByKey(id);
     _node['title'] = data['title'];
+    _node['origin']['title'] = data['title'];
+    _node.update();
   }
 
   public nzEvent(v?) {

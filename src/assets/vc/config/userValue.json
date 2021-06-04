@@ -1,0 +1,7 @@
+{
+    "data":[
+        { "id": "user_001", "name": "userId", "title": "用户标识", "type": "userValue", "source": "[内置]", "description": "", "dataType": "string"},
+        { "id": "user_002", "name": "userName", "title": "用户名称", "type": "userValue", "source": "[内置]", "description": "", "dataType": "string"},
+        { "id": "user_003", "name": "realName", "title": "姓名", "type": "userValue", "source": "[内置]", "description": "", "dataType": "string" }
+    ]
+}

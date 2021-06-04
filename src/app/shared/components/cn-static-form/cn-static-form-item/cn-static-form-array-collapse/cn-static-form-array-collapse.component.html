@@ -1,24 +1,37 @@
-<nz-collapse>
+<nz-collapse *ngIf="!config.componentConfig['mode'] || config.componentConfig['mode']==='collapse' ">
     <nz-collapse-panel [nzHeader]="config['title']">
 
-        <div nz-row [nzGutter]="8">
-            <div nz-col [nzSpan]="span" *ngFor="let item of validateFormArray.controls;let i = index;">
-
-
-                <nz-collapse>
-                    <nz-collapse-panel [nzHeader]="config['title']+(i+1)" [nzExtra]="delextraTemplate">
-                        <app-cn-static-form-object-empty [validateForm]="item" [config]="config">
-                        </app-cn-static-form-object-empty>
-                    </nz-collapse-panel>
-                </nz-collapse>
-                <ng-template #delextraTemplate let-i>
-                    <button nz-button nzType="primary" (click)="delItem(i,$event)">删除</button>
-                </ng-template>
-
-            </div>
-        </div>
-        <button nz-button type="button" nzType="dashed" nzBlock="true" nzSize="default" style="margin-bottom: 3px;"
-            (click)="add()"><i nz-icon nzType="plus"></i>
-            添加</button>
+        <ng-container *ngTemplateOutlet="content"></ng-container>
     </nz-collapse-panel>
 </nz-collapse>
+<div *ngIf="config.componentConfig['mode']==='empty'">
+    <ng-container *ngTemplateOutlet="content"></ng-container>
+</div>
+<nz-card nzType="inner" [nzTitle]="config['title']" *ngIf="config.componentConfig['mode']==='card'">
+    <ng-container *ngTemplateOutlet="content"></ng-container>
+</nz-card>
+
+<ng-template #content>
+    <div nz-row [nzGutter]="8">
+        <div nz-col [nzSpan]="span" *ngFor="let item of validateFormArray.controls;let i = index;">
+
+
+            <nz-collapse>
+                <nz-collapse-panel [nzHeader]="getobjectTitle(i)" [nzExtra]="delextraTemplate">
+                    <app-cn-static-form-object-empty [validateForm]="item" [config]="config"
+                        [fromDataService]="fromDataService">
+                    </app-cn-static-form-object-empty>
+                </nz-collapse-panel>
+            </nz-collapse>
+            <ng-template #delextraTemplate let-i>
+                <button nz-button nzType="primary" (click)="delItem(i,$event)">删除</button>
+            </ng-template>
+
+        </div>
+    </div>
+    <button nz-button type="button" nzType="dashed" nzBlock="true" nzSize="default" style="margin-bottom: 3px;"
+        (click)="add()"><i nz-icon nzType="plus"></i>
+        添加</button>
+
+
+</ng-template>

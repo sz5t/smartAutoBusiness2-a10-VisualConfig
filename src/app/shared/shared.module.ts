@@ -196,8 +196,32 @@ import { CnStaticFormCheckboxComponent } from './components/cn-static-form/cn-st
 import { CnStaticFormSliderComponent } from './components/cn-static-form/cn-static-form-item/cn-static-form-slider/cn-static-form-slider.component';
 import { CnStaticFormCustomSelectComponent } from './components/cn-static-form/cn-static-form-item/cn-static-form-custom-select/cn-static-form-custom-select.component';
 import { CnStaticFormAjaxComponent } from './components/cn-static-form/cn-static-form-cmpt/cn-static-form-ajax/cn-static-form-ajax.component';
+import { CfgPageCmptTreeComponent } from './config-components/cfg-page-design/cfg-page-design-layout/cfg-page-cmpt-tree/cfg-page-cmpt-tree.component';
 import { CfgPageDesignLayoutItemDirective } from './config-components/cfg-page-design/cfg-page-design-layout/cfg-page-design-layout-item.directive';
 import { CnStaticFormArrayCollapseComponent } from './components/cn-static-form/cn-static-form-item/cn-static-form-array-collapse/cn-static-form-array-collapse.component';
+import { CnStaticFormGridItemComponent } from './components/cn-static-form/cn-static-form-cmpt/cn-static-form-grid-item/cn-static-form-grid-item.component';
+import { CnStaticFormFormItemComponent } from './components/cn-static-form/cn-static-form-cmpt/cn-static-form-form-item/cn-static-form-form-item.component';
+import { CnStaticFormCustomInputSelectComponent } from './components/cn-static-form/cn-static-form-item/cn-static-form-custom-input-select/cn-static-form-custom-input-select.component';
+import { ToolAttrJsonComponent } from './tools/tool-attr-json/tool-attr-json.component';
+import { CnStaticFormLabelComponent } from './components/cn-static-form/cn-static-form-item/cn-static-form-label/cn-static-form-label.component';
+import { CnStaticFormPopFormComponent } from './components/cn-static-form/cn-static-form-item/cn-static-form-pop-form/cn-static-form-pop-form.component';
+import { CnStaticFormSwitchConentComponent } from './components/cn-static-form/cn-static-form-item/cn-static-form-switch-conent/cn-static-form-switch-conent.component';
+import { CnStaticFormStaticFormComponent } from './components/cn-static-form/cn-static-form-cmpt/cn-static-form-static-form/cn-static-form-static-form.component';
+import { SmtLayoutComponent } from './components/smt-layout/smt-layout/smt-layout.component';
+import { CnStaticFormParameterStructComponent } from './components/cn-static-form/cn-static-form-cmpt/cn-static-form-parameter-struct/cn-static-form-parameter-struct.component';
+import { SmtDynamicLayoutResolverDirective } from './resolver/smt-layout/smt-dynamic-layout-resolver.directive';
+import { SmtPageComponent } from './components/smt-layout/smt-page/smt-page.component';
+import { SmtComponentResolverDirective } from './resolver/smt-component/smt-component-resolver.directive';
+import { SmtDataTableComponent } from './smt-components/smt-data-table/smt-data-table.component';
+import { CnStaticFormPopSelectParameterComponent } from './components/cn-static-form/cn-static-form-item/cn-static-form-pop-select-parameter/cn-static-form-pop-select-parameter.component';
+import { CnStaticFormTreeObjectComponent } from './components/cn-static-form/cn-static-form-cmpt/cn-static-form-tree-object/cn-static-form-tree-object.component';
+import { CnStaticFormChildArrayComponent } from './components/cn-static-form/cn-static-form-item/cn-static-form-child-array/cn-static-form-child-array.component';
+import { SmtTabsComponent } from './smt-components/smt-tabs/smt-tabs.component';
+import { SmtToolbarComponent } from './smt-components/smt-toolbar/smt-toolbar.component';
+import { SmtTreeTableComponent } from './smt-components/smt-tree-table/smt-tree-table.component';
+import { CnStaticFormMainResourceComponent } from './components/cn-static-form/cn-static-form-cmpt/cn-static-form-main-resource/cn-static-form-main-resource.component';
+import { CnStaticFormApiComponent } from './components/cn-static-form/cn-static-form-cmpt/cn-static-form-api/cn-static-form-api.component';
+import { CnStaticFormPopApiComponent } from './components/cn-static-form/cn-static-form-item/cn-static-form-pop-api/cn-static-form-pop-api.component';
 
 
 // #region third libs
@@ -374,6 +398,7 @@ const COMPONENTS = [
   CfgPageCmptTableComponent,
   CfgPageCmptToolbarComponent,
   CfgPageCmptTabsComponent,
+  CfgPageCmptTreeComponent,
   CfgFormRowsComponent,
   CfgFormRowComponent,
   CfgFormColsComponent,
@@ -382,6 +407,7 @@ const COMPONENTS = [
   CfgPropertyTypeComponent,
   CfgPropertyFormComponent,
   CfgPropertyConentComponent,
+  ToolAttrJsonComponent,
 
   //--静态表单--
   CnStaticFormComponent,
@@ -399,8 +425,30 @@ const COMPONENTS = [
   CnStaticFormSliderComponent,
   CnStaticFormCustomSelectComponent,
   CnStaticFormArrayCollapseComponent,
+  CnStaticFormCustomInputSelectComponent,
+  CnStaticFormLabelComponent,
+  CnStaticFormPopSelectParameterComponent,
+  CnStaticFormChildArrayComponent,
+  CnStaticFormPopApiComponent,
   // --静态表单内特殊组件结构--
   CnStaticFormAjaxComponent,
+  CnStaticFormFormItemComponent,
+  CnStaticFormGridItemComponent,
+  CnStaticFormStaticFormComponent,
+  CnStaticFormParameterStructComponent,
+  CnStaticFormTreeObjectComponent,
+  CnStaticFormPopFormComponent,
+  CnStaticFormSwitchConentComponent,
+  CnStaticFormMainResourceComponent,
+  CnStaticFormApiComponent,
+  // 解析布局组件
+  SmtPageComponent,
+  SmtLayoutComponent,
+  SmtTabsComponent,
+  // 可视化生成配置解析出的组件
+  SmtDataTableComponent,
+  SmtToolbarComponent,
+  SmtTreeTableComponent,
 ];
 const DIRECTIVES = [
   CnLayoutResolverDirective,
@@ -413,6 +461,8 @@ const DIRECTIVES = [
   CnStaticFormItemDirective,
   CfgPropertyItemDirective,
   CfgPageDesignLayoutItemDirective,
+  SmtDynamicLayoutResolverDirective,
+  SmtComponentResolverDirective
 ];
 // #endregion
 
@@ -440,9 +490,7 @@ const DIRECTIVES = [
     CnTreeTransferComponent,
     SafeUrlPipe,
     CfgAttributeRanksRowModalComponent,
-
-
-
+    ToolAttrJsonComponent,
 
 
   ],

@@ -4,13 +4,15 @@ import { CfgPageCmptFormComponent } from './cfg-page-cmpt-form/cfg-page-cmpt-for
 import { CfgPageCmptTableComponent } from './cfg-page-cmpt-table/cfg-page-cmpt-table.component';
 import { CfgPageCmptTabsComponent } from './cfg-page-cmpt-tabs/cfg-page-cmpt-tabs.component';
 import { CfgPageCmptToolbarComponent } from './cfg-page-cmpt-toolbar/cfg-page-cmpt-toolbar.component';
+import { CfgPageCmptTreeComponent } from './cfg-page-cmpt-tree/cfg-page-cmpt-tree.component';
 const components: { [type: string]: Type<any> } = {
 
-  form: CfgPageCmptFormComponent,
+  cnForm: CfgPageCmptFormComponent,
   cnDataTable: CfgPageCmptTableComponent,
-  // tree: 'cnTree',
-  // treeTable: 'cnTreeTable',
-  button: CfgPageCmptToolbarComponent,
+  cnTree: CfgPageCmptTreeComponent,
+  // cnTreeTable: 'cnTreeTable',
+  cnToolbar: CfgPageCmptToolbarComponent,
+  cnRowToolbar: CfgPageCmptToolbarComponent,
   tabs: CfgPageCmptTabsComponent
 
 

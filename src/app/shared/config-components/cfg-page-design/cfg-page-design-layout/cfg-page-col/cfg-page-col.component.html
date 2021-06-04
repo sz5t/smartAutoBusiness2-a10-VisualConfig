@@ -31,11 +31,17 @@
     </nz-card>
 </div>
 
-<div *ngIf="!showLayout && !l_config['showTitle']">
+<div *ngIf="!showLayout && !config['showTitle']" (drop)="f_ondrop($event,l_config)">
     <!-- {{l_config['id']}} -->
-    内容
-    <!-- <app-config-l-drag-container [(l_config)]="l_config['component']" [(selectedItem)]="selectedItem"
-      [(cmptState)]="cmptState" [fromDataService]="fromDataService">
-    </app-config-l-drag-container> -->
+
+    <div *ngIf="l_config['container']">
+        <app-cfg-page-container [(l_config)]="l_config" [(selectedItem)]="selectedItem" [(cmptState)]="cmptState"
+            [fromDataService]="fromDataService" [showLayout]="showLayout"></app-cfg-page-container>
+
+    </div>
+    <div *ngIf="!l_config['container']" style="height: 200px;">
+        <p>可拖放数据【组件】或者布局【行】</p>
+
+    </div>
 
 </div>

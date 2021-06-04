@@ -14,7 +14,7 @@ export class CfgPageViewComponent implements OnInit {
   @Input() public selectedItem: any;
 
   @Input() public fromDataService: configFormDataServerService;
-  l_config: any = {};
+  @Input() l_config: any = [];
   constructor() { }
 
   ngOnInit(): void {
@@ -31,6 +31,7 @@ export class CfgPageViewComponent implements OnInit {
 
   CreateLayout() {
 
+    let back_layout = {};
     let layout_id = CommonUtils.uuID(30);
     let layout_obj = {
       "id": layout_id,
@@ -43,7 +44,7 @@ export class CfgPageViewComponent implements OnInit {
     }
     this.layoutSourceData[layout_id] = layout_obj;
 
-    this.l_config = {
+    back_layout = {
       ...layout_obj,
       "children": this.CreateLayout_row(this.layout_row, layout_id)
     }
@@ -51,8 +52,8 @@ export class CfgPageViewComponent implements OnInit {
     this.fromDataService.layoutSourceData = this.layoutSourceData;
 
     this.fromDataService.layoutTreeInstance.layoutTree = [];
-    this.fromDataService.layoutTreeInstance.layoutTree = [this.l_config];
-
+    this.fromDataService.layoutTreeInstance.layoutTree = [back_layout];
+    this.l_config = [back_layout];
 
   }
 

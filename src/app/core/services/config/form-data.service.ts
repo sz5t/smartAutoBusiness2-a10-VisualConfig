@@ -11,7 +11,17 @@ export class configFormDataServerService {
     public layoutViewInstance: any; // 布局视图实例
     public layoutSourceData: any = {}; // 明细节点项（平层树节点，完整配置信息）
     public layoutStructInstance: any = {}; // 布局结构明细实例
+    public layoutSourceDataMore: any = {}; // 明细节点组件的其他信息【参数等可互选信息】??不一定会独立构建可合并
 
+    public selectedItem: any;
+    public mainParameters: any = {
+        "mainParameters":
+            [
+                { "id": "cell_003", "name": "cellValue", "title": "单元格值", "type": "currentCell", "source": "[内置]", "description": "", "dataType": "string" }
+
+            ]
+
+    }; // 全局参数（页初始参数）
 
 
     public data: any = [];
@@ -127,6 +137,16 @@ export class configFormDataServerService {
         //【布局树，只做结构，layoutSourceData 最终数据【】】
     }
 
+
+
+    // 删除某一节点内容
+    deleteLayoutSourceData(id) {
+        if (this.layoutSourceData.hasOwnProperty(id)) {
+            delete this.layoutSourceData[id];
+        }
+    }
+
+
     // 传递小组件配置
     transferComponents() {
         // 组件信息修改，读取均从服务读取，保持数据一致
@@ -139,6 +159,85 @@ export class configFormDataServerService {
     }
 
 
+    getParameters(config?) {
+
+        // root  读取page 根参数信息
+        // 描述 节点到什么类型停止
+
+        let q = [  // 从当前节点，可向上，也可向下取参数，页面初始参数 可合并
+            {
+                nodeType: "root",
+                enableParameter: true, // 取当前节点参数
+                parameterType: "mainParameters",
+                parent: { // 可向上
+
+                },
+                children: [
+                    {
+                    }
+                ]
+            }
+        ]
+
+        // 当前节点  树的选中节点
+        // 可取父节点参数 parent节点
+        // node.getParentNode() // 取当前组件内参数
+
+        let node = this.selectedItem['item'];
+        let Parameters = [];
+        // 获取当前组件参数
+        // if (this.layoutSourceData[node['id']]) {
+        //     Parameters = this.layoutSourceData[node['id']]['parameters']['mainParameters']
+        // }
+
+        // 遍历合并当前参数配置
+        config.forEach(element => {
+            if (element['nodeType'] === 'root') {
+                if (element['enableParameter'] && element['parameterType']) {
+
+                    Parameters = [...Parameters, ... this.mainParameters[element['parameterType']]];
+                }
+
+            } else {
+                if (element['enableParameter'] && element['parameterType']) {
+                    if (this.layoutSourceData[node['id']]['parameters']) {
+                        Parameters = [...Parameters, ...this.layoutSourceData[node['id']]['parameters'][element['parameterType']]];
+                    }
+
+                }
+            }
+        });
+        return Parameters;
+
+    }
+    // 添加当前参数列表
+    public setParameter(data, type) {
+        let Parameter: any;
+        if (type) {
+            let _data: [] = Parameter[type];
+            let _index = _data.findIndex(item => {
+                item['name'] === data['name']
+            });
+            if (_index > -1) {
+                // 修改属性（来源）可不做
+
+            } else {
+                // 新增属性
+                Parameter[type].push(data);
+            }
+        }
+
+
+    }
+
+    // 绑定主资源生成 组件参数
+    createMainResourceParameter(data?) {
+        // this.mainParameter = data;
+
+        console.log('生成主资源参数，feild 字段绑定取值');
+
+
+    }
 
     /*
 
@@ -227,9 +326,15 @@ export class configFormDataServerService {
             "type": cmptObj['type'],
             "title": cmptObj['title'],
             "container": cmptObj['container'],
+            "positionId": cmptObj['positionId'],
             "parentId": pid,
             "expanded": true,
-            "children": []
+            "children": [],
+            "parameters": {
+                "mainParameters": [
+                    { "id": "cell_001", "name": "rowId", "title": "行标识", "type": "currentCell", "source": "[内置]", "description": "", "dataType": "string" }
+                ]
+            }
         }
 
         this.layoutSourceData[cmpt_id] = cmpt_obj;
@@ -268,6 +373,23 @@ export class configFormDataServerService {
         }
         this.layoutSourceData[cmpt_id] = cmpt_obj;
         return cmpt_obj;
+    }
+    public l_create_component_conent_button(pid?, cmptObj?) {
+        let cmpt_id = CommonUtils.uuID(30);
+        let cmpt_obj = {
+            "id": cmpt_id,
+            "key": cmpt_id,
+            "type": cmptObj['type'],
+            "title": cmptObj['title'],
+            "container": cmptObj['container'],
+            "parentId": pid,
+            "expanded": true,
+            "children": []
+        }
+
+        this.layoutSourceData[cmpt_id] = cmpt_obj;
+        return cmpt_obj;
+
     }
 
     public l_create_Layout(pid?) {

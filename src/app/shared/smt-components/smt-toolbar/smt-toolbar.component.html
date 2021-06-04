@@ -1,0 +1,39 @@
+<span *ngFor="let toolbar of config.children">
+    <span class="toolbarGroup" *ngIf="toolbar.type === 'button'">
+        <ng-container *ngIf="toolbar.icon">
+            <button style="font-weight: 500" [nzSize]="toolbar.size ? toolbar.size : 'default'"
+                [nzType]="toolbar.color ? toolbar.color : 'default'" nz-button type="button"
+                (click)="action(toolbar, config.originData)">
+                <i nz-icon [nzType]="toolbar.icon ? toolbar.icon : 'edit'"
+                    [nzTheme]="toolbar.theme ? toolbar.theme : 'outline'" [nzTwotoneColor]="'#A5A5B8'"></i>
+                {{toolbar.title}}
+            </button>
+        </ng-container>
+        <ng-container *ngIf="!toolbar.icon">
+            <button style="font-weight: 500" [nzSize]="toolbar.size ? toolbar.size : 'default'"
+                [nzType]="toolbar.color ? toolbar.color : 'default'" nz-button type="button"
+                (click)="action(toolbar, config.originData)">
+                {{toolbar.title}}
+            </button>
+
+        </ng-container>
+    </span>
+    <span class="toolbarGroup" *ngIf="toolbar.type === 'dropdown'">
+        <nz-button-group>
+            <button nzSize="default" nzType="primary" nz-button type="button" nz-dropdown [nzDropdownMenu]="menu"
+                nzPlacement="bottomLeft">
+                {{toolbar.title}}
+            </button>
+        </nz-button-group>
+        <nz-dropdown-menu #menu="nzDropdownMenu">
+            <ul nz-menu>
+                <ng-template ngFor let-btn [ngForOf]="toolbar.children">
+                    <li nz-menu-item (click)="action(btn, config.originData)">
+                        <i nz-icon [nzType]="btn.icon ? btn.icon : 'edit'" [nzTheme]="btn.theme ? btn.theme : 'outline'"
+                            [nzTwotoneColor]="'#A5A5B8'"></i> {{btn.title}}
+                    </li>
+                </ng-template>
+            </ul>
+        </nz-dropdown-menu>
+    </span>
+</span>

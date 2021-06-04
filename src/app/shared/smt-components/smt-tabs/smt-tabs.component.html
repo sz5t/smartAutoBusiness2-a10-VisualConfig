@@ -1,0 +1,10 @@
+<nz-tabset [nzSize]="config.size ? config.size : 'default'" [nzTabPosition]="config.position ? config.position : 'top'"
+    [nzType]="config.type ? config.type : 'line'" [nzTabBarGutter]="config.gutter ? config.gutter : '5'">
+    <nz-tab *ngFor="let tab of config.children" [nzTitle]="tab.title">
+        <ng-container *ngFor="let layout of tab.children">
+            <ng-container SmtDynamicLayoutResolverDirective [config]="layout" [originData]="config.originData"
+                [tempData]="tempData" [initData]="initData">
+            </ng-container>
+        </ng-container>
+    </nz-tab>
+</nz-tabset>

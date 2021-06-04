@@ -1,0 +1,47 @@
+<p>cn-static-form-parameter-struct works!</p>
+
+<nz-card nzType="inner" nzTitle="参数取值信息" style="width:100%;padding-right: 4px;" [nzBodyStyle]="{'padding':'1px 2px'}">
+    <app-cn-static-form #staticForm [config]="_form_config" [staticData]="sourceData"
+        [fromDataService]="fromDataService" (updateValue)="staticFormValueChange($event)">
+    </app-cn-static-form>
+</nz-card>
+<div nz-row style="max-height: 1000px;" nzAlign="top">
+    <div nz-col nzFlex="400px">
+        <nz-card nzType="inner" [nzBodyStyle]="{'padding':'1px 2px','max-height':'680px','overflow':'auto'}">
+            <nz-tree #nzTreeComponent nzShowLine="true" [nzData]="nodes" [nzCheckedKeys]="defaultCheckedKeys"
+                [nzExpandAll]="'true'" [nzSelectedKeys]="defaultSelectedKeys" (nzClick)="nzClick($event)"
+                (nzContextMenu)="nzClick($event)" (nzCheckBoxChange)="nzCheck($event)"
+                (nzExpandChange)="nzCheck($event)">
+            </nz-tree>
+
+        </nz-card>
+
+    </div>
+
+    <div nz-col nzFlex="auto">
+
+        <nz-table #basicTable [nzData]="listOfData">
+            <thead>
+                <tr>
+                    <th>参数code</th>
+                    <th>参数名称</th>
+                    <th>参数类型</th>
+                    <th>参数来源</th>
+                    <th>数据类型</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let data of basicTable.data" (click)="setSelectRow(data, $event)"
+                    [ngClass]="{ selectedRow: selectRow['id'] === data['id'] ? true: false}">
+                    <td>{{ data.name }}</td>
+                    <td>{{ data.title }}</td>
+                    <td>{{ data.type }}</td>
+                    <td>{{ data.source }}</td>
+                    <td>{{ data.dataType }}</td>
+
+                </tr>
+            </tbody>
+        </nz-table>
+
+    </div>
+</div>

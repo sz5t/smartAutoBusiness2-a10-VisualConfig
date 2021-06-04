@@ -1,0 +1,7 @@
+{
+    "data":[
+        { "id": "cmpt_001", "name": "selectedRow", "title": "选中行", "type": "componentValue", "source": "[内置]", "description": "", "dataType": "object"},
+        { "id": "cmpt_002", "name": "currentRow", "title": "操作行", "type": "componentValue", "source": "[内置]", "description": "", "dataType": "object"},
+        { "id": "cmpt_003", "name": "checkedRows", "title": "勾选行", "type": "componentValue", "source": "[内置]", "description": "", "dataType": "array" }
+    ]
+}

@@ -14,10 +14,16 @@ export class CfgPageLayoutComponent implements OnInit {
   @Input() public l_config: any;
   @Input() public fromDataService: configFormDataServerService;
 
-
+  config = {};
   constructor() { }
 
   ngOnInit(): void {
+
+    this.load();
+  }
+  load() {
+    this.config = this.fromDataService.layoutSourceData[this.l_config['id']];
+    console.log(this.config);
   }
 
 }

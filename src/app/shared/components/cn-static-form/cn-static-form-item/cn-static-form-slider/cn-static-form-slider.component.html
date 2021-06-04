@@ -1,15 +1,24 @@
 <ng-container *ngIf="config['formType'] === 'value'">
     <nz-form-item>
-        <nz-form-label [nzSm]="8" [nzXs]="24" nzRequired>{{config['title']}}</nz-form-label>
-        <nz-form-control [nzSm]="16" [nzXs]="24" [formGroup]="validateForm">
+        <nz-form-label *ngIf="!config.componentConfig['hiddenTitle']" [nzSpan]="config.componentConfig.labelSize.span"
+            [nzSm]="config.componentConfig.labelSize.nzSm" [nzXs]="config.componentConfig.labelSize.nzXs"
+            [nzMd]="config.componentConfig.labelSize.nzMd" [nzLg]="config.componentConfig.labelSize.nzLg"
+            [nzXl]="config.componentConfig.labelSize.nzXl" [nzTooltipTitle]="config.componentConfig.labelTooltipTitle"
+            [nzTooltipIcon]="config.componentConfig.labelTooltipIcon" nzRequired>{{config['title']}}</nz-form-label>
+        <nz-form-control [nzSpan]="config.componentConfig.controlSize.span"
+            [nzSm]="config.componentConfig.controlSize.nzSm" [nzXs]="config.componentConfig.controlSize.nzXs"
+            [nzMd]="config.componentConfig.controlSize.nzMd" [nzLg]="config.componentConfig.controlSize.nzLg"
+            [nzXl]="config.componentConfig.controlSize.nzXl" [formGroup]="validateForm">
             <!--  <input nz-input [formControlName]="config['name']" (ngModelChange)="log($event)" /> -->
             <nz-row>
-                <nz-col nzSpan="10">
-                    <nz-slider [nzMin]="1" [nzMax]="24" [formControlName]="config['name']"
-                        (ngModelChange)="log($event)"></nz-slider>
+                <nz-col nzSpan="12">
+                    <nz-slider [nzMin]="componentConfig['min']" [nzMax]="componentConfig['max']"
+                        [formControlName]="config['name']" (ngModelChange)="log($event)"></nz-slider>
                 </nz-col>
-                <div nz-col nzSpan="4">
-                    <nz-input-number [nzMin]="1" [nzMax]="24">
+                <div nz-col nzSpan="12">
+                    <nz-input-number [nzMin]="componentConfig['min']" [nzMax]="componentConfig['max']"
+                        [(ngModel)]="showValue" (ngModelChange)="valueChange($event)"
+                        [ngModelOptions]="{standalone: true}">
                     </nz-input-number>
                     <!--    [ngModelOptions]="{standalone: true}" -->
                 </div>

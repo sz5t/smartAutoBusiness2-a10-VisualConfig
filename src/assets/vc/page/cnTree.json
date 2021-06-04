@@ -1,0 +1,285 @@
+{
+    "propertyconfig": {
+        "componentCode": "row",
+        "typeConent": [
+            {
+                "code": "attr",
+                "title": "属性",
+                "propertyTypeConent": [
+                    {
+                        "code": "base",
+                        "title": "基础属性",
+                        "type": "property",
+                        "active": true,
+                        "sourceConfig": {
+                            "type": "staticForm",
+                            "backName": "title",
+                            "backConfig": [
+                                {
+                                    "name": "id"
+                                },
+                                {
+                                    "name": "showTitle"
+                                },
+                                {
+                                    "name": "rootTitle"
+                                },
+                                {
+                                    "name": "titleIcon"
+                                },
+                                {
+                                    "name": "keyId"
+                                },
+                                {
+                                    "name": "async"
+                                },
+                                {
+                                    "name": "showCheckBox"
+                                },
+                                {
+                                    "name": "enableState"
+                                },
+                                {
+                                    "name": "expandAll"
+                                },
+                                {
+                                    "name": "showSearch"
+                                },
+                                {
+                                    "name": "loadingOnInit"
+                                },
+                                {
+                                    "name": "checkStrictlyShow"
+                                },
+                                {
+                                    "name": "isSelected"
+                                },
+                                {
+                                    "name": "checkStrictly"
+                                },
+                                {
+                                    "name": "showLine"
+                                },
+                                {
+                                    "name": "defaultSelectedKeys"
+                                }
+                            ],
+                            "properties": [
+                                {
+                                    "name": "id",
+                                    "type": "label",
+                                    "componentConfig": {},
+                                    "formType": "value",
+                                    "formName": "formControlName",
+                                    "validations": [],
+                                    "title": "主键"
+                                },
+                                {
+                                    "name": "title",
+                                    "type": "input",
+                                    "componentConfig": {},
+                                    "formType": "value",
+                                    "formName": "formControlName",
+                                    "validations": [],
+                                    "title": "标题"
+                                },
+                                {
+                                    "name": "rootTitle",
+                                    "type": "input",
+                                    "componentConfig": {},
+                                    "formType": "value",
+                                    "formName": "formControlName",
+                                    "validations": [],
+                                    "title": "根节点名称"
+                                },
+                                {
+                                    "name": "titleIcon",
+                                    "type": "input",
+                                    "componentConfig": {},
+                                    "formType": "value",
+                                    "formName": "formControlName",
+                                    "validations": [],
+                                    "title": "图标"
+                                },
+                                {
+                                    "name": "keyId",
+                                    "type": "input",
+                                    "componentConfig": {},
+                                    "formType": "value",
+                                    "formName": "formControlName",
+                                    "validations": [],
+                                    "title": "绑定主键"
+                                },
+                                {
+                                    "name": "async",
+                                    "type": "switch",
+                                    "componentConfig": {},
+                                    "formType": "value",
+                                    "formName": "formControlName",
+                                    "validations": [],
+                                    "title": "是否异步"
+                                },
+                                {
+                                    "name": "showCheckBox",
+                                    "type": "switch",
+                                    "componentConfig": {},
+                                    "formType": "value",
+                                    "formName": "formControlName",
+                                    "validations": [],
+                                    "title": "是否勾选"
+                                },
+                                {
+                                    "name": "expandAll",
+                                    "type": "switch",
+                                    "componentConfig": {},
+                                    "formType": "value",
+                                    "formName": "formControlName",
+                                    "validations": [],
+                                    "title": "是否展开全部"
+                                },
+                                {
+                                    "name": "loadingOnInit",
+                                    "type": "switch",
+                                    "componentConfig": {},
+                                    "formType": "value",
+                                    "formName": "formControlName",
+                                    "validations": [],
+                                    "title": "是否初始化加载"
+                                },
+                                {
+                                    "name": "isSelected",
+                                    "type": "switch",
+                                    "componentConfig": {},
+                                    "formType": "value",
+                                    "formName": "formControlName",
+                                    "validations": [],
+                                    "title": "是否默认选中"
+                                },
+                                {
+                                    "name": "showLine",
+                                    "type": "switch",
+                                    "componentConfig": {},
+                                    "formType": "value",
+                                    "formName": "formControlName",
+                                    "validations": [],
+                                    "title": "是否展示连接线"
+                                },
+                                {
+                                    "name": "showSearch",
+                                    "type": "switch",
+                                    "componentConfig": {},
+                                    "formType": "value",
+                                    "formName": "formControlName",
+                                    "validations": [],
+                                    "title": "是否搜索"
+                                },
+                                {
+                                    "name": "checkStrictlyShow",
+                                    "type": "switch",
+                                    "componentConfig": {},
+                                    "formType": "value",
+                                    "formName": "formControlName",
+                                    "validations": [],
+                                    "title": "是否显示节点控制开关"
+                                },
+                                {
+                                    "name": "checkStrictly",
+                                    "type": "switch",
+                                    "componentConfig": {},
+                                    "formType": "value",
+                                    "formName": "formControlName",
+                                    "validations": [],
+                                    "title": "父子节点是否取消联动"
+                                },
+                                {
+                                    "name": "enableState",
+                                    "type": "switch",
+                                    "componentConfig": {},
+                                    "formType": "value",
+                                    "formName": "formControlName",
+                                    "validations": [],
+                                    "title": "是否启用图标"
+                                },
+                                {
+                                    "name": "defaultSelectedKeys",
+                                    "type": "switch",
+                                    "componentConfig": {},
+                                    "formType": "value",
+                                    "formName": "formControlName",
+                                    "validations": [],
+                                    "title": "默认选中节点值"
+                                }
+                            ]
+                        },
+                        "sourceData": {
+                            "type": "root",
+                            "name": "title"
+                        }
+                    },
+                    {
+                        "code": "col",
+                        "title": "列映射",
+                        "type": "property",
+                        "active": true,
+                        "sourceConfig": {
+                            "type": "staticForm",
+                            "backName": "columns",
+                            "backConfig": [
+                                {
+                                    "name": "columns"
+                                }
+                            ],
+                            "properties": [
+                                {
+                                    "name": "columns",
+                                    "type": "arrayCollapse",
+                                    "componentConfig": {
+        
+                                    },
+                                    "formType": "array",
+                                    "properties": [
+                                        {
+                                            "name": "title",
+                                            "type": "input",
+                                            "componentConfig": {},
+                                            "formType": "value",
+                                            "formName": "formControlName",
+                                            "validations": [],
+                                            "title": "标题"
+                                        },
+                                        {
+                                            "name": "type",
+                                            "type": "input",
+                                            "componentConfig": {},
+                                            "formType": "value",
+                                            "formName": "formControlName",
+                                            "validations": [],
+                                            "title": "映射属性"
+                                        },
+                                        {
+                                            "name": "field",
+                                            "type": "input",
+                                            "componentConfig": {},
+                                            "formType": "value",
+                                            "formName": "formControlName",
+                                            "validations": [],
+                                            "title": "绑定字段"
+                                        }
+                                    ],
+                                    "formName": "formControlName",
+                                    "validations": [],
+                                    "title": "列映射"
+                                }
+                        
+                            ]
+                        },
+                        "sourceData": {
+                            "type": "root",
+                            "name": "title"
+                        }
+                    }
+                ]
+            }
+        ]
+    }
+}

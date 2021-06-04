@@ -1,5 +1,7 @@
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { configFormDataServerService } from 'src/app/core/services/config/form-data.service';
+import { CommonUtils } from 'src/app/core/utils/common-utils';
 import { CustomValidator } from '../../../data-form/form-validator/CustomValidator';
 
 @Component({
@@ -12,9 +14,12 @@ export class CnStaticFormArrayCardComponent implements OnInit {
   @Input() validateForm: FormGroup;
   @Input() validateFormArray: FormArray;
   @Input() config;
+  @Input() public fromDataService;
   @Output() public updateValue = new EventEmitter<any>(true);
   constructor(private fb: FormBuilder) { }
+  staticDefaultValueConfig: any = [
 
+  ]
   size = {
     "sapn": 24,
     "nzXs": 24,
@@ -26,7 +31,9 @@ export class CnStaticFormArrayCardComponent implements OnInit {
   }
   span = 24;
   ngOnInit(): void {
-
+    if (this.config.componentConfig && this.config.componentConfig['staticDefaultValueConfig']) {
+      this.staticDefaultValueConfig = this.config.componentConfig['staticDefaultValueConfig'];
+    }
     if (this.config.componentConfig && this.config.componentConfig['size']) {
       this.size = this.config.componentConfig['size'];
       this.span = this.size['sapn'];
@@ -44,7 +51,12 @@ export class CnStaticFormArrayCardComponent implements OnInit {
 
   add() {
 
-    this.validateFormArray.push(this.set_formGroupControlName({}, this.config));
+    let _data = {};
+    if (this.staticDefaultValueConfig) {
+      _data = this.getStaticDefaultValue(this.staticDefaultValueConfig);
+    }
+
+    this.validateFormArray.push(this.set_formGroupControlName(_data, this.config));
     // this.validateFormArray.push(this.creatRow());
     this.validateFormArray.controls.forEach(item => {
       item.markAsPristine();
@@ -60,13 +72,81 @@ export class CnStaticFormArrayCardComponent implements OnInit {
 
 
   }
+
+  getStaticDefaultValue(defaultValueConfig) {
+    let objValue = {};
+    defaultValueConfig.forEach(element => {
+
+      objValue[element['name']] = this.getDefaultValue(element);
+    });
+    return objValue;
+
+
+  }
+
+  getDefaultValue(option) {
+    let value = null;
+    switch (option['type']) {
+      case 'value':
+        value = option['value'];
+        break;
+      case 'componentValue':
+        value = this.validateForm.value[option['valueName']];
+        break;
+      case 'GUID':
+        value = CommonUtils.uuID(36);
+        break;
+
+
+
+      // ......多种取值方式
+      default:
+        value = option['value'];
+        break;
+    }
+
+    return value;
+
+  }
   //刪除组合
   delItem(i) {
     this.validateFormArray.removeAt(i);
   }
 
 
+  getobjectTitle(i?) {
 
+    let showValue;
+    let _validateFormArray1 = this.validateFormArray.controls[i] as FormGroup;
+    let d = _validateFormArray1.value;
+    if (d) {
+      if (this.config.componentConfig['showConfig']) {
+        let _valueStrConfig = this.config.componentConfig['showConfig']['showString'];
+        showValue = this.getStringByshow(d, _valueStrConfig);
+      }
+    }
+    if (!showValue) {
+      showValue = this.config['title'] + (i + 1);
+    }
+    return showValue;;
+  }
+
+
+  getStringByshow(_value, _config) {
+    let str: any;
+    _config.forEach(element => {
+      if (_value && _value.hasOwnProperty(element['name'])) {
+        str = _value[element['name']];
+        if (element['children'] && element['children'].length > 0) {
+          str = this.getStringByshow(str, element['children'])
+        }
+      }
+
+    });
+
+    return str;
+
+  }
   set_formGroupControlName(data, Control) {
 
     let obj: any = {};

@@ -11,6 +11,7 @@ export class CnStaticFormContainersComponent implements OnInit {
 
   @Input() validateForm: FormGroup;
   @Input() config;
+  @Input() public fromDataService;
   @Output() public updateValue = new EventEmitter<any>(true);
   constructor() { }
 

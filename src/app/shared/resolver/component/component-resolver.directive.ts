@@ -44,6 +44,8 @@ import { CnFlowStartComponent } from '../../components/work-flow/cn-flow-items/c
 import { CnFlowPreviewComponent } from '../../components/work-flow/cn-flow-preview/cn-flow-preview.component';
 import { CfgPageDesignComponent } from '../../config-components/cfg-page-design/cfg-page-design.component';
 import { CfgFormDesignComponent } from '../../config-components/cfg-form-design/cfg-form-design.component';
+import { SmtLayoutComponent } from '../../components/smt-layout/smt-layout/smt-layout.component';
+import { SmtPageComponent } from '../../components/smt-layout/smt-page/smt-page.component';
 const components: { [type: string]: Type<any> } = {
   cnDataTable: CnDataTableComponent,
   cnToolbar: CnToolbarComponent,
@@ -85,7 +87,9 @@ const components: { [type: string]: Type<any> } = {
   cfgFormValidation: CfgAttributeValidationComponent,
   cnCascadeProperty: CfgCascadePropertyComponent,
   cfgPageDesign: CfgPageDesignComponent,
-  cfgFormDesign: CfgFormDesignComponent
+  cfgFormDesign: CfgFormDesignComponent,
+  smtLayOut: SmtLayoutComponent,
+  smtPage: SmtPageComponent,
 };
 
 @Directive({
