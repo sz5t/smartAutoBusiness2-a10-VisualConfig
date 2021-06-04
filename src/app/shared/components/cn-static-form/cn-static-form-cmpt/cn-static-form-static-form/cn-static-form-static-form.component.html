@@ -1,3 +1,3 @@
-<app-cn-static-form #staticForm [config]="attr_config" [staticData]="sourceData" [fromDataService]="fromDataService"
-    (updateValue)="staticFormValueChange($event)">
+<app-cn-static-form *ngIf="attr_config" #staticForm [config]="attr_config" [staticData]="sourceData"
+    [fromDataService]="fromDataService" (updateValue)="staticFormValueChange($event)">
 </app-cn-static-form>

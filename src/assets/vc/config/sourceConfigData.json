@@ -1,0 +1,91 @@
+{
+    "type": "staticForm",
+    "backName": "title",
+    "backConfig": [
+        {
+            "name": "isCreateParameter"
+        },
+        {
+            "name": "ajaxType"
+        },
+        {
+            "name": "executionType"
+        }
+    ],
+    "properties": [
+        {
+            "name": "isCreateParameter",
+            "type": "switch",
+            "componentConfig": {},
+            "formType": "value",
+            "formName": "formControlName",
+            "validations": [],
+            "title": "是否生成参数"
+        },
+        {
+            "name": "ajaxType",
+            "type": "select",
+            "componentConfig": {
+                "options": [
+                    {
+                        "label": "post",
+                        "value": "post"
+                    },
+                    {
+                        "label": "put",
+                        "value": "put"
+                    },
+                    {
+                        "label": "get",
+                        "value": "get"
+                    },
+                    {
+                        "label": "delete",
+                        "value": "delete"
+                    }
+                ],
+                "labelName": "label",
+                "valueName": "value"
+            },
+            "formType": "value",
+            "formName": "formControlName",
+            "validations": [],
+            "title": "请求资源方式"
+        },
+        {
+            "name": "executionType",
+            "type": "select",
+            "componentConfig": {
+                "options": [
+                    {
+                        "label": "查询",
+                        "value": "query"
+                    },
+                    {
+                        "label": "执行",
+                        "value": "operate"
+                    },
+                    {
+                        "label": "【表】新增",
+                        "value": "insert"
+                    },
+                    {
+                        "label": "【表】修改",
+                        "value": "update"
+                    },
+                    {
+                        "label": "【表】删除",
+                        "value": "delete"
+                    }
+                ],
+                "labelName": "label",
+                "valueName": "value"
+            },
+            "formType": "value",
+            "formName": "formControlName",
+            "validations": [],
+            "title": "执行资源方式"
+        }
+       
+    ]
+}
