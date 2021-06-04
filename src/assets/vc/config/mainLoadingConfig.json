@@ -1,0 +1,912 @@
+{
+    "type": "staticForm",
+    "backName": "title",
+    "backConfig": [
+        {
+            "name": "id"
+        },
+        {
+            "name": "urlType"
+        },
+        {
+            "name": "ajaxType"
+        },
+        {
+            "name": "url"
+        },
+        {
+            "name": "urlContent"
+        },
+        {
+            "name": "urlInner"
+        },
+        {
+            "name": "headParams"
+        },
+        {
+            "name": "pathParams"
+        },
+        {
+            "name": "queryParams"
+        },
+        {
+            "name": "bodyParams"
+        }
+    ],
+    "properties": [
+        {
+            "name": "id",
+            "type": "input",
+            "componentConfig": {},
+            "formType": "value",
+            "formName": "formControlName",
+            "validations": [],
+            "title": "标识"
+        },
+        {
+            "name": "urlType",
+            "type": "select",
+            "componentConfig": {
+                "casadeValue": [
+                    {
+                        "cascadeName": "urlContent",
+                        "cascadeItems": [
+                            {
+                                "type": "condition",
+                                "condition": [
+                                    {
+                                        "conditionType": "and",
+                                        "type": "expression",
+                                        "centent": [],
+                                        "expression": {
+                                            "comput": "regular",
+                                            "leftExpression": {
+                                                "type": "componentValue",
+                                                "value": "0",
+                                                "valueName": "urlType"
+                                            },
+                                            "righitExpression": {
+                                                "type": "value",
+                                                "value": "^out$"
+                                            }
+                                        }
+                                    }
+                                ],
+                                "content": {
+                                    "type": "display",
+                                    "data": {
+                                        "option": [
+                                            {
+                                                "name": "display",
+                                                "type": "value",
+                                                "value": false,
+                                                "valueName": ""
+                                            }
+                                        ]
+                                    }
+                                }
+                            },
+                            {
+                                "type": "condition",
+                                "condition": [
+                                    {
+                                        "conditionType": "and",
+                                        "type": "expression",
+                                        "centent": [],
+                                        "expression": {
+                                            "comput": "regular",
+                                            "leftExpression": {
+                                                "type": "componentValue",
+                                                "value": "0",
+                                                "valueName": "urlType"
+                                            },
+                                            "righitExpression": {
+                                                "type": "value",
+                                                "value": "^inner$"
+                                            }
+                                        }
+                                    }
+                                ],
+                                "content": {
+                                    "type": "display",
+                                    "data": {
+                                        "option": [
+                                            {
+                                                "name": "display",
+                                                "type": "value",
+                                                "value": true,
+                                                "valueName": ""
+                                            }
+                                        ]
+                                    }
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "cascadeName": "urlInner",
+                        "cascadeItems": [
+                            {
+                                "type": "condition",
+                                "condition": [
+                                    {
+                                        "conditionType": "and",
+                                        "type": "expression",
+                                        "centent": [],
+                                        "expression": {
+                                            "comput": "regular",
+                                            "leftExpression": {
+                                                "type": "componentValue",
+                                                "value": "0",
+                                                "valueName": "urlType"
+                                            },
+                                            "righitExpression": {
+                                                "type": "value",
+                                                "value": "^inner$"
+                                            }
+                                        }
+                                    }
+                                ],
+                                "content": {
+                                    "type": "display",
+                                    "data": {
+                                        "option": [
+                                            {
+                                                "name": "display",
+                                                "type": "value",
+                                                "value": false,
+                                                "valueName": ""
+                                            }
+                                        ]
+                                    }
+                                }
+                            },
+                            {
+                                "type": "condition",
+                                "condition": [
+                                    {
+                                        "conditionType": "and",
+                                        "type": "expression",
+                                        "centent": [],
+                                        "expression": {
+                                            "comput": "regular",
+                                            "leftExpression": {
+                                                "type": "componentValue",
+                                                "value": "0",
+                                                "valueName": "urlType"
+                                            },
+                                            "righitExpression": {
+                                                "type": "value",
+                                                "value": "^out$"
+                                            }
+                                        }
+                                    }
+                                ],
+                                "content": {
+                                    "type": "display",
+                                    "data": {
+                                        "option": [
+                                            {
+                                                "name": "display",
+                                                "type": "value",
+                                                "value": true,
+                                                "valueName": ""
+                                            }
+                                        ]
+                                    }
+                                }
+                            }
+                        ]
+                    }
+                ],
+                "options": [
+                    {
+                        "label": "内部数据源",
+                        "value": "inner"
+                    },
+                    {
+                        "label": "外部数据源",
+                        "value": "out"
+                    }
+                ],
+                "labelName": "label",
+                "valueName": "value"
+            },
+            "formType": "value",
+            "formName": "formControlName",
+            "validations": [],
+            "title": "请求地址类型"
+        },
+        {
+            "name": "ajaxType",
+            "type": "select",
+            "componentConfig": {
+                "options": [
+                    {
+                        "label": "post",
+                        "value": "post"
+                    },
+                    {
+                        "label": "put",
+                        "value": "put"
+                    },
+                    {
+                        "label": "get",
+                        "value": "get"
+                    },
+                    {
+                        "label": "delete",
+                        "value": "delete"
+                    }
+                ],
+                "labelName": "label",
+                "valueName": "value",
+                "casadeValue": [
+                    {
+                        "cascadeName": "bodyParams",
+                        "cascadeItems": [
+                            {
+                                "type": "condition",
+                                "condition": [
+                                    {
+                                        "conditionType": "and",
+                                        "type": "expression",
+                                        "centent": [],
+                                        "expression": {
+                                            "comput": "regular",
+                                            "leftExpression": {
+                                                "type": "componentValue",
+                                                "value": "0",
+                                                "valueName": "ajaxType"
+                                            },
+                                            "righitExpression": {
+                                                "type": "value",
+                                                "value": "^get$"
+                                            }
+                                        }
+                                    }
+                                ],
+                                "content": {
+                                    "type": "display",
+                                    "data": {
+                                        "option": [
+                                            {
+                                                "name": "display",
+                                                "type": "value",
+                                                "value": true,
+                                                "valueName": ""
+                                            }
+                                        ]
+                                    }
+                                }
+                            },
+                            {
+                                "type": "condition",
+                                "condition": [
+                                    {
+                                        "conditionType": "and",
+                                        "type": "expression",
+                                        "centent": [],
+                                        "expression": {
+                                            "comput": "regular",
+                                            "leftExpression": {
+                                                "type": "componentValue",
+                                                "value": "0",
+                                                "valueName": "ajaxType"
+                                            },
+                                            "righitExpression": {
+                                                "type": "value",
+                                                "value": "^(?!get)[a-z]+$"
+                                            }
+                                        }
+                                    }
+                                ],
+                                "content": {
+                                    "type": "display",
+                                    "data": {
+                                        "option": [
+                                            {
+                                                "name": "display",
+                                                "type": "value",
+                                                "value": false,
+                                                "valueName": ""
+                                            }
+                                        ]
+                                    }
+                                }
+                            }
+                        ]
+                    }
+                ]
+            },
+            "formType": "value",
+            "formName": "formControlName",
+            "validations": [],
+            "title": "请求资源方式"
+        },
+        {
+            "name": "url",
+            "type": "input",
+            "componentConfig": {},
+            "formType": "value",
+            "formName": "formControlName",
+            "validations": [],
+            "title": "请求资源API"
+        },
+        {
+            "name": "urlContent",
+            "type": "objectCard",
+            "componentConfig": {},
+            "properties": [
+                {
+                    "name": "title",
+                    "type": "input",
+                    "componentConfig": {},
+                    "formType": "value",
+                    "formName": "formControlName",
+                    "validations": [],
+                    "title": "外部资源标题"
+                },
+                {
+                    "name": "name",
+                    "type": "input",
+                    "componentConfig": {},
+                    "formType": "value",
+                    "formName": "formControlName",
+                    "validations": [],
+                    "title": "外部资源名"
+                }
+           
+            ],
+            "formType": "object",
+            "formName": "formControlName",
+            "validations": [],
+            "title": "外部请求适配"
+        },
+        {
+            "name": "urlInner",
+            "type": "objectCard",
+            "componentConfig": {},
+            "properties": [
+                {
+                    "name": "apiId",
+                    "hidden":true,
+                    "type": "input",
+                    "componentConfig": {},
+                    "formType": "value",
+                    "formName": "formControlName",
+                    "validations": [],
+                    "title": "资源id"
+                },
+                {
+                    "name": "resourceType",
+                    "type": "select",
+                    "hidden":true,
+                    "componentConfig": {
+                        "options": [
+                            {
+                                "label": "表资源",
+                                "value": 10
+                            },
+                            {
+                                "label": "SQL[存储过程]",
+                                "value": 15
+                            },
+                            {
+                                "label": "SQL[语句]",
+                                "value": 20
+                            },
+                            {
+                                "label": "业务对象",
+                                "value": 30
+                            }
+                        ],
+                        "labelName": "label",
+                        "valueName": "value"
+                    },
+                    "formType": "value",
+                    "formName": "formControlName",
+                    "validations": [],
+                    "title": "资源类型"
+                },
+                {
+                    "name": "label",
+                    "type": "label",
+                    "componentConfig": {},
+                    "formType": "value",
+                    "formName": "formControlName",
+                    "validations": [],
+                    "title": "资源标题"
+                },
+                {
+                    "name": "ajaxType",
+                    "type": "select",
+                    "hidden":true,
+                    "componentConfig": {
+                        "options": [
+                            {
+                                "label": "post",
+                                "value": "post"
+                            },
+                            {
+                                "label": "put",
+                                "value": "put"
+                            },
+                            {
+                                "label": "get",
+                                "value": "get"
+                            },
+                            {
+                                "label": "delete",
+                                "value": "delete"
+                            }
+                        ],
+                        "labelName": "label",
+                        "valueName": "value"
+                    },
+                    "formType": "value",
+                    "formName": "formControlName",
+                    "validations": [],
+                    "title": "请求资源方式"
+                },
+                {
+                    "name": "executionType",
+                    "type": "select",
+                    "hidden":true,
+                    "componentConfig": {
+                        "options": [
+                            {
+                                "label": "查询",
+                                "value": "query"
+                            },
+                            {
+                                "label": "执行",
+                                "value": "operate"
+                            },
+                            {
+                                "label": "【表】新增",
+                                "value": "insert"
+                            },
+                            {
+                                "label": "【表】修改",
+                                "value": "update"
+                            },
+                            {
+                                "label": "【表】删除",
+                                "value": "delete"
+                            }
+                        ],
+                        "labelName": "label",
+                        "valueName": "value"
+                    },
+                    "formType": "value",
+                    "formName": "formControlName",
+                    "validations": [],
+                    "title": "执行资源方式"
+                },
+                {
+                    "name": "value",
+                    "type": "popApi",
+                    "componentConfig": {
+                        "hiddenTitle": false,
+                        "labelSize": {
+                            "span": 8,
+                            "nzXs": 8,
+                            "nzSm": 8,
+                            "nzMd": 8,
+                            "nzLg": 8,
+                            "ngXl": 8,
+                            "nzXXl": 8
+                        },
+                        "controlSize": {
+                            "span": 16,
+                            "nzXs": 16,
+                            "nzSm": 16,
+                            "nzMd": 16,
+                            "nzLg": 16,
+                            "ngXl": 16,
+                            "nzXXl": 16
+                        },
+                        "customPage": {
+                            "title": "",
+                            "width": "90%",
+                            "style": null,
+                            "maskClosable": true,
+                            "cancelText": "取消",
+                            "okText": "确定",
+                            "footerButton": null,
+                            "customAction": [],
+                            "customContent": "api",
+                            "customPageConfig": {
+                                "asyncLoad": true,
+                                "loadingConfig": {
+                                    "path": "vc/config/sourceConfigData.json"
+                                }
+                            },
+                            "sourceData": {
+                                "type": "root"
+                            },
+                            "updateData": [
+                                {
+                                    "name": "value"
+                                },
+                                {
+                                    "name": "apiId"
+                                },
+                                {
+                                    "name": "resourceType"
+                                },
+                                {
+                                    "name": "label"
+                                },
+                                {
+                                    "name": "ajaxType"
+                                },
+                                {
+                                    "name": "executionType"
+                                }
+                            ]
+                        },
+                        "showConfig": {
+                            "showString": [
+                                {
+                                    "name": "value"
+                                }
+                            ]
+                        }
+                    },
+                    "formType": "value",
+                    "formName": "formControlName",
+                    "validations": [],
+                    "title": "资源名称"
+                }
+            ],
+            "formType": "object",
+            "formName": "formControlName",
+            "validations": [],
+            "title": "内部请求适配"
+        },   
+        {
+            "name": "headParams",
+            "type": "arrayTable",
+            "componentConfig": {},
+            "formType": "array",
+            "formName": "formControlName",
+            "validations": [],
+            "title": "请求头参数",
+            "properties": [
+                {
+                    "name": "name",
+                    "type": "input",
+                    "componentConfig": {},
+                    "formType": "value",
+                    "formName": "formControlName",
+                    "validations": [],
+                    "title": "参数名称"
+                },
+                {
+                    "name": "type",
+                    "type": "input",
+                    "componentConfig": {},
+                    "formType": "value",
+                    "formName": "formControlName",
+                    "validations": [],
+                    "title": "参数类型"
+                },
+                {
+                    "name": "valueName",
+                    "type": "input",
+                    "componentConfig": {},
+                    "formType": "value",
+                    "formName": "formControlName",
+                    "validations": [],
+                    "title": "参数取值名称"
+                }
+            ]
+        },
+        {
+            "name": "pathParams",
+            "type": "arrayTable",
+            "componentConfig": {},
+            "formType": "array",
+            "formName": "formControlName",
+            "validations": [],
+            "title": "地址参数",
+            "properties": [
+                {
+                    "name": "name",
+                    "type": "input",
+                    "componentConfig": {},
+                    "formType": "value",
+                    "formName": "formControlName",
+                    "validations": [],
+                    "title": "参数名称"
+                },
+                {
+                    "name": "type",
+                    "type": "input",
+                    "componentConfig": {},
+                    "formType": "value",
+                    "formName": "formControlName",
+                    "validations": [],
+                    "title": "参数类型"
+                },
+                {
+                    "name": "valueName",
+                    "type": "input",
+                    "componentConfig": {},
+                    "formType": "value",
+                    "formName": "formControlName",
+                    "validations": [],
+                    "title": "参数取值名称"
+                }
+            ]
+        },
+        {
+            "name": "queryParams",
+            "type": "arrayTable",
+            "componentConfig": {},
+            "formType": "array",
+            "formName": "formControlName",
+            "validations": [],
+            "title": "查询参数",
+            "properties": [
+                {
+                    "name": "name",
+                    "type": "input",
+                    "componentConfig": {
+                        "hiddenTitle": true,
+                        "controlSize": {
+                            "span": 23,
+                            "nzXs": 23,
+                            "nzSm": 23,
+                            "nzMd": 23,
+                            "nzLg": 23,
+                            "ngXl": 23,
+                            "nzXXl": 23
+                        }
+                    },
+                    "formType": "value",
+                    "formName": "formControlName",
+                    "validations": [],
+                    "title": "参数名称"
+                },
+                {
+                    "name": "conditionType",
+                    "type": "select",
+                    "componentConfig": {
+                        "hiddenTitle": true,
+                        "controlSize": {
+                            "span": 23,
+                            "nzXs": 23,
+                            "nzSm": 23,
+                            "nzMd": 23,
+                            "nzLg": 23,
+                            "ngXl": 23,
+                            "nzXXl": 23
+                        },
+                        "options": [
+                            {
+                                "label": "等于",
+                                "value": "eq"
+                            },
+                            {
+                                "label": "不等于",
+                                "value": "neq"
+                            },
+                            {
+                                "label": "模糊匹配",
+                                "value": "ctn"
+                            },
+                            {
+                                "label": "模糊不匹配",
+                                "value": "nctn"
+                            },
+                            {
+                                "label": "包含匹配",
+                                "value": "in"
+                            },
+                            {
+                                "label": "不包含匹配",
+                                "value": "nin"
+                            },
+                            {
+                                "label": "区间匹配",
+                                "value": "btn"
+                            },
+                            {
+                                "label": "大于等于",
+                                "value": "ge"
+                            },
+                            {
+                                "label": "大于",
+                                "value": "gt"
+                            },
+                            {
+                                "label": "小于等于",
+                                "value": "le"
+                            },
+                            {
+                                "label": "小于",
+                                "value": "lt"
+                            }
+                        ],
+                        "labelName": "label",
+                        "valueName": "value"
+                    },
+                    "formType": "value",
+                    "formName": "formControlName",
+                    "validations": [],
+                    "title": "匹配类型"
+                },
+                {
+                    "name": "type",
+                    "type": "input",
+                    "componentConfig": {
+                        "hiddenTitle": true,
+                        "controlSize": {
+                            "span": 23,
+                            "nzXs": 23,
+                            "nzSm": 23,
+                            "nzMd": 23,
+                            "nzLg": 23,
+                            "ngXl": 23,
+                            "nzXXl": 23
+                        }
+                    },
+                    "formType": "value",
+                    "formName": "formControlName",
+                    "validations": [],
+                    "title": "参数类型"
+                },
+                {
+                    "name": "valueName",
+                    "type": "input",
+                    "componentConfig": {
+                        "hiddenTitle": true,
+                        "controlSize": {
+                            "span": 23,
+                            "nzXs": 23,
+                            "nzSm": 23,
+                            "nzMd": 23,
+                            "nzLg": 23,
+                            "ngXl": 23,
+                            "nzXXl": 23
+                        }
+                    },
+                    "formType": "value",
+                    "formName": "formControlName",
+                    "validations": [],
+                    "title": "参数取值名称"
+                }
+            ]
+        },
+        {
+            "name": "bodyParams",
+            "type": "arrayTable",
+            "componentConfig": {},
+            "formType": "array",
+            "formName": "formControlName",
+            "validations": [],
+            "title": "请求体参数",
+            "properties": [
+                {
+                    "name": "name",
+                    "type": "input",
+                    "componentConfig": {
+                        "hiddenTitle": true,
+                        "controlSize": {
+                            "span": 23,
+                            "nzXs": 23,
+                            "nzSm": 23,
+                            "nzMd": 23,
+                            "nzLg": 23,
+                            "ngXl": 23,
+                            "nzXXl": 23
+                        }
+                    },
+                    "formType": "value",
+                    "formName": "formControlName",
+                    "validations": [],
+                    "title": "参数名称"
+                },
+             
+                {
+                    "name": "type",
+                    "type": "input",
+                    "componentConfig": {
+                        "hiddenTitle": true,
+                        "controlSize": {
+                            "span": 23,
+                            "nzXs": 23,
+                            "nzSm": 23,
+                            "nzMd": 23,
+                            "nzLg": 23,
+                            "ngXl": 23,
+                            "nzXXl": 23
+                        }
+                    },
+                    "formType": "value",
+                    "formName": "formControlName",
+                    "validations": [],
+                    "title": "参数类型"
+                },
+                {
+                    "name": "valueName",
+                    "type": "popSelectParameter",
+                    "componentConfig": {
+                        "hiddenTitle": true,
+                        "controlSize": {
+                            "span": 23,
+                            "nzXs": 23,
+                            "nzSm": 23,
+                            "nzMd": 23,
+                            "nzLg": 23,
+                            "ngXl": 23,
+                            "nzXXl": 23
+                        },
+                        "customPage": {
+                            "title": "",
+                            "width": "90%",
+                            "style": null,
+                            "maskClosable": true,
+                            "cancelText": "取消",
+                            "okText": "确定",
+                            "footerButton": null,
+                            "customAction": [],
+                            "customContent": "parameterStruct",
+                            "customPageConfig": {
+                                "type": "popSelectParameter"
+                            },
+                            "sourceData": {
+                                "type": "root"
+                            },
+                            "updateData": [
+                                {
+                                    "name": "type"
+                                },
+                                {
+                                    "name": "valueName"
+                                },
+                                {
+                                    "name": "value"
+                                }
+                            ]
+                        },
+                        "showConfig": {
+                            "showString": [
+                                {
+                                    "name": "valueName"
+                                }
+                            ]
+                        }
+                    },
+                    "formType": "value",
+                    "formName": "formControlName",
+                    "validations": [],
+                    "title": "参数取值名称"
+                },
+                {
+                    "name": "value",
+                    "type": "input",
+                    "componentConfig": {
+                        "hiddenTitle": true,
+                        "controlSize": {
+                            "span": 23,
+                            "nzXs": 23,
+                            "nzSm": 23,
+                            "nzMd": 23,
+                            "nzLg": 23,
+                            "ngXl": 23,
+                            "nzXXl": 23
+                        }
+                    },
+                    "formType": "value",
+                    "formName": "formControlName",
+                    "validations": [],
+                    "title": "默认值"
+                }
+            ]
+        }
+    ]
+}

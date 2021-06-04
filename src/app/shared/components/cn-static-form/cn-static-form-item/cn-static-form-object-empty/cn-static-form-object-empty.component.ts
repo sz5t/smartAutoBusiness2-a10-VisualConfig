@@ -14,9 +14,11 @@ export class CnStaticFormObjectEmptyComponent implements OnInit {
   @Output() public updateValue = new EventEmitter<any>(true);
   @Output() public cascadeValue = new EventEmitter<any>(true);
   @Input() public fromDataService;
+  _globalConfig;
   constructor() { }
 
   ngOnInit(): void {
+    this._globalConfig = JSON.parse(JSON.stringify(this.config));
     this.config = JSON.parse(JSON.stringify(this.config));
 
   }

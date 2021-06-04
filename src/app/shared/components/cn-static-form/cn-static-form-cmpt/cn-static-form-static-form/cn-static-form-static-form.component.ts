@@ -18,7 +18,7 @@ export class CnStaticFormStaticFormComponent implements OnInit {
   staticData: any;
   constructor(private httpClient: HttpClient,) { }
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
 
     // 【当前组件是设置 表格项 展示，或者编辑的内容】
     // 1.计算出当前组件类型
@@ -31,7 +31,7 @@ export class CnStaticFormStaticFormComponent implements OnInit {
 
     if (this.config) {
       if (this.config.hasOwnProperty('asyncLoad') && this.config['asyncLoad']) {
-        this.load();
+        await this.load();
 
       } else {
         this.attr_config = this.config;
@@ -84,7 +84,7 @@ export class CnStaticFormStaticFormComponent implements OnInit {
     // 例如 input——》 加载input 配置 
     let backData = null;
     const timestamp = new Date().getTime();
-    const data = await this.httpClient.get(`assets/${cmpt}.json?${timestamp}`).toPromise();
+    const data = await this.httpClient.get(`assets/${cmpt}?${timestamp}`).toPromise();
     backData = data;
     console.log('加载配置', data);
     return backData;

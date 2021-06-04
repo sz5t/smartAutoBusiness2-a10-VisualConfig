@@ -4,6 +4,7 @@ import { NzModalService } from 'ng-zorro-antd/modal';
 import { configFormDataServerService } from 'src/app/core/services/config/form-data.service';
 import { CnStaticFormAjaxComponent } from '../../cn-static-form-cmpt/cn-static-form-ajax/cn-static-form-ajax.component';
 import { CnStaticFormGridItemComponent } from '../../cn-static-form-cmpt/cn-static-form-grid-item/cn-static-form-grid-item.component';
+import { CnStaticFormMainResourceComponent } from '../../cn-static-form-cmpt/cn-static-form-main-resource/cn-static-form-main-resource.component';
 import { CnStaticFormParameterStructComponent } from '../../cn-static-form-cmpt/cn-static-form-parameter-struct/cn-static-form-parameter-struct.component';
 import { CnStaticFormStaticFormComponent } from '../../cn-static-form-cmpt/cn-static-form-static-form/cn-static-form-static-form.component';
 import { CnStaticFormComponent } from '../../cn-static-form.component';
@@ -11,7 +12,8 @@ const components: { [type: string]: Type<any> } = {
   ajax: CnStaticFormAjaxComponent,
   gridItem: CnStaticFormGridItemComponent,
   staticForm: CnStaticFormStaticFormComponent,
-  parameterStruct: CnStaticFormParameterStructComponent
+  parameterStruct: CnStaticFormParameterStructComponent,
+  mainResource: CnStaticFormMainResourceComponent
 
 };
 @Component({

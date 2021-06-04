@@ -17,7 +17,7 @@
 
 
             <nz-collapse>
-                <nz-collapse-panel [nzHeader]="config['title']+(i+1)" [nzExtra]="delextraTemplate">
+                <nz-collapse-panel [nzHeader]="getobjectTitle(i)" [nzExtra]="delextraTemplate">
                     <app-cn-static-form-object-empty [validateForm]="item" [config]="config"
                         [fromDataService]="fromDataService">
                     </app-cn-static-form-object-empty>

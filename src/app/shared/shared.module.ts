@@ -219,6 +219,9 @@ import { CnStaticFormChildArrayComponent } from './components/cn-static-form/cn-
 import { SmtTabsComponent } from './smt-components/smt-tabs/smt-tabs.component';
 import { SmtToolbarComponent } from './smt-components/smt-toolbar/smt-toolbar.component';
 import { SmtTreeTableComponent } from './smt-components/smt-tree-table/smt-tree-table.component';
+import { CnStaticFormMainResourceComponent } from './components/cn-static-form/cn-static-form-cmpt/cn-static-form-main-resource/cn-static-form-main-resource.component';
+import { CnStaticFormApiComponent } from './components/cn-static-form/cn-static-form-cmpt/cn-static-form-api/cn-static-form-api.component';
+import { CnStaticFormPopApiComponent } from './components/cn-static-form/cn-static-form-item/cn-static-form-pop-api/cn-static-form-pop-api.component';
 
 
 // #region third libs
@@ -426,6 +429,7 @@ const COMPONENTS = [
   CnStaticFormLabelComponent,
   CnStaticFormPopSelectParameterComponent,
   CnStaticFormChildArrayComponent,
+  CnStaticFormPopApiComponent,
   // --静态表单内特殊组件结构--
   CnStaticFormAjaxComponent,
   CnStaticFormFormItemComponent,
@@ -435,6 +439,8 @@ const COMPONENTS = [
   CnStaticFormTreeObjectComponent,
   CnStaticFormPopFormComponent,
   CnStaticFormSwitchConentComponent,
+  CnStaticFormMainResourceComponent,
+  CnStaticFormApiComponent,
   // 解析布局组件
   SmtPageComponent,
   SmtLayoutComponent,
@@ -485,6 +491,8 @@ const DIRECTIVES = [
     SafeUrlPipe,
     CfgAttributeRanksRowModalComponent,
     ToolAttrJsonComponent,
+
+
   ],
   exports: [
     CommonModule,

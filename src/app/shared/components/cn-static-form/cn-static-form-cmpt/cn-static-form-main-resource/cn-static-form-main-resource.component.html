@@ -1,0 +1,44 @@
+【字段生成】
+更新生成：去除不存在，补充新增
+完全重新生成：清楚，重新生成
+补充生成：保留，补充新增
+【列生成】 根据字段生成列（字段>列） 先生成字段-》再生成列
+【生成范围 field 行内操作不变】
+更新生成：去除不存在，补充新增
+完全重新生成：清楚，重新生成
+补充生成：保留，补充新增
+【字段预览】
+【主资源】【字段】-》从公共服务取数据
+选取资源，点击确定的时候，读取当前资源的字段信息【异步读取，将信息写入当前资源】
+资源名称唯一
+读取资源 /column/queryParamByResourceId?resourceId=
+<nz-tabset nzTabPosition="top" [nzType]="'card'">
+    <nz-tab nzTitle="资源内容">
+        <!-- {{ tab.title}} -->
+        <app-cn-static-form *ngIf="attr_config" #staticForm [config]="attr_config" [staticData]="sourceData"
+            [fromDataService]="fromDataService" (updateValue)="staticFormValueChange($event)">
+        </app-cn-static-form>
+
+    </nz-tab>
+    <nz-tab nzTitle="字段">
+        <!-- {{ tab.title}} -->
+
+        <app-cn-static-form *ngIf="attr_config1" #staticForm [config]="attr_config1" [staticData]="sourceData1"
+            [fromDataService]="fromDataService" (updateValue)="staticFormValueChange1($event)">
+        </app-cn-static-form>
+
+    </nz-tab>
+    <nz-tab nzTitle="资源选择">
+        <!-- {{ tab.title}} -->
+
+        <app-cn-static-form-api></app-cn-static-form-api>
+        <!--  <button nz-button nzType="primary" (click)="zhuceEvent()">测试</button>
+
+        <div CnDynamicLayoutResolverDirective [config]="page_config" [dataServe]="componentDataService"
+            [tempData]="tempValue" [initData]="initValue"></div>
+        <app-cn-page #page [customPageId]="'PAGE_PAGE_RESOURCE_SELECT'" [config]="cn_page_config"></app-cn-page> -->
+    </nz-tab>
+
+
+
+</nz-tabset>

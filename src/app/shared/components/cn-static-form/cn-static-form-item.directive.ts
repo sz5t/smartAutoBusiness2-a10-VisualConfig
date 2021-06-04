@@ -12,6 +12,7 @@ import { CnStaticFormInputComponent } from './cn-static-form-item/cn-static-form
 import { CnStaticFormLabelComponent } from './cn-static-form-item/cn-static-form-label/cn-static-form-label.component';
 import { CnStaticFormObjectCardComponent } from './cn-static-form-item/cn-static-form-object-card/cn-static-form-object-card.component';
 import { CnStaticFormObjectEmptyComponent } from './cn-static-form-item/cn-static-form-object-empty/cn-static-form-object-empty.component';
+import { CnStaticFormPopApiComponent } from './cn-static-form-item/cn-static-form-pop-api/cn-static-form-pop-api.component';
 import { CnStaticFormPopSelectParameterComponent } from './cn-static-form-item/cn-static-form-pop-select-parameter/cn-static-form-pop-select-parameter.component';
 import { CnStaticFormSelectComponent } from './cn-static-form-item/cn-static-form-select/cn-static-form-select.component';
 import { CnStaticFormSliderComponent } from './cn-static-form-item/cn-static-form-slider/cn-static-form-slider.component';
@@ -33,6 +34,7 @@ const components: { [type: string]: Type<any> } = {
   popSelectParameter: CnStaticFormPopSelectParameterComponent,
   treeObject: CnStaticFormTreeObjectComponent,
   childArray: CnStaticFormChildArrayComponent,
+  popApi: CnStaticFormPopApiComponent
 
 }
 @Directive({

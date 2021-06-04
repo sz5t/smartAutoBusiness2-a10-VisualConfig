@@ -1,0 +1,41 @@
+{
+    "type": "staticForm",
+    "backName": "title",
+    "backConfig": [
+        {
+            "name": "title"
+        },
+        {
+            "name": "showTitle"
+        }
+    ],
+    "properties": [
+        {
+            "name": "id",
+            "type": "input",
+            "componentConfig": {},
+            "formType": "value",
+            "formName": "formControlName",
+            "validations": [],
+            "title": "主键"
+        },
+        {
+            "name": "title",
+            "type": "input",
+            "componentConfig": {},
+            "formType": "value",
+            "formName": "formControlName",
+            "validations": [],
+            "title": "标题"
+        },
+        {
+            "name": "isPagination",
+            "type": "switch",
+            "componentConfig": {},
+            "formType": "value",
+            "formName": "formControlName",
+            "validations": [],
+            "title": "是否分页"
+        }
+    ]
+}

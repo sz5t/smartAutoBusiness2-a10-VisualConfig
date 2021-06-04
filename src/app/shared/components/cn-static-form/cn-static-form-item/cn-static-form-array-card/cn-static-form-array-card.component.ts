@@ -114,7 +114,39 @@ export class CnStaticFormArrayCardComponent implements OnInit {
   }
 
 
+  getobjectTitle(i?) {
 
+    let showValue;
+    let _validateFormArray1 = this.validateFormArray.controls[i] as FormGroup;
+    let d = _validateFormArray1.value;
+    if (d) {
+      if (this.config.componentConfig['showConfig']) {
+        let _valueStrConfig = this.config.componentConfig['showConfig']['showString'];
+        showValue = this.getStringByshow(d, _valueStrConfig);
+      }
+    }
+    if (!showValue) {
+      showValue = this.config['title'] + (i + 1);
+    }
+    return showValue;;
+  }
+
+
+  getStringByshow(_value, _config) {
+    let str: any;
+    _config.forEach(element => {
+      if (_value && _value.hasOwnProperty(element['name'])) {
+        str = _value[element['name']];
+        if (element['children'] && element['children'].length > 0) {
+          str = this.getStringByshow(str, element['children'])
+        }
+      }
+
+    });
+
+    return str;
+
+  }
   set_formGroupControlName(data, Control) {
 
     let obj: any = {};

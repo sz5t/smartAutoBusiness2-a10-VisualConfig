@@ -15,7 +15,7 @@
         <div nz-col [nzSpan]="span" *ngFor="let item of validateFormArray.controls;let i = index;">
 
 
-            <nz-card nzType="inner" [nzTitle]="config['title']+i" [nzExtra]="delextraTemplate">
+            <nz-card nzType="inner" [nzTitle]="getobjectTitle(i)" [nzExtra]="delextraTemplate">
                 <app-cn-static-form-object-empty [validateForm]="item" [config]="config"
                     [fromDataService]="fromDataService">
                 </app-cn-static-form-object-empty>
