@@ -33,9 +33,9 @@ export class UserLockComponent {
     if (this.f.valid) {
       console.log('Valid!');
       console.log(this.f.value);
-      this.tokenService.set({
-        token: '123',
-      });
+      // this.tokenService.set({
+      //   token: '123',
+      // });
       this.router.navigate(['dashboard']);
     }
   }

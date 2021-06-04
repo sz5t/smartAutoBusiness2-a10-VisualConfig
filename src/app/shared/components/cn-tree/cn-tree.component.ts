@@ -116,232 +116,7 @@ export class CnTreeComponent extends CnComponentBase implements OnInit, AfterVie
   public beforeOperation;
   searchValue = '';
   defaultSelectedKeys = [];
-
-  private nodeSelectionConfig: any = [
-    // 或关系
-    {
-      id: 'selNode1',
-      compare: [
-        // 并且关系
-        {
-          type: 'clickNode',
-          valueName: 'NODE_TYPE',
-          method: 'value',
-          value: 'data',
-          compare: 'eq',
-          prevent: false,
-        },
-      ],
-    },
-  ];
-
   windowDialog;
-
-  _config = {
-    enableLabel: false, // 是否显示文本 默认不显示
-    enableTooltip: '', // 是否显示提示 默认不显示
-    enableIcon: true,
-    enableDefaultValue: '', // 是否启用默认值 默认不显示
-    enableSwitch: true, // 是否启用切换状态
-    showTheme: 'icon', // tag icon
-    enableColor: '', // 是否启用颜色
-    enableSelected: false, // 是否启用选中
-    enable: true, // 是否启用前置拦截，满足当前状态，显示图标状态
-    initObject: {
-      // 默认展示
-      label: '',
-      color: 'magenta',
-      value: '001',
-      icon: 'eye',
-    },
-    options: [
-      // 静态数据
-      { label: '', color: 'magenta', value: '001', icon: 'eye', tooltipTitle: '[状态]可见' },
-      { label: '', color: 'lime', value: '002', icon: 'eye-invisible', tooltipTitle: '[状态]不可见' },
-      { label: '', color: 'cyan', value: '003', icon: 'setting', tooltipTitle: '[状态]' },
-    ],
-
-    loadingConfig: {
-      // 远程加载数据
-      id: 'loadformselect1',
-    },
-    columns: [
-      // 配置图标状态映射
-      {
-        title: '值', // 映射id
-        type: 'value',
-        field: 'ID',
-      },
-      {
-        title: '图标', // 映射父id
-        type: 'icon',
-        field: 'PID',
-      },
-      {
-        title: '颜色', // 显示内容
-        type: 'color',
-        field: 'OFFICENAME',
-      },
-      {
-        title: '文本', // 显示内容
-        type: 'label',
-        field: 'OFFICENAME',
-      },
-    ],
-  };
-
-  _config1 = {
-    enableLabel: false, // 是否显示文本 默认不显示
-    enableTooltip: '', // 是否显示提示 默认不显示
-    enableIcon: true,
-    enableDefaultValue: '', // 是否启用默认值 默认不显示
-    enableSwitch: true, // 是否启用切换状态
-    showTheme: 'icon', // tag icon
-    enableColor: '', // 是否启用颜色
-    enableSelected: false, // 是否启用选中
-    enable: true, // 是否启用前置拦截，满足当前状态，显示图标状态
-    initObject: {
-      // 默认展示
-      label: '',
-      color: 'magenta',
-      value: '001',
-      icon: 'eye',
-    },
-    options: [
-      // 静态数据
-      { label: '', color: 'magenta', value: '001', icon: 'unlock', tooltipTitle: '[授权]可' },
-      { label: '', color: 'lime', value: '002', icon: 'lock', tooltipTitle: '[授权]不可' },
-      { label: '', color: 'cyan', value: '003', icon: 'setting', tooltipTitle: '[授权]' },
-    ],
-    loadingConfig: {
-      // 远程加载数据
-      id: 'loadformselect1',
-    },
-    columns: [
-      // 配置图标状态映射
-      {
-        title: '值', // 映射id
-        type: 'value',
-        field: 'ID',
-      },
-      {
-        title: '图标', // 映射父id
-        type: 'icon',
-        field: 'PID',
-      },
-      {
-        title: '颜色', // 显示内容
-        type: 'color',
-        field: 'OFFICENAME',
-      },
-      {
-        title: '文本', // 显示内容
-        type: 'label',
-        field: 'OFFICENAME',
-      },
-    ],
-  };
-
-  _config2 = {
-    enableLabel: true, // 是否显示文本 默认不显示
-    enableTooltip: '', // 是否显示提示 默认不显示
-    enableIcon: false,
-    enableDefaultValue: '', // 是否启用默认值 默认不显示
-    enableSwitch: true, // 是否启用切换状态
-    showTheme: 'tag', // tag icon
-    enableColor: '', // 是否启用颜色
-    enableSelected: false, // 是否启用选中
-    enable: true, // 是否启用前置拦截，满足当前状态，显示图标状态
-    initObject: {
-      // 默认展示,也可以是唯一展示，根据传入值，展示当前信息
-      label: '',
-      color: 'magenta',
-      value: '001',
-      icon: 'eye',
-    },
-    options: [
-      // 静态数据
-      { label: '1', color: 'magenta', value: '001', icon: '', tooltipTitle: '[优先级]1' },
-      { label: '2', color: 'red', value: '002', icon: '', tooltipTitle: '[优先级]2' },
-      { label: '3', color: 'volcano', value: '003', icon: '', tooltipTitle: '[优先级]3' },
-      { label: '4', color: 'orange', value: '004', icon: '', tooltipTitle: '[优先级]4' },
-      { label: '5', color: 'gold', value: '005', icon: '', tooltipTitle: '[优先级]5' },
-      { label: '6', color: 'lime', value: '006', icon: '', tooltipTitle: '[优先级]6' },
-      { label: '7', color: 'green', value: '007', icon: '', tooltipTitle: '[优先级]7' },
-      { label: '8', color: 'cyan', value: '008', icon: '', tooltipTitle: '[优先级]8' },
-      { label: '9', color: 'blue', value: '009', icon: '', tooltipTitle: '[优先级]9' },
-      { label: '0', color: 'purple', value: '000', icon: 'setting', tooltipTitle: '[优先级]' },
-    ],
-    loadingConfig: {
-      // 远程加载数据
-      id: 'loadformselect1',
-    },
-    columns: [
-      // 配置图标状态映射
-      {
-        title: '值', // 映射id
-        type: 'value',
-        field: 'ID',
-      },
-      {
-        title: '图标', // 映射父id
-        type: 'icon',
-        field: 'PID',
-      },
-      {
-        title: '颜色', // 显示内容
-        type: 'color',
-        field: 'OFFICENAME',
-      },
-      {
-        title: '文本', // 显示内容
-        type: 'label',
-        field: 'OFFICENAME',
-      },
-    ],
-  };
-
-  _config3 = [
-    {
-      id: '001',
-      field: 'ICON_STATE', // 对应字段
-      position: 'left', // 位置 left  right  默认left
-      iconConfig: {
-        pre: {
-          type: 'default', // default
-          caseValue: {
-            type: 'tempValue',
-            valueName: 'NODE_TYPE',
-            regular: '^1$',
-            value: '',
-          },
-        },
-        enableLabel: false, // 是否显示文本 默认不显示
-        enableTooltip: true, // 是否显示提示 默认不显示
-        enableIcon: true,
-        enableDefaultValue: true, // 是否启用默认值 默认不显示
-        enableSwitch: true, // 是否启用切换状态
-        showTheme: 'icon', // tag icon
-        enableColor: '', // 是否启用颜色
-        enableSelected: false, // 是否启用选中
-        enable: true, // 是否启用前置拦截，满足当前状态，显示图标状态
-        defaultValue: '003',
-        initObject: {
-          // 默认展示,也可以是唯一展示，根据传入值，展示当前信息
-          label: '',
-          color: 'magenta',
-          value: '001',
-          icon: 'eye',
-        },
-        options: [
-          // 静态数据
-          { label: '', color: 'magenta', value: '001', icon: 'eye', tooltipTitle: '[状态]可见' },
-          { label: '', color: 'lime', value: '002', icon: 'eye-invisible', tooltipTitle: '[状态]不可见' },
-          { label: '', color: 'red', value: '003', icon: 'file-unknown', tooltipTitle: '[状态]未设置' },
-        ],
-      },
-    },
-  ];
 
   private _initInnerValue() {
     if (this.tempData) {
@@ -465,38 +240,6 @@ export class CnTreeComponent extends CnComponentBase implements OnInit, AfterVie
     }
   }
 
-  /**
-   * 构建表格列集合
-   * @param columns
-   */
-  private _buildColumns(columns) {
-    if (Array.isArray(columns) && columns.length > 0) {
-      const colObjs = columns.filter((item) => item.type === 'field');
-      const actionCfgs = columns.filter((item) => item.type === 'action');
-      if (actionCfgs && actionCfgs.length > 0) {
-        actionCfgs.map((cfg) => {
-          const colActions = [];
-          cfg.actionIds.map((actionId) => {
-            const act = this.config.rowActions.find((action) => actionId === action.id);
-            if (act) {
-              colActions.push(act);
-            }
-          });
-          if (colActions.length > 0) {
-            cfg.action = colActions;
-          }
-        });
-      }
-
-      if (colObjs && colObjs.length > 0) {
-        this.tableColumns.push(...colObjs);
-      }
-      if (actionCfgs && actionCfgs.length > 0) {
-        this.tableColumns.push(...actionCfgs);
-      }
-    }
-  }
-
   public async load() {
     this.isLoading = true;
     this.nodes = [];
@@ -531,28 +274,6 @@ export class CnTreeComponent extends CnComponentBase implements OnInit, AfterVie
       this.defaultSelectedKeys = this.defaultSelectedKeys.filter((r) => r !== '');
     }
     if (!this.config.isSelected && this.config.defaultSelectedConfig) {
-      /*     let dd = {  // 指定层级定位
-                    location: {
-                        locationContent: {
-                            hierarchy: 0, // 层索引
-                            index: 0,  // 位置索引
-                            isLeaf: false,
-                            locationContent: {
-                                hierarchy: 1, // 层索引
-                                index: 0,  // 位置索引
-                                isLeaf: true
-                            }
-                        }
-                    },
-                    default: {
-                        locationContent: {
-                            hierarchy: 0, // 层索引
-                            index: 0,  // 位置索引
-                            isLeaf: true
-                        }
-                    }
-                } */
-
       let location_id;
       if (this.config.defaultSelectedConfig.location) {
         location_id = this.getSeletedkeys(this.config.defaultSelectedConfig.location.locationContent, this.nodes);
@@ -572,7 +293,6 @@ export class CnTreeComponent extends CnComponentBase implements OnInit, AfterVie
     setTimeout(() => {
       if (this.defaultSelectedKeys.length > 0) {
         const select_node = this.treeObj.getTreeNodeByKey(this.defaultSelectedKeys[0]);
-        // console.log('树节点选中', this.defaultSelectedKeys, select_node)
         if (select_node) {
           const clickNode = {
             eventName: 'click',
@@ -583,7 +303,6 @@ export class CnTreeComponent extends CnComponentBase implements OnInit, AfterVie
       }
     });
     console.log('+++++树++++++++++', this.dataServe);
-    // this.dataServe && this.dataServe.setComponentValue(this.config.id, this.nodes);
   }
 
   private emptyLoad(option?) {
@@ -621,6 +340,7 @@ export class CnTreeComponent extends CnComponentBase implements OnInit, AfterVie
     if (node.children && node.children.length > 0) {
       if (!this.config.async) {
         // 静态
+        node.expanded = this.config.expandAll;
         node.children.map((n) => {
           this._setTreeNode(n);
         });
@@ -1149,6 +869,7 @@ export class CnTreeComponent extends CnComponentBase implements OnInit, AfterVie
           if (parentNode.getChildren().length === 0) {
             parentNode.isSelected = true;
             parentNode.isExpanded = false;
+            parentNode.isLeaf = true;
             this.ACTIVED_NODE = parentNode;
           } else {
             const firstNode = parentNode.getChildren()[0];
@@ -1161,6 +882,8 @@ export class CnTreeComponent extends CnComponentBase implements OnInit, AfterVie
           this.nodes[0].isSelected = true;
           this.ACTIVED_NODE = this.nodes[0];
         }
+
+        this.NODE_SELECTED = this.ACTIVED_NODE.origin;
       }
     }
   }
@@ -1302,7 +1025,6 @@ export class CnTreeComponent extends CnComponentBase implements OnInit, AfterVie
    * loggin finish
    */
   public async executeCheckedNodesByID(option) {
-    debugger;
     console.log('execute checked nodes', option);
     const url = option.ajaxConfig.url;
     const method = option.ajaxConfig.ajaxType;
@@ -1524,10 +1246,11 @@ export class CnTreeComponent extends CnComponentBase implements OnInit, AfterVie
   }
 
   public async appendChildToRootNode(option) {
+    let appendNodeData: any = {};
     if (this.config.loadingItemConfig) {
       option = await this.loadItem(option);
     }
-    const appendNodeData: any = {};
+
     this.config.columns.map((col) => {
       appendNodeData[col.type] = option[col.field];
     });
@@ -1551,13 +1274,15 @@ export class CnTreeComponent extends CnComponentBase implements OnInit, AfterVie
 
   public async appendChildToSelectedNode(option) {
     // let appendNode: NzTreeNode;
+    let appendNodeData: any = {};
     if (this.config.loadingItemConfig) {
       option = await this.loadItem(option);
     }
-    const appendNodeData: any = {};
+
     this.config.columns.map((col) => {
       appendNodeData[col.type] = option[col.field];
     });
+
     appendNodeData.isLeaf = true;
     appendNodeData.origin = { ...option, ...appendNodeData };
     // const addChildNode = new NzTreeNode({
@@ -1749,10 +1474,11 @@ export class CnTreeComponent extends CnComponentBase implements OnInit, AfterVie
   }
 
   public async updateSelectedNode(option) {
-    const appendNodeData: any = {};
+    let appendNodeData: any = {};
     if (this.config.loadingItemConfig) {
       option = await this.loadItem(option);
     }
+
     this.config.columns.map((col) => {
       appendNodeData[col.type] = option[col.field];
     });
@@ -1946,6 +1672,7 @@ export class CnTreeComponent extends CnComponentBase implements OnInit, AfterVie
     // if(isEditForm) {
 
     // }
+    debugger;
     if (option.changeValue) {
       const d = ParameterResolver.resolve({
         params: option.changeValue.params,
@@ -1961,7 +1688,7 @@ export class CnTreeComponent extends CnComponentBase implements OnInit, AfterVie
         if (param.type === 'value') {
           // 类型为value是不需要进行任何值的解析和变化
         } else {
-          if (d[param.name]) {
+          if (d[param.name] || d[param.name] === 0) {
             param.value = d[param.name];
           }
         }

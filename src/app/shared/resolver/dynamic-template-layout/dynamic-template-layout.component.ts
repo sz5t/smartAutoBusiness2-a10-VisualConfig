@@ -87,48 +87,50 @@ export class CnDynamicTemplateLayoutComponent extends CnComponentBase implements
         }
       });
     } else {
-      this.componentService.apiService.post('resource/B_P_C_CONFIG_PAGE_ALL/operate', { PAGE_CODE: layoutId }).subscribe((response) => {
-        if (response.data._procedure_resultset_1[0].W === '') {
-          this.config = null;
-        } else {
-          const pageJson = JSON.parse(response.data._procedure_resultset_1[0].W);
-          // console.log('=====当前页加载数据=====',pageJson);
-          for (const key in pageJson) {
-            if (pageJson.hasOwnProperty(key)) {
-              // 判断是否时主页面配置,如果是主页面配置,则直接进行页面解析
-              if (key === layoutId) {
-                this.config = pageJson[layoutId].layoutJson;
-                // const componentJson = pageJson[params.name]['componentsJson']
-                // if (Array.isArray(componentJson) && componentJson.length > 0) {
-                //   componentJson.forEach(json => {
-                //     this.componentService.cacheService.set(json['id'], json);
-                //   });
-                // }
+      this.componentService.apiService
+        .post('smt-app/resource/B_P_C_CONFIG_PAGE_ALL/operate', { PAGE_CODE: layoutId })
+        .subscribe((response) => {
+          if (response.data._procedure_resultset_1[0].W === '') {
+            this.config = null;
+          } else {
+            const pageJson = JSON.parse(response.data._procedure_resultset_1[0].W);
+            // console.log('=====当前页加载数据=====',pageJson);
+            for (const key in pageJson) {
+              if (pageJson.hasOwnProperty(key)) {
+                // 判断是否时主页面配置,如果是主页面配置,则直接进行页面解析
+                if (key === layoutId) {
+                  this.config = pageJson[layoutId].layoutJson;
+                  // const componentJson = pageJson[params.name]['componentsJson']
+                  // if (Array.isArray(componentJson) && componentJson.length > 0) {
+                  //   componentJson.forEach(json => {
+                  //     this.componentService.cacheService.set(json['id'], json);
+                  //   });
+                  // }
 
-                // liu 2020.11.12
-                this.setCache(key, 'mainPage', pageJson[layoutId], null);
-                this._route.queryParams.subscribe((queryParam) => {
-                  this.buildLayout({ name: layoutId, ...queryParam });
-                });
+                  // liu 2020.11.12
+                  this.setCache(key, 'mainPage', pageJson[layoutId], null);
+                  this._route.queryParams.subscribe((queryParam) => {
+                    this.buildLayout({ name: layoutId, ...queryParam });
+                  });
 
-                // this.componentService.cacheService.set(key, pageJson[params.name]);
-              } else {
-                // 将子页面的配置加入缓存, 后期使用子页面数据时直接从缓存中获取
+                  // this.componentService.cacheService.set(key, pageJson[params.name]);
+                } else {
+                  // 将子页面的配置加入缓存, 后期使用子页面数据时直接从缓存中获取
 
-                // 2020.11.12
-                this.setCache(key, 'childPage', pageJson[key], null);
-                // this.componentService.cacheService.set(key, pageJson[key]);
-                // const componentJson = pageJson[key]['componentsJson']
-                // if (Array.isArray(componentJson) && componentJson.length > 0) {
-                //   componentJson.forEach(json => {
-                //     this.componentService.cacheService.set(json['id'], json);
-                //   });
-                // }
+                  // 2020.11.12
+                  this.setCache(key, 'childPage', pageJson[key], null);
+                  // this.componentService.cacheService.set(key, pageJson[key]);
+                  // const componentJson = pageJson[key]['componentsJson']
+                  // if (Array.isArray(componentJson) && componentJson.length > 0) {
+                  //   componentJson.forEach(json => {
+                  //     this.componentService.cacheService.set(json['id'], json);
+                  //   });
+                  // }
+                }
               }
             }
           }
-        }
-      });
+        });
     }
   }
 
@@ -282,7 +284,7 @@ export class CnDynamicTemplateLayoutComponent extends CnComponentBase implements
       console.log('params=========>', params);
       if (params.name) {
         this.componentService.apiService
-          .post('resource/B_P_C_CONFIG_PAGE_ALL/operate', { PAGE_CODE: params.name })
+          .post('smt-app/resource/B_P_C_CONFIG_PAGE_ALL/operate', { PAGE_CODE: params.name })
           .subscribe((response) => {
             if (response.data._procedure_resultset_1[0].W === '') {
               this.config = null;

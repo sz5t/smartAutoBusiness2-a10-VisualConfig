@@ -58,10 +58,9 @@ export class ParameterResolver {
       { name: 'pathParams' },
       { name: 'queryParams' },
       { name: 'bodyParams' },
-      { name: 'params' }
+      { name: 'params' },
     ];
-    ParamsList.forEach(item => {
-
+    ParamsList.forEach((item) => {
       let item_result = {};
       if (model.hasOwnProperty(item['name'])) {
         for (const param of model.params[item['name']]) {
@@ -80,12 +79,9 @@ export class ParameterResolver {
         }
       }
       result[item['name']] = item_result;
-    })
+    });
 
     return result;
-
-
-
   }
 
   private static tempValue(param, model) {
@@ -266,6 +262,9 @@ class BaseParameter {
         // strQ = strQ + 'lt(' + value + ')';
         strQ = `${strQ}lt(${value})`;
         break;
+      case 'like':
+        strQ = `like(%${value}%)`;
+        break;
       default:
         strQ = value;
         break;
@@ -309,16 +308,15 @@ class TempValueParameter extends BaseParameter implements IParameter {
     super();
   }
   public buildParameter() {
-    if (this._model.tempValue && this._model.tempValue[this._param.valueName]) {
+    debugger;
+    if (this._model.tempValue && (this._model.tempValue[this._param.valueName] || this._model.tempValue[this._param.valueName] === 0)) {
       if (this._param.conditionType) {
-        this._result = this.getParameter(
-          this._param.conditionType,
-          this._model.tempValue[this._param.valueName]);
+        this._result = this.getParameter(this._param.conditionType, this._model.tempValue[this._param.valueName]);
       } else {
         this._result = this._model.tempValue[this._param.valueName];
       }
     } else if (!this._param.valueName) {
-      this._result = this._model.tempValue;  // 不配valueName，则将当前属性给他 object
+      this._result = this._model.tempValue; // 不配valueName，则将当前属性给他 object
     } else {
       if (this._param.value === null || this._param.value === '' || this._param.value === 0) {
         if (this._param.conditionType) {
@@ -386,14 +384,11 @@ class ItemParameter extends BaseParameter implements IParameter {
             this._result = this._param.value;
           }
         } else if (!this._param.valueName) {
-          this._result = this._model.item;  // 不配valueName，则将当前属性给他 object
+          this._result = this._model.item; // 不配valueName，则将当前属性给他 object
         }
       } else {
         if (this._param.conditionType) {
-          this._result = this.getParameter(
-            this._param.conditionType,
-            this._model.item[this._param.valueName],
-          );
+          this._result = this.getParameter(this._param.conditionType, this._model.item[this._param.valueName]);
         } else {
           this._result = this._model.item[this._param.valueName];
         }
@@ -428,10 +423,7 @@ class ValidationParameter extends BaseParameter implements IParameter {
         }
       } else {
         if (this._param.conditionType) {
-          this._result = this.getParameter(
-            this._param.conditionType,
-            this._model.validation[this._param.valueName],
-          );
+          this._result = this.getParameter(this._param.conditionType, this._model.validation[this._param.valueName]);
         } else {
           this._result = this._model.validation[this._param.valueName];
         }
@@ -463,10 +455,7 @@ class AddedRows extends BaseParameter implements IParameter {
         }
       } else {
         if (this._param.conditionType) {
-          this._result = this.getParameter(
-            this._param.conditionType,
-            this._model.addedRows[this._param.valueName],
-          );
+          this._result = this.getParameter(this._param.conditionType, this._model.addedRows[this._param.valueName]);
         } else {
           this._result = this._model.addedRows[this._param.valueName];
         }
@@ -498,10 +487,7 @@ class EditedRows extends BaseParameter implements IParameter {
         }
       } else {
         if (this._param.conditionType) {
-          this._result = this.getParameter(
-            this._param.conditionType,
-            this._model.editedRows[this._param.valueName],
-          );
+          this._result = this.getParameter(this._param.conditionType, this._model.editedRows[this._param.valueName]);
         } else {
           this._result = this._model.editedRows[this._param.valueName];
         }
@@ -524,16 +510,11 @@ class ComponentValueParameter extends BaseParameter implements IParameter {
     const cmpVal = this._model.componentValue;
     if (this._param.valueName === 'componentValue') {
       this._result = JSON.stringify(cmpVal);
-    }
-    else if (!this._param.valueName) {
-      this._result = cmpVal;  // 不配valueName，则将当前属性给他 object
+    } else if (!this._param.valueName) {
+      this._result = cmpVal; // 不配valueName，则将当前属性给他 object
     }
     // 判断组件取值是否为null
-    if (
-      cmpVal[this._param.valueName] === null ||
-      cmpVal[this._param.valueName] === undefined ||
-      cmpVal[this._param.valueName] === ''
-    ) {
+    if (cmpVal[this._param.valueName] === null || cmpVal[this._param.valueName] === undefined || cmpVal[this._param.valueName] === '') {
       if (this._param.value !== undefined) {
         if (this._param.conditionType) {
           this._result = this.getParameter(this._param.conditionType, this._param.value);
@@ -544,20 +525,13 @@ class ComponentValueParameter extends BaseParameter implements IParameter {
           this._result = this._param.value;
         }
       }
-
     } else if (cmpVal === 0) {
-
-    }
-    else {
+    } else {
       if (this._param.conditionType) {
-        this._result = this.getParameter(
-          this._param.conditionType,
-          cmpVal[this._param.valueName],
-        );
+        this._result = this.getParameter(this._param.conditionType, cmpVal[this._param.valueName]);
       } else {
         this._result = cmpVal[this._param.valueName];
       }
-
     }
 
     return this._result;
@@ -612,10 +586,7 @@ class SelectedParameter extends BaseParameter implements IParameter {
     if (this._model.item) {
       //  result[param['name']] = model.item[param['valueName']];
       if (this._param.conditionType) {
-        this._result = this.getParameter(
-          this._param.conditionType,
-          this._model.this._item[this._param.valueName],
-        );
+        this._result = this.getParameter(this._param.conditionType, this._model.this._item[this._param.valueName]);
       } else {
         this._result = this._model.item[this._param.valueName];
       }
@@ -623,7 +594,6 @@ class SelectedParameter extends BaseParameter implements IParameter {
     return this._result;
   }
 }
-
 
 /**
  * 构建勾选ID项
@@ -650,7 +620,6 @@ class CheckedItemParameter extends BaseParameter implements IParameter {
  * 构建勾选表格行数据参数
  */
 class CheckedRowParameter extends BaseParameter implements IParameter {
-
   private _result: any[];
   constructor(private _param, private _model) {
     super();
@@ -710,10 +679,7 @@ class InitValueParameter extends BaseParameter implements IParameter {
   }
   public buildParameter() {
     if (this._model.initValue) {
-      if (
-        this._model.initValue[this._param.valueName] === null ||
-        this._model.initValue[this._param.valueName] === undefined
-      ) {
+      if (this._model.initValue[this._param.valueName] === null || this._model.initValue[this._param.valueName] === undefined) {
         if (this._param.value !== undefined) {
           if (this._param.conditionType) {
             this._result = this.getParameter(this._param.conditionType, this._model.initValue.value);
@@ -726,10 +692,7 @@ class InitValueParameter extends BaseParameter implements IParameter {
         }
       } else {
         if (this._param.conditionType) {
-          this._result = this.getParameter(
-            this._param.conditionType,
-            this._model.initValue[this._param.valueName],
-          );
+          this._result = this.getParameter(this._param.conditionType, this._model.initValue[this._param.valueName]);
         } else {
           this._result = this._model.initValue[this._param.valueName];
         }
@@ -771,10 +734,7 @@ class CascadeValueParameter extends BaseParameter implements IParameter {
   public buildParameter() {
     if (this._model.cascadeValue) {
       if (this._param.conditionType) {
-        this._result = this.getParameter(
-          this._param.conditionType,
-          this._model.cascadeValue[this._param.valueName]
-        );
+        this._result = this.getParameter(this._param.conditionType, this._model.cascadeValue[this._param.valueName]);
       } else {
         this._result = this._model.cascadeValue[this._param.valueName];
       }
@@ -810,11 +770,11 @@ class RouterParameter extends BaseParameter implements IParameter {
   public buildParameter() {
     if (this._model.router) {
       if (this._param.conditionType) {
-        this._model.router.params.subscribe(r => {
+        this._model.router.params.subscribe((r) => {
           this._result = this.getParameter(this._param.conditionType, r.name);
         });
       } else {
-        this._model.router.params.subscribe(r => {
+        this._model.router.params.subscribe((r) => {
           this._result = r.name;
         });
       }
@@ -822,7 +782,6 @@ class RouterParameter extends BaseParameter implements IParameter {
     return this._result;
   }
 }
-
 
 /**
  * 构建存储过程返回参数
@@ -840,7 +799,6 @@ class OutputValueParameter extends BaseParameter implements IParameter {
   }
 }
 
-
 /**
  * 构建用户值参数
  */
@@ -853,16 +811,11 @@ class UserValueParameter extends BaseParameter implements IParameter {
     const cmpVal = this._model.userValue;
     if (this._param.valueName === 'userValue') {
       this._result = JSON.stringify(cmpVal);
-    }
-    else if (!this._param.valueName) {
-      this._result = cmpVal;  // 不配valueName，则将当前属性给他 object
+    } else if (!this._param.valueName) {
+      this._result = cmpVal; // 不配valueName，则将当前属性给他 object
     }
     // 判断组件取值是否为null
-    if (
-      cmpVal[this._param.valueName] === null ||
-      cmpVal[this._param.valueName] === undefined ||
-      cmpVal[this._param.valueName] === ''
-    ) {
+    if (cmpVal[this._param.valueName] === null || cmpVal[this._param.valueName] === undefined || cmpVal[this._param.valueName] === '') {
       if (this._param.value !== undefined) {
         if (this._param.conditionType) {
           this._result = this.getParameter(this._param.conditionType, this._param.value);
@@ -873,26 +826,18 @@ class UserValueParameter extends BaseParameter implements IParameter {
           this._result = this._param.value;
         }
       }
-
     } else if (cmpVal === 0) {
-
-    }
-    else {
+    } else {
       if (this._param.conditionType) {
-        this._result = this.getParameter(
-          this._param.conditionType,
-          cmpVal[this._param.valueName],
-        );
+        this._result = this.getParameter(this._param.conditionType, cmpVal[this._param.valueName]);
       } else {
         this._result = cmpVal[this._param.valueName];
       }
-
     }
 
     return this._result;
   }
 }
-
 
 /**
  * 构建用户值参数
@@ -906,16 +851,11 @@ class MenuValueParameter extends BaseParameter implements IParameter {
     const cmpVal = this._model.menuValue;
     if (this._param.valueName === 'menuValue') {
       this._result = JSON.stringify(cmpVal);
-    }
-    else if (!this._param.valueName) {
-      this._result = cmpVal;  // 不配valueName，则将当前属性给他 object
+    } else if (!this._param.valueName) {
+      this._result = cmpVal; // 不配valueName，则将当前属性给他 object
     }
     // 判断组件取值是否为null
-    if (
-      cmpVal[this._param.valueName] === null ||
-      cmpVal[this._param.valueName] === undefined ||
-      cmpVal[this._param.valueName] === ''
-    ) {
+    if (cmpVal[this._param.valueName] === null || cmpVal[this._param.valueName] === undefined || cmpVal[this._param.valueName] === '') {
       if (this._param.value !== undefined) {
         if (this._param.conditionType) {
           this._result = this.getParameter(this._param.conditionType, this._param.value);
@@ -926,23 +866,15 @@ class MenuValueParameter extends BaseParameter implements IParameter {
           this._result = this._param.value;
         }
       }
-
     } else if (cmpVal === 0) {
-
-    }
-    else {
+    } else {
       if (this._param.conditionType) {
-        this._result = this.getParameter(
-          this._param.conditionType,
-          cmpVal[this._param.valueName],
-        );
+        this._result = this.getParameter(this._param.conditionType, cmpVal[this._param.valueName]);
       } else {
         this._result = cmpVal[this._param.valueName];
       }
-
     }
 
     return this._result;
   }
 }
-

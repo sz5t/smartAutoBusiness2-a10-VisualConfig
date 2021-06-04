@@ -50,8 +50,8 @@ const components: { [type: string]: Type<any> } = {
 export declare type _HttpHeaders =
   | HttpHeaders
   | {
-    [header: string]: string | string[];
-  };
+      [header: string]: string | string[];
+    };
 
 @Component({
   // tslint:disable-next-line:component-selector
@@ -186,6 +186,7 @@ export class CnDataTableComponent extends CnComponentBase implements OnInit, Aft
 
     // 初始化默认分页大小
     this.config.pageSize && (this.pageSize = this.config.pageSize);
+
     this.config.ajaxConfig.forEach((ajax) => {
       this._ajaxConfigObj[ajax.id] = ajax;
     });
@@ -224,7 +225,7 @@ export class CnDataTableComponent extends CnComponentBase implements OnInit, Aft
     this.initValue = { ...this.initValue, ...val };
   }
 
-  public ngAfterViewInit() { }
+  public ngAfterViewInit() {}
 
   public ngOnDestroy() {
     // 释放级联对象
@@ -1937,11 +1938,11 @@ export class CnDataTableComponent extends CnComponentBase implements OnInit, Aft
     console.log(this.config.id + '-------------cancelSearchRow');
   }
 
-  public export() { }
+  public export() {}
 
-  public import() { }
+  public import() {}
 
-  public download() { }
+  public download() {}
 
   /**
    *
@@ -1972,7 +1973,7 @@ export class CnDataTableComponent extends CnComponentBase implements OnInit, Aft
     // this.router.navigate(['../home'],{relativeTo:this.route});
   }
 
-  public linkTo(option) { }
+  public linkTo(option) {}
 
   /**
    * 内部子页面跳转【问题，参数传递、覆盖 changValue 和 普通参数传递】
@@ -2335,7 +2336,7 @@ export class CnDataTableComponent extends CnComponentBase implements OnInit, Aft
     dialog = this.componentService.modalService.create(dialogOptional);
   }
 
-  public showBatchDialog() { }
+  public showBatchDialog() {}
 
   /**
    * 显示消息框

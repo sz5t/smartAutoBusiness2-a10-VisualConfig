@@ -22,7 +22,7 @@
 
 
 
-          <ng-container *ngSwitchCase="'component'">
+          <ng-container *ngIf="c.container !== 'rows' && c.container!=='layout' && c.container !='tabs'">
             <nz-card [nzBodyStyle]="c.bodyStyle" [nzBordered]="c.noBorder ? false : true"
             [nzTitle]="c.header ? titleTmpl : false" [nzExtra]="c.header ? extraTemplate : false">
             <ng-template #titleTmpl>

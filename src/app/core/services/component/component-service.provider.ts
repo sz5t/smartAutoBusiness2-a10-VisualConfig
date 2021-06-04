@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { CacheService } from '@delon/cache';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { NzModalService } from 'ng-zorro-antd/modal';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Subject } from 'rxjs';
 import { BsnRelativesMessageModel, BSN_RELATION_SUBJECT, BSN_RELATION_TRIGGER } from '../../relations/bsn-relatives';
 import { ApiService } from '../api/api.service';
 
@@ -18,6 +18,7 @@ export class ComponentServiceProvider {
   public router: Router;
   public commonRelationSubject: BehaviorSubject<BsnRelativesMessageModel>;
   public commonRelationTrigger: BehaviorSubject<BsnRelativesMessageModel>;
+  public reloadDynamicLayoutSubject: Subject<string> = new Subject();
   constructor(
     private _apiService: ApiService,
     private _cacheService: CacheService,

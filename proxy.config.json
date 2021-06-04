@@ -1,29 +1,56 @@
 {
-    "/smt-base-A": {
-        "target": "http://192.168.1.111:8404/", 
+    "/smt-base": {
+        "target": "http://192.168.1.200:8502/smt-base/", 
         "logLevel": "debug",
         "secure": false,
         "changeOrigin": true,
         "pathRewrite": {
-            "^/smt-base-A": ""
+            "^/smt-base": "" 
         }
     },
-    "/smt-cfg-A": {
-        "target": "http://192.168.1.111:8403/", 
+    "/smt-app/resource": {
+        "target": "http://192.168.1.200:8505/smt-app", 
         "logLevel": "debug",
         "secure": false,
         "changeOrigin": true,
         "pathRewrite": {
-            "^/smt-cfg-A": ""
+            "^/smt-app": ""
         }
     },
-    "/dev": {
-        "target": "http://192.168.1.111:8405/", 
+    "/smt-app/busimodelresrelations": {
+        "target": "http://192.168.1.200:8505/smt-app/busimodelresrelations", 
         "logLevel": "debug",
         "secure": false,
         "changeOrigin": true,
         "pathRewrite": {
-            "^/dev": ""
+            "^/smt-app": ""
+        }
+    },
+    "/smt-app/busimodel": {
+        "target": "http://192.168.1.200:8505/smt-app/busimodel", 
+        "logLevel": "debug",
+        "secure": false,
+        "changeOrigin": true,
+        "pathRewrite": {
+            "^/smt-app": ""
+        }
+    },
+    "/smt-app/column": {
+        "target": "http://192.168.1.200:8505/smt-app/column", 
+        "logLevel": "debug",
+        "secure": false,
+        "changeOrigin": true,
+        "pathRewrite": {
+            "^/smt-app": ""
+        }
+    },
+    "/smt-log": {
+        "target": "http://192.168.1.200:8503/smt-log/", 
+        "logLevel": "debug",
+        "secure": false,
+        "changeOrigin": true,
+        "pathRewrite": {
+            "^/smt-log": ""
         }
     }
 }

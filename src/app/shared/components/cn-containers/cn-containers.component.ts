@@ -339,7 +339,7 @@ export class CnContainersComponent extends CnComponentBase implements OnInit, On
   // 取出当前配置 参数：页面id
   public async getCustomConfig1(customConfigId?) {
     const response = await this.componentService.apiService
-      .post('resource/B_P_C_CONFIG_PAGE_ALL/operate', { PAGE_CODE: customConfigId })
+      .post('smt-app/resource/B_P_C_CONFIG_PAGE_ALL/operate', { PAGE_CODE: customConfigId })
       .toPromise();
 
     if (response.data) {
