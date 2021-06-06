@@ -1,6 +1,6 @@
 {
     "/smt-base": {
-        "target": "http://192.168.1.200:8502/smt-base/", 
+        "target": "http://192.168.1.111:8502/smt-base/", 
         "logLevel": "debug",
         "secure": false,
         "changeOrigin": true,
@@ -9,7 +9,7 @@
         }
     },
     "/smt-app/resource": {
-        "target": "http://192.168.1.200:8505/smt-app", 
+        "target": "http://192.168.1.111:8505/smt-app", 
         "logLevel": "debug",
         "secure": false,
         "changeOrigin": true,
@@ -18,7 +18,7 @@
         }
     },
     "/smt-app/busimodelresrelations": {
-        "target": "http://192.168.1.200:8505/smt-app/busimodelresrelations", 
+        "target": "http://192.168.1.111:8505/smt-app/busimodelresrelations", 
         "logLevel": "debug",
         "secure": false,
         "changeOrigin": true,
@@ -27,7 +27,7 @@
         }
     },
     "/smt-app/busimodel": {
-        "target": "http://192.168.1.200:8505/smt-app/busimodel", 
+        "target": "http://192.168.1.111:8505/smt-app/busimodel", 
         "logLevel": "debug",
         "secure": false,
         "changeOrigin": true,
@@ -36,7 +36,7 @@
         }
     },
     "/smt-app/column": {
-        "target": "http://192.168.1.200:8505/smt-app/column", 
+        "target": "http://192.168.1.111:8505/smt-app/column", 
         "logLevel": "debug",
         "secure": false,
         "changeOrigin": true,
@@ -45,7 +45,7 @@
         }
     },
     "/smt-log": {
-        "target": "http://192.168.1.200:8503/smt-log/", 
+        "target": "http://192.168.1.111:8503/smt-log/", 
         "logLevel": "debug",
         "secure": false,
         "changeOrigin": true,

@@ -10,9 +10,8 @@ import { ParameterResolver } from '../../resolver/parameter/parameter.resolver';
 @Component({
   selector: 'app-cfg-page-design',
   templateUrl: './cfg-page-design.component.html',
-  styles: [
-  ],
-  providers: [configFormDataServerService]
+  styles: [],
+  providers: [configFormDataServerService],
 })
 export class CfgPageDesignComponent extends CnComponentBase implements OnInit {
   @Input() public config;
@@ -21,13 +20,20 @@ export class CfgPageDesignComponent extends CnComponentBase implements OnInit {
   @Input() tempData;
   layoutTree = [];
 
-  style1 = { "height": (window.document.body.clientHeight - 160).toString() + 'px', "max-height": (window.document.body.clientHeight - 160).toString() + 'px', "overflow": "auto" }
+  style1 = {
+    height: (window.document.body.clientHeight - 160).toString() + 'px',
+    'max-height': (window.document.body.clientHeight - 160).toString() + 'px',
+    overflow: 'auto',
+  };
   selectedItem: any = { item: null, active: null };
   layout_nodes: NzTreeNodeOptions[];
   showLayout = true;
-  constructor(public fromDataService: configFormDataServerService, private httpClient: HttpClient,
+  constructor(
+    public fromDataService: configFormDataServerService,
+    private httpClient: HttpClient,
     @Inject(BSN_COMPONENT_SERVICES)
-    public componentService: ComponentServiceProvider,) {
+    public componentService: ComponentServiceProvider,
+  ) {
     super(componentService);
   }
   ngOnInit(): void {
@@ -35,7 +41,6 @@ export class CfgPageDesignComponent extends CnComponentBase implements OnInit {
     this.setChangeValue(this.changeValue);
     this.load();
     this.fromDataService.selectedItem = this.selectedItem;
-
   }
   private _initInnerValue() {
     if (this.tempData) {
@@ -55,19 +60,18 @@ export class CfgPageDesignComponent extends CnComponentBase implements OnInit {
   }
   async load() {
     let load_config = {
-      "id": "tree_add_func",
-      "url": "resource/SMT_SETTING_LAYOUT/query",
-      "urlType": "inner",
-      "ajaxType": "get",
-      "params": [
+      id: 'tree_add_func',
+      url: 'smt-app/resource/SMT_SETTING_LAYOUT/query',
+      urlType: 'inner',
+      ajaxType: 'get',
+      params: [
         {
-          "name": "ID",
-          "type": "tempValue",
-          "valueName": "ID"
-
-        }
-      ]
-    }
+          name: 'ID',
+          type: 'tempValue',
+          valueName: 'ID',
+        },
+      ],
+    };
     this.config['loadingConfig'] = load_config;
     if (!this.config.loadingConfig) {
       return;
@@ -75,13 +79,12 @@ export class CfgPageDesignComponent extends CnComponentBase implements OnInit {
     let response: any;
     if (this.config.loadingConfig['enableAjaxMore']) {
       response = await this.executeHttpMore(this.config.loadingConfig, {}, 'buildParameters', null);
-
     } else {
       const url = this.config.loadingConfig.url;
       const method = this.config.loadingConfig.method ? this.config.loadingConfig.method : this.config.loadingConfig.ajaxType;
 
       const params = {
-        ...this.buildParameters(this.config.loadingConfig.params)
+        ...this.buildParameters(this.config.loadingConfig.params),
       };
 
       // const response: any = await this.componentService.apiService[method](url, method, { params }).toPromise();
@@ -101,13 +104,9 @@ export class CfgPageDesignComponent extends CnComponentBase implements OnInit {
         this.layoutTree = [];
         this.fromDataService.layoutSourceData = {};
       }
-
-
     }
 
-
-
-    console.log('===可视化页面加载===', response)
+    console.log('===可视化页面加载===', response);
   }
   public buildParameters(paramsCfg, data?, isArray = false) {
     let parameterResult: any | any[];
@@ -195,65 +194,61 @@ export class CfgPageDesignComponent extends CnComponentBase implements OnInit {
     if (this.fromDataService.layoutTreeInstance) {
       configjson = {
         layoutJson: this.fromDataService.layoutTreeInstance['layoutTree'],
-        componentsJson: this.fromDataService.layoutSourceData
-      }
+        componentsJson: this.fromDataService.layoutSourceData,
+      };
     }
     obj['configjson'] = configjson;
     return obj;
-
   }
 
   createMessageInfo(type: string, messageInfo: string): void {
     this.componentService.msgService.create(type, `${messageInfo}`);
   }
 
-
   async saveJson() {
     console.log('保存json', this.tempValue, this.fromDataService);
-    console.log('保存json 页面结构树', this.fromDataService.layoutTreeInstance['layoutTree'])
+    console.log('保存json 页面结构树', this.fromDataService.layoutTreeInstance['layoutTree']);
 
     console.log('页面最终结构', this.getComponentValue());
-    if (!this.tempValue["ID"]) {
+    if (!this.tempValue['ID']) {
       this.createMessageInfo('warning', '未指定页面，不能保存');
       return;
     }
     let save_config = {
-      "id": "tree_add_func",
-      "url": "resource/SMT_SETTING_LAYOUT/update",
-      "urlType": "inner",
-      "ajaxType": "post",
-      "params": [
+      id: 'tree_add_func',
+      url: 'smt-app/resource/SMT_SETTING_LAYOUT/update',
+      urlType: 'inner',
+      ajaxType: 'post',
+      params: [
         {
-          "name": "ID",
-          "type": "tempValue",
-          "valueName": "ID"
-
+          name: 'ID',
+          type: 'tempValue',
+          valueName: 'ID',
         },
         {
-          "name": "JSON",
-          "type": "componentValue",
-          "valueName": "configjson"
-        }
-      ]
-    }
+          name: 'JSON',
+          type: 'componentValue',
+          valueName: 'configjson',
+        },
+      ],
+    };
 
     const url = save_config.url;
     const method = save_config.ajaxType;
 
     const params = {
-      ...this.buildParameters(save_config.params)
+      ...this.buildParameters(save_config.params),
     };
 
     // const response: any = await this.componentService.apiService[method](url, method, { params }).toPromise();
     let response = await this.executeHttpRequest(url, method, params).toPromise();
-    if (response && response['success'] === 1) {
+    if (response && response['state'] === 1) {
       this.createMessageInfo('success', '保存成功');
     } else {
       this.createMessageInfo('warning', `保存失败${response['error']}`);
     }
 
     console.log('保存结果', response);
-
   }
 
   /*
@@ -261,5 +256,4 @@ export class CfgPageDesignComponent extends CnComponentBase implements OnInit {
      2.生成布局结构
      3.递归结构
   */
-
 }
