@@ -1,6 +1,8 @@
 <div (click)="click($event)"
     [ngStyle]="(selectedItem['item'] &&(selectedItem['active']==='cnForm')&& (selectedItem['item']['id']===l_config['id']) )? body_style_selected: body_style">
 
+    <button nz-button style="margin-left: 8px;" [nzSize]="'small'" nzType="primary" (click)="formDesign()">
+        【表单设计】</button>
     <nz-card nzHoverable="true" nzTitle="表单">
         <div *ngFor="let layout of config['formLayout']">
             <div nz-row [nzGutter]="2" *ngFor="let r of layout['children']">

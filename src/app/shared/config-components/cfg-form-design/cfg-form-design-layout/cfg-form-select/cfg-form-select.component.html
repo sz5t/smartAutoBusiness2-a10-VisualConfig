@@ -1,0 +1,20 @@
+<div (click)="click($event)"
+    [ngStyle]="(selectedItem['item'] &&(selectedItem['active']==='cnFormSelect')&& (selectedItem['item']['id']===l_config['id']) )? body_style_selected: body_style">
+
+    <nz-form-item>
+        <nz-form-label *ngIf="!config['hiddenTitle']" [nzSpan]="config.labelSize.span" [nzSm]="config.labelSize.nzSm"
+            [nzXs]="config.labelSize.nzXs" [nzMd]="config.labelSize.nzMd" [nzLg]="config.labelSize.nzLg"
+            [nzXl]="config.labelSize.nzXl" [nzTooltipTitle]="config.labelTooltipTitle"
+            [nzTooltipIcon]="config.labelTooltipIcon" nzRequired>
+            {{config['title']}}
+        </nz-form-label>
+        <nz-form-control [nzSpan]="config.controlSize.span" [nzSm]="config.controlSize.nzSm"
+            [nzXs]="config.controlSize.nzXs" [nzMd]="config.controlSize.nzMd" [nzLg]="config.controlSize.nzLg"
+            [nzXl]="config.controlSize.nzXl">
+            <nz-select ngModel="lucy">
+                <nz-option nzValue="jack" nzLabel="Jack"></nz-option>
+                <nz-option nzValue="lucy" nzLabel="Lucy"></nz-option>
+            </nz-select>
+        </nz-form-control>
+    </nz-form-item>
+</div>

@@ -1,1 +1,15 @@
-<p>cfg-form-layout works!</p>
+<div style="width: 100%;" *ngIf="showLayout || config['showTitle']">
+    <nz-card nzType="inner" nzTitle="布局" style="width:100%;padding-right: 4px;" [nzBodyStyle]="{'padding':'1px 2px'}">
+        <ng-container *ngTemplateOutlet="content"></ng-container>
+
+    </nz-card>
+</div>
+<div *ngIf="!showLayout && !config['showTitle']">
+    <ng-container *ngTemplateOutlet="content"></ng-container>
+</div>
+
+<ng-template #content>
+    <app-cfg-form-rows *ngIf="l_config && l_config['children']" [(l_config)]="l_config" [showLayout]="showLayout"
+        [(selectedItem)]="selectedItem" [(cmptState)]="cmptState" [fromDataService]="fromDataService">
+    </app-cfg-form-rows>
+</ng-template>

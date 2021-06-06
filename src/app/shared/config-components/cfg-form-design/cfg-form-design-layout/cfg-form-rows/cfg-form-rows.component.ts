@@ -1,20 +1,18 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { configFormDataServerService } from 'src/app/core/services/config/form-data.service';
-import { CommonUtils } from 'src/app/core/utils/common-utils';
 
 @Component({
-  selector: 'app-cfg-page-rows',
-  templateUrl: './cfg-page-rows.component.html',
+  selector: 'app-cfg-form-rows',
+  templateUrl: './cfg-form-rows.component.html',
   styles: [
   ]
 })
-export class CfgPageRowsComponent implements OnInit {
+export class CfgFormRowsComponent implements OnInit {
 
   @Input() public l_config: any;
   @Input() public showLayout: any;
   @Input() public selectedItem: any;
   @Input() public cmptState: any;
-  @Input() public fromDataService: configFormDataServerService;
+  @Input() public fromDataService;
   constructor() { }
 
   ngOnInit(): void {
@@ -28,38 +26,6 @@ export class CfgPageRowsComponent implements OnInit {
     const ss = e.dataTransfer.getData('test');
     console.log('拖动行ondrop临时值', ss);
     let dropData = JSON.parse(ss);
-    // console.log('拖拽JSON', dropData);
-    let c = {
-      "cols": [
-        {
-          "id": CommonUtils.uuID(30),
-          "col": "cc",
-          "type": "col",
-          "titlestate": 1,
-          "title": "",
-          "span": 24,
-          "container": "component",
-          "size": {
-            "nzXs": 24,
-            "nzSm": 24,
-            "nzMd": 24,
-            "nzLg": 24,
-            "ngXl": 24,
-            "nzXXl": 24
-          },
-          "component": {
-            "id": CommonUtils.uuID(30),
-            "type": "form",
-            "title": "",
-            "container": "form"
-          }
-        }
-      ],
-      "id": CommonUtils.uuID(30),
-      "type": "row",
-      "title": "【新增】行",
-      "container": "cols"
-    }
 
     if (dropData['dropName'] === 'row') {
       let node = this.fromDataService.l_createRow(this.l_config['id']);
@@ -108,5 +74,4 @@ export class CfgPageRowsComponent implements OnInit {
     }
 
   }
-
 }

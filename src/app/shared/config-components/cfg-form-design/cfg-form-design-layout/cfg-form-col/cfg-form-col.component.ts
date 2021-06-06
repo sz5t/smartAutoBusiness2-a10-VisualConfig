@@ -1,20 +1,19 @@
-import { Component, Input, OnChanges, OnInit, Output, SimpleChanges, EventEmitter } from '@angular/core';
-import { configFormDataServerService } from 'src/app/core/services/config/form-data.service';
+import { Component, Input, OnChanges, OnInit, Output, EventEmitter, SimpleChanges } from '@angular/core';
 import { CommonUtils } from 'src/app/core/utils/common-utils';
 
 @Component({
-  selector: 'app-cfg-page-col',
-  templateUrl: './cfg-page-col.component.html',
+  selector: 'app-cfg-form-col',
+  templateUrl: './cfg-form-col.component.html',
   styles: [
   ]
 })
-export class CfgPageColComponent implements OnInit, OnChanges {
+export class CfgFormColComponent implements OnInit, OnChanges {
 
   @Input() public l_config;
   @Input() public showLayout: any;
   @Input() public selectedItem: any;
   @Input() public cmptState: any;
-  @Input() public fromDataService: configFormDataServerService;
+  @Input() public fromDataService;
   @Output() public layoutOptions = new EventEmitter();
 
   public config: any;
@@ -142,7 +141,7 @@ export class CfgPageColComponent implements OnInit, OnChanges {
 
       let cmptObj = {
         "type": cmpTypeMapping[dropName],
-        "title": "组件" + cmpTypeMapping[dropName],
+        "title": "表单条目",
         "container": cmpTypeMapping[dropName]
       }
       this.l_config.children = [];

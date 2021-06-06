@@ -9,15 +9,22 @@ import { configFormDataServerService } from 'src/app/core/services/config/form-d
   ]
 })
 export class CfgFormSiderComponent implements OnInit {
+
   @Input() public layout_nodes: NzTreeNodeOptions[];
   @Input() public selectedItem: any;
   @Input() public fromDataService: configFormDataServerService;
+  @Input() public layoutTree = [];
+  @ViewChild('nzLayoutTreeComponent', { static: false }) nzLayoutTreeComponent!: NzTreeComponent;
+
   defaultSelectedKeys = [];
   is_drag = true;
-  layoutTree = [];
+  //  layoutTree = [];
   constructor() { }
 
   ngOnInit(): void {
+
+    this.fromDataService.layoutTreeInstance = this;
+
   }
   load() {
     // 加载 侧边栏
@@ -35,12 +42,16 @@ export class CfgFormSiderComponent implements OnInit {
       children: [
         {
           "id": "001",
+          "type": "layout",
+          "dropType": "form",
           "dropName": "row",
           "icon": "insert-row-above",
           "title": "行"
         },
         {
           "id": "002",
+          "type": "layout",
+          "dropType": "form",
           "dropName": "col",
           "icon": "column-width",
           "title": "列"
@@ -49,35 +60,46 @@ export class CfgFormSiderComponent implements OnInit {
     },
     {
       active: true,
-      name: '表单组件',
+      name: '数据组件',
       disabled: false,
       children: [
         {
           "id": "001",
-          "dropName": "item_input",
+          "type": "component",
+          "dropType": "form",
+          "dropName": "cnFormInput",
           "icon": "edit",
-          "title": "输入框"
+          "title": "输入框",
+          "sourceData": {
+            "field": "name",
+            "type": "input",
+            "displayType": "text"
+          }
         },
         {
           "id": "002",
-          "dropName": "item_select",
+          "type": "component",
+          "dropType": "form",
+          "dropName": "cnFormSelect",
           "icon": "select",
           "title": "下拉"
         },
         {
           "id": "003",
-          "dropName": "item_time",
+          "type": "component",
+          "dropType": "form",
+          "dropName": "cnFormTime",
           "icon": "field-time",
           "title": "时间"
         },
         {
           "id": "004",
-          "dropName": "item_check",
+          "type": "component",
+          "dropType": "form",
+          "dropName": "cnFormCheck",
           "icon": "check-square",
           "title": "勾选"
         }
-
-
       ]
     }
 
@@ -86,13 +108,14 @@ export class CfgFormSiderComponent implements OnInit {
 
   public f_ondragstart(e?, d?) {
     // this.d_row = d;
+    // let text = { "compt": "dddd" };
+    d = JSON.stringify(d);
     e.dataTransfer.setData('test', d);
     console.log('拖动行', e, d);
     const ss = e.dataTransfer.getData('test');
     console.log('拖动行临时值', ss);
   }
 
-  @ViewChild('nzLayoutTreeComponent', { static: false }) nzLayoutTreeComponent!: NzTreeComponent;
 
   addChildrenNode(id, node, index) {
 
@@ -106,11 +129,19 @@ export class CfgFormSiderComponent implements OnInit {
 
     let _node = this.nzLayoutTreeComponent.getTreeNodeByKey(id);
     _node['children'].splice(index, 1);
-    _node.update();
-    _node.setExpanded(true);
-
+  }
+  clearChildrenByNode(id) {
+    let _node = this.nzLayoutTreeComponent.getTreeNodeByKey(id);
+    // _node.clearChildren();
+    _node['children'] = [];
   }
 
+  updateNode(id?, data?) {
+    let _node = this.nzLayoutTreeComponent.getTreeNodeByKey(id);
+    _node['title'] = data['title'];
+    _node['origin']['title'] = data['title'];
+    _node.update();
+  }
 
   public nzEvent(v?) {
 
@@ -122,6 +153,9 @@ export class CfgFormSiderComponent implements OnInit {
     }
 
     this.fromDataService.treeNodeSelected(selectNode);
+
+
+
 
   }
 

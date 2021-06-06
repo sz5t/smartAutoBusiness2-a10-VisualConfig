@@ -8,8 +8,7 @@
 
                     <ng-container *ngFor="let r of panel['children']">
                         <div nz-card-grid [ngStyle]="gridStyle" [draggable]="is_drag"
-                            (dragstart)="f_ondragstart($event,r['dropName'])"><i nz-icon [nzType]="r['icon']"
-                                nzTheme="outline"></i>
+                            (dragstart)="f_ondragstart($event,r)"><i nz-icon [nzType]="r['icon']" nzTheme="outline"></i>
                             <br>{{r['title']}}
                         </div>
                     </ng-container>
@@ -20,8 +19,9 @@
 
         </nz-collapse>
     </nz-tab>
-    <nz-tab nzTitle="页面结构">
-        <nz-card nzType="inner" [nzBodyStyle]="{'padding':'1px 2px','max-height':'680px','overflow':'auto'}">
+    <nz-tab nzTitle="表单结构">
+        <nz-card nzType="inner"
+            [nzBodyStyle]="{'padding':'1px 2px','max-whidth':'250px','max-height':'780px','overflow':'auto'}">
 
             <nz-tree #nzLayoutTreeComponent [nzData]="layoutTree" nzMultiple="false" nzExpandAll="true"
                 (nzClick)="nzEvent($event)" nzShowLine="true" [nzSelectedKeys]="defaultSelectedKeys">
