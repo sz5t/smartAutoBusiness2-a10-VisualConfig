@@ -1,0 +1,888 @@
+{
+    "type": "staticForm",
+    "backName": "preCondition",
+    "backConfig": [
+        {
+            "name": "preCondition"
+        }
+    ],
+    "properties": [
+        {
+            "name": "preCondition",
+            "type": "arrayCard",
+            "componentConfig": {},
+            "properties": [
+                {
+                    "name": "title",
+                    "type": "input",
+                    "componentConfig": {},
+                    "formType": "value",
+                    "formName": "formControlName",
+                    "validations": [],
+                    "title": "名称"
+                },
+                {
+                    "name": "condition",
+                    "type": "arrayCard",
+                    "componentConfig": {},
+                    "properties": [
+                        {
+                            "name": "conditionType",
+                            "type": "select",
+                            "componentConfig": {
+                                "options": [
+                                    {
+                                        "label": "and",
+                                        "value": "and"
+                                    },
+                                    {
+                                        "label": "or",
+                                        "value": "or"
+                                    }
+                                ],
+                                "labelName": "label",
+                                "valueName": "value"
+                            },
+                            "formType": "value",
+                            "formName": "formControlName",
+                            "validations": [],
+                            "title": "条件类别"
+                        },
+                        {
+                            "name": "type",
+                            "type": "select",
+                            "componentConfig": {
+                                "options": [
+                                    {
+                                        "label": "表达式",
+                                        "value": "expression"
+                                    },
+                                    {
+                                        "label": "括号",
+                                        "value": "brackets"
+                                    }
+                                ],
+                                "labelName": "label",
+                                "valueName": "value"
+                            },
+                            "formType": "value",
+                            "formName": "formControlName",
+                            "validations": [],
+                            "title": "运算类型"
+                        },
+                        {
+                            "name": "brackets",
+                            "type": "childArray",
+                            "componentConfig": {},
+                            "properties": [],
+                            "formType": "array",
+                            "formName": "formControlName",
+                            "validations": [],
+                            "title": "括号"
+                        },
+                        {
+                            "name": "expression",
+                            "type": "objectEmpty",
+                            "componentConfig": {},
+                            "properties": [
+                                {
+                                    "name": "comput",
+                                    "type": "select",
+                                    "componentConfig": {
+                                        "options": [
+                                            {
+                                                "label": "正则表达式",
+                                                "value": "regular"
+                                            },
+                                            {
+                                                "label": "数学计算",
+                                                "value": "compute"
+                                            },
+                                            {
+                                                "label": "非空",
+                                                "value": "notnull"
+                                            },
+                                            {
+                                                "label": "为真",
+                                                "value": "true"
+                                            },
+                                            {
+                                                "label": "为假",
+                                                "value": "false"
+                                            }
+                                        ],
+                                        "labelName": "label",
+                                        "valueName": "value"
+                                    },
+                                    "formType": "value",
+                                    "formName": "formControlName",
+                                    "validations": [],
+                                    "title": "符号"
+                                },
+                                {
+                                    "name": "leftExpression",
+                                    "type": "objectEmpty",
+                                    "componentConfig": {},
+                                    "properties": [
+                                        {
+                                            "name": "type",
+                                            "type": "input",
+                                            "componentConfig": {},
+                                            "formType": "value",
+                                            "formName": "formControlName",
+                                            "validations": [],
+                                            "title": "参数类型"
+                                        },
+                                        {
+                                            "name": "valueName",
+                                            "type": "input",
+                                            "componentConfig": {},
+                                            "formType": "value",
+                                            "formName": "formControlName",
+                                            "validations": [],
+                                            "title": "参数取值名称"
+                                        },
+                                        {
+                                            "name": "value",
+                                            "type": "input",
+                                            "componentConfig": {},
+                                            "formType": "value",
+                                            "formName": "formControlName",
+                                            "validations": [],
+                                            "title": "静态值"
+                                        }
+                                    ],
+                                    "formType": "object",
+                                    "formName": "formControlName",
+                                    "validations": [],
+                                    "title": "表达式左侧配置"
+                                },
+                                {
+                                    "name": "righitExpression",
+                                    "type": "objectEmpty",
+                                    "componentConfig": {},
+                                    "properties": [
+                                        {
+                                            "name": "type",
+                                            "type": "input",
+                                            "componentConfig": {},
+                                            "formType": "value",
+                                            "formName": "formControlName",
+                                            "validations": [],
+                                            "title": "参数类型"
+                                        },
+                                        {
+                                            "name": "value",
+                                            "type": "input",
+                                            "componentConfig": {},
+                                            "formType": "value",
+                                            "formName": "formControlName",
+                                            "validations": [],
+                                            "title": "静态值"
+                                        }
+                                    ],
+                                    "formType": "object",
+                                    "formName": "formControlName",
+                                    "validations": [],
+                                    "title": "表达式右侧配置"
+                                }
+                            ],
+                            "formType": "object",
+                            "formName": "formControlName",
+                            "validations": [],
+                            "title": "表达式配置"
+                        }
+                    ],
+                    "formType": "array",
+                    "formName": "formControlName",
+                    "validations": [],
+                    "title": "条件"
+                },
+                {
+                    "name": "result",
+                    "type": "arrayCard",
+                    "componentConfig": {},
+                    "properties": [
+                        {
+                            "name": "info",
+                            "type": "select",
+                            "componentConfig": {
+                                "options": [
+                                    {
+                                        "label": "通过",
+                                        "value": "pass"
+                                    },
+                                    {
+                                        "label": "不通过",
+                                        "value": "prevent"
+                                    }
+                                ],
+                                "labelName": "label",
+                                "valueName": "value"
+                            },
+                            "formType": "value",
+                            "formName": "formControlName",
+                            "validations": [],
+                            "title": "提示信息"
+                        },
+                        {
+                            "name": "type",
+                            "type": "select",
+                            "componentConfig": {
+                                "casadeValue": [
+                                    {
+                                        "cascadeName": "message",
+                                        "cascadeItems": [
+                                            {
+                                                "type": "condition",
+                                                "condition": [
+                                                    {
+                                                        "conditionType": "and",
+                                                        "type": "expression",
+                                                        "centent": [],
+                                                        "expression": {
+                                                            "comput": "regular",
+                                                            "leftExpression": {
+                                                                "type": "componentValue",
+                                                                "value": "0",
+                                                                "valueName": "type"
+                                                            },
+                                                            "righitExpression": {
+                                                                "type": "value",
+                                                                "value": "^message$"
+                                                            }
+                                                        }
+                                                    }
+                                                ],
+                                                "content": {
+                                                    "type": "display",
+                                                    "data": {
+                                                        "option": [
+                                                            {
+                                                                "name": "display",
+                                                                "type": "value",
+                                                                "value": false,
+                                                                "valueName": ""
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            },
+                                            {
+                                                "type": "condition",
+                                                "condition": [
+                                                    {
+                                                        "conditionType": "and",
+                                                        "type": "expression",
+                                                        "centent": [],
+                                                        "expression": {
+                                                            "comput": "regular",
+                                                            "leftExpression": {
+                                                                "type": "componentValue",
+                                                                "value": "0",
+                                                                "valueName": "type"
+                                                            },
+                                                            "righitExpression": {
+                                                                "type": "value",
+                                                                "value": "^((?!message).)*$"
+                                                            }
+                                                        }
+                                                    }
+                                                ],
+                                                "content": {
+                                                    "type": "display",
+                                                    "data": {
+                                                        "option": [
+                                                            {
+                                                                "name": "display",
+                                                                "type": "value",
+                                                                "value": true,
+                                                                "valueName": ""
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "cascadeName": "confirm",
+                                        "cascadeItems": [
+                                            {
+                                                "type": "condition",
+                                                "condition": [
+                                                    {
+                                                        "conditionType": "and",
+                                                        "type": "expression",
+                                                        "centent": [],
+                                                        "expression": {
+                                                            "comput": "regular",
+                                                            "leftExpression": {
+                                                                "type": "componentValue",
+                                                                "value": "0",
+                                                                "valueName": "type"
+                                                            },
+                                                            "righitExpression": {
+                                                                "type": "value",
+                                                                "value": "^confirm$"
+                                                            }
+                                                        }
+                                                    }
+                                                ],
+                                                "content": {
+                                                    "type": "display",
+                                                    "data": {
+                                                        "option": [
+                                                            {
+                                                                "name": "display",
+                                                                "type": "value",
+                                                                "value": false,
+                                                                "valueName": ""
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            },
+                                            {
+                                                "type": "condition",
+                                                "condition": [
+                                                    {
+                                                        "conditionType": "and",
+                                                        "type": "expression",
+                                                        "centent": [],
+                                                        "expression": {
+                                                            "comput": "regular",
+                                                            "leftExpression": {
+                                                                "type": "componentValue",
+                                                                "value": "0",
+                                                                "valueName": "type"
+                                                            },
+                                                            "righitExpression": {
+                                                                "type": "value",
+                                                                "value": "^((?!confirm).)*$"
+                                                            }
+                                                        }
+                                                    }
+                                                ],
+                                                "content": {
+                                                    "type": "display",
+                                                    "data": {
+                                                        "option": [
+                                                            {
+                                                                "name": "display",
+                                                                "type": "value",
+                                                                "value": true,
+                                                                "valueName": ""
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "cascadeName": "execution",
+                                        "cascadeItems": [
+                                            {
+                                                "type": "condition",
+                                                "condition": [
+                                                    {
+                                                        "conditionType": "and",
+                                                        "type": "expression",
+                                                        "centent": [],
+                                                        "expression": {
+                                                            "comput": "regular",
+                                                            "leftExpression": {
+                                                                "type": "componentValue",
+                                                                "value": "0",
+                                                                "valueName": "type"
+                                                            },
+                                                            "righitExpression": {
+                                                                "type": "value",
+                                                                "value": "^execution$"
+                                                            }
+                                                        }
+                                                    }
+                                                ],
+                                                "content": {
+                                                    "type": "display",
+                                                    "data": {
+                                                        "option": [
+                                                            {
+                                                                "name": "display",
+                                                                "type": "value",
+                                                                "value": false,
+                                                                "valueName": ""
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            },
+                                            {
+                                                "type": "condition",
+                                                "condition": [
+                                                    {
+                                                        "conditionType": "and",
+                                                        "type": "expression",
+                                                        "centent": [],
+                                                        "expression": {
+                                                            "comput": "regular",
+                                                            "leftExpression": {
+                                                                "type": "componentValue",
+                                                                "value": "0",
+                                                                "valueName": "type"
+                                                            },
+                                                            "righitExpression": {
+                                                                "type": "value",
+                                                                "value": "^((?!execution).)*$"
+                                                            }
+                                                        }
+                                                    }
+                                                ],
+                                                "content": {
+                                                    "type": "display",
+                                                    "data": {
+                                                        "option": [
+                                                            {
+                                                                "name": "display",
+                                                                "type": "value",
+                                                                "value": true,
+                                                                "valueName": ""
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            }
+                                        ]
+                                    }
+                                ],
+                                "options": [
+                                    {
+                                        "label": "弹出提示消息",
+                                        "value": "message"
+                                    },
+                                    {
+                                        "label": "弹出确认框",
+                                        "value": "confirm"
+                                    },
+                                    {
+                                        "label": "执行内容",
+                                        "value": "execution"
+                                    }
+                                ],
+                                "labelName": "label",
+                                "valueName": "value"
+                            },
+                            "formType": "value",
+                            "formName": "formControlName",
+                            "validations": [],
+                            "title": "执行操作类型"
+                        },
+                        {
+                            "name": "message",
+                            "type": "objectEmpty",
+                            "componentConfig": {},
+                            "properties": [
+                                {
+                                    "name": "type",
+                                    "type": "select",
+                                    "componentConfig": {
+                                        "options": [
+                                            {
+                                                "label": "成功",
+                                                "value": "success"
+                                            },
+                                            {
+                                                "label": "提醒",
+                                                "value": "info"
+                                            },
+                                            {
+                                                "label": "警告",
+                                                "value": "warning"
+                                            },
+                                            {
+                                                "label": "错误",
+                                                "value": "error"
+                                            },
+                                            {
+                                                "label": "等待",
+                                                "value": "loading"
+                                            }
+                                        ],
+                                        "labelName": "label",
+                                        "valueName": "value"
+                                    },
+                                    "formType": "value",
+                                    "formName": "formControlName",
+                                    "validations": [],
+                                    "title": "提示消息类型"
+                                },
+                                {
+                                    "name": "messageInfo",
+                                    "type": "objectEmpty",
+                                    "componentConfig": {},
+                                    "properties": [
+                                        {
+                                            "name": "content",
+                                            "type": "input",
+                                            "componentConfig": {},
+                                            "formType": "value",
+                                            "formName": "formControlName",
+                                            "validations": [],
+                                            "title": "提示内容模板"
+                                        },
+                                        {
+                                            "name": "parameters",
+                                            "type": "arrayTable",
+                                            "componentConfig": {},
+                                            "properties": [
+                                                {
+                                                    "name": "name",
+                                                    "type": "input",
+                                                    "componentConfig": {
+                                                        "hiddenTitle": true,
+                                                        "controlSize": {
+                                                            "span": 24
+                                                        }
+                                                    },
+                                                    "formType": "value",
+                                                    "formName": "formControlName",
+                                                    "validations": [],
+                                                    "title": "参数名称"
+                                                },
+                                                {
+                                                    "name": "type",
+                                                    "type": "input",
+                                                    "componentConfig": {
+                                                        "hiddenTitle": true,
+                                                        "controlSize": {
+                                                            "span": 24
+                                                        }
+                                                    },
+                                                    "formType": "value",
+                                                    "formName": "formControlName",
+                                                    "validations": [],
+                                                    "title": "参数类型"
+                                                },
+                                                {
+                                                    "name": "value",
+                                                    "type": "input",
+                                                    "componentConfig": {
+                                                        "hiddenTitle": true,
+                                                        "controlSize": {
+                                                            "span": 24
+                                                        }
+                                                    },
+                                                    "formType": "value",
+                                                    "formName": "formControlName",
+                                                    "validations": [],
+                                                    "title": "默认值"
+                                                },
+                                                {
+                                                    "name": "valueName",
+                                                    "type": "input",
+                                                    "componentConfig": {
+                                                        "hiddenTitle": true,
+                                                        "controlSize": {
+                                                            "span": 24
+                                                        }
+                                                    },
+                                                    "formType": "value",
+                                                    "formName": "formControlName",
+                                                    "validations": [],
+                                                    "title": "参数取值字段"
+                                                }
+                                            ],
+                                            "formType": "array",
+                                            "formName": "formControlName",
+                                            "validations": [],
+                                            "title": "内容参数"
+                                        }
+                                    ],
+                                    "formType": "object",
+                                    "formName": "formControlName",
+                                    "validations": [],
+                                    "title": "消息体配置"
+                                },
+                                {
+                                    "name": "point",
+                                    "type": "select",
+                                    "componentConfig": {
+                                        "options": [
+                                            {
+                                                "label": "进行下一步验证",
+                                                "value": "next"
+                                            },
+                                            {
+                                                "label": "直接通过所有验证",
+                                                "value": "pass"
+                                            },
+                                            {
+                                                "label": "阻止下一步验证",
+                                                "value": "prevent"
+                                            }
+                                        ],
+                                        "labelName": "label",
+                                        "valueName": "value"
+                                    },
+                                    "formType": "value",
+                                    "formName": "formControlName",
+                                    "validations": [],
+                                    "title": "下一步操作"
+                                }
+                            ],
+                            "formType": "object",
+                            "formName": "formControlName",
+                            "validations": [],
+                            "title": "弹出消息提示配置"
+                        },
+                        {
+                            "name": "confirm",
+                            "type": "objectEmpty",
+                            "componentConfig": {},
+                            "properties": [
+                                {
+                                    "name": "title",
+                                    "type": "input",
+                                    "componentConfig": {},
+                                    "formType": "value",
+                                    "formName": "formControlName",
+                                    "validations": [],
+                                    "title": "提示消息类型"
+                                },
+                                {
+                                    "name": "contentInfo",
+                                    "type": "objectEmpty",
+                                    "componentConfig": {},
+                                    "properties": [
+                                        {
+                                            "name": "content",
+                                            "type": "input",
+                                            "componentConfig": {},
+                                            "formType": "value",
+                                            "formName": "formControlName",
+                                            "validations": [],
+                                            "title": "提示内容模板"
+                                        },
+                                        {
+                                            "name": "parameters",
+                                            "type": "arrayTable",
+                                            "componentConfig": {},
+                                            "properties": [
+                                                {
+                                                    "name": "name",
+                                                    "type": "input",
+                                                    "componentConfig": {
+                                                        "hiddenTitle": true,
+                                                        "controlSize": {
+                                                            "span": 24
+                                                        }
+                                                    },
+                                                    "formType": "value",
+                                                    "formName": "formControlName",
+                                                    "validations": [],
+                                                    "title": "参数名称"
+                                                },
+                                                {
+                                                    "name": "type",
+                                                    "type": "input",
+                                                    "componentConfig": {
+                                                        "hiddenTitle": true,
+                                                        "controlSize": {
+                                                            "span": 24
+                                                        }
+                                                    },
+                                                    "formType": "value",
+                                                    "formName": "formControlName",
+                                                    "validations": [],
+                                                    "title": "参数类型"
+                                                },
+                                                {
+                                                    "name": "value",
+                                                    "type": "input",
+                                                    "componentConfig": {
+                                                        "hiddenTitle": true,
+                                                        "controlSize": {
+                                                            "span": 24
+                                                        }
+                                                    },
+                                                    "formType": "value",
+                                                    "formName": "formControlName",
+                                                    "validations": [],
+                                                    "title": "默认值"
+                                                },
+                                                {
+                                                    "name": "valueName",
+                                                    "type": "input",
+                                                    "componentConfig": {
+                                                        "hiddenTitle": true,
+                                                        "controlSize": {
+                                                            "span": 24
+                                                        }
+                                                    },
+                                                    "formType": "value",
+                                                    "formName": "formControlName",
+                                                    "validations": [],
+                                                    "title": "参数取值字段"
+                                                }
+                                            ],
+                                            "formType": "array",
+                                            "formName": "formControlName",
+                                            "validations": [],
+                                            "title": "内容参数"
+                                        }
+                                    ],
+                                    "formType": "object",
+                                    "formName": "formControlName",
+                                    "validations": [],
+                                    "title": "消息体配置"
+                                },
+                                {
+                                    "name": "okInfo",
+                                    "type": "objectEmpty",
+                                    "componentConfig": {},
+                                    "properties": [
+                                        {
+                                            "name": "title",
+                                            "type": "input",
+                                            "componentConfig": {},
+                                            "formType": "value",
+                                            "formName": "formControlName",
+                                            "validations": [],
+                                            "title": "提示消息类型"
+                                        },
+                                        {
+                                            "name": "point",
+                                            "type": "select",
+                                            "componentConfig": {
+                                                "options": [
+                                                    {
+                                                        "label": "进行下一步验证",
+                                                        "value": "next"
+                                                    },
+                                                    {
+                                                        "label": "直接通过所有验证",
+                                                        "value": "pass"
+                                                    },
+                                                    {
+                                                        "label": "阻止下一步验证",
+                                                        "value": "prevent"
+                                                    }
+                                                ],
+                                                "labelName": "label",
+                                                "valueName": "value"
+                                            },
+                                            "formType": "value",
+                                            "formName": "formControlName",
+                                            "validations": [],
+                                            "title": "下一步操作"
+                                        }
+                                    ],
+                                    "formType": "object",
+                                    "formName": "formControlName",
+                                    "validations": [],
+                                    "title": "OK按钮内容配置"
+                                },
+                                {
+                                    "name": "cancelInfo",
+                                    "type": "objectEmpty",
+                                    "componentConfig": {},
+                                    "properties": [
+                                        {
+                                            "name": "title",
+                                            "type": "input",
+                                            "componentConfig": {},
+                                            "formType": "value",
+                                            "formName": "formControlName",
+                                            "validations": [],
+                                            "title": "提示消息类型"
+                                        },
+                                        {
+                                            "name": "point",
+                                            "type": "select",
+                                            "componentConfig": {
+                                                "options": [
+                                                    {
+                                                        "label": "进行下一步验证",
+                                                        "value": "next"
+                                                    },
+                                                    {
+                                                        "label": "直接通过所有验证",
+                                                        "value": "pass"
+                                                    },
+                                                    {
+                                                        "label": "阻止下一步验证",
+                                                        "value": "prevent"
+                                                    }
+                                                ],
+                                                "labelName": "label",
+                                                "valueName": "value"
+                                            },
+                                            "formType": "value",
+                                            "formName": "formControlName",
+                                            "validations": [],
+                                            "title": "下一步操作"
+                                        }
+                                    ],
+                                    "formType": "object",
+                                    "formName": "formControlName",
+                                    "validations": [],
+                                    "title": "CANCEL按钮内容配置"
+                                }
+                            ],
+                            "formType": "object",
+                            "formName": "formControlName",
+                            "validations": [],
+                            "title": "弹出确信消息配置"
+                        },
+                        {
+                            "name": "execution",
+                            "type": "objectEmpty",
+                            "componentConfig": {},
+                            "properties": [
+                                {
+                                    "name": "point",
+                                    "type": "select",
+                                    "componentConfig": {
+                                        "options": [
+                                            {
+                                                "label": "进行下一步验证",
+                                                "value": "next"
+                                            },
+                                            {
+                                                "label": "直接通过所有验证",
+                                                "value": "pass"
+                                            },
+                                            {
+                                                "label": "阻止下一步验证",
+                                                "value": "prevent"
+                                            }
+                                        ],
+                                        "labelName": "label",
+                                        "valueName": "value"
+                                    },
+                                    "formType": "value",
+                                    "formName": "formControlName",
+                                    "validations": [],
+                                    "title": "下一步操作"
+                                }
+                            ],
+                            "formType": "object",
+                            "formName": "formControlName",
+                            "validations": [],
+                            "title": "弹出消息提示配置"
+                        }
+                    ],
+                    "formType": "array",
+                    "formName": "formControlName",
+                    "validations": [],
+                    "title": "执行内容设置"
+                }
+            ],
+            "formType": "array",
+            "formName": "formControlName",
+            "validations": [],
+            "title": "前置条件"
+        }
+    ]
+}

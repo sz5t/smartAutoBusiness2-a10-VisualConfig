@@ -51,6 +51,7 @@ export class SmtDataTableComponent implements OnInit {
   public checkedNumber = 0;
   public RowActions: any;
   public tableColumns: any = [];
+  public pageSizeOptions: any = [];
 
   public KEY_ID: string;
   public isAllChecked = false;
@@ -65,14 +66,16 @@ export class SmtDataTableComponent implements OnInit {
     // console.log(this.tempData);
     // console.log(this.dataServe);
     this.KEY_ID = this.config.keyId ? this.config.keyId : 'ID';
-    this.pageSize = this.config.pageSize ? this.config.pageSize : 10;
+    this.pageSize = this.config.pageSize ? parseInt(this.config.pageSize) : 10;
+    this.pageSizeOptions = [10, 20, 50, 100];
     this.showTotal = this.config.showTotal ? this.config.showTotal : false;
     this._buildColumns(this.config.columns, this.config);
-    console.log(this.tableColumns);
+    console.log(this.config, this.tableColumns);
 
     // 是否需要进行初始化数据加载
     if (this.config.loadingOnInit) {
       // await this.load();
+      this.total = this.dataList.length;
     }
 
     this.createTableMapping();

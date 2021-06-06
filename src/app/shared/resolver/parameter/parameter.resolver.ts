@@ -308,7 +308,7 @@ class TempValueParameter extends BaseParameter implements IParameter {
     super();
   }
   public buildParameter() {
-    debugger;
+    // debugger;
     if (this._model.tempValue && (this._model.tempValue[this._param.valueName] || this._model.tempValue[this._param.valueName] === 0)) {
       if (this._param.conditionType) {
         this._result = this.getParameter(this._param.conditionType, this._model.tempValue[this._param.valueName]);

@@ -31,7 +31,7 @@ export class SmtPageComponent extends CnComponentBase implements OnInit {
   async loadPageConfig() {
     const url = this.config.loadingConfig.url;
     const method = this.config.loadingConfig.method ? this.config.loadingConfig.method : this.config.loadingConfig.ajaxType;
-    const params = { ID: 'DBD66E42-2670-4086-A71C-6BF40FB5E544' };
+    const params = { ID: '154A38B0-EB91-4E18-8DE7-86031D140363' };
     const response = await this.executeHttpRequest(url, method, params).toPromise();
     return response['data'][0]['JSON'];
   }
