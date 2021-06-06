@@ -1,0 +1,20 @@
+<!-- (drop)="f_ondrop($event,l_config)" -->
+<div (click)="click($event)"
+    [ngStyle]="(selectedItem['item'] &&(selectedItem['active']==='cnFormInput')&& (selectedItem['item']['id']===l_config['id']) )? body_style_selected: body_style">
+
+    <span>
+
+        <div nz-row style="margin-top: 6px;">
+            <div nz-col nzFlex="2">
+
+                {{config['title']}}:
+            </div>
+            <div nz-col nzFlex="8">
+                <input nz-input placeholder="请输入" style="width: 80%;" />
+            </div>
+        </div>
+
+
+
+    </span>
+</div>

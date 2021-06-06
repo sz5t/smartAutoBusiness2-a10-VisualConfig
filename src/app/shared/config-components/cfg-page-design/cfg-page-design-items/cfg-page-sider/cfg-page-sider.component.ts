@@ -42,18 +42,24 @@ export class CfgPageSiderComponent implements OnInit {
       children: [
         {
           "id": "001",
+          "type": "layout",
+          "dropType": "page",
           "dropName": "row",
           "icon": "insert-row-above",
           "title": "行"
         },
         {
           "id": "002",
+          "type": "layout",
+          "dropType": "page",
           "dropName": "col",
           "icon": "column-width",
           "title": "列"
         },
         {
           "id": "003",
+          "type": "layout",
+          "dropType": "page",
           "dropName": "tabs",
           "icon": "column-width",
           "title": "页签"
@@ -67,36 +73,48 @@ export class CfgPageSiderComponent implements OnInit {
       children: [
         {
           "id": "001",
+          "type": "component",
+          "dropType": "page",
           "dropName": "cnForm",
           "icon": "edit",
           "title": "表单"
         },
         {
           "id": "002",
+          "type": "component",
+          "dropType": "page",
           "dropName": "cnTree",
           "icon": "select",
           "title": "树"
         },
         {
           "id": "003",
+          "type": "component",
+          "dropType": "page",
           "dropName": "cnTable",
           "icon": "field-time",
           "title": "表格"
         },
         {
           "id": "004",
+          "type": "component",
+          "dropType": "page",
           "dropName": "cnTreeTable",
           "icon": "check-square",
           "title": "树表"
         },
         {
           "id": "005",
+          "type": "component",
+          "dropType": "page",
           "dropName": "cnToolbar",
           "icon": "check-square",
           "title": "按钮组"
         },
         {
           "id": "006",
+          "type": "component",
+          "dropType": "page",
           "dropName": "cnRowToolbar",
           "icon": "check-square",
           "title": "行内按钮"
@@ -112,6 +130,7 @@ export class CfgPageSiderComponent implements OnInit {
 
   public f_ondragstart(e?, d?) {
     // this.d_row = d;
+    d = JSON.stringify(d);
     e.dataTransfer.setData('test', d);
     console.log('拖动行', e, d);
     const ss = e.dataTransfer.getData('test');

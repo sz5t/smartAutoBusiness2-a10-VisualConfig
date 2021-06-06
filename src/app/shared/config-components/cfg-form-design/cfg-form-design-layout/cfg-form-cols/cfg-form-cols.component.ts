@@ -1,21 +1,18 @@
-import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
-import { configFormDataServerService } from 'src/app/core/services/config/form-data.service';
-import { CommonUtils } from 'src/app/core/utils/common-utils';
-import { CnFormButtonComponent } from 'src/app/shared/components/data-form/cn-form-items/cn-form-button/cn-form-button.component';
+import { Component, OnInit, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
-  selector: 'app-cfg-page-cols',
-  templateUrl: './cfg-page-cols.component.html',
+  selector: 'app-cfg-form-cols',
+  templateUrl: './cfg-form-cols.component.html',
   styles: [
   ]
 })
-export class CfgPageColsComponent implements OnInit {
+export class CfgFormColsComponent implements OnInit {
 
   @Input() public l_config;
   @Input() public showLayout: any;
   @Input() public selectedItem: any;
   @Input() public cmptState: any;
-  @Input() public fromDataService: configFormDataServerService;
+  @Input() public fromDataService;
   @Output() public layoutOptions = new EventEmitter();
   constructor() { }
 
@@ -145,5 +142,4 @@ export class CfgPageColsComponent implements OnInit {
     }
 
   }
-
 }

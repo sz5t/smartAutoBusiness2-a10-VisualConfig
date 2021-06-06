@@ -166,11 +166,11 @@ export class CfgPageCmptTableComponent implements OnInit {
     console.log('拖动行ondrop', e, d);
     const ss = e.dataTransfer.getData('test');
     console.log('拖动行ondrop临时值', ss);
-    //let dropData = JSON.stringify(ss);
+    let dropData = JSON.parse(ss);
     // console.log('拖拽JSON', dropData);
 
-
-    if (ss === 'cnToolbar') {
+    let dropName = dropData['dropName'];
+    if (dropData['dropName'] === 'cnToolbar') {
       const cmpTypeMapping = {
         cnForm: 'cnForm',
         cnTable: 'cnDataTable',
@@ -180,15 +180,15 @@ export class CfgPageCmptTableComponent implements OnInit {
         tabs: 'tabs'
       }
 
-      if (!cmpTypeMapping[ss]) {
+      if (!cmpTypeMapping[dropName]) {
         e.stopPropagation();
         return;
       }
 
       let cmptObj = {
-        "type": cmpTypeMapping[ss],
-        "title": "组件" + cmpTypeMapping[ss],
-        "container": cmpTypeMapping[ss],
+        "type": cmpTypeMapping[dropName],
+        "title": "组件" + cmpTypeMapping[dropName],
+        "container": cmpTypeMapping[dropName],
         "positionId": this.l_config['id']
       }
 

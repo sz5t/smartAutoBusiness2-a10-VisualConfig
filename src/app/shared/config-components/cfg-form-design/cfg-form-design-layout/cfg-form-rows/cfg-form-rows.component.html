@@ -1,0 +1,29 @@
+<div *ngIf="showLayout">
+    <ng-container *ngTemplateOutlet="content"></ng-container>
+</div>
+
+<div *ngIf="!showLayout">
+    <ng-container *ngTemplateOutlet="content"></ng-container>
+</div>
+
+
+<ng-template #content>
+    <div *ngIf="l_config['children']">
+        <ng-container *ngFor="let r of l_config['children']  let i=index">
+            <div (drop)="f_ondrop($event,l_config,i)" (dragover)="f_ondragover($event,l_config)"
+                (dragenter)="f_ondragenter($event,i)" (dragleave)="f_ondragleave($event,i)">
+                <app-cfg-form-row [(l_config)]="l_config['children'][i]" [showLayout]="showLayout"
+                    [(selectedItem)]="selectedItem" [(cmptState)]="cmptState" [fromDataService]="fromDataService">
+                </app-cfg-form-row>
+            </div>
+        </ng-container>
+    </div>
+
+    <div *ngIf="!l_config['children'] || l_config['children'].length === 0" nz-row [nzGutter]="6">
+        <div style="height: 50px;" nz-col (drop)="f_ondrop($event,l_config,0)"
+            (dragover)="f_ondragover($event,l_config)" (dragenter)="f_ondragenter($event,0)"
+            (dragleave)="f_ondragleave($event,0)" nzSpan="24">
+            可添加行
+        </div>
+    </div>
+</ng-template>

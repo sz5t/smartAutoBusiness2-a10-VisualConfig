@@ -8,8 +8,7 @@
 
                     <ng-container *ngFor="let r of panel['children']">
                         <div nz-card-grid [ngStyle]="gridStyle" [draggable]="is_drag"
-                            (dragstart)="f_ondragstart($event,r['dropName'])"><i nz-icon [nzType]="r['icon']"
-                                nzTheme="outline"></i>
+                            (dragstart)="f_ondragstart($event,r)"><i nz-icon [nzType]="r['icon']" nzTheme="outline"></i>
                             <br>{{r['title']}}
                         </div>
                     </ng-container>

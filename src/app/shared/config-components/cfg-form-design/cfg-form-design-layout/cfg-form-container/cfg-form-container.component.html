@@ -1,0 +1,18 @@
+<!-- <p>cfg-page-container works!</p> -->
+
+<div *ngIf="l_config">
+    <div *ngIf="l_config['container'] === 'rows'">
+        <app-cfg-form-rows [(l_config)]="l_config" [showLayout]="showLayout" [(selectedItem)]="selectedItem"
+            [(cmptState)]="cmptState" [fromDataService]="fromDataService">
+        </app-cfg-form-rows>
+    </div>
+    <div *ngIf="l_config['container'] === 'component'">
+
+
+        <div *ngFor="let r of l_config['children']  let i=index">
+            <div appCfgFormDesignLayoutItem [l_config]="r" [showLayout]="showLayout" [(selectedItem)]="selectedItem"
+                [(cmptState)]="cmptState" [fromDataService]="fromDataService">
+
+            </div>
+        </div>
+    </div>
