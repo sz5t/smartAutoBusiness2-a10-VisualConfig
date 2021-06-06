@@ -1,1 +1,25 @@
 <p>cfg-form-design works!</p>
+<nz-switch [(ngModel)]="showLayout" nzCheckedChildren="布局" nzUnCheckedChildren="组件" style="margin-left: 7px;">
+</nz-switch>
+<button nz-button style="margin-left: 8px;" [nzSize]="'small'" nzType="primary" (click)="saveJson()">
+    保存json</button>
+<button nz-button style="margin-left: 8px;" [nzSize]="'small'" nzType="primary" (click)="loadJson()">
+    测试加载json</button>
+<div nz-row>
+    <div nz-col nzFlex="0 1 250px">
+
+        <app-cfg-form-sider [fromDataService]="fromDataService" [layoutTree]="layoutTree"
+            [(selectedItem)]="selectedItem"></app-cfg-form-sider>
+    </div>
+    <div nz-col nzFlex="auto" [ngStyle]="style1">
+        <app-cfg-form-view [fromDataService]="fromDataService" [(selectedItem)]="selectedItem" [showLayout]="showLayout"
+            [l_config]="layoutTree"></app-cfg-form-view>
+    </div>
+    <div nz-col nzFlex="0 1 400px" [ngStyle]="style1">
+        <!-- style="max-height:80px;overflow:auto" -->
+        <app-cfg-form-property [fromDataService]="fromDataService" [(selectedItem)]="selectedItem">
+        </app-cfg-form-property>
+
+
+    </div>
+</div>

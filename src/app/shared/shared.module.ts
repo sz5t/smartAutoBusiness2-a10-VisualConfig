@@ -171,11 +171,11 @@ import { CfgPageCmptFormComponent } from './config-components/cfg-page-design/cf
 import { CfgPageCmptTableComponent } from './config-components/cfg-page-design/cfg-page-design-layout/cfg-page-cmpt-table/cfg-page-cmpt-table.component';
 import { CfgPageCmptToolbarComponent } from './config-components/cfg-page-design/cfg-page-design-layout/cfg-page-cmpt-toolbar/cfg-page-cmpt-toolbar.component';
 import { CfgPageCmptTabsComponent } from './config-components/cfg-page-design/cfg-page-design-layout/cfg-page-cmpt-tabs/cfg-page-cmpt-tabs.component';
-import { CfgFormRowsComponent } from './config-components/cfg-form-design/cfg-form-design-layout/cfg-form-layout/cfg-form-rows/cfg-form-rows.component';
-import { CfgFormRowComponent } from './config-components/cfg-form-design/cfg-form-design-layout/cfg-form-layout/cfg-form-row/cfg-form-row.component';
-import { CfgFormColsComponent } from './config-components/cfg-form-design/cfg-form-design-layout/cfg-form-layout/cfg-form-cols/cfg-form-cols.component';
-import { CfgFormColComponent } from './config-components/cfg-form-design/cfg-form-design-layout/cfg-form-layout/cfg-form-col/cfg-form-col.component';
-import { CfgFormContainerComponent } from './config-components/cfg-form-design/cfg-form-design-layout/cfg-form-layout/cfg-form-container/cfg-form-container.component';
+import { CfgFormRowsComponent } from './config-components/cfg-form-design/cfg-form-design-layout/cfg-form-rows/cfg-form-rows.component';
+import { CfgFormRowComponent } from './config-components/cfg-form-design/cfg-form-design-layout/cfg-form-row/cfg-form-row.component';
+import { CfgFormColsComponent } from './config-components/cfg-form-design/cfg-form-design-layout/cfg-form-cols/cfg-form-cols.component';
+import { CfgFormColComponent } from './config-components/cfg-form-design/cfg-form-design-layout/cfg-form-col/cfg-form-col.component';
+import { CfgFormContainerComponent } from './config-components/cfg-form-design/cfg-form-design-layout/cfg-form-container/cfg-form-container.component';
 import { CfgPropertyTypeComponent } from './config-components/cfg-property/cfg-property-type/cfg-property-type.component';
 import { CfgPropertyItemDirective } from './config-components/cfg-property/cfg-property-item.directive';
 import { CfgPropertyFormComponent } from './config-components/cfg-property/cfg-property-form/cfg-property-form.component';
@@ -222,6 +222,10 @@ import { SmtTreeTableComponent } from './smt-components/smt-tree-table/smt-tree-
 import { CnStaticFormMainResourceComponent } from './components/cn-static-form/cn-static-form-cmpt/cn-static-form-main-resource/cn-static-form-main-resource.component';
 import { CnStaticFormApiComponent } from './components/cn-static-form/cn-static-form-cmpt/cn-static-form-api/cn-static-form-api.component';
 import { CnStaticFormPopApiComponent } from './components/cn-static-form/cn-static-form-item/cn-static-form-pop-api/cn-static-form-pop-api.component';
+import { CfgFormInputComponent } from './config-components/cfg-form-design/cfg-form-design-layout/cfg-form-input/cfg-form-input.component';
+import { CfgFormSelectComponent } from './config-components/cfg-form-design/cfg-form-design-layout/cfg-form-select/cfg-form-select.component';
+import { CfgFormCheckComponent } from './config-components/cfg-form-design/cfg-form-design-layout/cfg-form-check/cfg-form-check.component';
+import { CfgFormDesignLayoutItemDirective } from './config-components/cfg-form-design/cfg-form-design-layout/cfg-form-design-layout-item.directive';
 
 
 // #region third libs
@@ -408,6 +412,9 @@ const COMPONENTS = [
   CfgPropertyFormComponent,
   CfgPropertyConentComponent,
   ToolAttrJsonComponent,
+  CfgFormInputComponent,
+  CfgFormSelectComponent,
+  CfgFormCheckComponent,
 
   //--静态表单--
   CnStaticFormComponent,
@@ -462,7 +469,8 @@ const DIRECTIVES = [
   CfgPropertyItemDirective,
   CfgPageDesignLayoutItemDirective,
   SmtDynamicLayoutResolverDirective,
-  SmtComponentResolverDirective
+  SmtComponentResolverDirective,
+  CfgFormDesignLayoutItemDirective,
 ];
 // #endregion
 
@@ -491,6 +499,8 @@ const DIRECTIVES = [
     SafeUrlPipe,
     CfgAttributeRanksRowModalComponent,
     ToolAttrJsonComponent,
+
+
 
 
   ],
