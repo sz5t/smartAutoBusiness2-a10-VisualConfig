@@ -1,0 +1,22 @@
+<div class="alain-default__aside-inner">
+  <div nz-dropdown nzTrigger="click" class="alain-default__aside-user">
+    <nz-avatar class="alain-default__aside-user-avatar" nzSrc="../assets/img/component.png"></nz-avatar>
+    <div class="alain-default__aside-user-info">
+      <strong>{{ settings.user.userName }}</strong>
+    </div>
+  </div>
+  
+  <button nzType="primary" nz-button nz-dropdown [nzDropdownMenu]="menu" class="alain-default__aside-user">
+    <strong>{{currentProject.name}}<i nz-icon nzType="down"></i></strong>
+  </button>
+  <nz-dropdown-menu #menu="nzDropdownMenu">
+  <ul nz-menu *ngFor="let project of projectList"> 
+    <li nz-submenu [nzTitle]="project.NAME" (click)="change(project)">
+    <ul *ngIf="project.children.length > 0">
+      <li nz-menu-item *ngFor="let child of project.children" (click)="change(child)">{{child.NAME}}</li>
+    </ul>
+  </li>
+  </ul>
+  </nz-dropdown-menu>
+  <vc-layout-nav [layoutCollapsed]="layoutCollapsed"></vc-layout-nav>
+</div>

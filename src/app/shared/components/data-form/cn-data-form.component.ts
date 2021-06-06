@@ -71,6 +71,7 @@ export class CnDataFormComponent extends CnComponentBase implements OnInit, OnDe
     public componentService: ComponentServiceProvider,
   ) {
     super(componentService);
+    this.cacheValue = this.componentService.cacheService;
   }
 
   ngOnInit() {
@@ -355,6 +356,7 @@ export class CnDataFormComponent extends CnComponentBase implements OnInit, OnDe
    * setChangeValue 接受 初始变量值
    */
   public setChangeValue(ChangeValues?) {
+    debugger;
     console.log('changeValue', ChangeValues);
     // const ChangeValues = [{ name: "", value: "", valueTo: "" }];
     if (ChangeValues && ChangeValues.length > 0) {

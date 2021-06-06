@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, Type } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { SimpleGuard } from '@delon/auth';
 import { environment } from '@env/environment';
@@ -19,29 +19,21 @@ import { UserRegisterResultComponent } from './passport/register-result/register
 import { CallbackComponent } from './callback/callback.component';
 import { UserLockComponent } from './passport/lock/lock.component';
 import { CALoginComponent } from './passport/calogin/calogin.component';
+import { VcUserLoginComponent } from './vc-passport/login/vc-login.component';
+import { VcLayoutDefaultComponent } from '../layout/vc_default/vc_default.component';
 
-const _routes: Routes = [
-  {
-    path: '',
-    component: LayoutDefaultComponent,
-    canActivate: [SimpleGuard],
-    canActivateChild: [SimpleGuard],
-    children: [
-      { path: '', redirectTo: 'dashboard/v1', pathMatch: 'full' },
-      { path: 'template', loadChildren: () => import('./template/template.module').then(m => m.TemplateModule) }
-    ]
-  },
-  {
-    path: 'passport',
-    component: LayoutPassportComponent,
-    children: []
-  }
-];
+const _loginComponents: { [type: string]: Type<any> } = {
+  calogin: CALoginComponent,
+  login: UserLoginComponent,
+  vclogin: VcUserLoginComponent,
+  vc: VcLayoutDefaultComponent,
+  app: LayoutDefaultComponent,
+};
 
 const routes: Routes = [
   {
     path: '',
-    component: LayoutDefaultComponent,
+    component: _loginComponents[environment.routeInfo.defaultPath],
     canActivate: [SimpleGuard],
     canActivateChild: [SimpleGuard],
     children: [
@@ -53,17 +45,17 @@ const routes: Routes = [
       { path: 'dashboard/workplace', component: DashboardWorkplaceComponent },
       {
         path: 'widgets',
-        loadChildren: () => import('./widgets/widgets.module').then(m => m.WidgetsModule),
+        loadChildren: () => import('./widgets/widgets.module').then((m) => m.WidgetsModule),
       },
-      { path: 'style', loadChildren: () => import('./style/style.module').then(m => m.StyleModule) },
-      { path: 'delon', loadChildren: () => import('./delon/delon.module').then(m => m.DelonModule) },
-      { path: 'extras', loadChildren: () => import('./extras/extras.module').then(m => m.ExtrasModule) },
-      { path: 'pro', loadChildren: () => import('./pro/pro.module').then(m => m.ProModule) },
-      { path: 'configure', loadChildren: () => import('./../configure/configure.module').then(m => m.ConfigureModule) },
+      { path: 'style', loadChildren: () => import('./style/style.module').then((m) => m.StyleModule) },
+      { path: 'delon', loadChildren: () => import('./delon/delon.module').then((m) => m.DelonModule) },
+      { path: 'extras', loadChildren: () => import('./extras/extras.module').then((m) => m.ExtrasModule) },
+      { path: 'pro', loadChildren: () => import('./pro/pro.module').then((m) => m.ProModule) },
+      { path: 'configure', loadChildren: () => import('./../configure/configure.module').then((m) => m.ConfigureModule) },
       // Exception
-      { path: 'exception', loadChildren: () => import('./exception/exception.module').then(m => m.ExceptionModule) },
-      { path: 'template', loadChildren: () => import('./template/template.module').then(m => m.TemplateModule) }
-    ]
+      { path: 'exception', loadChildren: () => import('./exception/exception.module').then((m) => m.ExceptionModule) },
+      { path: 'template', loadChildren: () => import('./template/template.module').then((m) => m.TemplateModule) },
+    ],
   },
   // 全屏布局
   // {
@@ -77,21 +69,15 @@ const routes: Routes = [
     path: 'passport',
     component: LayoutPassportComponent,
     children: [
-      environment.routeInfo.enableLogin === true ? {
-        path: 'login',
-        component: UserLoginComponent,
-        data: { title: '登录', titleI18n: 'app.login.login' }
-      } : { path: 'login', redirectTo: 'calogin' },
-      environment.routeInfo.enableCalogin === true ? {
-        path: 'calogin',
-        component: CALoginComponent,
-        data: { title: '登录', titleI18n: 'app.login.login' },
-      } : { path: 'calogin', redirectTo: 'login' }
-    ]
+      {
+        path: environment.routeInfo.loginPath,
+        component: _loginComponents[environment.routeInfo.loginPath],
+      },
+    ],
   },
   // 单页不包裹Layout
   { path: 'callback/:type', component: CallbackComponent },
-  { path: '**', redirectTo: 'exception/404' }
+  //{ path: '**', redirectTo: 'exception/404' },
 ];
 
 function geturl(): string {
@@ -109,4 +95,4 @@ function geturl(): string {
   ],
   exports: [RouterModule],
 })
-export class RouteRoutingModule { }
+export class RouteRoutingModule {}

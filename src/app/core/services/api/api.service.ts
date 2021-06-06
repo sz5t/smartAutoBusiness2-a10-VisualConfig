@@ -10,7 +10,7 @@ import { CommonUtils } from './../../utils/common-utils';
 // import { Http, XHRBackend, Headers, Request, RequestMethod, RequestOptionsArgs, ResponseOptionsArgs, ConnectionBackend, RequestOptions } from '@angular/common/http';
 @Injectable()
 export class ApiServiceConfiguration {
-  constructor(@Inject(DA_SERVICE_TOKEN) private _tokenService: TokenService) { }
+  constructor(@Inject(DA_SERVICE_TOKEN) private _tokenService: ITokenService) {}
 
   // tslint:disable-next-line: no-object-literal-type-assertion
   private defaultError500 = {
@@ -40,7 +40,7 @@ export class ApiServiceConfiguration {
     data: {},
   } as IErrorInfo;
 
-  private logError(error: IErrorInfo): void { }
+  private logError(error: IErrorInfo): void {}
 
   private showError(error: IErrorInfo): any {
     if (error.code) {
@@ -130,7 +130,7 @@ export class ApiServiceConfiguration {
     // } as ApiResponse
   }
 
-  public handleResponse(response: ApiResponse | any): ApiResponse | any{
+  public handleResponse(response: ApiResponse | any): ApiResponse | any {
     const ajaxResponse = this.getResponseOrNull(response);
     if (ajaxResponse === null) {
       return response;
@@ -159,11 +159,11 @@ export class ApiServiceConfiguration {
 export class ApiService extends _HttpClient {
   protected configuration: ApiServiceConfiguration;
   constructor(
-    @Inject(DA_SERVICE_TOKEN) private _tokenService: TokenService,
+    @Inject(DA_SERVICE_TOKEN) private _tokenService: ITokenService,
     private clientHttp: HttpClient,
     private cacheService: CacheService,
     private configService: AlainConfigService,
-    _configuration: ApiServiceConfiguration
+    _configuration: ApiServiceConfiguration,
   ) {
     super(clientHttp, configService);
     this.configuration = _configuration;
@@ -176,16 +176,16 @@ export class ApiService extends _HttpClient {
 
   /**
    * 资源请求
-   * @param _url 资源地址 
+   * @param _url 资源地址
    * @param _method 资源方法
    * @param _options 资源选项
    */
   public getRequest(_url: string, _method: string, _options?: ApiOptions): Observable<any> {
     this.normalizeRequestOptions(_options);
-    return super.request<any>(_method, _url, _options as any)
-      .pipe(
-        map(response => this.configuration.handleResponse(response)),
-        catchError(error => this.configuration.handleError(error)));
+    return super.request<any>(_method, _url, _options as any).pipe(
+      map((response) => this.configuration.handleResponse(response)),
+      catchError((error) => this.configuration.handleError(error)),
+    );
   }
 
   /**
@@ -194,27 +194,27 @@ export class ApiService extends _HttpClient {
    * @param param 资源参数
    * @param _options 资源选项
    */
-  public doGet(_url: string, param: any, _options?: ApiOptions): Observable<any>{
+  public doGet(_url: string, param: any, _options?: ApiOptions): Observable<any> {
     this.normalizeRequestOptions(_options);
-    return super.get<ApiResponse>(_url, param, _options as any)
-      .pipe(
-        map(response => this.configuration.handleResponse(response)),
-        catchError(error => this.configuration.handleError(error)));
+    return super.get<ApiResponse>(_url, param, _options as any).pipe(
+      map((response) => this.configuration.handleResponse(response)),
+      catchError((error) => this.configuration.handleError(error)),
+    );
   }
 
   /**
    * 提交数据
-   * @param _url 资源地址 
+   * @param _url 资源地址
    * @param body 提交数据
    * @param param 资源参数
    * @param _options 资源选项
    */
   public doPost(_url: string, body?: any, param?: any, _options?: ApiOptions): Observable<any> {
     this.normalizeRequestOptions(_options);
-    return super.post<ApiResponse>(_url, body, param, _options as any)
-      .pipe(
-        map(response => this.configuration.handleResponse(response)),
-        catchError(error => this.configuration.handleError(error)));
+    return super.post<ApiResponse>(_url, body, param, _options as any).pipe(
+      map((response) => this.configuration.handleResponse(response)),
+      catchError((error) => this.configuration.handleError(error)),
+    );
   }
 
   /**
@@ -226,24 +226,24 @@ export class ApiService extends _HttpClient {
    */
   public doPut(_url: string, body?: any | any[], param?: any, _options?: ApiOptions): Observable<any> {
     this.normalizeRequestOptions(_options);
-    return super.put<ApiResponse>(_url, body, param, _options as any)
-      .pipe(
-        map(response => this.configuration.handleResponse(response)),
-        catchError(error => this.configuration.handleError(error)));
+    return super.put<ApiResponse>(_url, body, param, _options as any).pipe(
+      map((response) => this.configuration.handleResponse(response)),
+      catchError((error) => this.configuration.handleError(error)),
+    );
   }
 
   /**
    * 删除操作
-   * @param _url 资源地址 
+   * @param _url 资源地址
    * @param param 资源参数
    * @param _options 资源选项
    */
-  public doDelete(_url: string, param: any, _options?: ApiOptions): Observable<any>{
+  public doDelete(_url: string, param: any, _options?: ApiOptions): Observable<any> {
     this.normalizeRequestOptions(_options);
-    return super.delete<ApiResponse>(_url, param, _options as any)
-      .pipe(
-        map(response => this.configuration.handleResponse(response)),
-        catchError(error => this.configuration.handleError(error)));
+    return super.delete<ApiResponse>(_url, param, _options as any).pipe(
+      map((response) => this.configuration.handleResponse(response)),
+      catchError((error) => this.configuration.handleError(error)),
+    );
   }
 
   /**
@@ -293,9 +293,7 @@ export class ApiService extends _HttpClient {
     }
   }
 
-  private addAcceptLanguageHeader(options: ApiOptions): void {
-
-  }
+  private addAcceptLanguageHeader(options: ApiOptions): void {}
 
   private addAuthorizationHeader(options: ApiOptions): void {
     let authorizationHeaders = options.headers ? options.headers.getAll('_token') : null;
@@ -303,12 +301,12 @@ export class ApiService extends _HttpClient {
       authorizationHeaders = [];
     }
 
-    if (!this.itemExists(authorizationHeaders, (item: string) => item.indexOf('_token') === 0)) {
-      const token = this._tokenService.get();
-      if (options.headers && token) {
-        options.headers.append('_token', token);
-      }
-    }
+    // if (!this.itemExists(authorizationHeaders, (item: string) => item.indexOf('_token') === 0)) {
+    //   const token = this._tokenService.get();
+    //   if (options.headers && token) {
+    //     options.headers.append('_token', token);
+    //   }
+    // }
   }
 
   private itemExists<T>(items: T[], predicate: (item: T) => boolean): boolean {
@@ -343,9 +341,9 @@ export class IErrorInfo {
   data: any;
 }
 
-export class IValidationInfo extends IErrorInfo { }
+export class IValidationInfo extends IErrorInfo {}
 
-export class IMessageInfo extends IErrorInfo { }
+export class IMessageInfo extends IErrorInfo {}
 
 export class ApiResponse {
   private _success: number;
@@ -401,5 +399,4 @@ export class ApiResponse {
   public set error(value: IMessageInfo | IMessageInfo[]) {
     this._error = value;
   }
-
 }

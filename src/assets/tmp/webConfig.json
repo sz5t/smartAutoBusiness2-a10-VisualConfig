@@ -1,7 +1,8 @@
 {
     "SERVER_URL_333": "http://192.168.1.111:8405/",
     "SERVER_URL_erw": "dev/",
-    "SERVER_URL": "http://192.168.1.111:8406/",
+    "SERVER_URL": "",
+    "SERVER_URL13": "http://192.168.1.111:8406/",
     "SERVER_URL——d": "http://39.101.168.200:8304/",
     "SERVER_URL1": "http://192.168.1.111:8401/",
     "SERVER_URL_11": "http://192.168.1.111:8402/",
@@ -13,7 +14,7 @@
         "systemMode": "dev",
         "enablePermission": false,
         "enableLogin": true,
-        "enableExceptionLogin": true,
+        "enableExceptionLogin": false,
         "enableLog": true,
         "enablenotice": false,
         "enableClient": false,
@@ -60,25 +61,19 @@
                 ]
             },
             "loginAjaxConfig": {
-                "url": "resource/B_P_LOGIN/operate",
+                "url": "smt-base/vclogin",
                 "ajaxType": "post",
                 "params": [
                     {
-                        "name": "userName",
+                        "name": "loginName",
                         "type": "componentValue",
                         "valueName": "userName"
                     },
                     {
-                        "name": "passWord",
+                        "name": "loginPwd",
                         "type": "componentValue",
                         "valueName": "password",
                         "dataType": "MD5"
-                    },
-                    {
-                        "name": "attribute",
-                        "type": "componentValue",
-                        "valueName": "ca",
-                        "value": "enable"
                     }
                 ]
             },
@@ -330,7 +325,7 @@
             "enableToolbarLog": true,
             "enableRowActionLog": true,
             "logAjaxConfig": {
-                "url": "resource/LOG_OPERATION_1/insert",
+                "url": "smt-log/log/add",
                 "ajaxType": "post",
                 "params": [
                     {

@@ -11,7 +11,7 @@ import { CnDataFormComponent } from '../../cn-data-form.component';
 @Component({
   selector: 'cn-form-transfer',
   templateUrl: './cn-form-transfer.component.html',
-  styleUrls: ['./cn-form-transfer.component.less']
+  styleUrls: ['./cn-form-transfer.component.less'],
 })
 export class CnFormTransferComponent extends CnComponentBase implements OnInit {
   @Input() public config;
@@ -22,23 +22,23 @@ export class CnFormTransferComponent extends CnComponentBase implements OnInit {
   @Input() public dialogsConfig: any;
   @Output() public updateValue = new EventEmitter();
 
-
-
-
   public transferObj: {
-    list: TransferItem[],
-    transferArr: string,
-    title: any,
-    loadingData: any,
-    formDataArr: string,
-    formData: any,
+    list: TransferItem[];
+    transferArr: string;
+    title: any;
+    loadingData: any;
+    formDataArr: string;
+    formData: any;
     targetKeys: any[];
     footer: any;
+    style: any;
   };
+  public currentValue;
 
-  constructor(@Inject(BSN_COMPONENT_SERVICES)
-  public componentService: ComponentServiceProvider,
-    private _cdr: ChangeDetectorRef
+  constructor(
+    @Inject(BSN_COMPONENT_SERVICES)
+    public componentService: ComponentServiceProvider,
+    private _cdr: ChangeDetectorRef,
   ) {
     super(componentService);
     this.initValue = {};
@@ -46,7 +46,6 @@ export class CnFormTransferComponent extends CnComponentBase implements OnInit {
   }
 
   public ngOnInit() {
-    console.log(this.dialogsConfig);
     if (this.initData) {
       this.initValue = this.initData;
     } else {
@@ -59,9 +58,8 @@ export class CnFormTransferComponent extends CnComponentBase implements OnInit {
     }
     this.transferObj = this._initTransferObj(this.config);
     if (this.config.loadingConfig) {
-      this.load();
+      //this.load();
     }
-
   }
 
   private _initTransferObj(config: any) {
@@ -73,14 +71,15 @@ export class CnFormTransferComponent extends CnComponentBase implements OnInit {
       formDataArr: '',
       formData: [],
       targetKeys: [],
-      footer: config.footer ? config.footer : null
+      style: config.style,
+      footer: config.footer ? config.footer : null,
     };
   }
 
   public change($event): void {
     switch ($event.from) {
       case 'left':
-        $event.list.forEach(item => {
+        $event.list.forEach((item) => {
           const index = this.transferObj.targetKeys.indexOf(item.key);
           if (index < 0) {
             this.transferObj.targetKeys.push(item.key);
@@ -88,24 +87,26 @@ export class CnFormTransferComponent extends CnComponentBase implements OnInit {
         });
         break;
       case 'right':
-        $event.list.forEach(item => {
-          this.transferObj.targetKeys = this.transferObj.targetKeys.filter(_key => _key !== item.key);
+        $event.list.forEach((item) => {
+          this.transferObj.targetKeys = this.transferObj.targetKeys.filter((_key) => _key !== item.key);
         });
         break;
     }
 
     this.transferObj.formDataArr = '';
-    this.transferObj.targetKeys.forEach(key => {
+    this.transferObj.targetKeys.forEach((key) => {
       this.transferObj.formDataArr += key + ',';
     });
     this.transferObj.formDataArr = this.transferObj.formDataArr.substring(0, this.transferObj.formDataArr.length - 1);
+    this.currentValue = this.transferObj.formDataArr;
+    this.valueChange(this.currentValue);
     console.log('transferArrString===============>', this.transferObj.formDataArr);
     this._cdr.markForCheck();
   }
 
   /**
- * load 自加载
- */
+   * load 自加载
+   */
   public async load() {
     let response: any;
     if (this.config.loadingConfig.ajaxConfig.enableAjaxMore) {
@@ -115,16 +116,16 @@ export class CnFormTransferComponent extends CnComponentBase implements OnInit {
       const url = this.config.loadingConfig.ajaxConfig.url;
       const method = this.config.loadingConfig.ajaxConfig.ajaxType;
       const params = {
-        ...this.buildParameters(this.config.loadingConfig.ajaxConfig.params)
+        ...this.buildParameters(this.config.loadingConfig.ajaxConfig.params),
       };
       // 考虑满足 get 对象，集合，存储过程【指定dataset 来接收数据】，加载错误的信息提示
       response = await this.componentService.apiService.getRequest(url, method, { params }).toPromise();
     }
 
     if (response.data && response.data.length > 0) {
-      const data_form = response.data;
+      // const data_form = response.data;
       this.transferObj.loadingData = [];
-      response.data.forEach(d => {
+      response.data.forEach((d) => {
         if (d[this.config.valueField]) {
           const orginData: any = {};
           orginData.key = d[this.config.valueField];
@@ -133,37 +134,58 @@ export class CnFormTransferComponent extends CnComponentBase implements OnInit {
         }
       });
       this.transferObj.list = this.transferObj.loadingData;
+    } else {
+      this.transferObj.list = [];
     }
   }
 
   /**
- * valueChange
- */
+   * valueChange
+   */
   public async valueChange(v?) {
+    let backValue: any = { name: this.config.field, value: v, id: this.config.config.id };
+    /*    let rightArr = [];
+    if (v && v.length > 0) {
+      rightArr = v.split(',');
+      if (rightArr.length > 0) {
+        const arr: any = [];
+        rightArr.forEach((s) => {
+          for (let i = 0; i < this.transferObj.list.length; i++) {
+            if (this.transferObj.list[i].key === s) {
+              arr.push(s);
+            }
+          }
+        });
+        this.transferObj.targetKeys = arr;
+      }
+      this._cdr.markForCheck();
+    } */
+    this.updateValue.emit(backValue);
+  }
+
+  public currentValueChange(v?) {
     let backValue: any = { name: this.config.field, value: v, id: this.config.config.id };
     let rightArr = [];
     if (v && v.length > 0) {
       rightArr = v.split(',');
       if (rightArr.length > 0) {
         const arr: any = [];
-        rightArr.forEach(s => {
+        rightArr.forEach((s) => {
           for (let i = 0; i < this.transferObj.list.length; i++) {
             if (this.transferObj.list[i].key === s) {
               arr.push(s);
             }
           }
-
         });
         this.transferObj.targetKeys = arr;
       }
       this._cdr.markForCheck();
     }
-    this.updateValue.emit(backValue);
   }
 
   public buildParameters(paramsCfg, searchValue?) {
     if (searchValue) {
-      paramsCfg.forEach(p => {
+      paramsCfg.forEach((p) => {
         if (p.search) {
           p.type = 'value';
           p.value = searchValue;
@@ -178,14 +200,14 @@ export class CnFormTransferComponent extends CnComponentBase implements OnInit {
       cacheValue: this.cacheValue,
       router: this.routerValue,
       cascadeValue: this.cascadeValue,
-      userValue: this.userValue
+      userValue: this.userValue,
     });
   }
 
   public click(dialogId): boolean {
     let dialog = this.componentService.cacheService.getNone(dialogId);
     if (!dialog) {
-      dialog = this.dialogsConfig.find(d => d.id === dialogId);
+      dialog = this.dialogsConfig.find((d) => d.id === dialogId);
       this.componentService.cacheService.set(dialogId, dialog);
     }
     this.showDialog(dialog);
@@ -205,7 +227,7 @@ export class CnFormTransferComponent extends CnComponentBase implements OnInit {
         config: dialogCfg.form,
         tempValue: this.tempValue,
         initValue: this.initValue,
-        changeValue: this.changeValue
+        changeValue: this.changeValue,
         // changeValue: option.changeValue ? option.changeValue.params : [],
         // dialogsConfig: this.config.dialog
       },
@@ -236,8 +258,19 @@ export class CnFormTransferComponent extends CnComponentBase implements OnInit {
     };
 
     dialog = this.componentService.modalService.create(dialogOptional);
-    
   }
 
-  public cascadeAnalysis(c?) { }
+  public async cascadeAnalysis(c?) {
+    if (c.hasOwnProperty(this.config.field)) {
+      if (c[this.config.field].hasOwnProperty('cascadeValue')) {
+        this.cascadeValue = c[this.config.field].cascadeValue;
+      }
+      if (c[this.config.field].hasOwnProperty('exec')) {
+        if (c[this.config.field].exec === 'ajax') {
+          await this.load();
+          this.currentValueChange(this.currentValue);
+        }
+      }
+    }
+  }
 }

@@ -17,10 +17,10 @@ export const environment: any = {
   useHash: true,
   hmr: false,
   routeInfo: {
-    enableLogin: true,
-    enableCalogin: false,
-    enable404Page: true
-  }
+    enable404Page: true,
+    loginPath: 'vclogin',
+    defaultPath: 'vc',
+  },
 };
 
 /*

@@ -33,7 +33,7 @@ const CODEMESSAGE = {
  */
 @Injectable()
 export class DefaultInterceptor implements HttpInterceptor {
-  constructor(private injector: Injector, private cacheService: CacheService) { }
+  constructor(private injector: Injector, private cacheService: CacheService) {}
 
   private get notification(): NzNotificationService {
     return this.injector.get(NzNotificationService);
@@ -85,12 +85,12 @@ export class DefaultInterceptor implements HttpInterceptor {
         // this.notification.error(`未登录或登录已过期，请重新登录。`, ``);
         // 清空 token 信息
         (this.injector.get(DA_SERVICE_TOKEN) as ITokenService).clear();
-        this.goTo('/passport/login');
+        this.goTo(`/passport/${environment.routeInfo.loginPath}`);
         break;
       case 403:
       case 404:
       case 500:
-        this.goTo(`/exception/${ev.status}`);
+        //this.goTo(`/exception/${ev.status}`);
         break;
       default:
         if (ev instanceof HttpErrorResponse) {

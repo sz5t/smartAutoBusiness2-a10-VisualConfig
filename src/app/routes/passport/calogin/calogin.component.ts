@@ -48,7 +48,7 @@ export class CALoginComponent implements OnDestroy, OnInit {
   ngOnInit(): void {
     this.calogin();
 
-    this._cacheService.set('login_info', "/passport/calogin");
+    this._cacheService.set('login_info', '/passport/calogin');
     // this.submit({ ca: 'exception', userName: 'admin', password: '1' });
   }
 
@@ -85,26 +85,25 @@ export class CALoginComponent implements OnDestroy, OnInit {
   public async calogin() {
     const that = this;
     const clientIp = '';
-    clientIp
+    clientIp;
     const wsString = environment.systemSettings.loginInfo.CAWebSocket;
 
     let url = wsString['url'];
     const Params = this.buildParametersByWS(wsString['pathParam'], {});
     for (let key in Params) {
-      url = url.replace(new RegExp("\\{" + key + "\\}", "g"), Params[key]);
+      url = url.replace(new RegExp('\\{' + key + '\\}', 'g'), Params[key]);
     }
 
     that.ws = new WebSocket(url);
     that.ws.onopen = function () {
       that.ws.send('客户端已上线');
       console.log('数据发送中...');
-    }
+    };
     that.ws.onmessage = function (evt) {
       const caName = evt.data;
       console.log('数据已经接受到');
       that.submit({ ca: 'ca', userName: caName, password: '' });
-    }
-
+    };
   }
 
   async submit(caObj?: any): Promise<any> {
@@ -127,8 +126,8 @@ export class CALoginComponent implements OnDestroy, OnInit {
     //   }
     // }
 
-    this.tokenService.set({ key: `123`, token: '123' });
-    this.tokenService
+    //this.tokenService.set({ key: `123`, token: '123' });
+    // this.tokenService
 
     if (environment.systemSettings && environment.systemSettings.enableLogin) {
       // 启用登录
@@ -285,7 +284,8 @@ export class CALoginComponent implements OnDestroy, OnInit {
       let valueItem: any;
       if (element.type === 'componentValue') {
         valueItem = caObj[element.valueName];
-      } if (element.type === 'cacheValue') {
+      }
+      if (element.type === 'cacheValue') {
         valueItem = this._cacheService.getNone(element.valueName);
       } else {
         valueItem = element.value;

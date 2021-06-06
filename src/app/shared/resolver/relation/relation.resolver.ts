@@ -11,7 +11,7 @@ import { TriggerResolver } from '../trigger/trigger.resolver';
  * 所有组件关系解析的统一入口
  */
 export class RelationResolver {
-  constructor(private _componentInstance) { }
+  constructor(private _componentInstance) {}
   public resolve(cascadeCfg?: any) {
     let source$;
     if (cascadeCfg && cascadeCfg.messageSender) {
@@ -121,7 +121,7 @@ export class RelationResolver {
                           if (successData[item.caseValue.valueName]) {
                             regularData = successData[item.caseValue.valueName];
                           } else {
-                            regularData = successData
+                            regularData = successData;
                           }
                         }
                         if (item.caseValue.type === 'tempValue') {
@@ -270,7 +270,7 @@ export class RelationResolver {
  * 接收触发器发出的消息
  */
 export class TriggerReceiverResolver {
-  constructor(private _componentInstance) { }
+  constructor(private _componentInstance) {}
   public resolve() {
     const currentId = this._componentInstance.getCurrentComponentId();
     const trigger_subscribe$ = this._componentInstance.componentService.commonRelationTrigger.subscribe((data) => {
@@ -286,7 +286,7 @@ export class TriggerReceiverResolver {
  * 消息发送器类
  */
 export class SenderResolver {
-  constructor(private _componentInstance: any) { }
+  constructor(private _componentInstance: any) {}
   public resolve(senderCfg) {
     const that = this;
     const sender_source$ = from(senderCfg);
@@ -349,7 +349,7 @@ export class ComponentSenderResolver {
   public set currentData(value) {
     this._currentData = value;
   }
-  constructor(private _componentInstance: any) { }
+  constructor(private _componentInstance: any) {}
   resolve(cfg: any) {
     switch (cfg.triggerType) {
       case BSN_TRIGGER_TYPE.STATE:
@@ -740,7 +740,7 @@ export class ComponentSenderResolver {
  * 消息接收器类
  */
 export class ReceiverResolver {
-  constructor(private _componentInstance: any) { }
+  constructor(private _componentInstance: any) {}
   // public resolve(receiverCfg) {
   //     const receiver_source$ = from(receiverCfg);
   //     const receiver_subscribe$ = receiver_source$.pipe(map(cfg => {
@@ -797,6 +797,6 @@ export class ReceiverResolver {
 }
 
 export class ComponentReceiverResolver {
-  constructor(private _componentInstance: any) { }
-  public resolve(cfg: any) { }
+  constructor(private _componentInstance: any) {}
+  public resolve(cfg: any) {}
 }

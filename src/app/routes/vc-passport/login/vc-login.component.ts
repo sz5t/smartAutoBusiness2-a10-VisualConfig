@@ -12,12 +12,12 @@ import { CacheService } from '@delon/cache';
 import { Md5 } from 'ts-md5/dist/md5';
 import { ReuseTabService } from '@delon/abc/reuse-tab';
 @Component({
-  selector: 'passport-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.less'],
+  selector: 'vc-passport-login',
+  templateUrl: './vc-login.component.html',
+  styleUrls: ['./vc-login.component.less'],
   providers: [SocialService],
 })
-export class UserLoginComponent implements OnDestroy, OnInit {
+export class VcUserLoginComponent implements OnDestroy, OnInit {
   constructor(
     fb: FormBuilder,
     modalSrv: NzModalService,
@@ -45,7 +45,7 @@ export class UserLoginComponent implements OnDestroy, OnInit {
     modalSrv.closeAll();
   }
   ngOnInit(): void {
-    this._cacheService.set('login_info', `/passport/${environment.routeInfo.loginPath}`);
+    this._cacheService.set('login_info', '/passport/vclogin');
   }
 
   // #region fields
@@ -128,6 +128,7 @@ export class UserLoginComponent implements OnDestroy, OnInit {
       if (environment.systemSettings.loginInfo) {
         // 用户信息，将解析登录信息
         // 解析登录信息
+        this.tokenService.set({ key: `token`, token: 'login' });
         const loginAjaxConfig = environment.systemSettings.loginInfo.loginAjaxConfig;
         const url = loginAjaxConfig.url;
         const params = this.buildParametersByLogin(loginAjaxConfig.params);
@@ -135,7 +136,7 @@ export class UserLoginComponent implements OnDestroy, OnInit {
 
         //const userInfo: any = environment.systemSettings.loginInfo.userInfo;
         //const _userInfo: any = this.buildUserInfo(r_data, _userInfo);
-        this.tokenService.set({ key: `123`, token: '123' });
+
         console.log('登录返回', userInfo);
         // 将当前用户信息写入缓存
         if (userInfo.state === 1) {
@@ -154,17 +155,18 @@ export class UserLoginComponent implements OnDestroy, OnInit {
           this.error = userInfo.validationMessage;
         }
       }
-    } else {
-      // 不启用登录  直接进系统
-      this.reuseTabService.clear();
-      this.startupSrv.load().then(() => {
-        let url = this.tokenService.referrer!.url || '/';
-        if (url.includes('/passport')) {
-          url = '/';
-        }
-        this.router.navigateByUrl(url);
-      });
     }
+    // else {
+    //   // 不启用登录  直接进系统
+    //   this.reuseTabService.clear();
+    //   this.startupSrv.load().then(() => {
+    //     let url = this.tokenService.referrer!.url || '/';
+    //     if (url.includes('/passport')) {
+    //       url = '/';
+    //     }
+    //     this.router.navigateByUrl(url);
+    //   });
+    // }
   }
 
   public buildUserInfo(data?, userConfig?) {

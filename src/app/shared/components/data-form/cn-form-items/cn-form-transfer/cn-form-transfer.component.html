@@ -1,7 +1,7 @@
 <nz-form-item>
     <nz-form-label [nzFor]="config.field" [nzSpan]="config.config.labelSize.span" [nzSm]="config.config.labelSize.nzSm"
         [nzXs]="config.config.labelSize.nzXs" [nzMd]="config.config.labelSize.nzMd"
-        [nzLg]="config.config.labelSize.nzLg" [nzXl]="config.config.labelSize.nzXl"
+        [nzLg]="config.config.labelSize.nzLg" [nzXl]="config.config.labelSize.nzXl" [nzNoColon]="config.config.noColon"
         [nzRequired]="config.config.titleConfig.required">
         {{config.config.title}}</nz-form-label>
 
@@ -10,12 +10,12 @@
         [nzLg]="config.config.controlSize.nzLg" [nzXl]="config.config.controlSize.nzXl" [formGroup]="formGroup"
         [nzErrorTip]="emailErrorTpl">
         <nz-transfer [nzDataSource]="transferObj.list" [nzTitles]="transferObj.title" (nzChange)="change($event)"
-            [nzTargetKeys]="transferObj.targetKeys" [nzFooter]="footer">
+            [nzTargetKeys]="transferObj.targetKeys" [nzFooter]="footer" [nzListStyle]="transferObj.style">
         </nz-transfer>
 
 
 
-        <input nz-input type="hidden" [formControlName]="config.field" [(ngModel)]="transferObj.formDataArr"
+        <input nz-input type="hidden" [formControlName]="config.field" [(ngModel)]="currentValue"
             (ngModelChange)="valueChange($event)" />
 
         <ng-template #footer let-direction>

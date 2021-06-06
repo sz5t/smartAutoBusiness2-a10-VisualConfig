@@ -288,7 +288,7 @@ export class CnComponentBase {
       }
     } else {
       const response = await this._componentService.apiService
-        .post('resource/B_P_C_CONFIG_PAGE_ALL/operate', { PAGE_CODE: customConfigId })
+        .post('smt-app/resource/B_P_C_CONFIG_PAGE_ALL/operate', { PAGE_CODE: customConfigId })
         .toPromise();
 
       if (response && response.data) {
