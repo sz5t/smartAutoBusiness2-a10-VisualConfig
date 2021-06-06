@@ -1,5 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { NzModalService } from 'ng-zorro-antd/modal';
 import { configFormDataServerService } from 'src/app/core/services/config/form-data.service';
+import { CfgFormDesignComponent } from '../../../cfg-form-design/cfg-form-design.component';
 
 @Component({
   selector: 'app-cfg-page-cmpt-form',
@@ -17,10 +19,11 @@ export class CfgPageCmptFormComponent implements OnInit {
   @Input() public cmptState: any;
   @Input() public fromDataService: configFormDataServerService;
 
-  constructor() { }
+  constructor(private modal: NzModalService) { }
 
   public config = {
-    formLayout: [
+    formLayout: [],
+    formLayout1: [
       {
         children: [
           {
@@ -129,6 +132,70 @@ export class CfgPageCmptFormComponent implements OnInit {
     this.fromDataService.layoutNodeSelected(this.l_config);
     console.log('选中当前tabs', this.selectedItem);
 
+  }
+  windowDialog;
+  formDesign() {
+    console.log('');
+    let dialog;
+    // 根据按钮类型初始化表单状态
+    const dialogCfg = {
+      title: '表单设计器',
+      width: '100%',
+      "style": {
+        "top": "0px",
+        "padding-bottom": "0px"
+      },
+      maskClosable: true,
+      cancelText: '取消',
+      okText: '确定',
+      footerButton: null,
+      customAction: [],
+      customContent: 'api',
+      customPageConfig: {
+
+      }
+    }
+    if (!dialogCfg) {
+      return;
+    }
+
+    let staticData;
+
+
+    const dialogOptional = {
+      nzTitle: dialogCfg.title ? dialogCfg.title : '',
+      nzWidth: dialogCfg.width ? dialogCfg.width : '600px',
+      nzStyle: dialogCfg.style ? dialogCfg.style : null, // style{top:'1px'},
+      nzMaskClosable: dialogCfg.hasOwnProperty('maskClosable') ? dialogCfg.maskClosable : false,
+      nzContent: CfgFormDesignComponent,
+      nzComponentParams: {
+        layoutTree: this.config['formLayout'] ? this.config['formLayout'] : [],
+        layoutSourceData: this.config['componentJson'] ? this.config['componentJson'] : {}
+      },
+      nzFooter: [
+        {
+          label: dialogCfg.cancelText ? dialogCfg.cancelText : 'cancel',
+          onClick: (componentInstance) => {
+            dialog.close();
+          },
+        },
+        {
+          label: dialogCfg.okText ? dialogCfg.okText : 'OK',
+          onClick: async (componentInstance) => {
+
+            console.log('当前弹出表单值：', componentInstance)
+            this.config['formLayout'] = componentInstance.fromDataService.layoutTreeInstance['layoutTree'];
+            this.config['componentJson'] = componentInstance.fromDataService.layoutSourceData;
+            // this.loadShowValue();
+            // console.log('当前弹出表单值：', componentInstance['staticForm']['validateForm']['value'])
+            dialog.close();
+          },
+        },
+      ],
+    };
+
+    dialog = this.modal.create(dialogOptional);
+    this.windowDialog = dialog;
   }
 
 }
