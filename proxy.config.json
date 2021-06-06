@@ -18,7 +18,7 @@
         }
     },
     "/smt-app/busimodelresrelations": {
-        "target": "http://192.168.1.111:8505/smt-app/busimodelresrelations", 
+        "target": "http://192.168.1.111:8505/smt-app", 
         "logLevel": "debug",
         "secure": false,
         "changeOrigin": true,
@@ -27,7 +27,7 @@
         }
     },
     "/smt-app/busimodel": {
-        "target": "http://192.168.1.111:8505/smt-app/busimodel", 
+        "target": "http://192.168.1.111:8505/smt-app", 
         "logLevel": "debug",
         "secure": false,
         "changeOrigin": true,
@@ -36,7 +36,7 @@
         }
     },
     "/smt-app/column": {
-        "target": "http://192.168.1.111:8505/smt-app/column", 
+        "target": "http://192.168.1.111:8505/smt-app", 
         "logLevel": "debug",
         "secure": false,
         "changeOrigin": true,

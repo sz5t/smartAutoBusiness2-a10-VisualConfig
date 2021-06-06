@@ -1238,7 +1238,7 @@ export class CnTreeComponent extends CnComponentBase implements OnInit, AfterVie
 
   private _setRootSelectedNode(currentSelectedNode) {
     if (currentSelectedNode) {
-      currentSelectedNode.isSelected = false;
+      currentSelectedNode.isSelected = true;
     }
     // const sNode = this.treeObj.getTreeNodes();
     // sNode[0].isSelected = true;
@@ -1265,11 +1265,11 @@ export class CnTreeComponent extends CnComponentBase implements OnInit, AfterVie
     });
     addRootNode.isLeaf = true;
     this.nodes = this.treeObj.getTreeNodes();
-    const currentSelectedNode = this.treeObj.getTreeNodeByKey(this.ACTIVED_NODE.key);
-    /// const nNode = { ...option, addRootNode };
     this.nodes = [addRootNode, ...this.nodes];
     this.ACTIVED_NODE = addRootNode;
-    this._setRootSelectedNode(currentSelectedNode);
+    this.NODE_SELECTED = addRootNode.origin;
+    // const currentSelectedNode = this.treeObj.getTreeNodeByKey(this.ACTIVED_NODE.key);
+    this._setRootSelectedNode(addRootNode);
   }
 
   public async appendChildToSelectedNode(option) {
@@ -1672,7 +1672,6 @@ export class CnTreeComponent extends CnComponentBase implements OnInit, AfterVie
     // if(isEditForm) {
 
     // }
-    debugger;
     if (option.changeValue) {
       const d = ParameterResolver.resolve({
         params: option.changeValue.params,
