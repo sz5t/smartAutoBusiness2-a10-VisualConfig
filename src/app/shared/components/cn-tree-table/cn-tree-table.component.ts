@@ -969,7 +969,7 @@ export class CnTreeTableComponent extends CnComponentBase implements OnInit, Aft
     }
   }
 
-  public async executeHttpRequest(url, method, paramData, logInfo?: any) {
+  public executeHttpRequest(url, method, paramData, logInfo?: any) {
     let _header = {};
     if (logInfo) {
       const logInfoStr = JSON.stringify(logInfo);
@@ -980,6 +980,8 @@ export class CnTreeTableComponent extends CnComponentBase implements OnInit, Aft
     }
     switch (method) {
       case 'get':
+        return this.componentService.apiService[method](url, paramData, { headers: _header });
+      case 'delete':
         return this.componentService.apiService[method](url, paramData, { headers: _header });
       default:
         return this.componentService.apiService[method](url, paramData, {}, { headers: _header });
@@ -1074,7 +1076,7 @@ export class CnTreeTableComponent extends CnComponentBase implements OnInit, Aft
         userValue: this.userValue,
       });
     }
-    const response = await this.executeHttpRequest(url, method, paramData);
+    const response = await this.executeHttpRequest(url, method, paramData).toPromise();
     // 批量对象数据,返回结果都将以对象的形式返回,如果对应结果没有值则返回 {}
     this._sendDataSuccessMessage(response, option.ajaxConfig.result);
 
@@ -1457,7 +1459,7 @@ export class CnTreeTableComponent extends CnComponentBase implements OnInit, Aft
       });
     }
     if (parameterResult) {
-      const response = await this.executeHttpRequest(url, method, parameterResult, option.logInfo ? option.logInfo : {});
+      const response = await this.executeHttpRequest(url, method, parameterResult, option.logInfo ? option.logInfo : {}).toPromise();
       // 批量对象数据,返回结果都将以对象的形式返回,如果对应结果没有值则返回 {}
       this._sendDataSuccessMessage(response, option.ajaxConfig.result);
 
@@ -1518,7 +1520,7 @@ export class CnTreeTableComponent extends CnComponentBase implements OnInit, Aft
       //     const pData = p[this.KEY_ID]
       //     pData && ids.push(pData);
       // });
-      const response = await this.executeHttpRequest(url, method, paramData, option.logInfo ? option.logInfo : {});
+      const response = await this.executeHttpRequest(url, method, paramData, option.logInfo ? option.logInfo : {}).toPromise();
       // 批量对象数据,返回结果都将以对象的形式返回,如果对应结果没有值则返回 {}
       this._sendDataSuccessMessage(response, option.ajaxConfig.result);
 

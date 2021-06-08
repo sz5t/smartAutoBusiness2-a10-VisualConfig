@@ -131,11 +131,9 @@ export class UserLoginComponent implements OnDestroy, OnInit {
         const loginAjaxConfig = environment.systemSettings.loginInfo.loginAjaxConfig;
         const url = loginAjaxConfig.url;
         const params = this.buildParametersByLogin(loginAjaxConfig.params);
-        const userInfo = await this.http[loginAjaxConfig.ajaxType](url, params).toPromise();
+        const userInfo: any = await this.http[loginAjaxConfig.ajaxType](url, params).toPromise();
 
-        //const userInfo: any = environment.systemSettings.loginInfo.userInfo;
-        //const _userInfo: any = this.buildUserInfo(r_data, _userInfo);
-        this.tokenService.set({ key: `123`, token: '123' });
+        this.tokenService.set({ key: `login`, token: 'login' });
         console.log('登录返回', userInfo);
         // 将当前用户信息写入缓存
         if (userInfo.state === 1) {
@@ -151,7 +149,7 @@ export class UserLoginComponent implements OnDestroy, OnInit {
             this.router.navigateByUrl(url);
           });
         } else {
-          this.error = userInfo.validationMessage;
+          this.error = userInfo.validation.message;
         }
       }
     } else {

@@ -817,6 +817,8 @@ export class CnTreeComponent extends CnComponentBase implements OnInit, AfterVie
     switch (method) {
       case 'get':
         return this.componentService.apiService[method](url, paramData, { headers: _header });
+      case 'delete':
+        return this.componentService.apiService[method](url, paramData, { headers: _header });
       default:
         return this.componentService.apiService[method](url, paramData, {}, { headers: _header });
     }

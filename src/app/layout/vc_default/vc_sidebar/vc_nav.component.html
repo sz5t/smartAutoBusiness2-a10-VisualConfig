@@ -6,12 +6,12 @@
           <li
             *ngIf="menu.children && menu.children.length > 0; else tmplLeafMenu"
             nz-submenu
-            [nzPaddingLeft]="menu.level  * 24 + 24"
-            [nzTitle]="menu.name"
-            [nzIcon]="menu.icon ? menu.icon.value : ''"
+            [nzPaddingLeft]="menu.LEVEL  * 24 + 24"
+            [nzTitle]="menu.NAME"
+            [nzIcon]="menu.ICON ? menu.ICON.value : ''"
 
           >
-          <!-- <i nz-icon [nzType]="menu.icon" *ngIf="menu.icon"></i> -->
+          <!-- <i nz-ICON [nzType]="menu.ICON" *ngIf="menu.ICON"></i> -->
             <ul>
               <ng-container *ngTemplateOutlet="menuTpl; context: { $implicit: menu.children }"></ng-container>
             </ul>
@@ -19,11 +19,11 @@
 
 
           <ng-template #tmplLeafMenu>
-            <li nz-menu-item [nzPaddingLeft]="menu.level ? menu.level * 24 + 24 : 48"
+            <li nz-menu-item [nzPaddingLeft]="menu.LEVEL ? menu.LEVEL * 24 + 24 : 48"
                 (click)="onClick(menu)">
                 <span title>
-                  <i nz-icon [nzType]="menu.icon.value" *ngIf="menu.icon" [nzTheme]="'outline'"></i>
-                  <span>{{ menu.name }}</span>
+                  <i nz-icon [nzType]="menu.ICON.value" *ngIf="menu.ICON" [nzTheme]="'outline'"></i>
+                  <span>{{ menu.NAME }}</span>
                 </span>
               </li>
           </ng-template>
@@ -37,9 +37,9 @@
   <ng-template #menuTemplate let-menus>
     <ng-container *ngFor="let menu of menus">
       <li nz-submenu nz-popover *ngIf="menu.status === 2" [nzPopoverContent]="contentTemplate"
-         [nzTitle]="titleTemplate" [nzPopoverTitle]="titleTemplate2" [nzIcon]="menu.icon.value">
+         [nzTitle]="titleTemplate" [nzPopoverTitle]="titleTemplate2" [nzIcon]="menu.ICON.value">
         <ng-template #titleTemplate>
-          <span style="font-size:14px;">{{menu.name}}</span>
+          <span style="font-size:14px;">{{menu.NAME}}</span>
         </ng-template>
         <ng-template #titleTemplate2>
         </ng-template>
@@ -59,14 +59,14 @@
                 <nz-list [nzDataSource]="group.children" [nzRenderItem]="renderItemTpl" nzSize="small" nzSplit="false">
                   <ng-template #renderItemTpl let-item>
                     <nz-list-item *ngIf="item.status === 2" (click)="onClick(item)">
-                      <a style="display: block;min-width: 150px; max-width: 200px;"><span nz-text nzType="secondary"> {{ item.name }}</span></a>
+                      <a style="display: block;min-width: 150px; max-width: 200px;"><span nz-text nzType="secondary"> {{ item.NAME }}</span></a>
                     </nz-list-item>
                   </ng-template>
 
                 </nz-list>
 
                 <ng-template #ctitle>
-                  <i *ngIf="group.icon" nz-icon [nzType]="group.icon.value"></i> {{group.name}}
+                  <i *ngIf="group.ICON" nz-icon [nzType]="group.ICON.value"></i> {{group.NAME}}
                 </ng-template>
               </nz-card>
             </div>
