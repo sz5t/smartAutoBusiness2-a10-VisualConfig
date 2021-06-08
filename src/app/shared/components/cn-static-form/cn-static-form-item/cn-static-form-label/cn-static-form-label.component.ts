@@ -68,6 +68,10 @@ export class CnStaticFormLabelComponent implements OnInit {
         this.config.componentConfig['controlSize'] = this.itemConfig['controlSize'];
       }
 
+      if (this.config.componentConfig['enableDefaultValue']) {
+        this.validateForm.controls[this.config['name']].setValue(null);
+      }
+
     }
     this.loadShowValue();
   }

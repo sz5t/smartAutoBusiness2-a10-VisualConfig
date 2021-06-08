@@ -1,4 +1,14 @@
 {
+    
+    "/smt-jbpm": {
+        "target": "http://192.168.1.111:8504/smt-jbpm/", 
+        "logLevel": "debug",
+        "secure": false,
+        "changeOrigin": true,
+        "pathRewrite": {
+            "^/smt-jbpm": "" 
+        }
+    },
     "/smt-base": {
         "target": "http://192.168.1.111:8502/smt-base/", 
         "logLevel": "debug",
@@ -36,7 +46,7 @@
         }
     },
     "/smt-app/column": {
-        "target": "http://192.168.1.111:8505/smt-app/column", 
+        "target": "http://192.168.1.111:8505/smt-app", 
         "logLevel": "debug",
         "secure": false,
         "changeOrigin": true,

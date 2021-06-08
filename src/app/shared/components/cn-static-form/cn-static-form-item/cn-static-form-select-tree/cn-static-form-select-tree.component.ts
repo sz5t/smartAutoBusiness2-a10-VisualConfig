@@ -1,17 +1,16 @@
-import { Component, Input, OnInit, EventEmitter, Output, Inject } from '@angular/core';
+import { Component, OnInit, EventEmitter, Input, Output, Inject } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { BSN_COMPONENT_SERVICES } from 'src/app/core/relations/bsn-relatives';
 import { ComponentServiceProvider } from 'src/app/core/services/components/component.service';
-import { configFormDataServerService } from 'src/app/core/services/config/form-data.service';
 import { VcComponentBase } from 'src/app/shared/vc-components/vc-component';
 
 @Component({
-  selector: 'app-cn-static-form-select',
-  templateUrl: './cn-static-form-select.component.html',
+  selector: 'app-cn-static-form-select-tree',
+  templateUrl: './cn-static-form-select-tree.component.html',
   styles: [
   ]
 })
-export class CnStaticFormSelectComponent extends VcComponentBase implements OnInit {
+export class CnStaticFormSelectTreeComponent extends VcComponentBase implements OnInit {
   @Input() validateForm: FormGroup;
   @Input() config;
   @Input() public fromDataService;
@@ -19,6 +18,7 @@ export class CnStaticFormSelectComponent extends VcComponentBase implements OnIn
   @Output() public cascadeValue = new EventEmitter<any>(true);
   selectValue: any;
   selectOptions: any[];
+  nodes = [];
   itemConfig: any = {
     hiddenTitle: false,
     "labelSize": {
@@ -80,7 +80,7 @@ export class CnStaticFormSelectComponent extends VcComponentBase implements OnIn
           this.load();
           break;
         default:
-          this.selectOptions = this.config['componentConfig']['options'];
+          this.nodes = this.config['componentConfig']['options'];
           break;
       }
 
@@ -138,20 +138,62 @@ export class CnStaticFormSelectComponent extends VcComponentBase implements OnIn
     }
 
     if (response.data && response.data.length > 0) {
-      const data_form = response.data;
+      if (response && response.data) {
+        response.data.map((d, index) => {
+          // 默认选中第一个节点
+          if (index === 0) {
+            d.selected = true;
+            //  this.ACTIVED_NODE = {};
+            //  this.ACTIVED_NODE['origin'] = d;
+          }
+          this._setTreeNode(d);
+        });
+        this.nodes = response.data;
+
+      }
       const newOptions = [];
       // 下拉选项赋值
-      data_form.forEach(element => {
-        newOptions.push({ label: element[this.config['componentConfig'].labelName], value: element[this.config['componentConfig'].valueName] });
-      });
-      this.selectOptions = newOptions;
-      this.selectOptions = this.selectOptions.filter(d => d.lable !== null);
-      console.log('下拉选择的最终数据集===》', this.selectOptions);
+
+      console.log('下拉选择树的最终数据集===》', this.nodes);
 
     }
     else {
-      this.selectOptions = [];
+      this.nodes = [];
     }
+  }
+
+
+  private _setTreeNode(node) {
+    this.config['componentConfig']['columns'].map((column) => {
+      node[column.type] = node[column.field];
+    });
+
+    const dd = this.nodes.find((d) => d.isSystem_Add);
+    if (dd) {
+      if (node.key === dd.key) {
+        this.nodes = this.nodes.filter((d) => !d.isSystem_Add);
+      }
+    }
+
+    if (node.children && node.children.length > 0) {
+      if (!this.config['componentConfig']['asyncData']) {
+        // 静态
+        node.children.map((n) => {
+          this._setTreeNode(n);
+        });
+      } else {
+        node.children = [];
+        node.expanded = false;
+      }
+      node.isLeaf = false;
+
+    } else {
+      node.isLeaf = true;
+    }
+  }
+
+  onChange(v?) {
+    console.log('树选中值', v);
   }
 
 
