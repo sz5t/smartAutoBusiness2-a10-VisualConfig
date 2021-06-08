@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { SmtDataTableAdapter } from './smt-table-adapter';
 
 @Component({
   selector: 'app-smt-data-table',
@@ -30,6 +31,7 @@ export class SmtDataTableComponent implements OnInit {
       AGE: 22
     }
   ]
+  public dataTableConfig: any = {};
   public pageIndex = 1;
   public pageSize: number;
   public total = 0;
@@ -65,12 +67,14 @@ export class SmtDataTableComponent implements OnInit {
     // console.log(this.initData);
     // console.log(this.tempData);
     // console.log(this.dataServe);
-    this.KEY_ID = this.config.keyId ? this.config.keyId : 'ID';
-    this.pageSize = this.config.pageSize ? parseInt(this.config.pageSize) : 10;
-    this.pageSizeOptions = [10, 20, 50, 100];
-    this.showTotal = this.config.showTotal ? this.config.showTotal : false;
-    this._buildColumns(this.config.columns, this.config);
-    console.log(this.config, this.tableColumns);
+    const newConfig = new SmtDataTableAdapter;
+    this.dataTableConfig = newConfig.transformConfigToDataTbale(this.config);
+    this.KEY_ID = this.dataTableConfig.KEY_ID;
+    this.pageSize = typeof (this.dataTableConfig.pageSize) === 'string' ? parseInt(this.dataTableConfig.pageSize) : this.dataTableConfig.pageSize;
+    this.pageSizeOptions = this.dataTableConfig.pageSizeOptions;
+    this.showTotal = this.dataTableConfig.showTotal;
+    this._buildColumns(this.dataTableConfig.columns, this.dataTableConfig);
+    console.log(this.dataTableConfig, this.tableColumns);
 
     // 是否需要进行初始化数据加载
     if (this.config.loadingOnInit) {
