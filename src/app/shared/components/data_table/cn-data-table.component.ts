@@ -1291,6 +1291,8 @@ export class CnDataTableComponent extends CnComponentBase implements OnInit, Aft
     switch (method) {
       case 'get':
         return this.componentService.apiService[method](url, paramData, { headers: _header });
+      case 'delete':
+        return this.componentService.apiService[method](url, paramData, { headers: _header });
       default:
         return this.componentService.apiService[method](url, paramData, {}, { headers: _header });
     }
@@ -4224,75 +4226,72 @@ export class CnDataTableComponent extends CnComponentBase implements OnInit, Aft
     return isFit;
   }
 
-
   async test1111() {
-    let url = "column/queryParamByResourceId";
-    let method = "get";
+    let url = 'column/queryParamByResourceId';
+    let method = 'get';
     let params = {
-      resourceId: 'J3neTLLwky15pkBxrlZamVsL4k8MxREyD79M'
+      resourceId: 'J3neTLLwky15pkBxrlZamVsL4k8MxREyD79M',
     };
     ///column/queryParamByResourceId?resourceId=
     let response = await this.executeHttpRequest(url, method, params).toPromise();
     console.log(response);
     let r = {
-      "data": {
-        "parameterSet": [
+      data: {
+        parameterSet: [
           {
-            "createDate": "2021-06-02 14:19:02",
-            "createUserId": "accountId",
-            "customerId": "customerId",
-            "datatype": "number",
-            "defaultValue": "",
-            "descName": "年龄",
-            "id": "DUxMBFKBwNiTPCZkIM6m4U3EUWQOqOxauJaO",
-            "inout": 0,
-            "isNullable": 1,
-            "isUnique": 0,
-            "isValidate": 1,
-            "lastUpdateDate": "2021-06-02 14:19:02",
-            "lastUpdateUserId": "accountId",
-            "length": 8,
-            "oldParamName": null,
-            "orderCode": 2,
-            "paramName": "age",
-            "paramType": 0,
-            "precision": 0,
-            "projectId": "projectId",
-            "resourceId": "J3neTLLwky15pkBxrlZamVsL4k8MxREyD79M"
+            createDate: '2021-06-02 14:19:02',
+            createUserId: 'accountId',
+            customerId: 'customerId',
+            datatype: 'number',
+            defaultValue: '',
+            descName: '年龄',
+            id: 'DUxMBFKBwNiTPCZkIM6m4U3EUWQOqOxauJaO',
+            inout: 0,
+            isNullable: 1,
+            isUnique: 0,
+            isValidate: 1,
+            lastUpdateDate: '2021-06-02 14:19:02',
+            lastUpdateUserId: 'accountId',
+            length: 8,
+            oldParamName: null,
+            orderCode: 2,
+            paramName: 'age',
+            paramType: 0,
+            precision: 0,
+            projectId: 'projectId',
+            resourceId: 'J3neTLLwky15pkBxrlZamVsL4k8MxREyD79M',
           },
           {
-            "createDate": "2021-06-02 14:19:02",
-            "createUserId": "accountId",
-            "customerId": "customerId",
-            "datatype": "string",
-            "defaultValue": "",
-            "descName": "名称",
-            "id": "SVaaWUjGxyWcSUWIRffg0TDuJectBj0AzXgO",
-            "inout": 0,
-            "isNullable": 1,
-            "isUnique": 0,
-            "isValidate": 1,
-            "lastUpdateDate": "2021-06-02 14:19:02",
-            "lastUpdateUserId": "accountId",
-            "length": 50,
-            "oldParamName": null,
-            "orderCode": 1,
-            "paramName": "name",
-            "paramType": 0,
-            "precision": 0,
-            "projectId": "projectId",
-            "resourceId": "J3neTLLwky15pkBxrlZamVsL4k8MxREyD79M"
-          }
+            createDate: '2021-06-02 14:19:02',
+            createUserId: 'accountId',
+            customerId: 'customerId',
+            datatype: 'string',
+            defaultValue: '',
+            descName: '名称',
+            id: 'SVaaWUjGxyWcSUWIRffg0TDuJectBj0AzXgO',
+            inout: 0,
+            isNullable: 1,
+            isUnique: 0,
+            isValidate: 1,
+            lastUpdateDate: '2021-06-02 14:19:02',
+            lastUpdateUserId: 'accountId',
+            length: 50,
+            oldParamName: null,
+            orderCode: 1,
+            paramName: 'name',
+            paramType: 0,
+            precision: 0,
+            projectId: 'projectId',
+            resourceId: 'J3neTLLwky15pkBxrlZamVsL4k8MxREyD79M',
+          },
         ],
-        "resultSet": [
-
-        ]
+        resultSet: [],
       },
-      "error": null,
-      "exception": null,
-      "success": 1,
-      "validation": null,
-      "warn": null
-    }
+      error: null,
+      exception: null,
+      success: 1,
+      validation: null,
+      warn: null,
+    };
   }
 }

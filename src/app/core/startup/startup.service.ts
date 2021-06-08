@@ -62,92 +62,85 @@ export class StartupService {
   }
 
   async load(): Promise<any> {
+    debugger;
     await this.getWebConfig();
 
-    // const data = await this.httpClient.get(`resource/SMT_SETTING_LAYOUT_BASE/query?_mapToObject=true`).toPromise();
-    // console.log('======测试发布地址======',data);
-    // only works with promises
-    // https://github.com/angular/angular/issues/15088
-    let MenuDataList: any[] = [];
-
     this.userInfo = this._cacheService.getNone('userInfo');
-    const menu_url = 'GET_MENU_LIST';
     const proj_url = 'smt-base/project/query';
     if (this.userInfo) {
-    }
-    return new Promise(async (resolve) => {
-      const langData: any = await this.httpClient.get(`assets/tmp/i18n/${this.i18n.defaultLang}.json`).toPromise();
-      const serverlangData: any = []; // await this.httpClient.get(`resource/GET_SYS_I18N_LIST/query?_mapToObject=true&ddicCode=${this.i18n.defaultLang}`).toPromise();
-      let appData: any = {
-        app: [],
-        user: {
-          name: 'Admin',
-          avatar: './assets/tmp/img/avatar.jpg',
-          email: 'cipchk@qq.com',
-        },
-        menu: [],
-      }; //await this.httpClient.get(`assets/tmp/app-data.json`).toPromise();
+      return new Promise(async (resolve) => {
+        const langData: any = await this.httpClient.get(`assets/tmp/i18n/${this.i18n.defaultLang}.json`).toPromise();
+        const serverlangData: any = [];
+        let appData: any = {
+          app: [],
+          user: { name: '', avatar: './assets/tmp/img/avatar.jpg', email: '' },
+          menu: [],
+        };
 
-      const param1 = {
-        $mode$: 'RECURSIVE_QUERY',
-        'STATE,': 'EQ(1)',
-      };
-      appData.app = await this.httpClient.request('get', proj_url, { params: param1 }).toPromise();
+        const param1 = {
+          $mode$: 'RECURSIVE_QUERY',
+          'STATE,': 'EQ(1)',
+        };
+        appData.app = await this.httpClient.request('get', proj_url, { params: param1 }).toPromise();
 
-      let serverData: any;
-      if (this.userInfo) {
-        serverData = await this.httpClient.get(`smt-app/resource/${menu_url}/query?_mapToObject=true&_sort=menuSort asc`).toPromise();
-      }
+        let serverData: any = [];
 
-      if (langData) {
-        const lang_data = this.buildI18NServerRes(langData, serverlangData);
-        this.translate.setTranslation(this.i18n.defaultLang, lang_data);
-        this.translate.setDefaultLang(this.i18n.defaultLang);
-      }
-
-      // setting language data
-
-      // application data
-      // const res = appData;
-      let res: any;
-      res = this.buildServerRes(appData, serverData);
-      // const res: any = this.buildServerRes(appData, serverData)// appData;
-      // 应用信息：包括站点名、描述、年份
-      this.settingService.setApp(res.app);
-      // 用户信息：包括姓名、头像、邮箱地址
-      if (this.userInfo && this.userInfo.userId) {
-        this.settingService.setUser(this.userInfo);
-      } else {
-        this.settingService.setUser(res.user);
-      }
-      // ACL：设置权限为全量
-      // this.aclService.setFull(true);
-      // 初始化菜单
-      this.menuService.add(res.menu);
-      // 设置页面标题的后缀
-      //this.titleService.default = '';
-      //this.titleService.suffix = res.app.name;
-
-      if (this.userInfo && this.userInfo.userId) {
-      } else {
-        // let url = this.tokenService.referrer!.url || '/';
-        // if (url.includes('/passport')) {
-        //   url = '/';
-        // }
-        // 没有登录信息，跳转至登录页面
-        let login_url: any = this._cacheService.getNone('login_info');
-        if (!login_url) {
-          this.router.navigateByUrl(this.tokenService.login_url!);
-        } else {
-          this.router.navigateByUrl(login_url!);
+        if (this.userInfo && environment.routeInfo.loginPath === 'login') {
+          const rs: any = await this.httpClient
+            .post(`smt-app/resource/GET_APP_MENU_LIST_PROC/operate`, { ROLES_CODE: this.userInfo.roles.join(',') })
+            .toPromise();
+          serverData = rs.data._procedure_resultset_1;
+        } else if (this.userInfo && environment.routeInfo.loginPath === 'vclogin') {
+          const rs: any = await this.httpClient.get(`smt-app/resource/GET_MENU_LIST/query`).toPromise();
+          serverData = rs.data;
         }
-      }
-      resolve(null);
-    });
-  }
+        if (langData) {
+          const lang_data = this.buildI18NServerRes(langData, serverlangData);
+          this.translate.setTranslation(this.i18n.defaultLang, lang_data);
+          this.translate.setDefaultLang(this.i18n.defaultLang);
+        }
 
-  private buildLocalRes(data) {
-    return data;
+        // data._procedure_resultset_1
+        // data
+
+        let res: any;
+        res = this.buildServerRes(appData, serverData);
+        // const res: any = this.buildServerRes(appData, serverData)// appData;
+        // 应用信息：包括站点名、描述、年份
+        this.settingService.setApp(res.app);
+        // 用户信息：包括姓名、头像、邮箱地址
+        if (this.userInfo && this.userInfo.userId) {
+          this.settingService.setUser(this.userInfo);
+        } else {
+          this.settingService.setUser(res.user);
+        }
+        // ACL：设置权限为全量
+        // this.aclService.setFull(true);
+        // 初始化菜单
+        this.menuService.add(res.menu);
+        // 设置页面标题的后缀
+        //this.titleService.default = '';
+        //this.titleService.suffix = res.app.name;
+
+        if (this.userInfo && this.userInfo.userId) {
+        } else {
+          // let url = this.tokenService.referrer!.url || '/';
+          // if (url.includes('/passport')) {
+          //   url = '/';
+          // }
+          // 没有登录信息，跳转至登录页面
+          let login_url: any = this._cacheService.getNone('login_info');
+          if (!login_url) {
+            this.router.navigateByUrl(this.tokenService.login_url!);
+          } else {
+            this.router.navigateByUrl(login_url!);
+          }
+        }
+        resolve(null);
+      });
+    } else {
+      return [];
+    }
   }
 
   public buildParametersByLogin(params?) {
@@ -254,7 +247,7 @@ export class StartupService {
       data = {};
       data.menu = [];
     }
-    if (serverData && serverData.data) {
+    if (serverData && serverData.length > 0) {
       const s = this.buildServerMenu(serverData);
       data.menu = [...s, ...data.menu];
       return data;
@@ -262,20 +255,21 @@ export class StartupService {
       return data;
     }
   }
+
   private buildServerMenu(serverData) {
     // const menu_level_1 = serverData.data.filter((d) => (d.menuType === 0 || d.menuType === 999) && d.level === 0);
     // const menu_level_2 = serverData.data.filter((d) => (d.menuType === 1 || d.menuType === 999) && d.level === 1);
     // const menu_level_3 = serverData.data.filter((d) => (d.menuType === 2 || d.menuType === 999) && d.level === 2);
 
-    const menu_level_1 = serverData.data.filter((d) => d.level === 0);
-    const menu_level_2 = serverData.data.filter((d) => d.level === 1);
-    const menu_level_3 = serverData.data.filter((d) => d.level === 2);
+    const menu_level_1 = serverData.filter((d) => d.LEVEL === 0);
+    const menu_level_2 = serverData.filter((d) => d.LEVEL === 1);
+    const menu_level_3 = serverData.filter((d) => d.LEVEL === 2);
 
     if (menu_level_3) {
       for (const l2 of menu_level_2) {
         l2.children = [];
         for (const l3 of menu_level_3) {
-          if (l3.parentId === l2.id) {
+          if (l3.PARENT_ID === l2.ID) {
             l2.children.push(l3);
           }
         }
@@ -295,7 +289,7 @@ export class StartupService {
       menu_level_1.map((l1) => {
         l1.children = [];
         menu_level_2.map((l2) => {
-          if (l2.parentId === l1.id) {
+          if (l2.PARENT_ID === l1.ID) {
             l1.children.push(l2);
           }
         });

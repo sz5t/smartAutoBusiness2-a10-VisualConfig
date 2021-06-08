@@ -208,6 +208,7 @@ export class TriggerResolver {
   }
 
   private checkComponentProperty(expCfg) {
+    debugger;
     // 判断取值的类型
     const allCheckResult = [];
     switch (expCfg.type) {

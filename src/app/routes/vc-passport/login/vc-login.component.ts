@@ -152,7 +152,7 @@ export class VcUserLoginComponent implements OnDestroy, OnInit {
             this.router.navigateByUrl(url);
           });
         } else {
-          this.error = userInfo.validationMessage;
+          this.error = userInfo.validation.message;
         }
       }
     }
