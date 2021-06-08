@@ -1,9 +1,9 @@
 <nz-table #dataTable [nzData]="dataList"
-    [nzShowSizeChanger]="config.isShowSizeChanger ? config.isShowSizeChanger : true" [nzLoadingDelay]="300"
-    [nzFrontPagination]="config.isFrontPagination ? config.isFrontPagination : false"
+    [nzShowSizeChanger]="config.isShowSizeChanger ? config.isShowSizeChanger : true"
+    [nzFrontPagination]="config.isFrontPagination ? config.isFrontPagination : true"
     [nzShowPagination]="config.isPagination ? config.isPagination : true" [nzTotal]="total" [(nzPageIndex)]="pageIndex"
     [(nzPageSize)]="pageSize" (nzPageIndexChange)="searchData()" (nzPageSizeChange)="searchData(true)"
-    [nzPageSizeOptions]="config.pageSizeOptions ? config.pageSizeOptions : []" [nzShowTotal]="showTotal"
+    [nzPageSizeOptions]="pageSizeOptions" [nzShowTotal]="showTotal"
     [nzBordered]="config.isBordered ? config.isBordered : false" [nzSize]="config.size ? config.size: 'default'"
     [nzScroll]="config.scroll ? config.scroll : null">
     <thead>
@@ -19,6 +19,7 @@
             </ng-template>
         </tr>
     </thead>
+
     <tbody>
         <tr *ngFor="let rowData of dataTable.data" (click)="setSelectRow(rowData, $event)"
             [ngClass]="{ selectedRow: mapOfDataState[rowData[KEY_ID]] ? mapOfDataState[rowData[KEY_ID]]['selected'] : true, validationError: !mapOfDataState[rowData[KEY_ID]]['validation']}"

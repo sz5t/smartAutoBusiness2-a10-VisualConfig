@@ -19,6 +19,8 @@ export class CfgFormDesignComponent extends CnComponentBase implements OnInit {
   @Input() changeValue: any;
   @Input() initData;
   @Input() tempData;
+
+  @Input() layoutSourceData;
   layoutTree = [];
 
   style1 = { "height": (window.document.body.clientHeight - 160).toString() + 'px', "max-height": (window.document.body.clientHeight - 160).toString() + 'px', "overflow": "auto" }
@@ -33,8 +35,11 @@ export class CfgFormDesignComponent extends CnComponentBase implements OnInit {
   ngOnInit(): void {
     this._initInnerValue();
     this.setChangeValue(this.changeValue);
-    this.load();
+    // this.load();
     this.fromDataService.selectedItem = this.selectedItem;
+    if (this.layoutSourceData) {
+      this.fromDataService.layoutSourceData = this.layoutSourceData;
+    }
 
   }
   private _initInnerValue() {
