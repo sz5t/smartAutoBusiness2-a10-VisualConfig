@@ -9,6 +9,7 @@ export class pageServerService {
     public data: any = [];
     public componentInstance: any = {};
     public componentsConfig: any = {};
+    public permissionConfig: any = [];
 
     constructor() { }
     public setComponentValue(id?: string, value?: any): void {

@@ -228,6 +228,7 @@ import { CfgFormCheckComponent } from './config-components/cfg-form-design/cfg-f
 import { CfgFormDesignLayoutItemDirective } from './config-components/cfg-form-design/cfg-form-design-layout/cfg-form-design-layout-item.directive';
 import { CnStaticFormSubComponentComponent } from './components/cn-static-form/cn-static-form-item/cn-static-form-sub-component/cn-static-form-sub-component.component';
 import { CnStaticFormSelectTreeComponent } from './components/cn-static-form/cn-static-form-item/cn-static-form-select-tree/cn-static-form-select-tree.component';
+import { SmtDynamicPageComponent } from './smt-components/smt-dynamic-page/smt-dynamic-page.component';
 
 
 // #region third libs
@@ -454,6 +455,7 @@ const COMPONENTS = [
   CnStaticFormApiComponent,
   // 解析布局组件
   SmtPageComponent,
+  SmtDynamicPageComponent,
   SmtLayoutComponent,
   SmtTabsComponent,
   // 可视化生成配置解析出的组件
