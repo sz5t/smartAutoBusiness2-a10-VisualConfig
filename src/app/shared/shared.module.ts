@@ -227,7 +227,6 @@ import { CfgFormSelectComponent } from './config-components/cfg-form-design/cfg-
 import { CfgFormCheckComponent } from './config-components/cfg-form-design/cfg-form-design-layout/cfg-form-check/cfg-form-check.component';
 import { CfgFormDesignLayoutItemDirective } from './config-components/cfg-form-design/cfg-form-design-layout/cfg-form-design-layout-item.directive';
 
-
 // #region third libs
 
 const THIRDMODULES = [
@@ -376,7 +375,6 @@ const COMPONENTS = [
   CfgAttributeRanksColComponent,
   CfgCascadePropertyComponent,
 
-
   // ------设计组件-----
   CfgAttributeAssembleResourceSelectComponent,
   CfgAttributeRanksRowModalComponent,
@@ -499,10 +497,6 @@ const DIRECTIVES = [
     SafeUrlPipe,
     CfgAttributeRanksRowModalComponent,
     ToolAttrJsonComponent,
-
-
-
-
   ],
   exports: [
     CommonModule,
@@ -526,4 +520,4 @@ const DIRECTIVES = [
   entryComponents: [...COMPONENTS],
   providers: [],
 })
-export class SharedModule { }
+export class SharedModule {}

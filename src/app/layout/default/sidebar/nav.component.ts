@@ -93,7 +93,7 @@ export class NavComponent implements OnInit, OnDestroy {
     this.componentService.cacheService.set('activeMenu', activeMenu);
 
     // liu 20.11.12 只缓存5个页面数据
-    const index = this.menuList.findIndex((item) => item.ID === menu.ID);
+    const index = this.menuList.findIndex((item) => item.PAGE_CODE === menu.PAGE_CODE);
     if (index < 0) {
       this.menuList = [activeMenu, ...this.menuList];
     }
@@ -101,16 +101,17 @@ export class NavComponent implements OnInit, OnDestroy {
       this.menuList = this.menuList.slice(0, 5);
     }
     for (const key in pageConfigCache) {
-      const index = this.menuList.findIndex((item) => item.ID === key);
+      const index = this.menuList.findIndex((item) => item.PAGE_CODE === key);
       if (index < 0) {
         pageConfigCache[key] = { pageConfig: {}, permissionConfig: {} };
       }
     }
+    debugger;
     // console.log('缓存信息',this.menuList);
-    pageConfigCache[menu.ID] = { pageConfig: {}, permissionConfig: {} };
+    pageConfigCache[menu.PAGE_CODE] = { pageConfig: {}, permissionConfig: {} };
     if (!menu.link) {
       if (menu.PAGE_CODE) {
-        menu.link = '/template/dynamic/' + menu.PAGE_CODE;
+        menu.link = '/template/smt-dynamic/' + menu.PAGE_CODE;
       }
     }
     this._router.navigateByUrl(menu.link);
