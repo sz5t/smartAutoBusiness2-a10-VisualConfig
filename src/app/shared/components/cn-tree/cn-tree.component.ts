@@ -1674,6 +1674,7 @@ export class CnTreeComponent extends CnComponentBase implements OnInit, AfterVie
     // if(isEditForm) {
 
     // }
+    // debugger;
     if (option.changeValue) {
       const d = ParameterResolver.resolve({
         params: option.changeValue.params,

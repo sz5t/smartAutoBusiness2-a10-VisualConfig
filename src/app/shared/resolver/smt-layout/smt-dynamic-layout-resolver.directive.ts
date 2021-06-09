@@ -22,8 +22,7 @@ import { LayoutTabs } from './layout.tabs';
 
 @Directive({
     // tslint:disable-next-line: directive-selector
-    selector: ' [SmtDynamicLayoutResolverDirective]',
-    providers: [pageServerService]
+    selector: ' [SmtDynamicLayoutResolverDirective]'
 })
 export class SmtDynamicLayoutResolverDirective extends CnComponentBase implements OnInit, OnDestroy {
     /**
@@ -57,7 +56,6 @@ export class SmtDynamicLayoutResolverDirective extends CnComponentBase implement
     constructor(
         private _resolver: ComponentFactoryResolver,
         private _container: ViewContainerRef,
-        private pageService: pageServerService,
         @Inject(BSN_COMPONENT_SERVICES)
         public componentService: ComponentServiceProvider,
     ) {
@@ -205,7 +203,7 @@ export class SmtDynamicLayoutResolverDirective extends CnComponentBase implement
         if (this.initValue) {
             this._layoutObj.instance.initData = this.initData;
         }
-        this._layoutObj.instance.dataServe = this.dataServe ? this.dataServe : this.pageService;
+        this._layoutObj.instance.dataServe = this.dataServe;
     }
 
     private buildLayoutRows(layoutObj: any) {
@@ -220,7 +218,7 @@ export class SmtDynamicLayoutResolverDirective extends CnComponentBase implement
         if (this.initValue) {
             this._rowsObj.instance.initData = this.initData;
         }
-        this._rowsObj.instance.dataServe = this.dataServe ? this.dataServe : this.pageService;
+        this._rowsObj.instance.dataServe = this.dataServe;
     }
 
     // private buildTabsLayout(tabsObj: any) {

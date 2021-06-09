@@ -14,8 +14,10 @@ import { CnStaticFormObjectCardComponent } from './cn-static-form-item/cn-static
 import { CnStaticFormObjectEmptyComponent } from './cn-static-form-item/cn-static-form-object-empty/cn-static-form-object-empty.component';
 import { CnStaticFormPopApiComponent } from './cn-static-form-item/cn-static-form-pop-api/cn-static-form-pop-api.component';
 import { CnStaticFormPopSelectParameterComponent } from './cn-static-form-item/cn-static-form-pop-select-parameter/cn-static-form-pop-select-parameter.component';
+import { CnStaticFormSelectTreeComponent } from './cn-static-form-item/cn-static-form-select-tree/cn-static-form-select-tree.component';
 import { CnStaticFormSelectComponent } from './cn-static-form-item/cn-static-form-select/cn-static-form-select.component';
 import { CnStaticFormSliderComponent } from './cn-static-form-item/cn-static-form-slider/cn-static-form-slider.component';
+import { CnStaticFormSubComponentComponent } from './cn-static-form-item/cn-static-form-sub-component/cn-static-form-sub-component.component';
 import { CnStaticFormSwitchComponent } from './cn-static-form-item/cn-static-form-switch/cn-static-form-switch.component';
 
 const components: { [type: string]: Type<any> } = {
@@ -34,7 +36,9 @@ const components: { [type: string]: Type<any> } = {
   popSelectParameter: CnStaticFormPopSelectParameterComponent,
   treeObject: CnStaticFormTreeObjectComponent,
   childArray: CnStaticFormChildArrayComponent,
-  popApi: CnStaticFormPopApiComponent
+  popApi: CnStaticFormPopApiComponent,
+  subComponent: CnStaticFormSubComponentComponent,
+  treeSelect: CnStaticFormSelectTreeComponent
 
 }
 @Directive({

@@ -1,0 +1,6 @@
+<ng-container *ngFor="let r of config['subProperties']">
+
+    <ng-container CnStaticFormItemDirective [validateForm]="validateForm" [config]="r" *ngIf="r['show']"
+        [globalConfig]="config" [fromDataService]="fromDataService" (cascadeValue)="cascadeValueEmit($event)">
+    </ng-container>
+</ng-container>

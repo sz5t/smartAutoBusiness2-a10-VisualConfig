@@ -1,0 +1,25 @@
+<ng-container *ngIf="config['formType'] === 'value'">
+    <nz-form-item>
+        <nz-form-label *ngIf="!config.componentConfig['hiddenTitle']" [nzSpan]="config.componentConfig.labelSize.span"
+            [nzSm]="config.componentConfig.labelSize.nzSm" [nzXs]="config.componentConfig.labelSize.nzXs"
+            [nzMd]="config.componentConfig.labelSize.nzMd" [nzLg]="config.componentConfig.labelSize.nzLg"
+            [nzTooltipTitle]="config.componentConfig.labelTooltipTitle"
+            [nzTooltipIcon]="config.componentConfig.labelTooltipIcon" nzRequired>{{config['title']}}</nz-form-label>
+        <nz-form-control [nzSpan]="config.componentConfig.controlSize.span"
+            [nzSm]="config.componentConfig.controlSize.nzSm" [nzXs]="config.componentConfig.controlSize.nzXs"
+            [nzMd]="config.componentConfig.controlSize.nzMd" [nzLg]="config.componentConfig.controlSize.nzLg"
+            [nzXl]="config.componentConfig.controlSize.nzXl" [formGroup]="validateForm">
+            <!-- <input nz-input [formControlName]="config['name']" /> -->
+
+            <!-- <nz-select [formControlName]="config['name']" (ngModelChange)="log($event)">
+
+                <nz-option *ngFor="let option of selectOptions" [nzLabel]="option.label" [nzValue]="option.value">
+                </nz-option>
+
+            </nz-select> -->
+            <nz-tree-select style="width: 100%" [nzNodes]="nodes" nzPlaceHolder="Please select"
+                [formControlName]="config['name']" (ngModelChange)="onChange($event)">
+            </nz-tree-select>
+        </nz-form-control>
+    </nz-form-item>
+</ng-container>

@@ -60,7 +60,102 @@
                       "validations": [],
                       "title": "是否显示标题"
   
+                    },
+                    {
+                      "name": "showTitleSub",
+                      "type": "subComponent",
+                      "componentConfig": {
+                        "subMapping":[
+
+                          {
+                            "type": "condition",
+                            "condition": [
+                              {
+                                "conditionType": "and",
+                                "type": "expression",  
+                                "brackets": [],
+                                "expression": {
+                                  "comput": "true", 
+                                  "leftExpression": {
+                                    "type": "componentValue",
+                                    "value": "0",
+                                    "valueName": "showTitle"
+                                  },
+                                  "righitExpression": {
+                                    "type": "value",
+                                    "value": "^0$"
+                                  }
+                                }
+                    
+                              }
+                            ],
+                            "code": "01"
+                          },
+                          {
+                            "type": "condition",
+                            "condition": [
+                              {
+                                "conditionType": "and",
+                                "type": "expression",  
+                                "brackets": [],
+                                "expression": {
+                                  "comput": "false", 
+                                  "leftExpression": {
+                                    "type": "componentValue",
+                                    "value": "0",
+                                    "valueName": "showTitle"
+                                  },
+                                  "righitExpression": {
+                                    "type": "value",
+                                    "value": "^0$"
+                                  }
+                                }
+                    
+                              }
+                            ],
+                            "code": "02"
+                          },
+                          {
+                            "type": "default",
+                            "code": "02"
+                          }
+                        ]
+                      },
+                      "formType": "value",
+                      "formName": "formControlName",
+                      "validations": [],
+                      "title": "sub切换",
+                      "subProperties":[
+                        {
+                          "code":"01",
+                          "name": "showTitleSub",
+                          "type": "switch",
+                          "componentConfig": {
+      
+                          },
+                          "formType": "value",
+                          "formName": "formControlName",
+                          "validations": [],
+                          "title": "sub开关"
+      
+                        },
+                        {
+                          "code":"02",
+                          "name": "showTitleSub",
+                          "type": "input",
+                          "componentConfig": {
+      
+                          },
+                          "formType": "value",
+                          "formName": "formControlName",
+                          "validations": [],
+                          "title": "sub文本"
+      
+                        }
+                      ]
+  
                     }
+                    
   
   
   
