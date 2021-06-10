@@ -7,6 +7,7 @@ import { ComponentServiceProvider } from 'src/app/core/services/components/compo
 import { CnComponentBase } from 'src/app/shared/components/cn-component.base';
 import { CnDynamicLayoutComponent } from 'src/app/shared/components/layout/cn-dynamic-layout.component';
 import { SmtDynamicLayoutResolverDirective } from 'src/app/shared/resolver/smt-layout/smt-dynamic-layout-resolver.directive';
+import { SmtDynamicPageComponent } from 'src/app/shared/smt-components/smt-dynamic-page/smt-dynamic-page.component';
 
 @Component({
   selector: 'smt-dynamic-template,[smt-dynamic-template]',
@@ -18,8 +19,11 @@ export class SmtDynamicTemplateComponent extends CnComponentBase implements OnIn
   public layoutId: string;
   public layoutName: string;
   public config = {
-    layoutJson: {},
-    componentsJson: {},
+    pageJson: {
+      layoutJson: {},
+      componentsJson: {},
+    },
+    permissionJson: [],
   };
   private _layoutObj: ComponentRef<any>;
   constructor(
@@ -64,52 +68,63 @@ export class SmtDynamicTemplateComponent extends CnComponentBase implements OnIn
   private loadDynamicLayout(pageCode: string) {
     debugger;
     let page_url = 'smt-app/resource/SMT_SETTING_LAYOUT/query';
+    let permission_url = 'smt-app/resource/GET_AUTH_LAYOUT_STRUCTURE_PERMISSION/query';
     let page_params = { PAGE_CODE: pageCode };
+    const userInfo = this.cacheValue.getNone('userInfo');
+    if (userInfo) {
+      let permission_params = {
+        PAGE_CODE: pageCode,
+        ROLE_CODE: userInfo['roles'].join(','),
+      };
+      // if (environment.systemSettings && environment.systemSettings.permissionInfo.enableOperatePermission) {
+      //   const work_Page = environment.systemSettings.pageInfo.workPageInfo.pageAjaxConfig;
+      //   page_url = work_Page.url;
+      //   const d_params = { PageId: layoutId };
+      //   page_params = this.buildParametersByPage(work_Page.params, d_params);
+      // } else {
+      //   page_url = 'resource/B_P_C_CONFIG_PAGE_ALL_NEW/operate';
+      //   page_params = { PageId: layoutId };
+      // }
 
-    // if (environment.systemSettings && environment.systemSettings.permissionInfo.enableOperatePermission) {
-    //   const work_Page = environment.systemSettings.pageInfo.workPageInfo.pageAjaxConfig;
-    //   page_url = work_Page.url;
-    //   const d_params = { PageId: layoutId };
-    //   page_params = this.buildParametersByPage(work_Page.params, d_params);
-    // } else {
-    //   page_url = 'resource/B_P_C_CONFIG_PAGE_ALL_NEW/operate';
-    //   page_params = { PageId: layoutId };
-    // }
+      this.componentService.apiService.get(page_url, page_params).subscribe((response) => {
+        if (response.state !== 1 || response.data === null || response.data === []) {
+          this.config = null;
+        } else {
+          const pageJson = JSON.parse(response.data[0]['JSON']);
 
-    this.componentService.apiService.get(page_url, page_params).subscribe((response) => {
-      if (response.state !== 1 || response.data === null || response.data === []) {
-        this.config = null;
-      } else {
-        const pageJson = JSON.parse(response.data[0]['JSON']);
-        console.log('=====当前页加载数据=====', pageJson);
-        this.config = pageJson;
-        this._route.queryParams.subscribe((queryParam) => {
-          this.buildLayout({ name: pageCode, ...queryParam });
-        });
+          this.componentService.apiService.get(permission_url, permission_params).subscribe((response: any) => {
+            if (response && response.state === 1) {
+              this.config = { pageJson: pageJson, permissionJson: response.data };
+              this._route.queryParams.subscribe((queryParam) => {
+                this.buildLayout({ name: pageCode, ...queryParam });
+              });
+            }
+          });
 
-        // for (const key in pageJson) {
-        //   if (pageJson.hasOwnProperty(key)) {
-        //     // 判断是否时主页面配置,如果是主页面配置,则直接进行页面解析
-        //     if (key === layoutId) {
-        //       this.config = pageJson[layoutId].config.layoutJson;
-        //       // liu 2020.11.12
-        //       this.setCache(key, 'mainPage', pageJson[layoutId].config, pageJson[layoutId].permission);
-        //       this._route.queryParams.subscribe((queryParam) => {
-        //         this.buildLayout({ name: layoutId, ...queryParam });
-        //       });
-        //     } else {
-        //       // 2020.11.12
-        //       this.setCache(key, 'childPage', pageJson[key].config, pageJson[key].permission);
-        //     }
-        //   }
-        // }
-      }
-    });
+          // for (const key in pageJson) {
+          //   if (pageJson.hasOwnProperty(key)) {
+          //     // 判断是否时主页面配置,如果是主页面配置,则直接进行页面解析
+          //     if (key === layoutId) {
+          //       this.config = pageJson[layoutId].config.layoutJson;
+          //       // liu 2020.11.12
+          //       this.setCache(key, 'mainPage', pageJson[layoutId].config, pageJson[layoutId].permission);
+          //       this._route.queryParams.subscribe((queryParam) => {
+          //         this.buildLayout({ name: layoutId, ...queryParam });
+          //       });
+          //     } else {
+          //       // 2020.11.12
+          //       this.setCache(key, 'childPage', pageJson[key].config, pageJson[key].permission);
+          //     }
+          //   }
+          // }
+        }
+      });
+    }
   }
 
   private buildLayout(params) {
     // console.log('buildLayout Receive message --', this.initValue, this.tempValue);
-    const cmpt = this._resolver.resolveComponentFactory<any>(SmtDynamicLayoutResolverDirective);
+    const cmpt = this._resolver.resolveComponentFactory<any>(SmtDynamicPageComponent);
     this._container.clear();
     this._layoutObj = this._container.createComponent(cmpt);
     this._layoutObj.instance.config = this.config;

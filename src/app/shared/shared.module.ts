@@ -229,6 +229,7 @@ import { CfgFormDesignLayoutItemDirective } from './config-components/cfg-form-d
 import { CnStaticFormSubComponentComponent } from './components/cn-static-form/cn-static-form-item/cn-static-form-sub-component/cn-static-form-sub-component.component';
 import { CnStaticFormSelectTreeComponent } from './components/cn-static-form/cn-static-form-item/cn-static-form-select-tree/cn-static-form-select-tree.component';
 import { SmtDynamicPageComponent } from './smt-components/smt-dynamic-page/smt-dynamic-page.component';
+import { SmtTreeComponent } from './smt-components/smt-tree/smt-tree.component';
 
 // #region third libs
 
@@ -503,6 +504,7 @@ const DIRECTIVES = [
     SafeUrlPipe,
     CfgAttributeRanksRowModalComponent,
     ToolAttrJsonComponent,
+    SmtTreeComponent,
   ],
   exports: [
     CommonModule,

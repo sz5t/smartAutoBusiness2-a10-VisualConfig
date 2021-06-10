@@ -94,11 +94,11 @@ export class StartupService {
           if (rs.state === 1) {
             serverData = rs.data._procedure_resultset_1;
           } else {
-            if (rs.data.validation) {
-              switch (rs.data.vaildation.code) {
+            if (rs.validation) {
+              switch (rs.validation.code) {
                 case 'smt.base.token.validate.invalid':
-                  this._messageService.warning(rs.data.validation.message);
-                  this.router.navigateByUrl(`/password/${environment.routeInfo.loginPath}`);
+                  this._messageService.warning(rs.validation.message);
+                  this.router.navigateByUrl(`/passport/${environment.routeInfo.loginPath}`);
                   break;
               }
             }
