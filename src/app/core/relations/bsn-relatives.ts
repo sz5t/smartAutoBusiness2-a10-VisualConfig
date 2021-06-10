@@ -38,3 +38,13 @@ export class BsnRelativesMessageModel {
         public options?: any
     ) { }
 }
+
+// 发送命令结构
+export class BsnCommandMessageModel {
+    constructor(
+        public commandId: any,
+        public pageCode: string,
+        public sendComponent: string,
+        public data: any
+    ) { }
+}

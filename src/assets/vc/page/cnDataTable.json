@@ -2736,7 +2736,15 @@
                                                             {
                                                                 "name": "eventContent",
                                                                 "type": "arrayCard",
-                                                                "componentConfig": {},
+                                                                "componentConfig": {
+                                                                    "staticDefaultValueConfig": [
+                                                                        {
+                                                                            "name": "tagPageId",
+                                                                            "type": "tempValue",
+                                                                            "valueName": "ID"
+                                                                        }
+                                                                    ]
+                                                                },
                                                                 "formType": "array",
                                                                 "formName": "formControlName",
                                                                 "validations": [],
@@ -2759,6 +2767,16 @@
                                                                         "formName": "formControlName",
                                                                         "validations": [],
                                                                         "title": "绑定组件标识"
+                                                                    },
+                                                                    {
+                                                                        "name": "tagPageId",
+                                                                        "type": "input",
+                                                                        "componentConfig": {
+                                                                        },
+                                                                        "formType": "value",
+                                                                        "formName": "formControlName",
+                                                                        "validations": [],
+                                                                        "title": "绑定页面标识"
                                                                     },
                                                                     {
                                                                         "name": "preCondition",

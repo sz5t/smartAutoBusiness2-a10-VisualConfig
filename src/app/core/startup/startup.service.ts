@@ -62,7 +62,7 @@ export class StartupService {
   }
 
   async load(): Promise<any> {
-    debugger;
+    // debugger;
     await this.getWebConfig();
 
     this.userInfo = this._cacheService.getNone('userInfo');
