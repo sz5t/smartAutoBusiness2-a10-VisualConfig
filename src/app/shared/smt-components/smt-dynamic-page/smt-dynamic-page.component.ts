@@ -16,7 +16,7 @@ export class SmtDynamicPageComponent extends CnComponentBase implements OnInit {
   constructor(
     @Inject(BSN_COMPONENT_SERVICES)
     public componentService: ComponentServiceProvider,
-    private pageService: pageServerService
+    public pageService: pageServerService
   ) {
     super(componentService);
   }
@@ -24,8 +24,10 @@ export class SmtDynamicPageComponent extends CnComponentBase implements OnInit {
   @Input() public config;
 
   ngOnInit(): void {
-    this.pageService['componentsConfig'] = this.config['pageJson']['componentsJson'];
-    this.pageService['permissionConfig'] = this.config['permissionJson'];
+    // this.pageService['componentsConfig'] = this.config['pageJson']['componentsJson'];
+    // this.pageService['permissionConfig'] = this.config['permissionJson'];
+    this.pageService['componentsConfig'] = this.config['pageJson'].hasOwnProperty('componentsJson') ? this.config['pageJson']['componentsJson'] : {}
+    this.pageService['permissionConfig'] = this.config['permissionJson'].length > 0 ? this.config['permissionJson'] : [];
   }
 
 }
