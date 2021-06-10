@@ -20,6 +20,7 @@ import { StepsDemoComponent } from './steps-demo.component';
 import { DataBusinessModelingComponent } from './data-business-modeling.component';
 import { CnDynamicTemplateComponent } from './dynamic-template/dynamic-template.component';
 import { DataStepsDemoComponent } from './data-step-demo.component';
+import { SmtDynamicTemplateComponent } from './dynamic-template/smt-dynamic-template.component';
 
 const COMPONENTS = [
   LayoutDemoComponent,
@@ -39,7 +40,8 @@ const COMPONENTS = [
   DataBusinessModelingComponent,
   BaseComponentMannagerComponent,
   CnDynamicTemplateComponent,
-  DataStepsDemoComponent
+  DataStepsDemoComponent,
+  SmtDynamicTemplateComponent,
 ];
 
 const COMPONENTS_NOROUNT = [];
@@ -49,4 +51,4 @@ const COMPONENTS_NOROUNT = [];
   declarations: [...COMPONENTS, ...COMPONENTS_NOROUNT],
   entryComponents: COMPONENTS_NOROUNT,
 })
-export class TemplateModule { }
+export class TemplateModule {}

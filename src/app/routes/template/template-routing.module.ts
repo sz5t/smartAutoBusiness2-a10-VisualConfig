@@ -18,7 +18,7 @@ import { StepsDemoComponent } from './steps-demo.component';
 import { DataBusinessModelingComponent } from './data-business-modeling.component';
 import { CnDynamicTemplateComponent } from './dynamic-template/dynamic-template.component';
 import { DataStepsDemoComponent } from './data-step-demo.component';
-
+import { SmtDynamicTemplateComponent } from './dynamic-template/smt-dynamic-template.component';
 
 const routes: Routes = [
   { path: 'demo', component: LayoutDemoComponent },
@@ -39,11 +39,13 @@ const routes: Routes = [
   { path: 'businessmodeling', component: DataBusinessModelingComponent },
   { path: 'componentManager', component: BaseComponentMannagerComponent },
   { path: 'dynamic/:name', component: CnDynamicTemplateComponent },
-  { path: 'dynamic/:name/:id', component: CnDynamicTemplateComponent }
+  { path: 'dynamic/:name/:id', component: CnDynamicTemplateComponent },
+  { path: 'smt-dynamic/:name', component: SmtDynamicTemplateComponent },
+  { path: 'smt-dynamic/:name/:id', component: SmtDynamicTemplateComponent },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class TemplateRoutingModule { }
+export class TemplateRoutingModule {}

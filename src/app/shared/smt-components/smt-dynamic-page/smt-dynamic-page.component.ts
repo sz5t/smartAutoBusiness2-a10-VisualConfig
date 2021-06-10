@@ -7,16 +7,14 @@ import { CnComponentBase } from '../../components/cn-component.base';
 @Component({
   selector: 'app-smt-dynamic-page',
   templateUrl: './smt-dynamic-page.component.html',
-  styles: [
-  ],
-  providers: [pageServerService]
+  styles: [],
+  providers: [pageServerService],
 })
 export class SmtDynamicPageComponent extends CnComponentBase implements OnInit {
-
   constructor(
     @Inject(BSN_COMPONENT_SERVICES)
     public componentService: ComponentServiceProvider,
-    public pageService: pageServerService
+    public pageService: pageServerService,
   ) {
     super(componentService);
   }
@@ -29,5 +27,4 @@ export class SmtDynamicPageComponent extends CnComponentBase implements OnInit {
     this.pageService['componentsConfig'] = this.config['pageJson'].hasOwnProperty('componentsJson') ? this.config['pageJson']['componentsJson'] : {}
     this.pageService['permissionConfig'] = this.config['permissionJson'].length > 0 ? this.config['permissionJson'] : [];
   }
-
 }

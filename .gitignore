@@ -48,3 +48,6 @@ node_modules.zip
 yarn.lock
 package.json
 package.json
+src/environments/environment.ts
+src/assets/tmp/webConfig.json
+src/assets/tmp/webConfig.json

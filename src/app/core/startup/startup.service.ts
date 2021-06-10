@@ -14,6 +14,8 @@ import { environment } from '@env/environment';
 import { DA_SERVICE_TOKEN, ITokenService } from '@delon/auth';
 import { CacheService } from '@delon/cache';
 import { Router } from '@angular/router';
+import { NzModalService } from 'ng-zorro-antd/modal';
+import { NzMessageService } from 'ng-zorro-antd/message';
 
 /**
  * 用于应用启动时
@@ -26,6 +28,7 @@ export class StartupService {
     private menuService: MenuService,
     private translate: TranslateService,
     private _cacheService: CacheService,
+    private _messageService: NzMessageService,
     private router: Router,
     @Inject(ALAIN_I18N_TOKEN) private i18n: I18NService,
     private settingService: SettingsService,
@@ -89,7 +92,18 @@ export class StartupService {
           const rs: any = await this.httpClient
             .post(`smt-app/resource/GET_APP_MENU_LIST_PROC/operate`, { ROLES_CODE: this.userInfo.roles.join(',') })
             .toPromise();
-          serverData = rs.data._procedure_resultset_1;
+          if (rs.state === 1) {
+            serverData = rs.data._procedure_resultset_1;
+          } else {
+            if (rs.validation) {
+              switch (rs.validation.code) {
+                case 'smt.base.token.validate.invalid':
+                  this._messageService.warning(rs.validation.message);
+                  this.router.navigateByUrl(`/passport/${environment.routeInfo.loginPath}`);
+                  break;
+              }
+            }
+          }
         } else if (this.userInfo && environment.routeInfo.loginPath === 'vclogin') {
           const rs: any = await this.httpClient.get(`smt-app/resource/GET_MENU_LIST/query`).toPromise();
           serverData = rs.data;
