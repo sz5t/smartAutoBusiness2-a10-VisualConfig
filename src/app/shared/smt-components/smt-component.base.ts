@@ -14,91 +14,169 @@ export class SmtComponentBase {
   constructor(public componentService: ComponentServiceProvider) {}
   //#region 组件公共属性定义
 
-  private _initValue: any;
+  private _INIT_VALUE: any;
   /**
    * 初始化值变量
    */
-  public get initValue(): any {
-    return this._initValue ? this._initValue : {};
+  public get INIT_VALUE(): any {
+    return this._INIT_VALUE;
   }
-  public set initValue(value: any) {
-    this._initValue = value;
+  public set INIT_VALUE(value: any) {
+    this._INIT_VALUE = value;
   }
-  private _tempValue: any;
+
+  private _TEMP_VALUE: any;
   /**
    * 组件内部临时变量
    */
-  public get tempValue(): any {
-    return this._tempValue ? this._tempValue : {};
+  public get TEMP_VALUE(): any {
+    return this._TEMP_VALUE;
   }
-  public set tempValue(value: any) {
-    this._tempValue = value;
+  public set TEMP_VALUE(value: any) {
+    this._TEMP_VALUE = value;
   }
 
+  private _COMPONENT_VALUE: any;
+  /**
+   * 组件值
+   */
+  public get COMPONENT_VALUE(): any {
+    return this._COMPONENT_VALUE;
+  }
+  public set COMPONENT_VALUE(value: any) {
+    this._COMPONENT_VALUE = value;
+  }
+
+  private _CACHE_VALUE: any;
   /**
    * 缓存值
    */
-  private _cacheValue: any;
-  public get cacheValue(): any {
-    return this._cacheValue ? this._cacheValue : {};
+  public get CACHE_VALUE(): any {
+    return this._CACHE_VALUE;
   }
-  public set cacheValue(value: any) {
-    this._cacheValue = value;
+  public set CACHE_VALUE(value: any) {
+    this._CACHE_VALUE = value;
   }
 
-  private _routerValue: any;
+  private _ROUTE_VALUE: any;
   /**
    * 路由值
    */
-  public get routerValue(): any {
-    return this._routerValue ? this._routerValue : {};
+  public get ROUTE_VALUE(): any {
+    return this._ROUTE_VALUE;
   }
-  public set routerValue(value: any) {
-    this._routerValue = value;
+  public set ROUTE_VALUE(value: any) {
+    this._ROUTE_VALUE = value;
   }
 
-  private _cascadeValue: any;
+  private _CASCADE_VALUE: any;
   /**
    * 级联值
    */
-  public get cascadeValue(): any {
-    return this._cascadeValue ? this._cascadeValue : {};
+  public get CASCADE_VALUE(): any {
+    return this._CASCADE_VALUE;
   }
-  public set cascadeValue(value: any) {
-    this._cascadeValue = value;
+  public set CASCADE_VALUE(value: any) {
+    this._CASCADE_VALUE = value;
   }
 
-  private _staticComponentValue: any;
+  private _STATIC_COMPONENT_VALUE: any;
   /**
    * 静态组件值
    */
-  public get staticComponentValue(): any {
-    return this._staticComponentValue ? this._staticComponentValue : {};
+  public get STATIC_COMPONENT_VALUE(): any {
+    return this._STATIC_COMPONENT_VALUE;
   }
-  public set staticComponentValue(value: any) {
-    this._staticComponentValue = value;
+  public set STATIC_COMPONENT_VALUE(value: any) {
+    this._STATIC_COMPONENT_VALUE = value;
   }
 
-  private _userValue: any;
+  private _USER_VALUE: any;
   /**
    * 用户信息
    */
-  public get userValue(): any {
-    return this._userValue ? this._userValue : {};
+  public get USER_VALUE(): any {
+    return this._USER_VALUE;
   }
-  public set userValue(value: any) {
-    this._userValue = value;
+  public set USER_VALUE(value: any) {
+    this._USER_VALUE = value;
   }
 
   /**
    * 菜单信息
    */
-  private _menuValue: any;
-  public get menuValue(): any {
-    return this._menuValue ? this._menuValue : {};
+  private _MENU_VALUE: any;
+  public get MENU_VALUE(): any {
+    return this._MENU_VALUE;
   }
-  public set menuValue(value: any) {
-    this._menuValue = value;
+  public set MENU_VALUE(value: any) {
+    this._MENU_VALUE = value;
+  }
+
+  private _RETURN_VALUE: any;
+  /**
+   * 异步操作数据
+   */
+  public get RETURN_VALUE(): any {
+    return this._RETURN_VALUE;
+  }
+  public set RETURN_VALUE(value: any) {
+    this._RETURN_VALUE = value;
+  }
+
+  private _ADDED_ITEMS: any[];
+  /**
+   * 已添加的数据集合
+   */
+  public get ADDED_ITEMS(): any[] {
+    return this._ADDED_ITEMS;
+  }
+  public set ADDED_ITEMS(value: any[]) {
+    this._ADDED_ITEMS = value;
+  }
+
+  private _EDITED_ITEMS: any;
+  /**
+   * 已编辑的数据集合
+   */
+  public get EDITED_ITEMS(): any {
+    return this._EDITED_ITEMS;
+  }
+  public set EDITED_ITEMS(value: any) {
+    this._EDITED_ITEMS = value;
+  }
+
+  private _CHECKED_ITEMS_IDS: any;
+  /**
+   * 勾选数据的ID {ids:'di1,do2'}
+   */
+  public get CHECKED_ITEMS_IDS(): any {
+    return this._CHECKED_ITEMS_IDS;
+  }
+  public set CHECKED_ITEMS_IDS(value: any) {
+    this._CHECKED_ITEMS_IDS = value;
+  }
+
+  private _SELECTED_ITEM: any;
+  /**
+   * 选中记录的数据对象
+   */
+  public get SELECTED_ITEM(): any {
+    return this._SELECTED_ITEM;
+  }
+  public set SELECTED_ITEM(value: any) {
+    this._SELECTED_ITEM = value;
+  }
+
+  private _CURRENT_ITEM: any;
+  /**
+   * 当前操作的记录数据对象
+   */
+  public get CURRENT_ITEM(): any {
+    return this._CURRENT_ITEM;
+  }
+  public set CURRENT_ITEM(value: any) {
+    this._CURRENT_ITEM = value;
   }
 
   //#endregion
@@ -106,36 +184,90 @@ export class SmtComponentBase {
   //#region 参数解析
   public buildParameters(paramsCfg: any, data?: any, isArray = false): any {
     let paramsResult: any | any[];
-
+    if (!isArray && !data) {
+      paramsResult = this._buildInnerParams(paramsCfg);
+    } else if (!isArray && data) {
+      paramsResult = this._buildInComingParams(paramsCfg, data);
+    } else if (isArray && data && Array.isArray(data)) {
+      paramsResult = this._buildArrayParams(paramsCfg, data);
+    }
     return paramsResult;
   }
 
   private _buildInnerParams(paramsCfg) {
-    // return SmtParameterResolver.resolve({
-    //     params: paramsCfg,
-    //     tempValue: this.tempValue,
-    //     componentValue: this.COMPONENT_VALUE,
-    //     item: this.ROW_SELECTED,
-    //     initValue: this.initValue,
-    //     cacheValue: this.cacheValue,
-    //     router: this.routerValue,
-    //     addedRows: this.ROWS_ADDED,
-    //     editedRows: this.ROWS_EDITED,
-    //     checkedRow: this.ROWS_CHECKED,
-    //     outputValue: data,
-    //     returnValue: data,
-    //     selectedRow: this.ROW_SELECTED,
-    //     currentRow: this.ROW_CURRENT,
-    //     userValue: this.userValue,
-    //     menuValue: this.componentService.cacheService.getNone('activeMenu') ? this.componentService.cacheService.getNone('activeMenu') : {},
-    //   });
+    return SmtParameterResolver.resolve({
+      params: paramsCfg,
+      tempValue: this.TEMP_VALUE,
+      componentValue: this.COMPONENT_VALUE,
+      initValue: this.INIT_VALUE,
+      cacheValue: this.CACHE_VALUE,
+      router: this.ROUTE_VALUE,
+      addedItems: this.ADDED_ITEMS,
+      editedItems: this.EDITED_ITEMS,
+      returnValue: this.RETURN_VALUE,
+      selectedItem: this.SELECTED_ITEM,
+      currentItem: this.CURRENT_ITEM,
+      userValue: this.USER_VALUE,
+      menuValue: this.componentService.cacheService.getNone('activeMenu') ? this.componentService.cacheService.getNone('activeMenu') : {},
+    });
   }
 
-  private _buildInComingParams(paramsCfg, data) {}
+  private _buildInComingParams(paramsCfg, data): any {
+    let inputData = this._buildProcParams(data);
+    return SmtParameterResolver.resolve({
+      params: paramsCfg,
+      tempValue: this.TEMP_VALUE,
+      componentValue: this.COMPONENT_VALUE,
+      item: inputData ? inputData : data,
+      initValue: this.INIT_VALUE,
+      cacheValue: this.CACHE_VALUE,
+      router: this.ROUTE_VALUE,
+      addedItems: data,
+      editedItems: data,
+      //validation: data,
+      returnValue: data,
+      //checkedRow: this.ROWS_CHECKED,
+      outputValue: data,
+      selectedItem: this.SELECTED_ITEM,
+      currentItem: this.CURRENT_ITEM,
+      userValue: this.USER_VALUE,
+      menuValue: this.componentService.cacheService.getNone('activeMenu') ? this.componentService.cacheService.getNone('activeMenu') : {},
+    });
+  }
 
-  private _buildArrayParams() {}
+  private _buildArrayParams(paramsCfg, data): any[] {
+    let returnData: any[];
+    data.map((d) => {
+      const param = SmtParameterResolver.resolve({
+        params: paramsCfg,
+        tempValue: this.TEMP_VALUE,
+        componentValue: d,
+        item: d,
+        initValue: this.INIT_VALUE,
+        cacheValue: this.CACHE_VALUE,
+        router: this.ROUTE_VALUE,
+        addedItems: d,
+        editedItems: d,
+        //validation: d,
+        returnValue: d,
+        //checkedRow: this.ROWS_CHECKED,
+        outputValue: data,
+        currentItem: this.CURRENT_ITEM,
+        userValue: this.USER_VALUE,
+        menuValue: this.componentService.cacheService.getNone('activeMenu') ? this.componentService.cacheService.getNone('activeMenu') : {},
+      });
+      returnData.push(param);
+    });
+    return returnData;
+  }
 
-  private _buildProcParams() {}
+  private _buildProcParams(data: any) {
+    let _returnData;
+    if (data._procedure_resultset_1) {
+      _returnData = { ...data._procedure_resultset_1[0], ...data };
+    }
+    return _returnData;
+  }
   //#endregion
 
   //#region 异步请求
