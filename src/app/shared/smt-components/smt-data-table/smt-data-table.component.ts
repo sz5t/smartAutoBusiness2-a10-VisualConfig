@@ -74,13 +74,13 @@ export class SmtDataTableComponent implements OnInit {
     this.pageSizeOptions = this.dataTableConfig.pageSizeOptions;
     this.showTotal = this.dataTableConfig.showTotal;
     this._buildColumns(this.dataTableConfig.columns, this.dataTableConfig);
-    console.log(this.dataTableConfig, this.tableColumns);
+    // console.log(this.dataTableConfig, this.tableColumns);
 
     // 是否需要进行初始化数据加载
-    if (this.config.loadingOnInit) {
-      // await this.load();
-      this.total = this.dataList.length;
-    }
+    // if (this.config.loadingOnInit) {
+    // await this.load();
+    this.total = this.dataList.length;
+    // }
 
     this.createTableMapping();
   }

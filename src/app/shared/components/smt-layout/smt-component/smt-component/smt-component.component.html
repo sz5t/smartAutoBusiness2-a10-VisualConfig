@@ -1,0 +1,19 @@
+<nz-card [nzBodyStyle]="col.bodyStyle" [nzBordered]="col.noBorder ? false : true"
+    [nzTitle]="col.header ? titleTmpl : false" [nzExtra]="col.header ? extraTemplate : false">
+    <ng-template #titleTmpl>
+        <i nz-icon spin style="font-size:14px" [nzType]="col.header.icon" *ngIf="col.header.icon"></i>
+        {{col.header.title}}
+    </ng-template>
+
+    <ng-template #extraTemplate>
+        <ng-container smtComponentResolverDirective *ngIf="col.header.toolbar" [config]="col.header.toolbar"
+            [tempData]="tempData" [initData]="initData" [dataServe]="dataServe">
+        </ng-container>
+    </ng-template>
+
+    <div *ngFor="let cmp of col.layoutStructure.children">
+        <ng-container smtComponentResolverDirective [config]="cmp" [tempData]="tempData" [dataServe]="dataServe"
+            [initData]="initData">
+        </ng-container>
+    </div>
+</nz-card>

@@ -230,6 +230,8 @@ import { CnStaticFormSubComponentComponent } from './components/cn-static-form/c
 import { CnStaticFormSelectTreeComponent } from './components/cn-static-form/cn-static-form-item/cn-static-form-select-tree/cn-static-form-select-tree.component';
 import { SmtDynamicPageComponent } from './smt-components/smt-dynamic-page/smt-dynamic-page.component';
 import { SmtTreeComponent } from './smt-components/smt-tree/smt-tree.component';
+import { SmtComponentComponent } from './components/smt-layout/smt-component/smt-component/smt-component.component';
+import { SmtComponentBase } from './smt-components/smt-component.base';
 
 // #region third libs
 
@@ -505,6 +507,7 @@ const DIRECTIVES = [
     CfgAttributeRanksRowModalComponent,
     ToolAttrJsonComponent,
     SmtTreeComponent,
+    SmtComponentComponent,
   ],
   exports: [
     CommonModule,
@@ -528,4 +531,4 @@ const DIRECTIVES = [
   entryComponents: [...COMPONENTS],
   providers: [],
 })
-export class SharedModule {}
+export class SharedModule { }

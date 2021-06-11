@@ -106,7 +106,7 @@ export class NavComponent implements OnInit, OnDestroy {
         pageConfigCache[key] = { pageConfig: {}, permissionConfig: {} };
       }
     }
-    debugger;
+    // debugger;
     // console.log('缓存信息',this.menuList);
     pageConfigCache[menu.PAGE_CODE] = { pageConfig: {}, permissionConfig: {} };
     if (!menu.link) {

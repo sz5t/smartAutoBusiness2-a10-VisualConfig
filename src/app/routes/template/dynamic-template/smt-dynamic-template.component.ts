@@ -46,7 +46,7 @@ export class SmtDynamicTemplateComponent extends CnComponentBase implements OnIn
     } else {
       this._route.params.subscribe((params: any) => {
         if (params.name) {
-          debugger;
+          // debugger;
           console.log('当前系统配置', environment);
           this.layoutName = params.name;
           this.loadDynamicLayout(params.name);
@@ -66,7 +66,7 @@ export class SmtDynamicTemplateComponent extends CnComponentBase implements OnIn
   }
 
   private loadDynamicLayout(pageCode: string) {
-    debugger;
+    // debugger;
     let page_url = 'smt-app/resource/SMT_SETTING_LAYOUT/query';
     let permission_url = 'smt-app/resource/GET_AUTH_LAYOUT_STRUCTURE_PERMISSION/query';
     let page_params = { PAGE_CODE: pageCode };

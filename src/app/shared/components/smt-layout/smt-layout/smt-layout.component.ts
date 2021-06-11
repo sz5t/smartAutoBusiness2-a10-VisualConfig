@@ -16,7 +16,7 @@ export class SmtLayoutComponent implements OnInit {
   @Input() public layoutObj;
 
   ngOnInit(): void {
-    console.log('layoutObj', this.layoutObj);
+    // console.log('layoutObj', this.layoutObj);
   }
 
 }
