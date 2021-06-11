@@ -1,5 +1,8 @@
+import { from } from "rxjs";
+import { map } from "rxjs/operators";
 import { BsnCommandMessageModel } from "src/app/core/relations/bsn-relatives";
 import { SmtParameterResolver } from "../smt-parameter/smt-parameter-resolver";
+import { SmtProCondition } from "../smt-pro-condition/smt-pro-condition.resolver";
 
 export interface SmtMessageSenderResolverModel {
     targetComponentId: string,
@@ -14,30 +17,91 @@ export interface SmtMessageSenderResolverModel {
     item: any
 }
 
-export class SmtMessageSenderResolver {
-    constructor(private _componentInstance: any, model: SmtMessageSenderResolverModel) {
-        this.resolve(model);
+export class SmtMessageSenderEnterResolver {
+    constructor(private _componentInstance: any) {
     }
-    public resolve(model) {
-        const paramsObj = {
-            params: model.params,
-            tempValue: model.tempValue,
-            componentValue: model.item,
-            initValue: model.tempValue,
-            cacheValue: model.cacheValue,
-            selectedItems: model.item,
-            currentItems: model.item,
-        }
-        const commandParams = SmtParameterResolver.resolve(paramsObj);
-        this._componentInstance.componentService.commonRelationSubject.next(
-            new BsnCommandMessageModel(
-                model.commandTitle, // 命令发出组件的内容和下一步操作
-                model.pageCode,
-                model.targetComponentId,
-                commandParams,
-            )
+    public resolver(eventArray, param) {
+        let source$: any;
+        // for (let i = 0; i < eventArray.length; i++) {
+        // const content = eventArray[i]['eventContent'];
+        const sender_source$ = from(eventArray);
+        const sender_subscribe$ = sender_source$.pipe(
+            map((cfg) => {
+                // 根据当前表格实例的类型,进行相应消息的注册
+                // console.log('single sender cfg', cfg);
+                // tslint:disable-next-line: no-use-before-declare
+                new SmtMessageSenderResolver(this._componentInstance).resolve(cfg, param);
+            }),
         );
-        return true;
+        source$ = sender_subscribe$;
+        return source$;
+    }
+    // }
+}
+
+export class SmtMessageSenderResolver {
+    constructor(private _componentInstance: any) { }
+    public resolve(contentArray, param) {
+        // const commandObject = {
+        //     targetComponentId: cfg['tagViewId'],
+        //     targetComponentTitle: cfg['tagViewTitle'],
+        //     pageCode: param.pageCode,
+        //     commandType: cfg['commandType'],
+        //     commandTitle: cfg['command'],
+        //     params: cfg['parameters'],
+        //     initValue: param.initValue,
+        //     cacheValue: param.cacheValue,
+        //     tempValue: param.tempValue,
+        //     item: param.item
+        // }
+        contentArray['eventContent'].forEach(cfg => {
+            if (cfg['preCondition'] && cfg['preCondition'].length > 0) {
+                const beforeOperation = new SmtProCondition(cfg['preCondition'], param.initValue, param.cacheValue, param.tempValue, param.item)
+                if (beforeOperation) {
+                    // new SmtMessageSenderResolver(this._componentInstance, commandObject);
+                    const paramsObj = {
+                        params: param.params,
+                        tempValue: param.tempValue,
+                        componentValue: param.item,
+                        initValue: param.tempValue,
+                        cacheValue: param.cacheValue,
+                        selectedItems: param.item,
+                        currentItems: param.item,
+                    }
+                    const commandParams = SmtParameterResolver.resolve(paramsObj);
+                    this._componentInstance.componentService.commonRelationSubject.next(
+                        new BsnCommandMessageModel(
+                            cfg['tagViewTitle'], // 命令发出组件的内容和下一步操作
+                            param.pageCode,
+                            param.targetComponentId,
+                            commandParams,
+                        )
+                    );
+                } else {
+                    return
+                }
+            } else {
+                // new SmtMessageSenderResolver(this._componentInstance, commandObject);
+                const paramsObj = {
+                    params: param.params,
+                    tempValue: param.tempValue,
+                    componentValue: param.item,
+                    initValue: param.tempValue,
+                    cacheValue: param.cacheValue,
+                    selectedItems: param.item,
+                    currentItems: param.item,
+                }
+                const commandParams = SmtParameterResolver.resolve(paramsObj);
+                this._componentInstance.componentService.commonRelationSubject.next(
+                    new BsnCommandMessageModel(
+                        cfg['tagViewTitle'], // 命令发出组件的内容和下一步操作
+                        param.pageCode,
+                        param.targetComponentId,
+                        commandParams,
+                    )
+                );
+            }
+        });
     }
 }
 
