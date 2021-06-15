@@ -197,13 +197,7 @@ export class SmtDataTableComponent extends SmtComponentBase implements OnInit {
 
   }
   public createCommand() {
-    const model = {
-      initValue: this.INIT_VALUE,
-      cacheValue: this.CACHE_VALUE,
-      tempValue: this.TEMP_VALUE,
-      item: this.SELECTED_ITEM,
-      pageCode: this.CACHE_VALUE.getNone('activeMenu')['mainPageId']
-    }
+    const model = this.createCommandModel();
     this.commandList = new SmtCommandResolver(this, model).resolver(this.dataTableConfig['customCommand']);
     // console.log('commandList', this.commandList);
   }
@@ -235,6 +229,17 @@ export class SmtDataTableComponent extends SmtComponentBase implements OnInit {
           new SmtMessageSenderEnterResolver(this).resolve(content[i]['commandConfig'], this.buildParam())
       }
     }
+  }
+
+  public createCommandModel() {
+    return {
+      initValue: this.INIT_VALUE,
+      cacheValue: this.CACHE_VALUE,
+      tempValue: this.TEMP_VALUE,
+      item: this.SELECTED_ITEM,
+      pageCode: this.CACHE_VALUE.getNone('activeMenu')['mainPageId']
+    }
+
   }
 
   public buildParam() {
@@ -818,7 +823,11 @@ export class SmtDataTableComponent extends SmtComponentBase implements OnInit {
       response = await this.executeHttp(option.ajaxConfig, null, null);
     }
 
-    // new SmtCommandResolver(this, this.buildParam()).afterOperate()
+    if (option['result'] && option['result'].length > 0) {
+      option['result'].forEach(result => {
+        new SmtCommandResolver(this, this.createCommandModel()).afterOperate(result, this.createCommandModel(), this.componentService.modalService)
+      });
+    }
 
     this.dataList = this.dataList.filter((d) => d[this.KEY_ID] !== response['data'][this.KEY_ID]);
     if (this.dataList.length > 0) {

@@ -16,7 +16,7 @@ export class SmtCommandResolver {
     constructor(private _componentInstance, model: SmtCommandResolverModel) {
         this.model = model;
     }
-    public resolver(commandArray) {
+    public resolver(commandArray, data?) {
         const commandList = [];
         for (let i = 0; i < commandArray.length; i++) {
             const paramObj: any = this.declareParams(commandArray[i]['declareParameters']);
@@ -27,22 +27,23 @@ export class SmtCommandResolver {
                     commandContent: commandArray[i]['commandContent']
                 }
             )
+            if (data) {
+                this.savePrams(commandArray[i]['declareParameters'], data);
+            }
         }
         return commandList;
     }
 
-    public afterOperate(commandObj, model, data) {
-        if (commandObj['preCondition'].length > 0) {
+    public afterOperate(commandObj, model, modal) {
+        if (commandObj['preCondition'] && commandObj['preCondition'].length > 0) {
             const beforeOperation = new SmtProCondition(commandObj['preCondition'], model.initValue, model.cacheValue, model.tempValue, model.item)
             if (beforeOperation) {
-                this.savePrams(commandObj['declareParameters'], data);
-                this.commandOperate(commandObj['commandContent'], model);
+                this.resultResolver(commandObj, modal);
             } else {
                 return;
             }
         } else {
-            this.savePrams(commandObj['declareParameters'], data);
-            this.commandOperate(commandObj['commandContent'], model);
+            this.resultResolver(commandObj, modal);
         }
     }
 
@@ -72,58 +73,55 @@ export class SmtCommandResolver {
         });
     }
 
-    private commandOperate(command, model) {
-        for (let i = 0; i < command.length; i++) {
-            if (command[i]['type'] === 'commandConfig') {
-                let sendResult = true;
-                // 解析命令，发送命令方法
-                const commandArray = command[i]['commandConfig'];
-                const commandObject = {
-                    targetComponentId: command['tagViewId'],
-                    targetComponentTitle: command['tagViewTitle'],
-                    pageCode: model.pageCode,
-                    commandType: command['commandType'],
-                    commandTitle: command['command'],
-                    params: command['parameters'],
-                    initValue: model.initValue,
-                    cacheValue: model.cacheValue,
-                    tempValue: model.tempValue,
-                    item: model.item
-                }
-                new SmtMessageSenderEnterResolver(this._componentInstance).resolve(commandArray, commandObject);
-                if (sendResult) {
-                    const nextOperate = this.resultResolver(command['reasult']);
-                    if (nextOperate === 'next') { }
-                    else if (nextOperate === 'prevent') {
-                        return;
-                    } else if (nextOperate === 'pass') {
-                        break;
-                    }
-                }
-            } else if (command[i]['type'] === 'ajaxConfig') {
-                this._componentInstance['executeHttp'](command[i]['ajaxConfig']);
+    // private commandOperate(command, model) {
+    //     for (let i = 0; i < command.length; i++) {
+    //         if (command[i]['type'] === 'commandConfig') {
+    //             let sendResult = true;
+    //             // 解析命令，发送命令方法
+    //             const commandArray = command[i]['commandConfig'];
+    //             const commandObject = {
+    //                 targetComponentId: command['tagViewId'],
+    //                 targetComponentTitle: command['tagViewTitle'],
+    //                 pageCode: model.pageCode,
+    //                 commandType: command['commandType'],
+    //                 commandTitle: command['command'],
+    //                 params: command['parameters'],
+    //                 initValue: model.initValue,
+    //                 cacheValue: model.cacheValue,
+    //                 tempValue: model.tempValue,
+    //                 item: model.item
+    //             }
+    //             new SmtMessageSenderEnterResolver(this._componentInstance).resolve(commandArray, commandObject);
+    //             if (sendResult) {
+    //                 const nextOperate = this.resultResolver(command['reasult']);
+    //                 if (nextOperate === 'next') { }
+    //                 else if (nextOperate === 'prevent') {
+    //                     return;
+    //                 } else if (nextOperate === 'pass') {
+    //                     break;
+    //                 }
+    //             }
+    //         } else if (command[i]['type'] === 'ajaxConfig') {
+    //             this._componentInstance['executeHttp'](command[i]['ajaxConfig']);
 
-            }
-        }
-    }
+    //         }
+    //     }
+    // }
 
-    private resultResolver(resultArray) {
+    private resultResolver(result, modal) {
         let nextOperate: any;
         let returnValue: any;
-        let _modal: NzModalService;
-        resultArray.forEach(result => {
-            switch (result['type']) {
-                case 'message':
-                    nextOperate = this.showMessage(result['message'], returnValue, _modal);
-                    break;
-                case 'confirm':
-                    nextOperate = this.showConfirm(result['confirm'], returnValue, _modal);
-                    break;
-                case 'execution':
-                    nextOperate = this.showExecution(result['execution'], returnValue);
-                    break;
-            }
-        });
+        switch (result['type']) {
+            case 'message':
+                nextOperate = this.showMessage(result['message'], returnValue, modal);
+                break;
+            case 'confirm':
+                nextOperate = this.showConfirm(result['confirm'], returnValue, modal);
+                break;
+            case 'execution':
+                nextOperate = this.showExecution(result['execution'], returnValue);
+                break;
+        }
         return nextOperate;
     }
 
@@ -160,12 +158,16 @@ export class SmtCommandResolver {
 
     createContent(cfg) {
         let content = cfg['content'];
-        const params = this.buildParameter(cfg['parameters'], this.model);
-        const array = cfg['content'].match(/{(\S*)}/)
-        for (let i = 1; i < array.length; i++) {
-            const tempName = array[i];
-            const repalceString = "{" + tempName + "}"
-            content = content.replace(repalceString, params[tempName]);
+        let params;
+        let array;
+        if (cfg['parameters'].length > 0) {
+            params = this.buildParameter(cfg['parameters'], this.model);
+            array = cfg['content'].match(/{(\S*)}/)
+            for (let i = 1; i < array.length; i++) {
+                const tempName = array[i];
+                const repalceString = "{" + tempName + "}"
+                content = content.replace(repalceString, params[tempName]);
+            }
         }
         return content;
     }
