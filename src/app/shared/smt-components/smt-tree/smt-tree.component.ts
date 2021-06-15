@@ -44,6 +44,23 @@ export class SmtTreeComponent extends SmtComponentBase implements OnInit {
   @ViewChild('treeComponentObj', { static: true })
   public treeComponentObj: NzTreeComponent;
 
+  public columns = [
+    {
+      field: 'ID',
+      title: 'ID',
+      type: 'key',
+    },
+    {
+      field: 'PARENT_ID',
+      title: 'PARENT_ID',
+      type: 'parentId',
+    },
+    {
+      field: 'NAME',
+      title: 'NAME',
+      type: 'name',
+    },
+  ];
   public treeBindObj: {
     checkStrictly: boolean;
     nodeSelectionConfig: any[];
@@ -78,41 +95,6 @@ export class SmtTreeComponent extends SmtComponentBase implements OnInit {
   };
 
   public ACTIVED_NODE: any;
-
-  private dataSourceCfg = {
-    isloadingOnInit: true,
-    loadingConfig: {
-      id: 'loading',
-      urlType: 'inner', // 请求地址，inner 匹配的后台地址
-      urlContent: {
-        // 适配外部请求
-        name: 'system_url',
-        title: '权限系统访问地址',
-      },
-      url: 'smt-app/resource/TEST_TABLE/query',
-      headParams: [
-        // 头部参数
-      ],
-      ajaxType: 'get',
-      pathParams: [
-        // 路径参数
-        // {
-        //   name: 'pathParam',
-        //   type: 'value',
-        //   value: 'ddd'
-        // }
-      ],
-      queryParams: [
-        // {
-        //   name: 'PROJECT_CODE',
-        //   type: 'value',
-        //   value: 'SMT_VC'
-        // }
-      ], // 查询参数
-      bodyParams: [], // 请求体参数
-    },
-    async: false,
-  };
 
   private eventConfig = {
     componentEvent: [
@@ -152,6 +134,100 @@ export class SmtTreeComponent extends SmtComponentBase implements OnInit {
     this.TEMP_VALUE = {};
     this.INIT_VALUE = {};
     this.COMPONENT_METHODS = CN_TREE_METHOD;
+    this.dataSourceCfg = {
+      loadingOnInit: true,
+      expandConfig: {
+        id: 'loading',
+        urlType: 'inner', // 请求地址，inner 匹配的后台地址
+        urlContent: {
+          // 适配外部请求
+          name: 'system_url',
+          title: '权限系统访问地址',
+        },
+        url: 'smt-app/resource/TEST_TABLE/query',
+        headParams: [
+          // 头部参数
+        ],
+        ajaxType: 'get',
+        pathParams: [
+          // 路径参数
+          // {
+          //   name: 'pathParam',
+          //   type: 'value',
+          //   value: 'ddd'
+          // }
+        ],
+        queryParams: [
+          // {
+          //   name: 'PROJECT_CODE',
+          //   type: 'value',
+          //   value: 'SMT_VC'
+          // }
+        ], // 查询参数
+        bodyParams: [], // 请求体参数
+      },
+      loadingItemConfig: {
+        id: 'loadingItem',
+        urlType: 'inner', // 请求地址，inner 匹配的后台地址
+        urlContent: {
+          // 适配外部请求
+          name: 'system_url',
+          title: '权限系统访问地址',
+        },
+        url: 'smt-app/resource/TEST_TABLE/query',
+        headParams: [
+          // 头部参数
+        ],
+        ajaxType: 'get',
+        pathParams: [
+          // 路径参数
+          // {
+          //   name: 'pathParam',
+          //   type: 'value',
+          //   value: 'ddd'
+          // }
+        ],
+        queryParams: [
+          // {
+          //   name: 'PROJECT_CODE',
+          //   type: 'value',
+          //   value: 'SMT_VC'
+          // }
+        ], // 查询参数
+        bodyParams: [], // 请求体参数
+      },
+      loadingConfig: {
+        id: 'loading',
+        urlType: 'inner', // 请求地址，inner 匹配的后台地址
+        urlContent: {
+          // 适配外部请求
+          name: 'system_url',
+          title: '权限系统访问地址',
+        },
+        url: 'smt-app/resource/TEST_TABLE/query',
+        headParams: [
+          // 头部参数
+        ],
+        ajaxType: 'get',
+        pathParams: [
+          // 路径参数
+          // {
+          //   name: 'pathParam',
+          //   type: 'value',
+          //   value: 'ddd'
+          // }
+        ],
+        queryParams: [
+          // {
+          //   name: 'PROJECT_CODE',
+          //   type: 'value',
+          //   value: 'SMT_VC'
+          // }
+        ], // 查询参数
+        bodyParams: [], // 请求体参数
+      },
+      async: false,
+    };
   }
 
   private _initComponent(config: any) {
@@ -175,23 +251,23 @@ export class SmtTreeComponent extends SmtComponentBase implements OnInit {
    */
   private setTreeBindObj(config: any): ITreeBindProperties {
     return {
-      checkStrictly: config.checkStrictly,
-      nodeSelectionConfig: config.nodeSelectionConfig,
+      checkStrictly: config.checkStrictly ? config.checkStrictly : false,
+      nodeSelectionConfig: config.nodeSelectionConfig ? config.nodeSelectionConfig : [],
       nodes: [],
-      isAllChecked: config.isAllChecked,
+      isAllChecked: config.isAllChecked ? config.isAllChecked : false,
       indeterminate: false,
       checkedNumber: 0,
-      showSearch: config.showSearch,
+      showSearch: config.showSearch ? config.showSearch : false,
       searchValue: '',
-      expandAll: config.expandAll,
-      showCheckBox: config.showCheckBox,
-      showLine: config.showLine,
+      expandAll: config.expandAll ? config.expandAll : true,
+      showCheckBox: config.showCheckBox ? config.showCheckBox : false,
+      showLine: config.showLine ? config.showLine : false,
       defaultSelectedKeys: [],
-      enableState: config.enableState,
-      iconState: config.iconState,
+      enableState: config.enableState ? config.enableState : false,
+      iconState: config.iconState ? config.iconState : [],
       leftIconState: [],
       rightIconState: [],
-      descField: config.diesFile,
+      descField: config.descFile ? config.descField : null,
     };
   }
 
@@ -231,7 +307,7 @@ export class SmtTreeComponent extends SmtComponentBase implements OnInit {
   }
 
   private _setTreeNode(node: any) {
-    this.config.columns.map((column: any) => {
+    this.columns.map((column: any) => {
       node[column.type] = node[column.field];
     });
     this.mapOfDataState[node[this.KEY_ID]] = {
@@ -244,8 +320,8 @@ export class SmtTreeComponent extends SmtComponentBase implements OnInit {
     };
 
     if (node.children && node.children.length > 0) {
-      if (!this.config.async) {
-        node.expanded = this.config.expandAll;
+      if (!this.dataSourceCfg.async) {
+        node.expanded = this.treeBindObj.expandAll;
         node.children.map((n: any) => {
           this._setTreeNode(n);
         });
@@ -264,7 +340,7 @@ export class SmtTreeComponent extends SmtComponentBase implements OnInit {
     } else {
       currentNode = $event.node;
     }
-    if (!this.config.async) {
+    if (!this.dataSourceCfg.async) {
       return true;
     }
 
@@ -399,7 +475,7 @@ export class SmtTreeComponent extends SmtComponentBase implements OnInit {
   public loadRefreshData(option) {
     this.IS_LOADING = true;
     const url = this.dataSourceCfg.loadingConfig.url;
-    const method = this.dataSourceCfg.loadingConfig.method;
+    const method = this.dataSourceCfg.loadingConfig.ajaxType;
     const param1: any = {};
     if (option && Array.isArray(option)) {
       const rids = [];
@@ -679,7 +755,7 @@ export class SmtTreeComponent extends SmtComponentBase implements OnInit {
 
   public async appendChildToRootNode(option) {
     let appendNodeData: any = {};
-    if (this.config.loadingItemConfig) {
+    if (this.dataSourceCfg.loadingItemConfig) {
       option = await this.loadItem(option);
     }
 
@@ -705,7 +781,7 @@ export class SmtTreeComponent extends SmtComponentBase implements OnInit {
   }
 
   public async loadItem(data?) {
-    const response = await this.executeHttp(this.dataSourceCfg.loadingItemConfig, data, null);
+    const response = await this.executeHttp(this.dataSourceCfg, data, null);
     let data_form;
     if (Array.isArray(response.data)) {
       if (response.data && response.data.length > 0) {

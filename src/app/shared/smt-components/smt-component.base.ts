@@ -1,5 +1,6 @@
 import { HttpHeaders } from '@angular/common/http';
 import { environment } from '@env/environment';
+import { Subscription } from 'rxjs';
 import { ComponentServiceProvider } from 'src/app/core/services/components/component.service';
 import { SmtParameterResolver } from '../resolver/smt-parameter/smt-parameter-resolver';
 
@@ -217,6 +218,22 @@ export class SmtComponentBase {
   }
   public set COMPONENT_METHODS(value: any) {
     this._COMPONENT_METHODS = value;
+  }
+
+  private _subscription$: Subscription;
+  public get subscription$(): Subscription {
+    return this._subscription$;
+  }
+  public set subscription$(value: Subscription) {
+    this._subscription$ = value;
+  }
+
+  private _trigger_subscription$: Subscription;
+  public get trigger_subscription$(): Subscription {
+    return this._trigger_subscription$;
+  }
+  public set trigger_subscription$(value: Subscription) {
+    this._trigger_subscription$ = value;
   }
 
   private _dataSourceCfg: {

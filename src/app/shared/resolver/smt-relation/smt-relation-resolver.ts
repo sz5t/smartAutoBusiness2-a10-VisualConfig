@@ -20,7 +20,7 @@ export interface SmtMessageSenderResolverModel {
 export class SmtMessageSenderEnterResolver {
     constructor(private _componentInstance: any) {
     }
-    public resolver(eventArray, param) {
+    public resolve(eventArray, param) {
         let source$: any;
         // for (let i = 0; i < eventArray.length; i++) {
         // const content = eventArray[i]['eventContent'];
@@ -60,7 +60,7 @@ export class SmtMessageSenderResolver {
                 if (beforeOperation) {
                     // new SmtMessageSenderResolver(this._componentInstance, commandObject);
                     const paramsObj = {
-                        params: param.params,
+                        params: cfg.parameters,
                         tempValue: param.tempValue,
                         componentValue: param.item,
                         initValue: param.tempValue,
@@ -71,9 +71,9 @@ export class SmtMessageSenderResolver {
                     const commandParams = SmtParameterResolver.resolve(paramsObj);
                     this._componentInstance.componentService.commonRelationSubject.next(
                         new BsnCommandMessageModel(
-                            cfg['tagViewTitle'], // 命令发出组件的内容和下一步操作
-                            param.pageCode,
-                            param.targetComponentId,
+                            cfg['command'], // 命令发出组件的内容和下一步操作
+                            cfg['tagPageId'],
+                            cfg['tagViewId'],
                             commandParams,
                         )
                     );
@@ -83,7 +83,7 @@ export class SmtMessageSenderResolver {
             } else {
                 // new SmtMessageSenderResolver(this._componentInstance, commandObject);
                 const paramsObj = {
-                    params: param.params,
+                    params: cfg.parameters,
                     tempValue: param.tempValue,
                     componentValue: param.item,
                     initValue: param.tempValue,
@@ -92,11 +92,12 @@ export class SmtMessageSenderResolver {
                     currentItems: param.item,
                 }
                 const commandParams = SmtParameterResolver.resolve(paramsObj);
+                console.log('发送参数', commandParams, cfg['tagViewTitle'], cfg['tagPageId'], cfg['tagViewId']);
                 this._componentInstance.componentService.commonRelationSubject.next(
                     new BsnCommandMessageModel(
-                        cfg['tagViewTitle'], // 命令发出组件的内容和下一步操作
-                        param.pageCode,
-                        param.targetComponentId,
+                        cfg['command'], // 命令发出组件的内容和下一步操作
+                        cfg['tagPageId'],
+                        cfg['tagViewId'],
                         commandParams,
                     )
                 );
@@ -105,23 +106,31 @@ export class SmtMessageSenderResolver {
     }
 }
 
-// export class SmtMessageReceiverResolver {
-//     constructor(private _componentInstance: any) { }
-//     public resolve(commandContent) {
-//         this._componentInstance.componentService.commonRelationSubject.subscribe((data) => {
-//             commandContent.map((cfg) => {
-//                 cfg.map((item) => {
-//                     // 判断发送组件与接受组件是否一致
-//                     if (data.viewId === item.targetViewId) {
-//                         // 判断发送触发器与接受触发起是否一致
-//                         // new TriggerResolver(
-//                         //     data,
-//                         //     this._componentInstance
-//                         // ).resolve();
-//                         this.chooseMethod(data, item);
-//                     }
-//                 })
-//             });
-//         }
-//     }
-// }
+export class SmtMessageReceiverResolver {
+    constructor(private _componentInstance: any) { }
+    public resolve(customCommand) {
+        customCommand.forEach(command => {
+            if (command['commandContent'] && command['commandContent'].length > 0) {
+                if (!this._componentInstance.subscription$) {
+                    this._componentInstance.subscription$ = this._componentInstance.componentService.commonRelationSubject.subscribe((data) => {
+                        command['commandContent'].map((cfg) => {
+                            // 判断发送组件与接受组件是否一致
+                            if (data.commandId === cfg[cfg['type']]['targetViewId']) {
+                                // 判断发送触发器与接受触发起是否一致
+                                // new TriggerResolver(
+                                //     data,
+                                //     this._componentInstance
+                                // ).resolve();
+                                this.exec(this._componentInstance, data, cfg);
+                            }
+                        });
+                    });
+                }
+            }
+        });
+    }
+
+    private exec(componentInstance, data, cfg) {
+        componentInstance['execCommand'](data, cfg);
+    }
+}
