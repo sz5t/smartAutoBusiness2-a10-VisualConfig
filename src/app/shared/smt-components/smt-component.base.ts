@@ -353,19 +353,19 @@ export class SmtComponentBase {
     return _returnData;
   }
 
-  public buildHttpParameters(paramsCfg, data?, isArray = false, paramsMethod?, options?) {
+  public buildHttpParameters(paramsCfg, data?, isArray = false, options?) {
     let paramsResult: any = {};
     for (let p in paramsCfg) {
       let cfgItem = paramsCfg[p];
       if (p === 'queryParams' && options === 'paging') {
         paramsResult[p] = {
-          ...this[paramsMethod](cfgItem, data, isArray),
+          ...this.buildParameters(cfgItem, data, isArray),
           ...this['_buildPaging'](),
           ...this['_buildSort'](),
           ...this['_buildFilter'](),
         };
       } else {
-        paramsResult[p] = this[paramsMethod](cfgItem, data, isArray);
+        paramsResult[p] = this.buildParameters(cfgItem, data, isArray);
       }
     }
     return paramsResult;
