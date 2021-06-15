@@ -11,6 +11,8 @@ export class SmtToolbar implements ILayout {
     private _children: any[];
     private _originData: any;
     private _parentId: any;
+    private _customCommand: any[];
+    private _eventConent: any[];
 
     public get id(): string {
         return this._id;
@@ -51,6 +53,20 @@ export class SmtToolbar implements ILayout {
     }
     public set children(value: any[]) {
         this._children = value;
+    }
+
+    public get eventConent(): any[] {
+        return this._eventConent;
+    }
+    public set eventConent(value: any[]) {
+        this._eventConent = value;
+    }
+
+    public get customCommand(): any[] {
+        return this._customCommand;
+    }
+    public set customCommand(value: any[]) {
+        this._customCommand = value;
     }
 
     public add(row: any) {

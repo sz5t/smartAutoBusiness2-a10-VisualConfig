@@ -4,7 +4,6 @@ import { SmtProCondition } from "../smt-pro-condition/smt-pro-condition.resolver
 import { SmtMessageSenderEnterResolver, SmtMessageSenderResolver } from "../smt-relation/smt-relation-resolver";
 
 export interface SmtCommandResolverModel {
-    params: any[],
     initValue: any,
     cacheValue: any,
     tempValue: any,
@@ -14,28 +13,43 @@ export interface SmtCommandResolverModel {
 
 export class SmtCommandResolver {
     model: any;
-    constructor(private _componentInstance, model: SmtCommandResolverModel, private _modal?: NzModalService,) {
+    constructor(private _componentInstance, model: SmtCommandResolverModel) {
         this.model = model;
     }
-    private resolver(commandArray, model, data) {
+    public resolver(commandArray) {
+        const commandList = [];
         for (let i = 0; i < commandArray.length; i++) {
-            if (commandArray[i]['preCondition'].length > 0) {
-                const beforeOperation = new SmtProCondition(commandArray[i]['preCondition'], model.initValue, model.cacheValue, model.tempValue, model.item)
-                if (beforeOperation) {
-                    const paramObj: any = this.declareParams(commandArray[i]['declareParameters']);
-                    this.savePrams(commandArray[i]['declareParameters'], data);
-                    this.commandOperate(commandArray[i]['commandContent'], model);
-                } else {
-                    return;
+            const paramObj: any = this.declareParams(commandArray[i]['declareParameters']);
+            commandList.push(
+                {
+                    commandName: commandArray[i]['command'],
+                    declareParams: paramObj,
+                    commandContent: commandArray[i]['commandContent']
                 }
+            )
+        }
+        return commandList;
+    }
+
+    public afterOperate(commandObj, model, data) {
+        if (commandObj['preCondition'].length > 0) {
+            const beforeOperation = new SmtProCondition(commandObj['preCondition'], model.initValue, model.cacheValue, model.tempValue, model.item)
+            if (beforeOperation) {
+                this.savePrams(commandObj['declareParameters'], data);
+                this.commandOperate(commandObj['commandContent'], model);
+            } else {
+                return;
             }
+        } else {
+            this.savePrams(commandObj['declareParameters'], data);
+            this.commandOperate(commandObj['commandContent'], model);
         }
     }
 
     private declareParams(params) {
         const param = {};
         params.forEach(p => {
-            param[p['name']] = p['dataType'];
+            param[p['name']] = p['type'];
         });
         return param;
     }
@@ -45,13 +59,13 @@ export class SmtCommandResolver {
             if (p['valueTo']) {
                 switch (p.valueTo) {
                     case 'tempValue':
-                        this._componentInstance.tempValue[p.name] = data[p.name];
+                        this._componentInstance.TEMP_VALUE[p.name] = data[p.name];
                         break;
                     case 'initValue':
-                        this._componentInstance.initValue[p.name] = data[p.name];
+                        this._componentInstance.INIT_VALUE[p.name] = data[p.name];
                         break;
                     case 'staticComponentValue':
-                        this._componentInstance.staticComponentValue[p.name] = data[p.name];
+                        this._componentInstance.STATIC_COMPONENT_VALUE[p.name] = data[p.name];
                         break;
                 }
             }
@@ -96,13 +110,14 @@ export class SmtCommandResolver {
     private resultResolver(resultArray) {
         let nextOperate: any;
         let returnValue: any;
+        let _modal: NzModalService;
         resultArray.forEach(result => {
             switch (result['type']) {
                 case 'message':
-                    nextOperate = this.showMessage(result['message'], returnValue);
+                    nextOperate = this.showMessage(result['message'], returnValue, _modal);
                     break;
                 case 'confirm':
-                    nextOperate = this.showConfirm(result['confirm'], returnValue);
+                    nextOperate = this.showConfirm(result['confirm'], returnValue, _modal);
                     break;
                 case 'execution':
                     nextOperate = this.showExecution(result['execution'], returnValue);
@@ -113,8 +128,8 @@ export class SmtCommandResolver {
     }
 
     // 根据前置条件展示提示框
-    showMessage(cfg, returnValue) {
-        this._modal[cfg['type']]({
+    showMessage(cfg, returnValue, modal) {
+        modal[cfg['type']]({
             nzTitle: cfg['messageInfo']['title'] ? cfg['messageInfo']['title'] : '提示',
             nzContent: this.createContent(cfg['messageInfo'])
         })
@@ -122,8 +137,8 @@ export class SmtCommandResolver {
         return returnValue;
     }
 
-    showConfirm(cfg, returnValue) {
-        this._modal[cfg['type']]({
+    showConfirm(cfg, returnValue, modal) {
+        modal[cfg['type']]({
             nzTitle: cfg['contentInfo']['title'] ? cfg['contentInfo']['title'] : '提示',
             nzContent: this.createContent(cfg['contentInfo']),
             nzOkText: cfg['okInfo']['title'],

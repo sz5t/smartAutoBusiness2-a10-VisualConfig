@@ -25,6 +25,8 @@ export class SmtDataTable implements ILayout {
     private _scroll: any;
     private _columns: any[];
     private _children: any[];
+    private _customCommand: any[];
+    private _eventConent: any[];
 
     public get id(): string {
         return this._id;
@@ -164,6 +166,20 @@ export class SmtDataTable implements ILayout {
     }
     public set children(value: any[]) {
         this._children = value;
+    }
+
+    public get eventConent(): any[] {
+        return this._eventConent;
+    }
+    public set eventConent(value: any[]) {
+        this._eventConent = value;
+    }
+
+    public get customCommand(): any[] {
+        return this._customCommand;
+    }
+    public set customCommand(value: any[]) {
+        this._customCommand = value;
     }
 
     public add(row: any) {

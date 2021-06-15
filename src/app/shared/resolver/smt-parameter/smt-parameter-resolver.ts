@@ -89,12 +89,12 @@ export class SmtParameterResolver {
     return new CheckedItemsParameter(param, model, parseNull).buildParameter();
   }
 
-  private static selectedItems(param, model, parseNull) {
-    return new SelectedItemsParameter(param, model, parseNull).buildParameter();
+  private static selectedItem(param, model, parseNull) {
+    return new SelectedItemParameter(param, model, parseNull).buildParameter();
   }
 
-  private static currentItems(param, model, parseNull) {
-    return new CurrentItemsParameter(param, model, parseNull).buildParameter();
+  private static currentItem(param, model, parseNull) {
+    return new CurrentItemParameter(param, model, parseNull).buildParameter();
   }
 
   private static userValue(param, model, parseNull) {
@@ -433,14 +433,14 @@ class CheckedItemsParameter extends BaseParameter implements IParameter {
   }
 }
 
-class SelectedItemsParameter extends BaseParameter implements IParameter {
+class SelectedItemParameter extends BaseParameter implements IParameter {
   private _result: any;
   constructor(private _param, private _model, private _parseNull) {
     super();
   }
   public buildParameter() {
     if (this._parseNull) {
-      const selectededVal = this._model.selectedItems;
+      const selectededVal = this._model.selectedItem;
       if (this._param.valueName) {
         this._result = selectededVal[this._param.valueName];
       } else {
@@ -449,7 +449,7 @@ class SelectedItemsParameter extends BaseParameter implements IParameter {
         }
       }
     } else {
-      const selectededVal = this._model.selectedItems;
+      const selectededVal = this._model.selectedItem;
       if (this._param.valueName) {
         const value = selectededVal[this._param.valueName];
         if (this._param.conditionType) {
@@ -472,14 +472,14 @@ class SelectedItemsParameter extends BaseParameter implements IParameter {
   }
 }
 
-class CurrentItemsParameter extends BaseParameter implements IParameter {
+class CurrentItemParameter extends BaseParameter implements IParameter {
   private _result: any;
   constructor(private _param, private _model, private _parseNull) {
     super();
   }
   public buildParameter() {
     if (this._parseNull) {
-      const currentVal = this._model.currentItems;
+      const currentVal = this._model.currentItem;
       if (this._param.valueName) {
         this._result = currentVal[this._param.valueName];
       } else {
@@ -488,7 +488,7 @@ class CurrentItemsParameter extends BaseParameter implements IParameter {
         }
       }
     } else {
-      const currentVal = this._model.currentItems;
+      const currentVal = this._model.currentItem;
       if (this._param.valueName) {
         const value = currentVal[this._param.valueName];
         if (this._param.conditionType) {

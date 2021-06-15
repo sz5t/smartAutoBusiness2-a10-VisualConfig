@@ -199,6 +199,8 @@ export class SmtComponentResolverDirective implements OnInit, OnDestroy {
     config.scroll = configData['scroll'] ? configData['scroll'] : {};
     config.columns = configData['columns'] ? configData['columns'] : [];
     config.children = this.config['children'] ? this.config['children'] : [];
+    config.customCommand = configData['customCommand'] ? configData['customCommand'] : [];
+    config.eventConent = configData['eventConent'] ? configData['eventConent'] : [];
     return config;
   }
 
@@ -223,6 +225,8 @@ export class SmtComponentResolverDirective implements OnInit, OnDestroy {
     config.children = this.config['children'] ? this.config['children'] : [];
     config.originData = this.originData;
     config.parentId = configData ? configData['parentId'] : this.config['parentId'];
+    config.customCommand = configData['customCommand'] ? configData['customCommand'] : this.config['customCommand'];
+    config.eventConent = configData['eventConent'] ? configData['eventConent'] : this.config['eventConent'];
     return config;
   }
 
@@ -233,6 +237,8 @@ export class SmtComponentResolverDirective implements OnInit, OnDestroy {
     config.children = this.config['children'] ? this.config['children'] : [];
     config.originData = null;
     config.parentId = this.config['parentId'];
+    config.customCommand = this.config['eventConent'];
+    config.eventConent = this.config['eventConent'];
     return config;
   }
 

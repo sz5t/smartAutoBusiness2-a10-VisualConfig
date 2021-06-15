@@ -327,7 +327,7 @@ export class SmtDynamicLayoutResolverDirective extends CnComponentBase implement
                         newCol.type = data.type;
                         newCol.title = data.title;
                         newCol.noBorder = data.noBorder ? true : false;
-                        newCol.bodyStyle = data.bodyStyle ? c.bodyStyle : { height: '300px' };
+                        newCol.bodyStyle = data.bodyStyle ? c.bodyStyle : { height: '450px' };
                         newCol.size = new LayoutSize(data.size);
                         newCol.span = data.span;
                         newCol.container = c.container;
