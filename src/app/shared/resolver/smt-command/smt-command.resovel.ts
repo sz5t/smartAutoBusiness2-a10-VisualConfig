@@ -1,7 +1,7 @@
 import { NzModalService } from "ng-zorro-antd/modal";
 import { SmtParameterResolver } from "../smt-parameter/smt-parameter-resolver";
 import { SmtProCondition } from "../smt-pro-condition/smt-pro-condition.resolver";
-import { SmtMessageSenderResolver } from "../smt-relation/smt-relation-resolver";
+import { SmtMessageSenderEnterResolver, SmtMessageSenderResolver } from "../smt-relation/smt-relation-resolver";
 
 export interface SmtCommandResolverModel {
     params: any[],
@@ -14,7 +14,7 @@ export interface SmtCommandResolverModel {
 
 export class SmtCommandResolver {
     model: any;
-    constructor(private _componentInstance, model: SmtCommandResolverModel, data: any, private _modal?: NzModalService,) {
+    constructor(private _componentInstance, model: SmtCommandResolverModel, private _modal?: NzModalService,) {
         this.model = model;
     }
     private resolver(commandArray, model, data) {
@@ -64,21 +64,19 @@ export class SmtCommandResolver {
                 let sendResult = true;
                 // 解析命令，发送命令方法
                 const commandArray = command[i]['commandConfig'];
-                commandArray.forEach(command, sendResult => {
-                    const commandObject = {
-                        targetComponentId: command['tagViewId'],
-                        targetComponentTitle: command['tagViewTitle'],
-                        pageCode: model.pageCode,
-                        commandType: command['commandType'],
-                        commandTitle: command['command'],
-                        params: command['parameters'],
-                        initValue: model.initValue,
-                        cacheValue: model.cacheValue,
-                        tempValue: model.tempValue,
-                        item: model.item
-                    }
-                    sendResult = sendResult && new SmtMessageSenderResolver(this._componentInstance, commandObject);
-                });
+                const commandObject = {
+                    targetComponentId: command['tagViewId'],
+                    targetComponentTitle: command['tagViewTitle'],
+                    pageCode: model.pageCode,
+                    commandType: command['commandType'],
+                    commandTitle: command['command'],
+                    params: command['parameters'],
+                    initValue: model.initValue,
+                    cacheValue: model.cacheValue,
+                    tempValue: model.tempValue,
+                    item: model.item
+                }
+                new SmtMessageSenderEnterResolver(this._componentInstance).resolve(commandArray, commandObject);
                 if (sendResult) {
                     const nextOperate = this.resultResolver(command['reasult']);
                     if (nextOperate === 'next') { }
@@ -166,8 +164,8 @@ export class SmtCommandResolver {
             params: paramsCfg,
             tempValue: model.tempValue,
             initValue: model.initValue,
-            currentItems: model.item,
-            selectedItems: model.item
+            currentItem: model.item,
+            selectedItem: model.item
         });
         return params;
     }

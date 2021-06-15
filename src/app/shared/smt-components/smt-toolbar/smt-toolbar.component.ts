@@ -1,9 +1,10 @@
-import { Component, Inject, Input, OnInit } from '@angular/core';
+import { Component, Inject, Input, OnDestroy, OnInit } from '@angular/core';
 import { Subject, Subscription } from 'rxjs';
 import { BSN_COMPONENT_SERVICES } from 'src/app/core/relations/bsn-relatives';
 import { ComponentServiceProvider } from 'src/app/core/services/components/component.service';
+import { SmtCommandResolver } from '../../resolver/smt-command/smt-command.resovel';
 import { SmtEventResolver } from '../../resolver/smt-event/smt-event-resolver';
-import { SmtMessageSenderEnterResolver } from '../../resolver/smt-relation/smt-relation-resolver';
+import { SmtMessageReceiverResolver, SmtMessageSenderEnterResolver } from '../../resolver/smt-relation/smt-relation-resolver';
 import { SmtComponentBase } from '../smt-component.base';
 
 @Component({
@@ -17,13 +18,13 @@ import { SmtComponentBase } from '../smt-component.base';
     `
   ]
 })
-export class SmtToolbarComponent extends SmtComponentBase implements OnInit {
+export class SmtToolbarComponent extends SmtComponentBase implements OnInit, OnDestroy {
   constructor(
     @Inject(BSN_COMPONENT_SERVICES)
     public componentService: ComponentServiceProvider,
   ) {
     super(componentService);
-    this.routerValue = this.componentService.router;
+    this.ROUTE_VALUE = this.componentService.router;
   }
   @Input() public config; // dataTables 的配置参数
   @Input() public initData;
@@ -40,16 +41,53 @@ export class SmtToolbarComponent extends SmtComponentBase implements OnInit {
 
   ngOnInit(): void {
     this.editConfig(this.config);
-    // console.log('111', this.routerValue);
+    // console.log('111', this.config);
+    // console.log('222', this.ROUTE_VALUE);
     // console.log(this.initData);
     // console.log(this.tempData);
     // console.log(this.dataServe);
   }
 
+  public ngOnDestroy() {
+    // 释放级联对象
+    this.unsubscribeRelation();
+    // 释放及联接受对象
+    if (this._receiver_subscription$) {
+      this._receiver_subscription$.unsubscribe();
+    }
+
+    if (this._sender_subscription$) {
+      this._sender_subscription$.unsubscribe();
+    }
+
+    // 释放触发器对象
+    if (this._trigger_receiver_subscription$) {
+      this._trigger_receiver_subscription$.unsubscribe();
+    }
+
+    if (this._trigger_source$) {
+      this._trigger_source$.unsubscribe();
+    }
+
+    if (this.subscription$) {
+      this.subscription$.unsubscribe();
+    }
+  }
+
+  public unsubscribeRelation() {
+    if (this.subscription$) {
+      this.subscription$.unsubscribe();
+    }
+    if (this.trigger_subscription$) {
+      this.trigger_subscription$.unsubscribe();
+    }
+  }
+
   public action(cfg, originData) {
-    // console.log(cfg);
+    console.log(this.dataServe);
     // console.log(this.cacheValue);
     cfg['eventConent'] = this.dataServe['componentsConfig'][cfg['id']]['eventConent'];
+    cfg['customCommand'] = this.dataServe['componentsConfig'][cfg['id']]['customCommand'];
     const model = {
       initValue: this.initData,
       tempValue: this.tempData,
@@ -58,8 +96,11 @@ export class SmtToolbarComponent extends SmtComponentBase implements OnInit {
       componentEvent: cfg['eventConent']
     }
     const eventObj = new SmtEventResolver(this).resolve(model, 'PAGE_CODE');
-    this._sender_source$ = new SmtMessageSenderEnterResolver(this).resolver(eventObj['eventArray'], eventObj['param']);
+
+    this._sender_source$ = new SmtMessageSenderEnterResolver(this).resolve(eventObj['eventArray'], eventObj['param']);
     this._sender_subscription$ = this._sender_source$.subscribe();
+
+    new SmtMessageReceiverResolver(this).resolve(cfg['customCommand']);
   }
 
   public editConfig(cfg) {

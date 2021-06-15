@@ -10,6 +10,7 @@ export class SmtToolbar implements ILayout {
     private _component: string = 'cnToolbar';
     private _children: any[];
     private _originData: any;
+    private _parentId: any;
 
     public get id(): string {
         return this._id;
@@ -36,6 +37,13 @@ export class SmtToolbar implements ILayout {
     }
     public set originData(value: any) {
         this._originData = value;
+    }
+
+    public get parentId(): any {
+        return this._parentId;
+    }
+    public set parentId(value: any) {
+        this._parentId = value;
     }
 
     public get children(): any[] {

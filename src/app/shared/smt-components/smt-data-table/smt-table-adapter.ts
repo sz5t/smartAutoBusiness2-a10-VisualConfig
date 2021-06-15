@@ -16,6 +16,7 @@ export class SmtDataTableAdapter {
         dataTableConfig['pageSizeOptions'] = config.pageSizeOptions.length > 0 ? config.pageSizeOptions : [10, 20, 50, 100];
         dataTableConfig['children'] = config.children.length > 0 ? config.children : [];
         dataTableConfig['columns'] = config.columns ? config.columns : [];
+        dataTableConfig['mainSource'] = config.mainSource ? config.mainSource : null;
         return dataTableConfig;
     }
 }

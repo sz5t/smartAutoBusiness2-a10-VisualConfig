@@ -222,6 +222,7 @@ export class SmtComponentResolverDirective implements OnInit, OnDestroy {
     config.title = configData ? configData['title'] : this.config['title'];
     config.children = this.config['children'] ? this.config['children'] : [];
     config.originData = this.originData;
+    config.parentId = configData ? configData['parentId'] : this.config['parentId'];
     return config;
   }
 
@@ -231,6 +232,7 @@ export class SmtComponentResolverDirective implements OnInit, OnDestroy {
     config.title = this.config['title'];
     config.children = this.config['children'] ? this.config['children'] : [];
     config.originData = null;
+    config.parentId = this.config['parentId'];
     return config;
   }
 

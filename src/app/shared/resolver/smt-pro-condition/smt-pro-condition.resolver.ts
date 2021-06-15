@@ -55,8 +55,8 @@ export class SmtProCondition {
       params: paramsCfg,
       tempValue: this.tempValue,
       initValue: this.initValue,
-      currentItems: value,
-      selectedItems: value
+      currentItem: value,
+      selectedItem: value
     });
     return params;
   }
