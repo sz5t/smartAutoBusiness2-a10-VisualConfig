@@ -14,6 +14,22 @@ export class SmtComponentBase {
   constructor(public componentService: ComponentServiceProvider) {}
   //#region 组件公共属性定义
 
+  private _IS_LOADING: boolean;
+  public get IS_LOADING(): boolean {
+    return this._IS_LOADING;
+  }
+  public set IS_LOADING(value: boolean) {
+    this._IS_LOADING = value;
+  }
+
+  private _KEY_ID: string;
+  public get KEY_ID(): string {
+    return this._KEY_ID;
+  }
+  public set KEY_ID(value: string) {
+    this._KEY_ID = value;
+  }
+
   private _INIT_VALUE: any;
   /**
    * 初始化值变量
@@ -179,6 +195,44 @@ export class SmtComponentBase {
     this._CURRENT_ITEM = value;
   }
 
+  private _dataSourceCfg: {
+    isloadingOnInit?: boolean;
+    loadingConfig?: any;
+    loadingItemConfig?: any;
+    expandConfig?: any;
+    async?: boolean;
+  };
+  public get dataSourceCfg(): {
+    isloadingOnInit?: boolean;
+    loadingConfig?: any;
+    loadingItemConfig?: any;
+    expandConfig?: any;
+    async?: boolean;
+  } {
+    return this._dataSourceCfg;
+  }
+  public set dataSourceCfg(value: {
+    isloadingOnInit?: boolean;
+    loadingConfig?: any;
+    loadingItemConfig?: any;
+    expandConfig?: any;
+    async?: boolean;
+  }) {
+    this._dataSourceCfg = value;
+  }
+
+  //#endregion
+
+  //#region 数据源解析
+  public setDataSourceCfg(config: any) {
+    return {
+      isloadingOnInit: config.sourceData.isloadingOnInit,
+      loadingConfig: config.sourceData.loadingConfig,
+      loadingItemConfig: config.sourceData.loadingItemConfig,
+      expandConfig: config.sourceData.expandConfig,
+      async: config.sourceData.async,
+    };
+  }
   //#endregion
 
   //#region 参数解析
