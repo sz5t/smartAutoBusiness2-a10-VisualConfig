@@ -130,7 +130,7 @@ export class SmtDataTableComponent extends SmtComponentBase implements OnInit {
     // console.log(this.dataServe);
 
     this.dataSourceCfg = {
-      isloadingOnInit: true,
+      loadingOnInit: true,
       loadingConfig: {
         id: 'loading',
         urlType: 'inner', // 请求地址，inner 匹配的后台地址
