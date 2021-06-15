@@ -10,6 +10,7 @@ import { SmtComponentBase } from '../smt-component.base';
 
 interface ITreeBindProperties {
   checkStrictly: boolean;
+  checkStrictlyShow: boolean;
   nodeSelectionConfig: any[];
   nodes: any[];
   isAllChecked: boolean;
@@ -63,6 +64,7 @@ export class SmtTreeComponent extends SmtComponentBase implements OnInit {
   ];
   public treeBindObj: {
     checkStrictly: boolean;
+    checkStrictlyShow: boolean;
     nodeSelectionConfig: any[];
     nodes: any[];
     isAllChecked: boolean;
@@ -251,6 +253,7 @@ export class SmtTreeComponent extends SmtComponentBase implements OnInit {
    */
   private setTreeBindObj(config: any): ITreeBindProperties {
     return {
+      checkStrictlyShow: config.checkStrictlyShow ? config.checkStrictlyShow : false,
       checkStrictly: config.checkStrictly ? config.checkStrictly : false,
       nodeSelectionConfig: config.nodeSelectionConfig ? config.nodeSelectionConfig : [],
       nodes: [],
@@ -1022,6 +1025,31 @@ export class SmtTreeComponent extends SmtComponentBase implements OnInit {
     option && this.componentService.msgService.create(message.type, `${message.field}: ${message.message}`);
   }
   //#endregion
+
+  public iconStateValueChange(data?) {
+    console.log('IconStateValueChange', data);
+  }
+
+  public searchTargetString(objtext) {
+    // 查找处理
+    const searchtext = this.treeBindObj.searchValue;
+    const reg = new RegExp(searchtext, 'g');
+    const back = ['', '', ''];
+    if (!reg.test(objtext)) {
+      // 没找到
+      return back;
+    } else {
+      // 找到
+      const index = objtext.indexOf(searchtext);
+      if (index > 0) {
+        back[0] = objtext.substring(0, index);
+      }
+      back[1] = searchtext;
+      const indexEnd = index + searchtext.length;
+      back[2] = objtext.substring(indexEnd);
+      return back;
+    }
+  }
 }
 
 export interface ISenderModel {
