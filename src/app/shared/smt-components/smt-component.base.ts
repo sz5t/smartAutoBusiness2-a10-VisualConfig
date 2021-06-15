@@ -173,6 +173,14 @@ export class SmtComponentBase {
     this._CHECKED_ITEMS_IDS = value;
   }
 
+  private _CHECKED_ITEMS: any[];
+  public get CHECKED_ITEMS(): any[] {
+    return this._CHECKED_ITEMS;
+  }
+  public set CHECKED_ITEMS(value: any[]) {
+    this._CHECKED_ITEMS = value;
+  }
+
   private _SELECTED_ITEM: any;
   /**
    * 选中记录的数据对象
@@ -195,15 +203,31 @@ export class SmtComponentBase {
     this._CURRENT_ITEM = value;
   }
 
+  private _COMPONENT_VIEW_ID: string;
+  public get COMPONENT_VIEW_ID(): string {
+    return this._COMPONENT_VIEW_ID;
+  }
+  public set COMPONENT_VIEW_ID(value: string) {
+    this._COMPONENT_VIEW_ID = value;
+  }
+
+  private _COMPONENT_METHODS: any;
+  public get COMPONENT_METHODS(): any {
+    return this._COMPONENT_METHODS;
+  }
+  public set COMPONENT_METHODS(value: any) {
+    this._COMPONENT_METHODS = value;
+  }
+
   private _dataSourceCfg: {
-    isloadingOnInit?: boolean;
+    loadingOnInit?: boolean;
     loadingConfig?: any;
     loadingItemConfig?: any;
     expandConfig?: any;
     async?: boolean;
   };
   public get dataSourceCfg(): {
-    isloadingOnInit?: boolean;
+    loadingOnInit?: boolean;
     loadingConfig?: any;
     loadingItemConfig?: any;
     expandConfig?: any;
@@ -212,7 +236,7 @@ export class SmtComponentBase {
     return this._dataSourceCfg;
   }
   public set dataSourceCfg(value: {
-    isloadingOnInit?: boolean;
+    loadingOnInit?: boolean;
     loadingConfig?: any;
     loadingItemConfig?: any;
     expandConfig?: any;
