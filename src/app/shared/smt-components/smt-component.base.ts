@@ -12,7 +12,7 @@ import { SmtParameterResolver } from '../resolver/smt-parameter/smt-parameter-re
  * 5、弹出页面
  */
 export class SmtComponentBase {
-  constructor(public componentService: ComponentServiceProvider) { }
+  constructor(public componentService: ComponentServiceProvider) {}
   //#region 组件公共属性定义
 
   private _IS_LOADING: boolean;
@@ -174,6 +174,14 @@ export class SmtComponentBase {
     this._CHECKED_ITEMS_IDS = value;
   }
 
+  private _CHECKED_ITEMS: any[];
+  public get CHECKED_ITEMS(): any[] {
+    return this._CHECKED_ITEMS;
+  }
+  public set CHECKED_ITEMS(value: any[]) {
+    this._CHECKED_ITEMS = value;
+  }
+
   private _SELECTED_ITEM: any;
   /**
    * 选中记录的数据对象
@@ -196,6 +204,22 @@ export class SmtComponentBase {
     this._CURRENT_ITEM = value;
   }
 
+  private _COMPONENT_VIEW_ID: string;
+  public get COMPONENT_VIEW_ID(): string {
+    return this._COMPONENT_VIEW_ID;
+  }
+  public set COMPONENT_VIEW_ID(value: string) {
+    this._COMPONENT_VIEW_ID = value;
+  }
+
+  private _COMPONENT_METHODS: any;
+  public get COMPONENT_METHODS(): any {
+    return this._COMPONENT_METHODS;
+  }
+  public set COMPONENT_METHODS(value: any) {
+    this._COMPONENT_METHODS = value;
+  }
+
   private _subscription$: Subscription;
   public get subscription$(): Subscription {
     return this._subscription$;
@@ -213,14 +237,14 @@ export class SmtComponentBase {
   }
 
   private _dataSourceCfg: {
-    isloadingOnInit?: boolean;
+    loadingOnInit?: boolean;
     loadingConfig?: any;
     loadingItemConfig?: any;
     expandConfig?: any;
     async?: boolean;
   };
   public get dataSourceCfg(): {
-    isloadingOnInit?: boolean;
+    loadingOnInit?: boolean;
     loadingConfig?: any;
     loadingItemConfig?: any;
     expandConfig?: any;
@@ -229,7 +253,7 @@ export class SmtComponentBase {
     return this._dataSourceCfg;
   }
   public set dataSourceCfg(value: {
-    isloadingOnInit?: boolean;
+    loadingOnInit?: boolean;
     loadingConfig?: any;
     loadingItemConfig?: any;
     expandConfig?: any;
