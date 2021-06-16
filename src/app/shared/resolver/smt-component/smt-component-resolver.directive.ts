@@ -3,47 +3,6 @@ import { pageConfigCache } from '@env/page-config-cache';
 import { BSN_COMPONENT_SERVICES } from 'src/app/core/relations/bsn-relatives';
 import { ComponentServiceProvider } from 'src/app/core/services/components/component.service';
 import { CommonUtils } from 'src/app/core/utils/common-utils';
-import { CfgAtrributeCascadeSenderComponent } from '../../components/cn-attribute/cn-attribute-items/cfg-atrribute-cascade-sender/cfg-atrribute-cascade-sender.component';
-import { CfgAttributeAssembleAjaxComponent } from '../../components/cn-attribute/cn-attribute-items/cfg-attribute-assemble-ajax/cfg-attribute-assemble-ajax.component';
-import { CfgAttributeAssembleResourceSelectComponent } from '../../components/cn-attribute/cn-attribute-items/cfg-attribute-assemble-resource-select/cfg-attribute-assemble-resource-select.component';
-import { CfgAttributeFormStateComponent } from '../../components/cn-attribute/cn-attribute-items/cfg-attribute-form-state/cfg-attribute-form-state.component';
-import { CfgAttributeRanksBasicComponent } from '../../components/cn-attribute/cn-attribute-items/cfg-attribute-ranks-basic/cfg-attribute-ranks-basic.component';
-import { CfgAttributeRanksColComponent } from '../../components/cn-attribute/cn-attribute-items/cfg-attribute-ranks-col/cfg-attribute-ranks-col.component';
-import { CfgAttributeRanksCombComponent } from '../../components/cn-attribute/cn-attribute-items/cfg-attribute-ranks-comb/cfg-attribute-ranks-comb.component';
-import { CfgAttributeRanksRowComponent } from '../../components/cn-attribute/cn-attribute-items/cfg-attribute-ranks-row/cfg-attribute-ranks-row.component';
-import { CfgAttributeValidationComponent } from '../../components/cn-attribute/cn-attribute-items/cfg-attribute-validation/cfg-attribute-validation.component';
-import { CfgPropertyEditorCascadeValueComponent } from '../../components/cn-attribute/cn-attribute-items/cfg-property-editor-cascade-value/cfg-property-editor-cascade-value.component';
-import { CfgCascadePropertyComponent } from '../../components/cn-attribute/cfg-attribute-items/cfg-cascade-property/cfg-cascade-property.component';
-import { CnCalendarComponent } from '../../components/cn-calendar/cn-calendar.component';
-import { CnCardListComponent } from '../../components/cn-card-list/cn-card-list.component';
-import { CnCarouseComponent } from '../../components/cn-carouse/cn-carouse.component';
-import { CnChartsComponent } from '../../components/cn-charts/cn-charts.component';
-import { CnContainersComponent } from '../../components/cn-containers/cn-containers.component';
-import { CnDataStepsComponent } from '../../components/cn-data-steps/cn-data-steps.component';
-import { CnDescriptionsComponent } from '../../components/cn-descriptions/cn-descriptions.component';
-import { CnDynamicContainersComponent } from '../../components/cn-dynamic-containers/cn-dynamic-containers.component';
-import { CnProgressComponent } from '../../components/cn-progress/cn-progress.component';
-import { CnReportGridComponent } from '../../components/cn-report-grid/cn-report-grid.component';
-import { CnResultComponent } from '../../components/cn-result/cn-result.component';
-import { CnStatisticComponent } from '../../components/cn-statistic/cn-statistic.component';
-import { CnStepsComponent } from '../../components/cn-steps/cn-steps.component';
-import { CnTagComponent } from '../../components/cn-tag/cn-tag.component';
-import { CnTimeLineComponent } from '../../components/cn-time-line/cn-time-line.component';
-import { CnStaticTreeTableComponent } from '../../components/cn-tree-table/cn-static-tree-table/cn-static-tree-table.component';
-import { CnTreeTableComponent } from '../../components/cn-tree-table/cn-tree-table.component';
-import { CnTreeComponent } from '../../components/cn-tree/cn-tree.component';
-import { CnUploadComponent } from '../../components/cn-upload/cn-upload.component';
-import { CnDataFormComponent } from '../../components/data-form/cn-data-form.component';
-import { CnDataTableComponent } from '../../components/data_table/cn-data-table.component';
-import { CnStaticTableComponent } from '../../components/data_table/cn-static-table.component';
-import { CnToolbarComponent } from '../../components/toolbar/cn-toolbar.component';
-import { CnFlowDesignMoreComponent } from '../../components/work-flow/cn-flow-design-more/cn-flow-design-more.component';
-import { CnFlowDesignComponent } from '../../components/work-flow/cn-flow-design/cn-flow-design.component';
-import { CnFlowApprovalComponent } from '../../components/work-flow/cn-flow-items/cn-flow-approval/cn-flow-approval.component';
-import { CnFlowStartComponent } from '../../components/work-flow/cn-flow-items/cn-flow-start/cn-flow-start.component';
-import { CnFlowPreviewComponent } from '../../components/work-flow/cn-flow-preview/cn-flow-preview.component';
-import { CfgPageDesignComponent } from '../../config-components/cfg-page-design/cfg-page-design.component';
-import { CfgFormDesignComponent } from '../../config-components/cfg-form-design/cfg-form-design.component';
 import { SmtLayoutComponent } from '../../components/smt-layout/smt-layout/smt-layout.component';
 import { SmtPageComponent } from '../../components/smt-layout/smt-page/smt-page.component';
 import { SmtDataTable } from './smt-table';
@@ -53,51 +12,15 @@ import { SmtTabs } from './smt-tabs';
 import { SmtToolbar } from './smt-toolbar';
 import { SmtToolbarComponent } from '../../smt-components/smt-toolbar/smt-toolbar.component';
 import { SmtTreeTableComponent } from '../../smt-components/smt-tree-table/smt-tree-table.component';
+import { SmtTreeComponent } from '../../smt-components/smt-tree/smt-tree.component';
 const components: { [type: string]: Type<any> } = {
   cnDataTable: SmtDataTableComponent,
   tabs: SmtTabsComponent,
   cnToolbar: SmtToolbarComponent,
   cnTreeTable: SmtTreeTableComponent,
-  form: CnDataFormComponent,
-  cnTree: CnTreeComponent,
-  cnDescription: CnDescriptionsComponent,
-  cnSteps: CnStepsComponent,
-  cnStatistic: CnStatisticComponent,
-  cnProgress: CnProgressComponent,
-  cnCalendar: CnCalendarComponent,
-  cnCardList: CnCardListComponent,
-  cnStaticTable: CnStaticTableComponent,
-  cnTag: CnTagComponent,
-  cnUpload: CnUploadComponent,
-  cnContainers: CnContainersComponent,
-  CnCarouse: CnCarouseComponent,
-  cnDataStep: CnDataStepsComponent,
-  CnReportGrid: CnReportGridComponent,
-  cnStaticTreeTable: CnStaticTreeTableComponent,
-  cnResult: CnResultComponent,
-  cnWFDesign: CnFlowDesignComponent,
-  cnCharts: CnChartsComponent,
-  cnDynamicContainers: CnDynamicContainersComponent,
-  cnWFPreview: CnFlowPreviewComponent,
-  cnTimeLine: CnTimeLineComponent,
-  cnWFDesignMore: CnFlowDesignMoreComponent,
-  cnWFApproval: CnFlowApprovalComponent,
-  cnWFStart: CnFlowStartComponent,
-  cfgPropertyEditor: CfgPropertyEditorCascadeValueComponent,
-  cfgCascadeSender: CfgAtrributeCascadeSenderComponent,
-  cfgAssembleAjax: CfgAttributeAssembleAjaxComponent,
-  cfgRanksComb: CfgAttributeRanksCombComponent,
-  cfgRanks: CfgAttributeRanksBasicComponent,
-  cfgRanksRow: CfgAttributeRanksRowComponent,
-  cfgRanksCol: CfgAttributeRanksColComponent,
-  cfgResourceSelect: CfgAttributeAssembleResourceSelectComponent,
-  cfgFormState: CfgAttributeFormStateComponent,
-  cfgFormValidation: CfgAttributeValidationComponent,
-  cnCascadeProperty: CfgCascadePropertyComponent,
-  cfgPageDesign: CfgPageDesignComponent,
-  cfgFormDesign: CfgFormDesignComponent,
   smtLayOut: SmtLayoutComponent,
   smtPage: SmtPageComponent,
+  cnTree: SmtTreeComponent,
 };
 
 @Directive({
@@ -117,10 +40,11 @@ export class SmtComponentResolverDirective implements OnInit, OnDestroy {
     private _container: ViewContainerRef,
     @Inject(BSN_COMPONENT_SERVICES)
     public componentService: ComponentServiceProvider,
-  ) { }
+  ) {}
 
   ngOnInit() {
-    this.assembleCmptConfig();
+    //this.assembleCmptConfig();
+    this._buildComponent(this.config);
   }
 
   ngOnDestroy(): void {
@@ -151,7 +75,7 @@ export class SmtComponentResolverDirective implements OnInit, OnDestroy {
   private assembleCmptConfig() {
     this.config;
     this.originData;
-    const componentType = this.config.container === 'component' ? this.config.type : this.config.container
+    const componentType = this.config.container === 'component' ? this.config.type : this.config.container;
     const componentConfig = this.generateCmptConfig(componentType);
     // console.log('componentConfig', componentConfig);
     if (componentConfig) {
@@ -179,7 +103,7 @@ export class SmtComponentResolverDirective implements OnInit, OnDestroy {
   }
 
   private getDataTableConfig() {
-    const configData = this.originData[this.config.id]
+    const configData = this.originData[this.config.id];
     const config = new SmtDataTable();
     config.id = configData['id'];
     config.title = configData['title'];
@@ -205,7 +129,7 @@ export class SmtComponentResolverDirective implements OnInit, OnDestroy {
   }
 
   private getTabsConfig() {
-    const configData = this.originData[this.config.id]
+    const configData = this.originData[this.config.id];
     const config = new SmtTabs();
     config.id = configData['id'];
     config.title = configData['title'];
@@ -243,7 +167,7 @@ export class SmtComponentResolverDirective implements OnInit, OnDestroy {
   }
 
   private _buildComponent(componentObj) {
-    const comp = this._resolver.resolveComponentFactory<any>(components[componentObj.component]);
+    const comp = this._resolver.resolveComponentFactory<any>(components[componentObj.type]);
     this._componentRef = this._container.createComponent(comp);
     this._componentRef.instance.config = componentObj;
     const _initValue_new = { ...this.initData };

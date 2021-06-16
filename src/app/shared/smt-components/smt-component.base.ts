@@ -650,6 +650,7 @@ export class SmtComponentBase {
   }
 
   public after(target, method, advice) {
+    debugger;
     const original = target[method];
     target[method] = (...args) => {
       original.apply(target, args) && advice(args);

@@ -88,7 +88,7 @@ export class StartupService {
 
         let serverData: any = [];
 
-        if (this.userInfo && environment.routeInfo.loginPath === 'login') {
+        if (this.userInfo && environment.routeInfo.loginPath === 'login' && this.userInfo.roles) {
           const rs: any = await this.httpClient
             .post(`smt-app/resource/GET_APP_MENU_LIST_PROC/operate`, { ROLES_CODE: this.userInfo.roles.join(',') })
             .toPromise();
@@ -100,7 +100,7 @@ export class StartupService {
                 case 'smt.base.token.validate.invalid':
                   this._messageService.warning(rs.validation.message);
                   this.router.navigateByUrl(`/passport/${environment.routeInfo.loginPath}`);
-                  break;
+                  return;
               }
             }
           }

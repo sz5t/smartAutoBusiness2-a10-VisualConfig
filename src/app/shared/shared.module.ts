@@ -463,6 +463,7 @@ const COMPONENTS = [
   SmtDataTableComponent,
   SmtToolbarComponent,
   SmtTreeTableComponent,
+  SmtTreeComponent,
 ];
 const DIRECTIVES = [
   CnLayoutResolverDirective,
@@ -506,7 +507,7 @@ const DIRECTIVES = [
     SafeUrlPipe,
     CfgAttributeRanksRowModalComponent,
     ToolAttrJsonComponent,
-    SmtTreeComponent,
+
     SmtComponentComponent,
   ],
   exports: [
@@ -531,4 +532,4 @@ const DIRECTIVES = [
   entryComponents: [...COMPONENTS],
   providers: [],
 })
-export class SharedModule { }
+export class SharedModule {}
