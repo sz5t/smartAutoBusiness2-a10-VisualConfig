@@ -186,35 +186,38 @@ export class SmtDataTableComponent extends SmtComponentBase implements OnInit {
 
   public initAnalysis() {
     // 解析行为
-    this.analysisEvent();
+    this.createEvent();
     // 解析命令
-    this.createCommand();
+    this.createCommandList();
     // 解析消息
     // this.analysisEvent();
   }
 
-  public analysisEvent() {
+  public createEvent() {
 
   }
-  public createCommand() {
+  public createCommandList() {
     const model = this.createCommandModel();
     this.commandList = new SmtCommandResolver(this, model).resolver(this.dataTableConfig['customCommand']);
     // console.log('commandList', this.commandList);
   }
 
-  public operateReceiveCommand(commandName, params) {
+  public operateReceiveCommand(commandName, params?) {
+    let paramsNameArray: any;
+    let paramsobj = {};
     const methodName = this.commandList[this.commandList.findIndex(e => e['commandName'] === commandName)];
     // const paramsNameArray = Object.keys(methodName['declareParams']).map(val => ({
     //   key: val
     // }));
-    const paramsNameArray = Object.keys(methodName['declareParams']);
-    // console.log(paramsNameArray);
-    let paramsobj = {};
-    paramsNameArray.forEach(e => {
-      paramsobj[e] = params[e]
-    })
-
-    this.analysisCommand(methodName['commandName'], methodName['commandContent'], paramsobj);
+    if (methodName['declareParams'] && methodName['declareParams'].length > 0) {
+      paramsNameArray = Object.keys(methodName['declareParams']);
+      paramsNameArray.forEach(e => {
+        paramsobj[e] = params[e]
+      })
+      this.analysisCommand(methodName['commandName'], methodName['commandContent'], paramsobj);
+    } else {
+      this.analysisCommand(methodName['commandName'], methodName['commandContent'], null);
+    }
 
     // this[methodName['commandName']](paramsobj);
   }
@@ -803,12 +806,20 @@ export class SmtDataTableComponent extends SmtComponentBase implements OnInit {
     }
   }
 
-  public deleteCheckedRows(option) {
-    if (option && option.IDS) {
-      option.IDS.split(',').map((id) => {
-        this.dataList = this.dataList.filter((d) => d[this.KEY_ID] !== id);
+  public async deleteCheckedRows(option, params) {
+    let response: any;
+    if (params !== null) {
+      response = await this.executeHttp(option.ajaxConfig, params, null);
+    } else {
+      response = await this.executeHttp(option.ajaxConfig, null, null);
+    }
+
+    if (option['result'] && option['result'].length > 0) {
+      option['result'].forEach(result => {
+        new SmtCommandResolver(this, this.createCommandModel()).afterOperate(result, this.createCommandModel(), this.componentService.modalService)
       });
     }
+
     if (this.dataList.length > 0) {
       this.setSelectRow(this.dataList[0]);
     }
@@ -817,7 +828,7 @@ export class SmtDataTableComponent extends SmtComponentBase implements OnInit {
 
   public async deleteRow(option, params) {
     let response: any;
-    if (params) {
+    if (params !== null) {
       response = await this.executeHttp(option.ajaxConfig, params, null);
     } else {
       response = await this.executeHttp(option.ajaxConfig, null, null);
@@ -837,24 +848,18 @@ export class SmtDataTableComponent extends SmtComponentBase implements OnInit {
     this.total = this.dataList.length;
   }
 
-  public async executeCurrentRow(option) {
+  public async executeCurrentRow(option, params) {
     let response: any;
-    if (option['data'] && option['data']['data']) {
-      response = await this.executeHttp(option.ajaxConfig, option['data']['data'], null);
+    if (params !== null) {
+      response = await this.executeHttp(option.ajaxConfig, params, null);
     } else {
-      response = await this.executeHttp(option.ajaxConfig, 'buildParameters', null);
+      response = await this.executeHttp(option.ajaxConfig, null, null);
     }
-    if (response) {
-      // 批量对象数据,返回结果都将以对象的形式返回,如果对应结果没有值则返回 {}
-      this._sendDataSuccessMessage(response, option.ajaxConfig.result);
 
-      // 处理validation结果
-      const validationResult = this._sendDataValidationMessage(response, option.ajaxConfig.result);
-
-      // 处理error结果
-      const errorResult = this._sendDataErrorMessage(response, option.ajaxConfig.result);
-
-      return validationResult && errorResult;
+    if (option['result'] && option['result'].length > 0) {
+      option['result'].forEach(result => {
+        new SmtCommandResolver(this, this.createCommandModel()).afterOperate(result, this.createCommandModel(), this.componentService.modalService)
+      });
     }
   }
 
@@ -1038,7 +1043,7 @@ export class SmtDataTableComponent extends SmtComponentBase implements OnInit {
    */
   public showConfirm(option: any) {
     this.buildConfirm(option.dialog, () => {
-      this.executeCurrentRow(option);
+      // this.executeCurrentRow(option);
     });
   }
 
@@ -1223,9 +1228,5 @@ export class SmtDataTableComponent extends SmtComponentBase implements OnInit {
   public testAction() {
     console.log(this.SELECTED_ITEM);
     console.log(this.CHECKED_ITEMS_IDS);
-  }
-
-  public testRefresh() {
-    this.load(this.dataTableConfig);
   }
 }

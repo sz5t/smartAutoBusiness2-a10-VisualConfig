@@ -17,10 +17,11 @@ const components: { [type: string]: Type<any> } = {
   cnDataTable: SmtDataTableComponent,
   tabs: SmtTabsComponent,
   cnToolbar: SmtToolbarComponent,
+  cnRowToolbar: SmtToolbarComponent,
   cnTreeTable: SmtTreeTableComponent,
+  cnTree: SmtTreeComponent,
   smtLayOut: SmtLayoutComponent,
   smtPage: SmtPageComponent,
-  cnTree: SmtTreeComponent,
 };
 
 @Directive({
@@ -32,7 +33,6 @@ export class SmtComponentResolverDirective implements OnInit, OnDestroy {
   @Input() initData;
   @Input() tempData;
   @Input() dataServe;
-  @Input() originData; // 配置数据
 
   private _componentRef: ComponentRef<any>;
   constructor(
@@ -40,11 +40,10 @@ export class SmtComponentResolverDirective implements OnInit, OnDestroy {
     private _container: ViewContainerRef,
     @Inject(BSN_COMPONENT_SERVICES)
     public componentService: ComponentServiceProvider,
-  ) {}
+  ) { }
 
   ngOnInit() {
-    //this.assembleCmptConfig();
-    this._buildComponent(this.config);
+    this.assembleCmptConfig();
   }
 
   ngOnDestroy(): void {
@@ -53,9 +52,19 @@ export class SmtComponentResolverDirective implements OnInit, OnDestroy {
     //  console.log('销毁后',  this.componentService.com);
   }
 
-  private resolve(config) {
-    if (config.component && components[config.component]) {
-      this._buildComponent(config);
+  private assembleCmptConfig() {
+    this.config;
+    const componentType = this.config.container === 'component' ? this.config.type : this.config.container
+    const componentConfig = this.generateCmptConfig();
+    // console.log('componentConfig', componentConfig);
+    if (componentConfig) {
+      this.resolve(componentConfig, componentType);
+    }
+  }
+
+  private resolve(config, type) {
+    if (type && components[type]) {
+      this._buildComponent(config, type);
     } else {
       // const cmptObj: any = this._getComponentObjectById(this.config.id);
 
@@ -67,107 +76,22 @@ export class SmtComponentResolverDirective implements OnInit, OnDestroy {
         const supportedTypes = Object.keys(components).join(', ');
         throw new Error(`Trying to use an unsupported types (${this.config.component}).Supported types: ${supportedTypes}`);
       } else {
-        this._buildComponent(cmptObj);
+        this._buildComponent(cmptObj, type);
       }
     }
   }
 
-  private assembleCmptConfig() {
-    this.config;
-    this.originData;
-    const componentType = this.config.container === 'component' ? this.config.type : this.config.container;
-    const componentConfig = this.generateCmptConfig(componentType);
-    // console.log('componentConfig', componentConfig);
-    if (componentConfig) {
-      this.resolve(componentConfig);
-    }
-  }
 
-  private generateCmptConfig(cmptType) {
+
+  private generateCmptConfig() {
     let cmptConfig;
-    switch (cmptType) {
-      case 'cnDataTable':
-        cmptConfig = this.getDataTableConfig();
-        break;
-      case 'tabs':
-        cmptConfig = this.getTabsConfig();
-        break;
-      case 'cnToolbar':
-        cmptConfig = this.getToolbarConfig();
-        break;
-      case 'cnRowToolbar':
-        cmptConfig = this.getRowToolbarConfig();
-        break;
-    }
+    cmptConfig = this.dataServe.componentsConfig[this.config.id];
+    cmptConfig['children'] = this.config['children'] ? this.config['children'] : [];
     return cmptConfig;
   }
 
-  private getDataTableConfig() {
-    const configData = this.originData[this.config.id];
-    const config = new SmtDataTable();
-    config.id = configData['id'];
-    config.title = configData['title'];
-    config.keyId = configData['keyId'] ? configData['keyId'] : 'ID';
-    config.size = configData['size'] ? configData['size'] : 'deafult';
-    config.pageSize = configData['pageSize'] ? configData['pageSize'] : 5;
-    config.isBordered = configData['isBordered'] ? configData['isBordered'] : false;
-    config.isFrontPagination = configData['isFrontPagination'] ? configData['isFrontPagination'] : false;
-    config.isPagination = configData['isPagination'] ? configData['isPagination'] : true;
-    config.isShowSizeChanger = configData['isShowSizeChanger'] ? configData['isShowSizeChanger'] : false;
-    config.showTotal = configData['showTotal'] ? configData['showTotal'] : false;
-    config.showCheckBox = configData['showCheckBox'] ? configData['showCheckBox'] : false;
-    config.enableColSummary = configData['enableColSummary'] ? configData['enableColSummary'] : false;
-    config.loadingOnInit = configData['loadingOnInit'] ? configData['loadingOnInit'] : false;
-    config.isSelected = configData['isSelected'] ? configData['isSelected'] : false;
-    config.pageSizeOptions = configData['pageSizeOptions'] ? configData['pageSizeOptions'] : [];
-    config.scroll = configData['scroll'] ? configData['scroll'] : {};
-    config.columns = configData['columns'] ? configData['columns'] : [];
-    config.children = this.config['children'] ? this.config['children'] : [];
-    config.customCommand = configData['customCommand'] ? configData['customCommand'] : [];
-    config.eventConent = configData['eventConent'] ? configData['eventConent'] : [];
-    return config;
-  }
-
-  private getTabsConfig() {
-    const configData = this.originData[this.config.id];
-    const config = new SmtTabs();
-    config.id = configData['id'];
-    config.title = configData['title'];
-    config.children = this.config['children'] ? this.config['children'] : [];
-    config.originData = this.originData;
-    return config;
-  }
-
-  private getToolbarConfig() {
-    let configData;
-    if (this.originData) {
-      configData = this.originData[this.config.id];
-    }
-    const config = new SmtToolbar();
-    config.id = configData ? configData['id'] : this.config['id'];
-    config.title = configData ? configData['title'] : this.config['title'];
-    config.children = this.config['children'] ? this.config['children'] : [];
-    config.originData = this.originData;
-    config.parentId = configData ? configData['parentId'] : this.config['parentId'];
-    config.customCommand = configData['customCommand'] ? configData['customCommand'] : this.config['customCommand'];
-    config.eventConent = configData['eventConent'] ? configData['eventConent'] : this.config['eventConent'];
-    return config;
-  }
-
-  private getRowToolbarConfig() {
-    const config = new SmtToolbar();
-    config.id = this.config['id'];
-    config.title = this.config['title'];
-    config.children = this.config['children'] ? this.config['children'] : [];
-    config.originData = null;
-    config.parentId = this.config['parentId'];
-    config.customCommand = this.config['eventConent'];
-    config.eventConent = this.config['eventConent'];
-    return config;
-  }
-
-  private _buildComponent(componentObj) {
-    const comp = this._resolver.resolveComponentFactory<any>(components[componentObj.type]);
+  private _buildComponent(componentObj, type) {
+    const comp = this._resolver.resolveComponentFactory<any>(components[type]);
     this._componentRef = this._container.createComponent(comp);
     this._componentRef.instance.config = componentObj;
     const _initValue_new = { ...this.initData };
@@ -175,11 +99,7 @@ export class SmtComponentResolverDirective implements OnInit, OnDestroy {
     this._componentRef.instance.initData = _initValue_new;
     this._componentRef.instance.tempData = _tempValue_new;
     this._componentRef.instance.dataServe = this.dataServe;
-    this.dataServe && this.dataServe.setComponentInstace(componentObj.id, this._componentRef);
-  }
-
-  private _getComponentObjectById(id) {
-    return this.componentService.cacheService.getNone(id);
+    this.dataServe && this.dataServe.setComponentInstace(componentObj.id, this._componentRef.instance);
   }
 
   // 获取当前组件配置（从缓存读取组件信息）

@@ -1,18 +1,25 @@
-<nz-card [nzBodyStyle]="col.bodyStyle" [nzBordered]="col.noBorder ? false : true"
-    [nzTitle]="col.header ? titleTmpl : false" [nzExtra]="col.header ? extraTemplate : false">
+<nz-card nzBordered="false" [nzTitle]="componentConfig.showTitle ? titleTmpl : false"
+    [nzExtra]="componentConfig.header ? extraTemplate : false">
     <ng-template #titleTmpl>
-        <i nz-icon spin style="font-size:14px" [nzType]="col.header.icon" *ngIf="col.header.icon"></i>
-        {{col.header.title}}
+        <!-- <i nz-icon spin style="font-size:14px" [nzType]="col.header.icon" *ngIf="col.header.icon"></i> -->
+        {{componentConfig.title}}
     </ng-template>
 
     <ng-template #extraTemplate>
-        <ng-container smtComponentResolverDirective *ngIf="col.header.toolbar" [config]="col.header.toolbar"
-            [tempData]="tempData" [initData]="initData" [dataServe]="dataServe">
-        </ng-container>
+        <div *ngFor="let cmp of config.children">
+            <div *ngIf="cmp.type === 'cnToolbar'">
+                <div *ngFor="let cmp of cmp.children">
+                    <ng-container smtComponentResolverDirective [config]="cmp" [tempData]="tempData"
+                        [initData]="initData" [dataServe]="dataServe">
+                    </ng-container>
+                </div>
+            </div>
+        </div>
+
     </ng-template>
 
-    <div *ngFor="let cmp of col.layoutStructure.children">
-        <ng-container smtComponentResolverDirective [config]="cmp" [tempData]="tempData" [dataServe]="dataServe"
+    <div>
+        <ng-container smtComponentResolverDirective [config]="config" [tempData]="tempData" [dataServe]="dataServe"
             [initData]="initData">
         </ng-container>
     </div>
