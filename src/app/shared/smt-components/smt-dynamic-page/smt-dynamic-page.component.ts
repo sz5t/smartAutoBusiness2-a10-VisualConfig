@@ -20,11 +20,14 @@ export class SmtDynamicPageComponent extends CnComponentBase implements OnInit {
   }
 
   @Input() public config;
+  @Input() public initData;
 
   ngOnInit(): void {
     // this.pageService['componentsConfig'] = this.config['pageJson']['componentsJson'];
     // this.pageService['permissionConfig'] = this.config['permissionJson'];
+    // console.log('initData', this.initData);
     this.pageService['componentsConfig'] = this.config['pageJson'].hasOwnProperty('componentsJson') ? this.config['pageJson']['componentsJson'] : {}
     this.pageService['permissionConfig'] = this.config['permissionJson'].length > 0 ? this.config['permissionJson'] : [];
+    this.pageService['pageCode'] = this.initData['name'];
   }
 }

@@ -272,6 +272,7 @@ export class SmtTreeComponent extends SmtComponentBase implements OnInit {
   }
 
   ngOnInit(): void {
+    debugger;
     this._initComponent(this.config);
 
     this._resolveRelations();
@@ -578,7 +579,7 @@ export class SmtTreeComponent extends SmtComponentBase implements OnInit {
     };
   }
 
-  getActions(state): any {}
+  getActions(state): any { }
 
   public deleteCheckedNodes(option) {
     if (option.ids) {
@@ -1000,9 +1001,9 @@ export class SmtTreeComponent extends SmtComponentBase implements OnInit {
     });
   }
 
-  public showUpload() {}
+  public showUpload() { }
 
-  public showBatchDialog() {}
+  public showBatchDialog() { }
 
   /**
    * 显示消息框
@@ -1031,7 +1032,7 @@ export interface ISenderModel {
 }
 
 export class SmtComponentEventResolver {
-  constructor(private _componentInstance: any) {}
+  constructor(private _componentInstance: any) { }
   public resolve(componentEvents: any[]) {
     if (componentEvents && Array.isArray(componentEvents) && componentEvents.length > 0) {
       const source$ = from(componentEvents);
@@ -1059,11 +1060,11 @@ export class SmtComponentEventResolver {
     }
   }
 
-  private _resolvePreCondition(condition: any[]) {}
+  private _resolvePreCondition(condition: any[]) { }
 }
 
 export class ComponentEventSender {
-  constructor(private _componentInstance: any) {}
+  constructor(private _componentInstance: any) { }
 
   public sendEvent(eventName: string, senderModel: ISenderModel) {
     this._componentInstance['after'](this._componentInstance, this._componentInstance.COMPONENT_METHODS[eventName], () => {

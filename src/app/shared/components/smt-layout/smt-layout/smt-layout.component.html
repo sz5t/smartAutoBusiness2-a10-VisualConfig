@@ -1,38 +1,22 @@
 <nz-layout>
     <nz-content>
-        <ng-container *ngIf="layoutObj.rows">
-            <div nz-row [nzGutter]="{ xs: 4, sm: 6, md:4, lg: 16 }" *ngFor="let row of layoutObj.rows">
-                <div nz-col *ngFor="let col of row.cols" [nzSpan]="col.span" [nzSm]="col.size.nzSm"
+        <ng-container *ngIf="layoutObj.children">
+            <div nz-row [nzGutter]="{ xs: 4, sm: 6, md:4, lg: 16 }" *ngFor="let row of layoutObj.children">
+                <div nz-col *ngFor="let col of row.children" [nzSpan]="col.span" [nzSm]="col.size.nzSm"
                     [nzXs]="col.size.nzXs" [nzMd]="col.size.nzMd" [nzLg]="col.size.nzLg" [nzXl]="col.size.nzXl"
                     [ngSwitch]="col.container">
 
-                    <nz-card *ngSwitchCase="'component'" [nzBodyStyle]="col.bodyStyle"
-                        [nzBordered]="col.noBorder ? false : true" [nzTitle]="col.header ? titleTmpl : false"
-                        [nzExtra]="col.header ? extraTemplate : false">
-                        <ng-template #titleTmpl>
-                            <i nz-icon spin style="font-size:14px" [nzType]="col.header.icon"
-                                *ngIf="col.header.icon"></i>
-                            {{col.header.title}}
-                        </ng-template>
-
-                        <ng-template #extraTemplate>
-                            <ng-container smtComponentResolverDirective *ngIf="col.header.toolbar"
-                                [config]="col.header.toolbar" [tempData]="tempData" [initData]="initData"
-                                [dataServe]="dataServe">
-                            </ng-container>
-                        </ng-template>
-
-                        <div *ngFor="let cmp of col.layoutStructure.children">
-                            <ng-container smtComponentResolverDirective [config]="cmp" [tempData]="tempData"
-                                [originData]="layoutObj.originData" [dataServe]="dataServe" [initData]="initData">
-                            </ng-container>
+                    <ng-container *ngSwitchCase="'component'">
+                        <div *ngFor="let cmp of col.children">
+                            <app-smt-component [config]="cmp" [tempData]="tempData" [dataServe]="dataServe"
+                                [initData]="initData">
+                            </app-smt-component>
                         </div>
-                    </nz-card>
+                    </ng-container>
 
                     <!-- <nz-card *ngSwitchCase="'rows'"> -->
-                    <ng-container *ngSwitchCase="'rows'" SmtDynamicLayoutResolverDirective
-                        [config]="col.layoutStructure" [originData]="layoutObj.originData" [tempData]="tempData"
-                        [initData]="initData">
+                    <ng-container *ngSwitchCase="'rows'" SmtDynamicLayoutResolverDirective [config]="col.children"
+                        [tempData]="tempData" [dataServe]="dataServe" [initData]="initData">
                     </ng-container>
                     <!-- </nz-card> -->
 

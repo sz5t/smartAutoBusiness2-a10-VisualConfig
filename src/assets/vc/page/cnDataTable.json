@@ -988,6 +988,100 @@
                                             "title": "声明参数"
                                         },
                                         {
+                                            "name": "localParameters",
+                                            "type": "customSelect",
+                                            "componentConfig": {
+                                                "customPage": {
+                                                    "title": "",
+                                                    "width": "90%",
+                                                    "style": null,
+                                                    "maskClosable": true,
+                                                    "cancelText": "取消",
+                                                    "okText": "确定",
+                                                    "footerButton": null,
+                                                    "customAction": [],
+                                                    "customContent": "staticForm",
+                                                    "customPageConfig": {
+                                                        "type": "staticForm",
+                                                        "backName": "name",
+                                                        "backConfig": [
+                                                            {
+                                                                "name": "localParameters"
+                                                            }
+                                                        ],
+                                                        "properties": [
+                                                            {
+                                                                "name": "localParameters",
+                                                                "type": "arrayCard",
+                                                                "componentConfig": {},
+                                                                "formType": "array",
+                                                                "formName": "formControlName",
+                                                                "validations": [],
+                                                                "title": "参数",
+                                                                "properties": [
+                                                                    {
+                                                                        "name": "name",
+                                                                        "type": "input",
+                                                                        "componentConfig": {},
+                                                                        "formType": "value",
+                                                                        "formName": "formControlName",
+                                                                        "validations": [],
+                                                                        "title": "参数名称"
+                                                                    },
+                                                                    {
+                                                                        "name": "type",
+                                                                        "type": "input",
+                                                                        "componentConfig": {},
+                                                                        "formType": "value",
+                                                                        "formName": "formControlName",
+                                                                        "validations": [],
+                                                                        "title": "参数类型"
+                                                                    },
+                                                                    {
+                                                                        "name": "value",
+                                                                        "type": "input",
+                                                                        "componentConfig": {},
+                                                                        "formType": "value",
+                                                                        "formName": "formControlName",
+                                                                        "validations": [],
+                                                                        "title": "默认值"
+                                                                    },
+                                                                    {
+                                                                        "name": "valueName",
+                                                                        "type": "input",
+                                                                        "componentConfig": {},
+                                                                        "formType": "value",
+                                                                        "formName": "formControlName",
+                                                                        "validations": [],
+                                                                        "title": "参数取值字段"
+                                                                    }
+                                                                ]
+                                                            }
+                                                        ]
+                                                    },
+                                                    "sourceData": {
+                                                        "type": "root",
+                                                        "name": "title"
+                                                    },
+                                                    "saveData": {
+                                                        "type": "_root",
+                                                        "name": "localParameters"
+                                                    }
+                                                },
+                                                "showConfig": {
+                                                    "showString": [
+                                                        {
+                                                            "name": "type"
+                                                        }
+                                                    ]
+                                                }
+                                            },
+                                            "formType": "value",
+                                            "formName": "formControlName",
+                                            "validations": [],
+                                            "title": "本地参数"
+                                        },
+                                        {
                                             "name": "commandContent",
                                             "type": "customSelect",
                                             "componentConfig": {
