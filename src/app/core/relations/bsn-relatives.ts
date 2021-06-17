@@ -24,27 +24,27 @@ export const BSN_RELATIVE_MESSAGE_BEHAVIOR_RECEIVER = new InjectionToken<string>
  */
 export const BSN_COMPONENT_SERVICES = new InjectionToken<string>('BSN_COMPONENT_SERVICES');
 
-
 export const BSN_RELATION_SUBJECT = new InjectionToken<string>('BSN_RELATION_SUBJECT');
 
+export const SMT_RELATION_SUBJECT = new InjectionToken<string>('SMT_RELATION_SUBJECT');
+
 export const BSN_RELATION_TRIGGER = new InjectionToken<string>('BSN_RELATION_TRIGGER');
+
+export interface ISenderModel {
+  targetViewId: string;
+  pageCode: string;
+  command: string;
+  params: any[];
+  data: any;
+}
 /**
  * 业务消息模型
  */
 export class BsnRelativesMessageModel {
-    constructor(
-        public trigger: any,
-        public viewId: string,
-        public options?: any
-    ) { }
+  constructor(public trigger: any, public viewId: string, public options?: any) {}
 }
 
 // 发送命令结构
 export class BsnCommandMessageModel {
-    constructor(
-        public commandId: any,
-        public pageCode: string,
-        public sendComponent: string,
-        public data: any
-    ) { }
+  constructor(public commandId: any, public pageCode: string, public sendComponent: string, public data: any) {}
 }

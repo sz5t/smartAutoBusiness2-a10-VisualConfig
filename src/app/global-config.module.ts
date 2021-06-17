@@ -15,6 +15,8 @@ import {
   BSN_RELATIVE_MESSAGE_BEHAVIOR_SENDER,
   BSN_RELATIVE_MESSAGE_BEHAVIOR_RECEIVER,
   BSN_COMPONENT_SERVICES,
+  SMT_RELATION_SUBJECT,
+  ISenderModel,
 } from './core/relations/bsn-relatives';
 import { ComponentServiceProvider } from './core/services/components/component.service';
 
@@ -91,6 +93,10 @@ const APPINIT_PROVIDES = [
 ];
 
 const RELATIONS_PROVIDERS = [
+  {
+    provide: SMT_RELATION_SUBJECT,
+    useValue: new Subject<ISenderModel>(),
+  },
   {
     provide: BSN_RELATION_TRIGGER,
     useValue: new Subject<BsnRelativesMessageModel>(),
