@@ -272,7 +272,6 @@ export class SmtTreeComponent extends SmtComponentBase implements OnInit {
   }
 
   ngOnInit(): void {
-    debugger;
     this._initComponent(this.config);
 
     this._resolveRelations();

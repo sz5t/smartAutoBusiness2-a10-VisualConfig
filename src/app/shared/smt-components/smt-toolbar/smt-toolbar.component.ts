@@ -95,9 +95,9 @@ export class SmtToolbarComponent extends SmtComponentBase implements OnInit, OnD
       cacheValue: '',
       componentEvent: cfg['eventConent']
     }
-    const eventObj = new SmtEventResolver(this).resolve(model, 'PAGE_CODE');
+    const eventObj = new SmtEventResolver(this).resolve(model);
 
-    this._sender_source$ = new SmtMessageSenderEnterResolver(this).resolve(eventObj['eventArray'], eventObj['param']);
+    this._sender_source$ = new SmtMessageSenderEnterResolver(this).resolve(eventObj['eventArray']);
     this._sender_subscription$ = this._sender_source$.subscribe();
 
     new SmtMessageReceiverResolver(this).resolve(cfg['customCommand']);

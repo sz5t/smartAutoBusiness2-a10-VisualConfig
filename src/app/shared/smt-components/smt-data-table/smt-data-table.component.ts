@@ -9,7 +9,9 @@ import { XlsxService } from '@delon/abc/xlsx';
 import { SmtParameterResolver } from '../../resolver/smt-parameter/smt-parameter-resolver';
 import { SmtCommandResolver } from '../../resolver/smt-command/smt-command.resovel';
 import { Content } from '@angular/compiler/src/render3/r3_ast';
-import { SmtMessageSenderEnterResolver } from '../../resolver/smt-relation/smt-relation-resolver';
+import { SmtMessageReceiverResolver, SmtMessageSenderEnterResolver, SmtMessageSenderResolver } from '../../resolver/smt-relation/smt-relation-resolver';
+import { Subject, Subscription } from 'rxjs';
+import { SmtEventResolver } from '../../resolver/smt-event/smt-event-resolver';
 
 @Component({
   selector: 'app-smt-data-table',
@@ -123,6 +125,14 @@ export class SmtDataTableComponent extends SmtComponentBase implements OnInit {
 
   public commandList: any[];
 
+  private _sender_source$: Subject<any>;
+  private _receiver_source$: Subject<any>;
+  private _trigger_source$: Subject<any>;
+
+  private _receiver_subscription$: Subscription;
+  private _sender_subscription$: Subscription;
+  private _trigger_receiver_subscription$: Subscription;
+
   public async ngOnInit() {
     // console.log(this.config);
     // console.log(this.initData);
@@ -194,12 +204,14 @@ export class SmtDataTableComponent extends SmtComponentBase implements OnInit {
   }
 
   public createEvent() {
-
+    this._sender_source$ = new SmtMessageSenderEnterResolver(this).resolve(this.dataTableConfig.eventConent);
+    this._sender_subscription$ = this._sender_source$.subscribe();
   }
   public createCommandList() {
     const model = this.createCommandModel();
     this.commandList = new SmtCommandResolver(this, model).resolver(this.dataTableConfig['customCommand']);
     // console.log('commandList', this.commandList);
+    new SmtMessageReceiverResolver(this).resolve(this.commandList);
   }
 
   public operateReceiveCommand(commandName, params?) {
@@ -229,7 +241,9 @@ export class SmtDataTableComponent extends SmtComponentBase implements OnInit {
           this[methodName](content[i], params);
           break;
         case 'commandConfig':
-          new SmtMessageSenderEnterResolver(this).resolve(content[i]['commandConfig'], this.buildParam())
+          for (let j = 0; j < content[i].commandConfig.length; j++) {
+            new SmtMessageSenderResolver(this).resolve(content[i]['commandConfig'][j])
+          }
       }
     }
   }
@@ -275,7 +289,7 @@ export class SmtDataTableComponent extends SmtComponentBase implements OnInit {
   }
 
   public initProperty() {
-    this.KEY_ID = this.dataTableConfig.KEY_ID;
+    this.KEY_ID = this.dataTableConfig.keyId;
     this.pageSize = typeof (this.dataTableConfig.pageSize) === 'string' ? parseInt(this.dataTableConfig.pageSize) : this.dataTableConfig.pageSize;
     this.pageSizeOptions = this.dataTableConfig.pageSizeOptions;
     this.showTotal = this.dataTableConfig.showTotal;
@@ -474,7 +488,7 @@ export class SmtDataTableComponent extends SmtComponentBase implements OnInit {
     this.mapOfDataState = {};
 
     this.createTableMapping();
-    this.initSelectedRow(this.mapOfDataState);
+    this.initSelectedRow();
   }
 
   public _buildPaging() {
@@ -517,8 +531,10 @@ export class SmtDataTableComponent extends SmtComponentBase implements OnInit {
     return filter;
   }
 
-  public initSelectedRow(obj) {
-
+  public initSelectedRow() {
+    if (this.dataList.length > 0) {
+      this.setSelectRow(this.dataList[0]);
+    }
   }
 
   // 有操作之后的刷新方法
@@ -840,12 +856,9 @@ export class SmtDataTableComponent extends SmtComponentBase implements OnInit {
       });
     }
 
-    this.dataList = this.dataList.filter((d) => d[this.KEY_ID] !== response['data'][this.KEY_ID]);
-    if (this.dataList.length > 0) {
-      this.setSelectRow(this.dataList[0]);
-    }
+    this.load(this.dataSourceCfg);
 
-    this.total = this.dataList.length;
+    // this.dataList = this.dataList.filter((d) => d[this.KEY_ID] !== response['data'][this.KEY_ID]);
   }
 
   public async executeCurrentRow(option, params) {
@@ -1229,4 +1242,22 @@ export class SmtDataTableComponent extends SmtComponentBase implements OnInit {
     console.log(this.SELECTED_ITEM);
     console.log(this.CHECKED_ITEMS_IDS);
   }
+
+  // private resolveRelations() {
+  //   if (this.dataTableConfig.eventConent && this.config.cascade.messageSender) {
+  //     if (!this._sender_source$) {
+  //       // 解析组件发送消息配置,并注册消息发送对象
+  //       this._sender_source$ = new SmtMessageSenderEnterResolver(this).resolve(this.config);
+  //       this._sender_subscription$ = this._sender_source$.subscribe();
+  //     }
+  //   }
+  //   if (this.config.cascade && this.config.cascade.messageReceiver) {
+  //     // 解析消息接受配置,并注册消息接收对象
+  //     // this._receiver_source$ = new RelationResolver(this).resolveReceiver(this.config);
+  //     // this._receiver_subscription$ = this._receiver_source$.subscribe();
+  //     new RelationResolver(this).resolveReceiver(this.config);
+  //   }
+
+  //   this._trigger_source$ = new RelationResolver(this).resolve();
+  // }
 }

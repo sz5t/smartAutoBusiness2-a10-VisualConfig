@@ -1,7 +1,6 @@
-import { NzModalService } from "ng-zorro-antd/modal";
+
 import { SmtParameterResolver } from "../smt-parameter/smt-parameter-resolver";
-import { SmtProCondition } from "../smt-pro-condition/smt-pro-condition.resolver";
-import { SmtMessageSenderEnterResolver, SmtMessageSenderResolver } from "../smt-relation/smt-relation-resolver";
+import { SmtPreCondition } from "../smt-pre-condition/smt-pre-condition.resolver";
 
 export interface SmtCommandResolverModel {
     initValue: any,
@@ -36,7 +35,7 @@ export class SmtCommandResolver {
 
     public afterOperate(commandObj, model, modal) {
         if (commandObj['preCondition'] && commandObj['preCondition'].length > 0) {
-            const beforeOperation = new SmtProCondition(commandObj['preCondition'], model.initValue, model.cacheValue, model.tempValue, model.item)
+            const beforeOperation = new SmtPreCondition(this._componentInstance).resolverBeforeOperationInfo(commandObj.preCondition, this._componentInstance.componentService.modalService)
             if (beforeOperation) {
                 this.resultResolver(commandObj, modal);
             } else {

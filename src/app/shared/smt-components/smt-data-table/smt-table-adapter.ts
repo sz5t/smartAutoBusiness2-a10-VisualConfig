@@ -17,7 +17,7 @@ export class SmtDataTableAdapter {
         dataTableConfig['children'] = config.children.length > 0 ? config.children : [];
         dataTableConfig['columns'] = config.hasOwnProperty('columns') ? config.columns : [];
         dataTableConfig['customCommand'] = config.hasOwnProperty('customCommand') ? config.customCommand : [];
-        dataTableConfig['eventConent'] = config.hasOwnProperty('eventConent') ? config.eventConent : [];
+        dataTableConfig['eventConent'] = config.hasOwnProperty('componentEvent') ? config.componentEvent : [];
         dataTableConfig['mainSource'] = config.hasOwnProperty('mainSource') ? config.mainSource : [];
         return dataTableConfig;
     }

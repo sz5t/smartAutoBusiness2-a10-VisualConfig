@@ -1,4 +1,4 @@
-<nz-spin nzTip="loading..." [nzSpinning]="isLoading">
+<!-- <nz-spin nzTip="loading..." [nzSpinning]="isLoading">
 
     <form *ngIf="treeBindObj.checkStrictlyShow" checkStrictly nz-form nzLayout="inline">
       <nz-form-item>
@@ -20,7 +20,6 @@
       (nzClick)="clickNode($event)" (nzExpandChange)="expandNode($event)" [nzTreeTemplate]="nzTreeTemplate"
       [nzSearchValue]="this.treeBindObj.searchValue" (nzSearchValueChange)="nzEvent($event)" [nzSelectedKeys]="this.treeBindObj.defaultSelectedKeys">
     </nz-tree>
-    <!--  -->
     <ng-template #nzTreeTemplate let-node>
       <span class="custom-node" [class.active]="ACTIVED_NODE?.key === node.key">
         <span *ngIf="!node.isLeaf">
@@ -63,4 +62,4 @@
       </span>
     </ng-template>
   
-  </nz-spin>
+  </nz-spin> -->
