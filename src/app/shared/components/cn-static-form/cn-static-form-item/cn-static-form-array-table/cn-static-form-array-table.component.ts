@@ -27,8 +27,10 @@ export class CnStaticFormArrayTableComponent implements OnInit {
     }
     this.dataList = this.setDataList();
     this.validateForm.get(this.config.name).valueChanges.subscribe(data => {
-      this.setDataList();
+
+      this.dataList = this.setDataList();
     });
+
 
   }
 

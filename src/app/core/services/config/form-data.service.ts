@@ -23,6 +23,10 @@ export class configFormDataServerService {
 
     }; // 全局参数（页初始参数）
 
+    //=========全局变量==========
+    public initValue: any = {};
+
+
 
     public data: any = [];
     public componentInstance: any = {};

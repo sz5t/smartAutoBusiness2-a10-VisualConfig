@@ -1,0 +1,102 @@
+<nz-layout [ngStyle]="modelstyle">
+    <nz-header style="background: rgb(243, 243, 243);">
+        <div style="width: 100%; height: 25px; ">
+            <span class="toolbarGroup">
+                <span class="toolbarGroupbutton">
+                    <button nz-button nzType="default" (click)="getButtonData()">[测试]读取数据</button>
+                    <!-- 
+                    <button nz-button nzType="default" (click)="setTest()">[测试]组件实例</button>
+                    
+                    <button nz-button nzType="default" (click)="handle_task()">[测试]审核</button>
+                    <button nz-button nzType="default" (click)="dispatch_task()">[测试]调度</button>
+
+                
+                <button nz-button nzType="default" (click)="test_satrt()">[测试]数据</button>
+               
+                <button nz-button nzType="default" nzType="primary" (click)="satrt()">提交</button>
+                <button nz-button nzType="default">保存</button>
+                <button nz-button nzType="primary">流程图</button> -->
+                </span>
+                <ng-template ngFor let-btnGroup [ngForOf]="buttonGroups">
+
+                    <!-- *ngIf="btnGroup['mode']===activeMode" -->
+                    <span class="toolbarGroupbutton" *ngIf="btnGroup['mode']==='DISPATCHING'">
+                        <ng-template ngFor let-btn [ngForOf]="btnGroup['buttons']">
+                            <button style="font-weight: 500" [nzSize]="btn.size ? btn.size : 'default'"
+                                [nzType]="btn.color ? btn.color : 'default'" [disabled]="btn.disabled" nz-button
+                                type="button" (click)="inner_action(btn)">
+                                <i nz-icon *ngIf="btn.icon" [nzType]="btn.icon"
+                                    [nzTheme]="btn.theme ? btn.theme : 'outline'" [nzTwotoneColor]="'#A5A5B8'"></i>
+                                {{btn.name}}
+                            </button>
+                        </ng-template>
+                    </span>
+                    <button style="font-weight: 500" [nzSize]="btnGroup.size ? btnGroup.size : 'default'"
+                        [nzType]="btnGroup.color ? btnGroup.color : 'default'" [disabled]="btnGroup.disabled" nz-button
+                        type="button" (click)="inner_action(btnGroup)">
+                        <i nz-icon *ngIf="btnGroup.icon" [nzType]="btnGroup.icon"
+                            [nzTheme]="btnGroup.theme ? btnGroup.theme : 'outline'" [nzTwotoneColor]="'#A5A5B8'"></i>
+                        {{btnGroup.name}}
+                    </button>
+
+                </ng-template>
+
+                <ng-template ngFor let-btnGroup [ngForOf]="buttonGroupsOption">
+
+                    <button style="font-weight: 500" [nzSize]="btnGroup.size ? btnGroup.size : 'default'"
+                        [nzType]="btnGroup.color ? btnGroup.color : 'default'" [disabled]="btnGroup.disabled" nz-button
+                        type="button" (click)="inner_action(btnGroup)">
+                        <i nz-icon *ngIf="btnGroup.icon" [nzType]="btnGroup.icon"
+                            [nzTheme]="btnGroup.theme ? btnGroup.theme : 'outline'" [nzTwotoneColor]="'#A5A5B8'"></i>
+                        {{btnGroup.name}}
+                    </button>
+
+                </ng-template>
+
+
+            </span>
+        </div>
+    </nz-header>
+    <nz-content style="background-color: rgb(255, 255, 255);">
+        <!-- <app-cn-page #approvalpage [config]="page_config"></app-cn-page> -->
+
+        业务：{{a_businessId}}
+        <ng-container #virtualContainer>
+
+        </ng-container>
+
+        <nz-collapse *ngIf="false">
+            <nz-collapse-panel *ngFor="let panel of config1.panels" [nzHeader]="panel.name" [nzActive]="panel.active"
+                [nzShowArrow]="panel.arrow">
+                <p style="margin:0;">
+                    内容...
+                </p>
+                <button (click)="add()">添加</button>
+                <nz-table #basicTable [nzData]="listOfData">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Age</th>
+                            <th>Address</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let data of basicTable.data">
+                            <td>{{data.name}}</td>
+                            <td>{{data.age}}</td>
+                            <td>{{data.address}}</td>
+                            <td>
+                                <a>Action 一 {{data.name}}</a>
+                                <nz-divider nzType="vertical"></nz-divider>
+                                <a>Delete</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </nz-table>
+
+
+            </nz-collapse-panel>
+        </nz-collapse>
+    </nz-content>
+</nz-layout>

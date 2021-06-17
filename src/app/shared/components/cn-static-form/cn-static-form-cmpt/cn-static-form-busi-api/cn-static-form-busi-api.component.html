@@ -1,0 +1,7 @@
+<p>cn-static-form-busi-api works!</p>
+<button nz-button nzType="primary" (click)="zhuceEvent()">测试选取资源详细信息</button>
+<app-cn-static-form *ngIf="attr_config" #staticForm [config]="attr_config" [staticData]="sourceConfigData"
+    [fromDataService]="fromDataService" (updateValue)="staticFormValueChange($event)">
+</app-cn-static-form>
+<app-cn-page #page [customPageId]="'PAGE_BUSI_FLOW_TABLE_SELECT'" [config]="cn_page_config" [initData]="initData">
+</app-cn-page>

@@ -1,0 +1,21 @@
+<p>cn-static-form-busi-pop-api works!</p>
+<ng-container *ngIf="config['formType'] === 'value'">
+    <nz-form-item>
+        <nz-form-label *ngIf="!config.componentConfig['hiddenTitle']" [nzSpan]="config.componentConfig.labelSize.span"
+            [nzSm]="config.componentConfig.labelSize.nzSm" [nzXs]="config.componentConfig.labelSize.nzXs"
+            [nzMd]="config.componentConfig.labelSize.nzMd" [nzLg]="config.componentConfig.labelSize.nzLg"
+            [nzXl]="config.componentConfig.labelSize.nzXl" [nzTooltipTitle]="config.componentConfig.labelTooltipTitle"
+            [nzTooltipIcon]="config.componentConfig.labelTooltipIcon" nzRequired>{{config['title']}}</nz-form-label>
+        <nz-form-control [nzSpan]="config.componentConfig.controlSize.span"
+            [nzSm]="config.componentConfig.controlSize.nzSm" [nzXs]="config.componentConfig.controlSize.nzXs"
+            [nzMd]="config.componentConfig.controlSize.nzMd" [nzLg]="config.componentConfig.controlSize.nzLg"
+            [nzXl]="config.componentConfig.controlSize.nzXl" [formGroup]="validateForm">
+            <nz-input-group nzSearch [nzAddOnAfter]="suffixButton">
+                <input type="text" [formControlName]="config['name']" nz-input placeholder="请输入" />
+            </nz-input-group>
+            <ng-template #suffixButton>
+                <button nz-button nzType="primary" (click)="setting()" nzSearch>参考</button>
+            </ng-template>
+        </nz-form-control>
+    </nz-form-item>
+</ng-container>

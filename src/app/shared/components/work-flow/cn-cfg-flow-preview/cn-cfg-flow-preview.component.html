@@ -1,0 +1,34 @@
+<nz-layout>
+
+
+    <nz-content>
+
+    </nz-content>
+
+
+</nz-layout>
+
+
+<div nz-row>
+    <div nz-col nzSpan="24">
+        <div class="inner-content" #refcontent>
+            <div #refContainer style="width: 100%; height: 100%;">
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!-- <button nz-button nzType="primary" (click)="open()">Create</button> -->
+<nz-drawer [nzBodyStyle]="{ overflow: 'auto' }" [nzMaskClosable]="true" [nzPlacement]="'bottom'" [nzWidth]="820"
+    [nzHeight]="drawerHeight" [nzVisible]="visible" nzTitle="节点办理" [nzFooter]="footerTpl" (nzOnClose)="close()">
+    <app-cn-static-form *ngIf="form_process_config && sourceData" #staticForm [config]="form_process_config"
+        [staticData]="sourceData">
+    </app-cn-static-form>
+
+    <ng-template #footerTpl>
+        <div style="float: right">
+            <button nz-button nzType="primary" (click)="close()">关闭</button>
+        </div>
+    </ng-template>
+</nz-drawer>

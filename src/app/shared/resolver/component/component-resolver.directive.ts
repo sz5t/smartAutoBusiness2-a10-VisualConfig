@@ -46,6 +46,11 @@ import { CfgPageDesignComponent } from '../../config-components/cfg-page-design/
 import { CfgFormDesignComponent } from '../../config-components/cfg-form-design/cfg-form-design.component';
 import { SmtLayoutComponent } from '../../components/smt-layout/smt-layout/smt-layout.component';
 import { SmtPageComponent } from '../../components/smt-layout/smt-page/smt-page.component';
+import { CnCfgFlowDesignComponent } from '../../components/work-flow/cn-cfg-flow-design/cn-cfg-flow-design.component';
+import { CnCfgBusiFlowComponent } from '../../components/work-flow/cn-cfg-busi-flow/cn-cfg-busi-flow.component';
+import { CnCfgFlowStartComponent } from '../../components/work-flow/cn-flow-items/cn-cfg-flow-start/cn-cfg-flow-start.component';
+import { CnCfgFlowApprovalComponent } from '../../components/work-flow/cn-flow-items/cn-cfg-flow-approval/cn-cfg-flow-approval.component';
+import { CnCfgFlowPreviewComponent } from '../../components/work-flow/cn-cfg-flow-preview/cn-cfg-flow-preview.component';
 const components: { [type: string]: Type<any> } = {
   cnDataTable: CnDataTableComponent,
   cnToolbar: CnToolbarComponent,
@@ -90,6 +95,11 @@ const components: { [type: string]: Type<any> } = {
   cfgFormDesign: CfgFormDesignComponent,
   smtLayOut: SmtLayoutComponent,
   smtPage: SmtPageComponent,
+  cnCfgWFDesign: CnCfgFlowDesignComponent,
+  cnCfgBusiFlowDesign: CnCfgBusiFlowComponent,
+  cnCfgWFStart: CnCfgFlowStartComponent,
+  cnCfgWFApproval: CnCfgFlowApprovalComponent,
+  cnCfgWFPreview: CnCfgFlowPreviewComponent,
 };
 
 @Directive({

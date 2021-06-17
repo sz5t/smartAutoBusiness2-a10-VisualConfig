@@ -340,6 +340,7 @@ export class CnFlowPreviewComponent extends CnComponentBase implements OnInit, O
 
     if (this.config.loadingOnInit) {
       await this.load();
+      this.graph.centerContent();
     }
 
 
