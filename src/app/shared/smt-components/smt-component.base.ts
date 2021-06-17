@@ -262,6 +262,14 @@ export class SmtComponentBase {
     this._dataSourceCfg = value;
   }
 
+  public unsubscribeRelation() {
+    if (this.subscription$) {
+      this.subscription$.unsubscribe();
+    }
+    if (this.trigger_subscription$) {
+      this.trigger_subscription$.unsubscribe();
+    }
+  }
   //#endregion
 
   //#region 数据源解析
@@ -313,7 +321,7 @@ export class SmtComponentBase {
       params: paramsCfg,
       tempValue: this.TEMP_VALUE,
       componentValue: this.COMPONENT_VALUE,
-      item: inputData ? inputData : data,
+      dataItem: inputData ? inputData : data,
       initValue: this.INIT_VALUE,
       cacheValue: this.CACHE_VALUE,
       router: this.ROUTE_VALUE,
@@ -337,7 +345,7 @@ export class SmtComponentBase {
         params: paramsCfg,
         tempValue: this.TEMP_VALUE,
         componentValue: d,
-        item: d,
+        dataItem: d,
         initValue: this.INIT_VALUE,
         cacheValue: this.CACHE_VALUE,
         router: this.ROUTE_VALUE,

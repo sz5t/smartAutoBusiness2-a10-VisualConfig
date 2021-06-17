@@ -6,7 +6,7 @@ export interface ParametersResolverModel {
   params: any[]; // 参数配置
   tempValue?: any; // 临时变量
   componentValue?: any; // 组件值
-  item?: any;
+  dataItem?: any;
   initValue?: any; // 初始值
   cacheValue?: any; // 缓存值
   cascadeValue?: any; // 级联值
@@ -83,6 +83,11 @@ export class SmtParameterResolver {
 
   private static componentValue(param, model, parseNull) {
     return new ComponentValueParameter(param, model, parseNull).buildParameter();
+  }
+
+  private static dataItem(param, model) {
+    // tslint:disable-next-line: no-use-before-declare
+    return new DataItemParameter(param, model).buildParameter();
   }
 
   private static checkedItems(param, model, parseNull) {
@@ -220,6 +225,43 @@ class BaseParameter {
         break;
     }
     return dValue;
+  }
+}
+
+/**
+ * 构建数据项参数
+ */
+class DataItemParameter extends BaseParameter implements IParameter {
+  private _result: any;
+  constructor(private _param, private _model) {
+    super();
+  }
+  public buildParameter() {
+    if (this._model.item) {
+      // 判断组件取值是否为null
+      if (this._model.item[this._param.valueName] === null || this._model.item[this._param.valueName] === undefined) {
+        if (this._param.value !== undefined) {
+          if (this._param.conditionType) {
+            this._result = this.getParameter(this._param.conditionType, this._param.value);
+          } else if (this._param.defaultDate) {
+            const dataType = this._param.defaultDate;
+            this._result = this.getDefaultDate(dataType);
+          } else {
+            this._result = this._param.value;
+          }
+        } else if (!this._param.valueName) {
+          this._result = this._model.item; // 不配valueName，则将当前属性给他 object
+        }
+      } else {
+        if (this._param.conditionType) {
+          this._result = this.getParameter(this._param.conditionType, this._model.item[this._param.valueName]);
+        } else {
+          this._result = this._model.item[this._param.valueName];
+        }
+      }
+    }
+
+    return this._result;
   }
 }
 

@@ -5,7 +5,13 @@ import { NzMessageService } from 'ng-zorro-antd/message';
 import { NzModalService } from 'ng-zorro-antd/modal';
 import { BehaviorSubject, Subject } from 'rxjs';
 import { ApiService } from '../api/api.service';
-import { BsnRelativesMessageModel, BSN_RELATION_SUBJECT, BSN_RELATION_TRIGGER } from './../../relations/bsn-relatives';
+import {
+  BsnRelativesMessageModel,
+  BSN_RELATION_SUBJECT,
+  BSN_RELATION_TRIGGER,
+  ISenderModel,
+  SMT_RELATION_SUBJECT,
+} from './../../relations/bsn-relatives';
 
 @Injectable()
 export class ComponentServiceProvider {
@@ -18,6 +24,7 @@ export class ComponentServiceProvider {
   public router: Router;
   public commonRelationSubject: BehaviorSubject<BsnRelativesMessageModel>;
   public commonRelationTrigger: BehaviorSubject<BsnRelativesMessageModel>;
+  public smtRelationSubject: BehaviorSubject<ISenderModel>;
   public reloadDynamicLayoutSubject: Subject<string> = new Subject();
   constructor(
     private _apiService: ApiService,
@@ -28,6 +35,8 @@ export class ComponentServiceProvider {
     private _router: Router,
     @Inject(BSN_RELATION_SUBJECT)
     private _commonRelationSubject: BehaviorSubject<BsnRelativesMessageModel>,
+    @Inject(SMT_RELATION_SUBJECT)
+    private _smtRelationSubject: BehaviorSubject<ISenderModel>,
     @Inject(BSN_RELATION_TRIGGER)
     private _commonRelationTrigger: BehaviorSubject<BsnRelativesMessageModel>,
   ) {
@@ -39,6 +48,7 @@ export class ComponentServiceProvider {
     this.router = this._router;
     this.commonRelationSubject = this._commonRelationSubject;
     this.commonRelationTrigger = this._commonRelationTrigger;
+    this.smtRelationSubject = this._smtRelationSubject;
   }
 }
 
