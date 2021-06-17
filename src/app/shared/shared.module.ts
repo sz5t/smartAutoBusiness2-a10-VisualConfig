@@ -238,6 +238,23 @@ import { CnCfgFlowApprovalHandleComponent } from './components/work-flow/cn-flow
 import { CnCfgFlowPreviewComponent } from './components/work-flow/cn-cfg-flow-preview/cn-cfg-flow-preview.component';
 import { CnStaticFormBusiPopApiComponent } from './components/cn-static-form/cn-static-form-item/cn-static-form-busi-pop-api/cn-static-form-busi-pop-api.component';
 import { CnStaticFormBusiApiComponent } from './components/cn-static-form/cn-static-form-cmpt/cn-static-form-busi-api/cn-static-form-busi-api.component';
+import { SmtFormComponent } from './smt-components/smt-form/smt-form.component';
+import { SmtFormInputComponent } from './smt-components/smt-form/smt-form-items/smt-form-input/smt-form-input.component';
+import { SmtFormSelectComponent } from './smt-components/smt-form/smt-form-items/smt-form-select/smt-form-select.component';
+import { SmtFormLabelComponent } from './smt-components/smt-form/smt-form-items/smt-form-label/smt-form-label.component';
+import { SmtFormSpanComponent } from './smt-components/smt-form/smt-form-items/smt-form-span/smt-form-span.component';
+import { SmtFormCheckComponent } from './smt-components/smt-form/smt-form-items/smt-form-check/smt-form-check.component';
+import { SmtFormSwitchComponent } from './smt-components/smt-form/smt-form-items/smt-form-switch/smt-form-switch.component';
+import { SmtFormTreeSelectComponent } from './smt-components/smt-form/smt-form-items/smt-form-tree-select/smt-form-tree-select.component';
+import { SmtFormTextareaComponent } from './smt-components/smt-form/smt-form-items/smt-form-textarea/smt-form-textarea.component';
+import { SmtFormRadioComponent } from './smt-components/smt-form/smt-form-items/smt-form-radio/smt-form-radio.component';
+import { SmtFormTagComponent } from './smt-components/smt-form/smt-form-items/smt-form-tag/smt-form-tag.component';
+import { SmtFormPickerYearComponent } from './smt-components/smt-form/smt-form-items/smt-form-picker-year/smt-form-picker-year.component';
+import { SmtFormPickerWeekComponent } from './smt-components/smt-form/smt-form-items/smt-form-picker-week/smt-form-picker-week.component';
+import { SmtFormPickerMonthComponent } from './smt-components/smt-form/smt-form-items/smt-form-picker-month/smt-form-picker-month.component';
+import { SmtFormPickerDateComponent } from './smt-components/smt-form/smt-form-items/smt-form-picker-date/smt-form-picker-date.component';
+import { SmtFormCodeEditComponent } from './smt-components/smt-form/smt-form-items/smt-form-code-edit/smt-form-code-edit.component';
+import { SmtFormPickerRangeComponent } from './smt-components/smt-form/smt-form-items/smt-form-picker-range/smt-form-picker-range.component';
 
 
 // #region third libs
@@ -482,6 +499,24 @@ const COMPONENTS = [
   SmtDataTableComponent,
   SmtToolbarComponent,
   SmtTreeTableComponent,
+  // 新表单
+  SmtFormComponent,
+  SmtFormInputComponent,
+  SmtFormSelectComponent,
+  SmtFormLabelComponent,
+  SmtFormSpanComponent,
+  SmtFormCheckComponent,
+  SmtFormSwitchComponent,
+  SmtFormTreeSelectComponent,
+  SmtFormTextareaComponent,
+  SmtFormRadioComponent,
+  SmtFormTagComponent,
+  SmtFormPickerYearComponent,
+  SmtFormPickerWeekComponent,
+  SmtFormPickerMonthComponent,
+  SmtFormPickerDateComponent,
+  SmtFormCodeEditComponent,
+  SmtFormPickerRangeComponent,
 ];
 const DIRECTIVES = [
   CnLayoutResolverDirective,
@@ -525,6 +560,7 @@ const DIRECTIVES = [
     SafeUrlPipe,
     CfgAttributeRanksRowModalComponent,
     ToolAttrJsonComponent,
+
 
 
 
