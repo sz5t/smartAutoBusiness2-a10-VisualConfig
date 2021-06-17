@@ -192,7 +192,7 @@ export class CnTreeComponent extends CnComponentBase implements OnInit, AfterVie
     return back_key;
   }
 
-  public ngAfterViewInit() { }
+  public ngAfterViewInit() {}
 
   public ngOnDestroy() {
     // 释放级联对象
@@ -634,7 +634,7 @@ export class CnTreeComponent extends CnComponentBase implements OnInit, AfterVie
   /**
    * 构建查询参数
    */
-  public _buildSearch() { }
+  public _buildSearch() {}
   // #endregion
 
   // #region state 状态切换
@@ -1185,7 +1185,7 @@ export class CnTreeComponent extends CnComponentBase implements OnInit, AfterVie
     return validationResult && errorResult;
   }
 
-  public setSelectedNode() { }
+  public setSelectedNode() {}
 
   public setSelectRow(rowData?, $event?) {
     if (!rowData) {
@@ -1641,11 +1641,11 @@ export class CnTreeComponent extends CnComponentBase implements OnInit, AfterVie
   //     console.log(this.config.id + '-------------cancelSearchRow');
   // }
 
-  public export() { }
+  public export() {}
 
-  public import() { }
+  public import() {}
 
-  public download() { }
+  public download() {}
 
   /**
    * 显示确认对话框
@@ -1863,9 +1863,9 @@ export class CnTreeComponent extends CnComponentBase implements OnInit, AfterVie
     return true;
   }
 
-  public showUpload() { }
+  public showUpload() {}
 
-  public showBatchDialog() { }
+  public showBatchDialog() {}
 
   /**
    * 显示消息框

@@ -128,12 +128,12 @@ export class UserLoginComponent implements OnDestroy, OnInit {
       if (environment.systemSettings.loginInfo) {
         // 用户信息，将解析登录信息
         // 解析登录信息
+        this.tokenService.set({ key: `login`, token: 'login' });
         const loginAjaxConfig = environment.systemSettings.loginInfo.loginAjaxConfig;
         const url = loginAjaxConfig.url;
         const params = this.buildParametersByLogin(loginAjaxConfig.params);
         const userInfo: any = await this.http[loginAjaxConfig.ajaxType](url, params).toPromise();
 
-        this.tokenService.set({ key: `login`, token: 'login' });
         console.log('登录返回', userInfo);
         // 将当前用户信息写入缓存
         if (userInfo.state === 1) {

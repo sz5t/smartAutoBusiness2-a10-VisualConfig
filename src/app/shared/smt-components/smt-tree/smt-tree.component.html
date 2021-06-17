@@ -1,0 +1,66 @@
+<nz-spin nzTip="loading..." [nzSpinning]="this.IS_LOADING">
+
+    <form *ngIf="treeBindObj.checkStrictlyShow" checkStrictly nz-form nzLayout="inline">
+      <nz-form-item>
+        <nz-form-label><label>无关联勾选</label></nz-form-label>
+        <nz-form-control>
+          <nz-switch [(ngModel)]="treeBindObj.checkStrictly" name="checkStrictly"></nz-switch>
+        </nz-form-control>
+      </nz-form-item>
+    </form>
+    <nz-input-group *ngIf="treeBindObj.showSearch" [nzSuffix]="suffixIcon" style="width: 100%;">
+      <input type="text" nz-input placeholder="查询" [(ngModel)]="treeBindObj.searchValue" />
+    </nz-input-group>
+    <ng-template #suffixIcon>
+      <i nz-icon nzType="search"></i>
+    </ng-template>
+  
+    <nz-tree #treeComponentObj [nzData]="this.treeBindObj.nodes" [nzAsyncData]="this.dataSourceCfg.async" [nzExpandAll]="treeBindObj.expandAll" [nzBlockNode]="true"
+      [nzCheckStrictly]="this.treeBindObj.checkStrictly" [nzCheckable]="this.treeBindObj.showCheckBox" [nzShowLine]="this.treeBindObj.showLine"
+      (nzClick)="clickNode($event)" (nzExpandChange)="expandNode($event)" [nzTreeTemplate]="nzTreeTemplate"
+      [nzSearchValue]="this.treeBindObj.searchValue" [nzSelectedKeys]="this.treeBindObj.defaultSelectedKeys">
+    </nz-tree>
+    <!--  -->
+    <ng-template #nzTreeTemplate let-node>
+      <span class="custom-node" [class.active]="ACTIVED_NODE?.key === node.key">
+        <span *ngIf="!node.isLeaf">
+          <i nz-icon style="padding-right: 3px;" [nzType]="node.isExpanded ? 'folder-open' : 'folder'"
+            (click)="openFolder(node)"></i>
+          <cn-custom-group-state *ngIf="this.treeBindObj.enableState" [config]="this.treeBindObj.leftIconState" [currentValue]="node"
+            (updateValue)="iconStateValueChange($event)"></cn-custom-group-state>
+  
+          <ng-container *ngIf="node.isMatched">
+            <span class="file-name"> {{searchTargetString(node.title)[0]}}</span>
+            <span class="highlight"> {{searchTargetString(node.title)[1]}} </span>
+            <span class="file-name">{{searchTargetString(node.title)[2]}}</span>
+          </ng-container>
+          <ng-container *ngIf="!node.isMatched">
+            <span class="file-name">{{ node.title }}</span>
+          </ng-container>
+          <cn-custom-group-state *ngIf="this.treeBindObj.enableState" [config]="this.treeBindObj.rightIconState" [currentValue]="node"
+            (updateValue)="iconStateValueChange($event)"></cn-custom-group-state>
+          <span class="folder-desc" *ngIf="config.descField">{{ node?.origin[config.desc] }}</span>
+        </span>
+        <span *ngIf="node.isLeaf">
+          <i nz-icon nzType="file" style="padding-right: 3px;"></i>
+          <cn-custom-group-state *ngIf="this.treeBindObj.enableState" [config]="this.treeBindObj.leftIconState" [currentValue]="node"
+            (updateValue)="iconStateValueChange($event)"></cn-custom-group-state>
+          <ng-container *ngIf="node.isMatched">
+  
+            <span class="file-name"> {{searchTargetString(node.title)[0]}}</span>
+            <span class="highlight"> {{searchTargetString(node.title)[1]}} </span>
+            <span class="file-name">{{searchTargetString(node.title)[2]}}</span>
+  
+          </ng-container>
+          <ng-container *ngIf="!node.isMatched">
+            <span class="file-name">{{ node.title }}</span>
+          </ng-container>
+          <cn-custom-group-state *ngIf="this.treeBindObj.enableState" [config]="this.treeBindObj.rightIconState" [currentValue]="node"
+            (updateValue)="iconStateValueChange($event)"></cn-custom-group-state>
+  
+          <span class="file-desc" *ngIf="config.descField">{{ node?.origin[config.desc] }}</span>
+        </span>
+      </span>
+    </ng-template>
+  
+  </nz-spin>

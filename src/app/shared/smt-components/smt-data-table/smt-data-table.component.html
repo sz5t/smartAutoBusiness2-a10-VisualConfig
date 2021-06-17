@@ -1,12 +1,20 @@
-<nz-table #dataTable [nzData]="dataList"
-    [nzShowSizeChanger]="dataTableConfig.isShowSizeChanger ? dataTableConfig.isShowSizeChanger : true"
-    [nzFrontPagination]="dataTableConfig.isFrontPagination ? dataTableConfig.isFrontPagination : true"
-    [nzShowPagination]="dataTableConfig.isPagination ? dataTableConfig.isPagination : true" [nzTotal]="total"
-    [(nzPageIndex)]="pageIndex" [(nzPageSize)]="pageSize" (nzPageIndexChange)="searchData()"
+<div class="send-request">
+    <button nz-button nzType="primary" (click)="testAction()">
+        选中操作
+    </button>
+    <button nz-button nzType="primary" (click)="operateReceiveCommand('loadRefreshData', null)">
+        刷新
+    </button>
+    <button nz-button nzType="primary" (click)="operateReceiveCommand('deleteRow', obj)">
+        删除
+    </button>
+</div>
+
+<nz-table #dataTable [nzData]="dataList" [nzShowSizeChanger]="dataTableConfig.isShowSizeChanger"
+    [nzFrontPagination]="dataTableConfig.isFrontPagination" [nzShowPagination]="dataTableConfig.isPagination"
+    [nzTotal]="total" [(nzPageIndex)]="pageIndex" [(nzPageSize)]="pageSize" (nzPageIndexChange)="searchData()"
     (nzPageSizeChange)="searchData(true)" [nzPageSizeOptions]="pageSizeOptions" [nzShowTotal]="showTotal"
-    [nzBordered]="dataTableConfig.isBordered ? dataTableConfig.isBordered : false"
-    [nzSize]="dataTableConfig.size ? dataTableConfig.size: 'default'"
-    [nzScroll]="dataTableConfig.scroll ? dataTableConfig.scroll : null">
+    [nzBordered]="dataTableConfig.isBordered" [nzSize]="dataTableConfig.size" [nzScroll]="dataTableConfig.scroll">
     <thead>
         <tr>
             <th [nzWidth]="(dataTableConfig.showCheckBoxConfig && dataTableConfig.showCheckBoxConfig.hasOwnProperty('width'))?dataTableConfig.showCheckBoxConfig['width']:'50px'"

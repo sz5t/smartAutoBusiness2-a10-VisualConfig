@@ -256,6 +256,10 @@ import { SmtFormPickerDateComponent } from './smt-components/smt-form/smt-form-i
 import { SmtFormCodeEditComponent } from './smt-components/smt-form/smt-form-items/smt-form-code-edit/smt-form-code-edit.component';
 import { SmtFormPickerRangeComponent } from './smt-components/smt-form/smt-form-items/smt-form-picker-range/smt-form-picker-range.component';
 
+import { SmtDynamicPageComponent } from './smt-components/smt-dynamic-page/smt-dynamic-page.component';
+import { SmtTreeComponent } from './smt-components/smt-tree/smt-tree.component';
+import { SmtComponentComponent } from './components/smt-layout/smt-component/smt-component/smt-component.component';
+import { SmtComponentBase } from './smt-components/smt-component.base';
 
 // #region third libs
 
@@ -405,7 +409,6 @@ const COMPONENTS = [
   CfgAttributeRanksColComponent,
   CfgCascadePropertyComponent,
 
-
   // ------设计组件-----
   CfgAttributeAssembleResourceSelectComponent,
   CfgAttributeRanksRowModalComponent,
@@ -493,6 +496,7 @@ const COMPONENTS = [
   CnCfgFlowPreviewComponent,
   // 解析布局组件
   SmtPageComponent,
+  SmtDynamicPageComponent,
   SmtLayoutComponent,
   SmtTabsComponent,
   // 可视化生成配置解析出的组件
@@ -517,6 +521,7 @@ const COMPONENTS = [
   SmtFormPickerDateComponent,
   SmtFormCodeEditComponent,
   SmtFormPickerRangeComponent,
+  SmtTreeComponent,
 ];
 const DIRECTIVES = [
   CnLayoutResolverDirective,
@@ -573,6 +578,7 @@ const DIRECTIVES = [
 
 
 
+    SmtComponentComponent,
   ],
   exports: [
     CommonModule,

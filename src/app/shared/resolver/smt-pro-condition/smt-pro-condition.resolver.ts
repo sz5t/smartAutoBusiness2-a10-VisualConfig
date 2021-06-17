@@ -1,33 +1,29 @@
-import { Input } from "@angular/core";
-import { CacheService } from "@delon/cache";
-import { NzMessageService } from "ng-zorro-antd/message";
 import { NzModalService } from "ng-zorro-antd/modal";
-import { ApiService } from "src/app/core/services/api/api.service";
 import { SmtParameterResolver } from "../smt-parameter/smt-parameter-resolver";
 
 export class SmtProCondition {
   tempValue: any;
   initValue: any;
+  item: any;
   cacheValue: any;
   beforeOperationCfg: any;
   resultMap: any = {
     pass: true,
     prevent: false
   }
-  private _cacheService: CacheService;
   constructor(
     private _config: any,
     private _initValue: any,
     private _cacheValue: any,
     private _tempValue: any,
-    private _apiService?: ApiService,
+    private _item: any,
     private _modal?: NzModalService,
-    private _message?: NzMessageService,
   ) {
     this.tempValue = _tempValue;
     this.initValue = _initValue;
     this.cacheValue = _cacheValue;
     this.beforeOperationCfg = _config;
+    this.item = _item;
     this.resolverBeforeOperation();
   }
 
@@ -59,8 +55,8 @@ export class SmtProCondition {
       params: paramsCfg,
       tempValue: this.tempValue,
       initValue: this.initValue,
-      currentItems: value,
-      selectedItems: value
+      currentItem: value,
+      selectedItem: value
     });
     return params;
   }
@@ -99,17 +95,18 @@ export class SmtProCondition {
 
   private responseOperate(conditionResult, operation) {
     let nextOperate: any;
+    let returnValue: any;
     operation.forEach(e => {
       if (this.resultMap(e['info']) === conditionResult) {
         switch (e['type']) {
           case 'message':
-            this.showMessage(e['message']);
+            nextOperate = this.showMessage(e['message'], returnValue);
             break;
           case 'confirm':
-            this.showConfirm(e['confirm']);
+            nextOperate = this.showConfirm(e['confirm'], returnValue);
             break;
           case 'execution':
-            // this.showExecution();
+            nextOperate = this.showExecution(e['execution'], returnValue);
             break;
         }
       }
@@ -129,10 +126,10 @@ export class SmtProCondition {
         back['comput'] = expression['comput'];
       }
       if (expression['leftExpression']) {
-        back['left'] = this.buildParameter(expression['leftExpression']);
+        back['left'] = this.buildParameter(expression['leftExpression'], this.item);
       }
       if (expression['righitExpression']) {
-        back['righit'] = this.buildParameter(expression['righitExpression']);
+        back['righit'] = this.buildParameter(expression['righitExpression'], this.item);
       }
 
     } else {
@@ -189,27 +186,39 @@ export class SmtProCondition {
   }
 
   // 根据前置条件展示提示框
-  showMessage(cfg) {
+  showMessage(cfg, returnValue) {
     this._modal[cfg['type']]({
       nzTitle: cfg['messageInfo']['title'] ? cfg['messageInfo']['title'] : '提示',
       nzContent: this.createContent(cfg['messageInfo'])
     })
+    returnValue = this.nextOperate(cfg['messageInfo']['point']);
+    return returnValue;
   }
 
-  showConfirm(cfg) {
+  showConfirm(cfg, returnValue) {
     this._modal[cfg['type']]({
       nzTitle: cfg['contentInfo']['title'] ? cfg['contentInfo']['title'] : '提示',
       nzContent: this.createContent(cfg['contentInfo']),
       nzOkText: cfg['okInfo']['title'],
       nzCancelText: cfg['cancelInfo']['title'],
-      nzOnOk: () => console.log('OK'),
-      nzOnCancel: () => console.log('Cancel')
+      nzOnOk: () => {
+        returnValue = this.nextOperate(cfg['okInfo']['point']);
+      },
+      nzOnCancel: () => {
+        returnValue = this.nextOperate(cfg['cancelInfo']['point']);
+      }
     })
+    return returnValue;
+  }
+
+  showExecution(cfg, returnValue) {
+    returnValue = this.nextOperate(cfg['point']);
+    return returnValue;
   }
 
   createContent(cfg) {
     let content = cfg['content'];
-    const params = this.buildParameter(cfg['parameters']);
+    const params = this.buildParameter(cfg['parameters'], this.item);
     const array = cfg['content'].match(/{(\S*)}/)
     for (let i = 1; i < array.length; i++) {
       const tempName = array[i];
@@ -217,5 +226,9 @@ export class SmtProCondition {
       content = content.replace(repalceString, params[tempName]);
     }
     return content;
+  }
+
+  nextOperate(type) {
+    return type;
   }
 }

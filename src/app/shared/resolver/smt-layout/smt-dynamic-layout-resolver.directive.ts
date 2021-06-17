@@ -22,8 +22,7 @@ import { LayoutTabs } from './layout.tabs';
 
 @Directive({
     // tslint:disable-next-line: directive-selector
-    selector: ' [SmtDynamicLayoutResolverDirective]',
-    providers: [pageServerService]
+    selector: ' [SmtDynamicLayoutResolverDirective]'
 })
 export class SmtDynamicLayoutResolverDirective extends CnComponentBase implements OnInit, OnDestroy {
     /**
@@ -57,7 +56,6 @@ export class SmtDynamicLayoutResolverDirective extends CnComponentBase implement
     constructor(
         private _resolver: ComponentFactoryResolver,
         private _container: ViewContainerRef,
-        private pageService: pageServerService,
         @Inject(BSN_COMPONENT_SERVICES)
         public componentService: ComponentServiceProvider,
     ) {
@@ -98,7 +96,7 @@ export class SmtDynamicLayoutResolverDirective extends CnComponentBase implement
 
     ngOnInit() {
         let configObj;
-        this.resolveRelations();
+        // this.resolveRelations();
         if (typeof (this.config) === 'string') {
             this.config = JSON.parse(this.config);
         }
@@ -205,7 +203,7 @@ export class SmtDynamicLayoutResolverDirective extends CnComponentBase implement
         if (this.initValue) {
             this._layoutObj.instance.initData = this.initData;
         }
-        this._layoutObj.instance.dataServe = this.dataServe ? this.dataServe : this.pageService;
+        this._layoutObj.instance.dataServe = this.dataServe;
     }
 
     private buildLayoutRows(layoutObj: any) {
@@ -220,7 +218,7 @@ export class SmtDynamicLayoutResolverDirective extends CnComponentBase implement
         if (this.initValue) {
             this._rowsObj.instance.initData = this.initData;
         }
-        this._rowsObj.instance.dataServe = this.dataServe ? this.dataServe : this.pageService;
+        this._rowsObj.instance.dataServe = this.dataServe;
     }
 
     // private buildTabsLayout(tabsObj: any) {
@@ -263,18 +261,19 @@ export class SmtDynamicLayoutResolverDirective extends CnComponentBase implement
             layoutMapping = cfg;
             componentMapping = this.originData;
         }
-        switch (layoutMapping.type) {
-            case 'col':
-                return this.buildLayoutObj(layoutMapping, componentMapping);
-            // case 'customLayout':
-            //     return this.buildCustomerObj(cfg);
-            // case 'tab':
-            //     return this.buildTabsObj(layoutMapping);
-            //   case 'pageHeader':
-            //     return this.buildPageHeaderObj(cfg.pageHeader);
-            case 'layout':
-                return this.buildLayoutObj(layoutMapping, componentMapping);
-        }
+        return layoutMapping;
+        // switch (layoutMapping.type) {
+        //     case 'col':
+        //         return this.buildLayoutObj(layoutMapping);
+        //     // case 'customLayout':
+        //     //     return this.buildCustomerObj(cfg);
+        //     // case 'tab':
+        //     //     return this.buildTabsObj(layoutMapping);
+        //     //   case 'pageHeader':
+        //     //     return this.buildPageHeaderObj(cfg.pageHeader);
+        //     case 'layout':
+        //         return this.buildLayoutObj(layoutMapping);
+        // }
     }
 
     // private buildNormalObj(cfg): LayoutBase {
@@ -310,55 +309,59 @@ export class SmtDynamicLayoutResolverDirective extends CnComponentBase implement
     //     return newLayout;
     // }
 
-    private buildLayoutObj(cfg, originData): LayoutBase {
-        const newLayout = new LayoutBase();
-        newLayout.container = cfg.container;
-        newLayout.originData = originData ? originData : this.originData;
-        newLayout.layoutStructure = cfg;
-        newLayout.type = cfg.type;
-        newLayout.rows = [];
-        if (Array.isArray(cfg.children)) {
-            for (const row of cfg.children) {
-                const newRow = new LayoutRow(row.id, row.type, row.title, cfg.children.find(e => e.id === row.id));
-                newRow.cols = [];
-                if (Array.isArray(row.children)) {
-                    for (const c of row.children) {
-                        const data = newLayout.originData[c.id];
-                        const newCol = new LayoutColumn();
-                        newCol.id = c.id;
-                        newCol.type = data.type;
-                        newCol.title = data.title;
-                        newCol.noBorder = data.noBorder ? true : false;
-                        newCol.bodyStyle = data.bodyStyle ? c.bodyStyle : { height: '300px' };
-                        newCol.size = new LayoutSize(data.size);
-                        newCol.span = data.span;
-                        newCol.container = c.container;
-                        if (c.container === 'component') {
-                            newCol['header'] = {};
-                            if (c['children'].length > 0) {
-                                c['children'].map(e => {
-                                    newCol['header']['title'] = e.title;
-                                    newCol['header']['toolbar'] = {};
-                                    if (e['children'].length > 0) {
-                                        e['children'].map(h => {
-                                            if (h['container'] === 'cnToolbar') {
-                                                newCol['header']['toolbar'] = h;
-                                            }
-                                        })
-                                    }
-                                })
-                            }
-                        }
-                        newCol.layoutStructure = row['children'].find(e => e.id === c.id);
-                        // this.setContainer(newCol, c);
-                        newRow.add(newCol);
-                    }
-                }
-                newLayout.add(newRow);
-            }
-        }
-        return newLayout;
-    }
+    // private buildLayoutObj(cfg) {
+    //     let newLayout = {};
+    //     newLayout['container'] = cfg.container;
+    //     newLayout['type'] = cfg.type;
+    //     newLayout['rows'] = [];
+    //     if (Array.isArray(cfg.children)) {
+    //         for (const row of cfg.children) {
+    //             // const newRow = new LayoutRow(row.id, row.type, row.title, cfg.children.find(e => e.id === row.id));
+    //             let newRow = {
+    //                 id: row.id,
+    //                 type: row.type,
+    //                 title: row.title,
+    //             }
+    //             newRow['cols'] = [];
+    //             if (Array.isArray(row.children)) {
+    //                 for (const c of row.children) {
+    //                     const data = this.dataServe.componentsConfig[c.id];
+    //                     let newCol = {
+    //                         id: c.id,
+    //                         type: data.type,
+    //                         title: data.title,
+    //                         noBorder: data.noBorder ? true : false,
+    //                         bodyStyle: data.bodyStyle ? c.bodyStyle : { height: '450px' },
+    //                         size: new LayoutSize(data.size),
+    //                         span: data.span,
+    //                         container: c.container,
+    //                     }
+    //                     // if (c.container === 'component') {
+    //                     //     newCol['header'] = {};
+    //                     //     if (c['children'].length > 0) {
+    //                     //         c['children'].map(e => {
+    //                     //             newCol['header']['title'] = e.title;
+    //                     //             newCol['header']['toolbar'] = {};
+    //                     //             if (e['children'].length > 0) {
+    //                     //                 e['children'].map(h => {
+    //                     //                     if (h['container'] === 'cnToolbar') {
+    //                     //                         newCol['header']['toolbar'] = h;
+    //                     //                     }
+    //                     //                 })
+    //                     //             }
+    //                     //         })
+    //                     //     }
+    //                     // }
+    //                     // newCol.layoutStructure = row['children'].find(e => e.id === c.id);
+    //                     // this.setContainer(newCol, c);
+    //                     newRow['cols'].push(newCol);
+    //                 }
+    //             }
+    //             newLayout['rows'].push(newRow);
+    //         }
+    //     }
+    //     return newLayout;
+    // }
 
     private setContainer(containerObj, containerCfg) {
         switch (containerObj.container) {

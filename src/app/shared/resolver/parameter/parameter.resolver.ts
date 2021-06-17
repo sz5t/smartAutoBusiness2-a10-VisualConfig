@@ -36,6 +36,7 @@ export class ParameterResolver {
         const paramType = param.type;
         if (paramType) {
           // console.log(paramType);
+          console.log(paramType);
           const val = this[paramType](param, model);
           if (param.dataType && (val || val === 0 || val === '')) {
             result[param.name] = CommonUtils.getResultByDataType(val, param.dataType);
