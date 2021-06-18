@@ -33,26 +33,26 @@ export class CnFormTagComponent implements OnInit {
         if (d.type === 'tempValue') {
           val = this.tempData[d.field];
         }
-        if (d.type  === 'initValue') {
+        if (d.type === 'initValue') {
           val = this.initData[d.field];
         }
-        if (d.type  === 'rowValue') {
+        if (d.type === 'rowValue') {
           val = this.formGroup.value[d.field];
         }
-        if (d.type  === 'formValue') {
+        if (d.type === 'formValue') {
           val = this.formGroup.value[d.field];
         }
-        if (d.type  === 'currentValue') {
+        if (d.type === 'currentValue') {
           val = this.value;
         }
-        if (val && (d.value === val)) {
+        if ((val || val === 0 || val === false) && (d.value === val)) {
           this.color = d.color;
-          if (d.valueText){
+          if (d.valueText) {
             this.text = d.valueText;
           }
-          if (d.valueField){
+          if (d.valueField) {
             this.text = this.formGroup.value[d.valueField];
-          } 
+          }
           if (!d.valueText && !d.valueField) {
             this.text = this.value;
           }
@@ -68,7 +68,7 @@ export class CnFormTagComponent implements OnInit {
     this._colorMappingResolve();
   }
 
-  public cascadeAnalysis(c?){
+  public cascadeAnalysis(c?) {
 
   }
 
