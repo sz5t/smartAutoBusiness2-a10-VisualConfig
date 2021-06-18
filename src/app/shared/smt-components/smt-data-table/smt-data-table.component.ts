@@ -18,17 +18,17 @@ import { SmtMessageSenderResolver } from '../../resolver/smt-relation/smt-relati
   selector: 'app-smt-data-table',
   templateUrl: './smt-data-table.component.html',
   styles: [
-    `.selectedRow {
-      color: #000;
-      background-color: rgba(232, 249, 243);
-    }`
-  ]
+    `
+      .selectedRow {
+        color: #000;
+        background-color: rgba(232, 249, 243);
+      }
+    `,
+  ],
 })
 export class SmtDataTableComponent extends SmtComponentBase implements OnInit {
-
   constructor(
     @Inject(BSN_COMPONENT_SERVICES)
-    // public xlsx: XlsxService,
     public componentService: ComponentServiceProvider,
   ) {
     super(componentService);
@@ -48,43 +48,36 @@ export class SmtDataTableComponent extends SmtComponentBase implements OnInit {
   @Input() public tempData;
   @Input() public dataServe;
 
-  public dataList: any[] = [ // 数据源数组
-    {
-      ID: '1',
-      NAME: '张三',
-      AGE: 20
-    },
-    {
-      ID: '2',
-      NAME: "李四",
-      AGE: 22
-    }
-  ]
+  public dataList: any[] = [
+    // 数据源数组
+  ];
   public execConfig = {
     loading: {
       loadingOninit: true,
       id: 'loading',
       urlType: 'inner', // 请求地址，inner 匹配的后台地址
-      urlContent: { // 适配外部请求
-        name: "system_url",
-        title: "权限系统访问地址"
+      urlContent: {
+        // 适配外部请求
+        name: 'system_url',
+        title: '权限系统访问地址',
       },
       url: 'resource/SQL_PERCENT/query/{pathParam1}',
-      headParams: [ // 头部参数
-
+      headParams: [
+        // 头部参数
       ],
       ajaxType: 'post',
-      pathParams: [  // 路径参数
+      pathParams: [
+        // 路径参数
         {
           name: 'pathParam',
           type: 'value',
-          value: 'ddd'
-        }
+          value: 'ddd',
+        },
       ],
       queryParams: [], // 查询参数
       bodyParams: [], // 请求体参数
-    }
-  }
+    },
+  };
   public _sortName;
   public _sortValue;
   public xlsx;
@@ -117,10 +110,10 @@ export class SmtDataTableComponent extends SmtComponentBase implements OnInit {
 
   public obj = {
     age: 18,
-    name: "zhangsan",
+    name: 'zhangsan',
     valueName: 'aaa',
-    valueName2: 'bbb'
-  }
+    valueName2: 'bbb',
+  };
 
   public ROW_SELECTED: any;
   public ROWS_CHECKED: any[] = [];
@@ -148,7 +141,7 @@ export class SmtDataTableComponent extends SmtComponentBase implements OnInit {
     this.initProperty();
 
     // 是否需要进行初始化数据加载
-    if (this.dataSourceCfg['loadingOnInit']) {
+    if (this.dataSourceCfg['loadingOnInit'] === true) {
       await this.load('init');
     }
     // 初始化解析表个的内容：命令，行为，消息
@@ -165,11 +158,15 @@ export class SmtDataTableComponent extends SmtComponentBase implements OnInit {
   }
 
   public createEvent() {
-    this._sender_source$ = new SmtEventResolver(this).resolve(this.dataTableConfig.eventConent);
-    this._sender_subscription$ = this._sender_source$.subscribe();
+    if (this.dataTableConfig.eventConent.length > 0) {
+      this._sender_source$ = new SmtEventResolver(this).resolve(this.dataTableConfig.eventConent);
+      this._sender_subscription$ = this._sender_source$.subscribe();
+    }
   }
   public createCommandList() {
-    new SmtCommandResolver(this).resolve(this.dataTableConfig['customCommand']);
+    if (this.dataTableConfig['customCommand'].length > 0) {
+      new SmtCommandResolver(this).resolve(this.dataTableConfig['customCommand']);
+    }
   }
 
   public sendCommand() {
@@ -179,8 +176,8 @@ export class SmtDataTableComponent extends SmtComponentBase implements OnInit {
       new SmtMessageSenderResolver(this).resolve(resObj.commandConfig[i]);
       // 执行命令发送后置
       if (resObj.result && resObj.result.length > 0) {
-        resObj.result.forEach(result => {
-          new SmtCommandResolver(this).afterOperate(result, this.createCommandModel(), this.componentService.modalService)
+        resObj.result.forEach((result) => {
+          new SmtCommandResolver(this).afterOperate(result, this.createCommandModel(), this.componentService.modalService);
         });
       }
     }
@@ -189,12 +186,12 @@ export class SmtDataTableComponent extends SmtComponentBase implements OnInit {
   public operateReceiveCommand(commandName, params?) {
     let paramsNameArray: any;
     let paramsobj = {};
-    const methodName = this.commandList[this.commandList.findIndex(e => e['commandName'] === commandName)];
+    const methodName = this.commandList[this.commandList.findIndex((e) => e['commandName'] === commandName)];
     if (methodName['declareParams'] && methodName['declareParams'].length > 0) {
       paramsNameArray = Object.keys(methodName['declareParams']);
-      paramsNameArray.forEach(e => {
-        paramsobj[e] = params[e]
-      })
+      paramsNameArray.forEach((e) => {
+        paramsobj[e] = params[e];
+      });
       this.analysisCommand(methodName['commandName'], methodName['commandContent'], paramsobj);
     } else {
       this.analysisCommand(methodName['commandName'], methodName['commandContent'], null);
@@ -211,7 +208,7 @@ export class SmtDataTableComponent extends SmtComponentBase implements OnInit {
           break;
         case 'commandConfig':
           for (let j = 0; j < content[i].commandConfig.length; j++) {
-            new SmtMessageSenderResolver(this).resolve(content[i]['commandConfig'][j])
+            new SmtMessageSenderResolver(this).resolve(content[i]['commandConfig'][j]);
           }
       }
     }
@@ -223,9 +220,8 @@ export class SmtDataTableComponent extends SmtComponentBase implements OnInit {
       cacheValue: this.CACHE_VALUE,
       tempValue: this.TEMP_VALUE,
       item: this.SELECTED_ITEM,
-      pageCode: this.CACHE_VALUE.getNone('activeMenu')['mainPageId']
-    }
-
+      pageCode: this.CACHE_VALUE.getNone('activeMenu')['mainPageId'],
+    };
   }
 
   public buildParam() {
@@ -236,11 +232,11 @@ export class SmtDataTableComponent extends SmtComponentBase implements OnInit {
       cacheValue: this.CACHE_VALUE,
       selectedItem: this.SELECTED_ITEM,
       currentItem: this.SELECTED_ITEM,
-    }
+    };
   }
 
   public createTableConfig(cfg) {
-    const newConfig = new SmtDataTableAdapter;
+    const newConfig = new SmtDataTableAdapter();
     this.dataTableConfig = newConfig.transformConfigToDataTbale(cfg);
   }
 
@@ -259,12 +255,13 @@ export class SmtDataTableComponent extends SmtComponentBase implements OnInit {
 
   public initProperty() {
     this.KEY_ID = this.dataTableConfig.keyId;
-    this.pageSize = typeof (this.dataTableConfig.pageSize) === 'string' ? parseInt(this.dataTableConfig.pageSize) : this.dataTableConfig.pageSize;
+    this.pageSize =
+      typeof this.dataTableConfig.pageSize === 'string' ? parseInt(this.dataTableConfig.pageSize) : this.dataTableConfig.pageSize;
     this.pageSizeOptions = this.dataTableConfig.pageSizeOptions;
     this.showTotal = this.dataTableConfig.showTotal;
     this.dataSourceCfg = {
-      loadingOnInit: true,
-      async: false,
+      loadingOnInit: this.dataTableConfig.hasOwnProperty('loadingOnInit') ? this.dataTableConfig.loadingOnInit : false,
+      async: this.dataTableConfig.hasOwnProperty('async') ? this.dataTableConfig.async : false,
       loadingConfig: {
         id: this.dataTableConfig.mainSource.hasOwnProperty('id') ? this.dataTableConfig.mainSource.id : 'loading',
         // 请求地址，inner 匹配的后台地址
@@ -280,15 +277,14 @@ export class SmtDataTableComponent extends SmtComponentBase implements OnInit {
         // 查询参数
         queryParams: this.dataTableConfig.mainSource.queryParams.length > 0 ? this.dataTableConfig.mainSource.queryParams : [],
         // 请求体参数
-        bodyParams: this.dataTableConfig.mainSource.bodyParams.length > 0 ? this.dataTableConfig.mainSource.bodyParams : []
-      }
-    }
+        bodyParams: this.dataTableConfig.mainSource.bodyParams.length > 0 ? this.dataTableConfig.mainSource.bodyParams : [],
+      },
+    };
     this._buildColumns(this.dataTableConfig.columns, this.dataTableConfig);
     this.createTableMapping();
   }
 
   private _buildColumns(columns, cfg) {
-
     if (Array.isArray(columns) && columns.length > 0) {
       const colIndex = columns.filter((item) => item.type === 'index');
       const colObjs = columns.filter((item) => item.type === 'field');
@@ -312,9 +308,9 @@ export class SmtDataTableComponent extends SmtComponentBase implements OnInit {
       if (actionCfgs && actionCfgs.length > 0) {
         actionCfgs.map((action) => {
           const colActions = [];
-          cfg.children.forEach(toolbar => {
+          cfg.children.forEach((toolbar) => {
             if (action['id'] === toolbar['positionId']) {
-              colActions.push(toolbar)
+              colActions.push(toolbar);
             }
           });
           if (colActions.length > 0) {
@@ -335,7 +331,7 @@ export class SmtDataTableComponent extends SmtComponentBase implements OnInit {
   }
 
   public createTableMapping() {
-    this.dataList.forEach(d => {
+    this.dataList.forEach((d) => {
       this.mapOfDataState[d[this.KEY_ID]] = {
         disabled: false,
         checked: false, // index === 0 ? true : false,
@@ -438,13 +434,13 @@ export class SmtDataTableComponent extends SmtComponentBase implements OnInit {
 
   public createIds(array) {
     let ids = '';
-    const checkedIdsObj = { IDS: '' }
+    const checkedIdsObj = { IDS: '' };
     if (array.length > 0) {
       for (let i = 0; i < array.length; i++) {
         if (i === 0) {
-          ids = array[i][this.KEY_ID]
+          ids = array[i][this.KEY_ID];
         } else {
-          ids = ids + ',' + array[i][this.KEY_ID]
+          ids = ids + ',' + array[i][this.KEY_ID];
         }
       }
       checkedIdsObj['IDS'] = ids;
@@ -462,6 +458,7 @@ export class SmtDataTableComponent extends SmtComponentBase implements OnInit {
   }
 
   public async load(iden) {
+    debugger;
     let response: any;
     // if (iden) {
     if (!this.dataSourceCfg.loadingConfig) {
@@ -473,14 +470,14 @@ export class SmtDataTableComponent extends SmtComponentBase implements OnInit {
       response = await this.executeHttp(this.dataSourceCfg['loadingConfig'], null, 'paging');
     }
 
-    if (typeof (iden) !== 'string') {
+    if (typeof iden !== 'string') {
       const resObj = this.createCommandUrl('load');
 
       // response = await this.executeHttp(resObj.ajaxConfig, null, 'paging');
 
       if (resObj.result && resObj.result.length > 0) {
-        resObj.result.forEach(result => {
-          new SmtCommandResolver(this).afterOperate(result, this.createCommandModel(), this.componentService.modalService)
+        resObj.result.forEach((result) => {
+          new SmtCommandResolver(this).afterOperate(result, this.createCommandModel(), this.componentService.modalService);
         });
       }
     }
@@ -834,8 +831,8 @@ export class SmtDataTableComponent extends SmtComponentBase implements OnInit {
     }
 
     if (option['result'] && option['result'].length > 0) {
-      option['result'].forEach(result => {
-        new SmtCommandResolver(this).afterOperate(result, this.createCommandModel(), this.componentService.modalService)
+      option['result'].forEach((result) => {
+        new SmtCommandResolver(this).afterOperate(result, this.createCommandModel(), this.componentService.modalService);
       });
     }
 
@@ -850,16 +847,16 @@ export class SmtDataTableComponent extends SmtComponentBase implements OnInit {
     let ajaxConfig: any;
     let result: any;
     let commandConfig: any;
-    const commandList = Object.keys(this.COMPONENT_METHODS)
+    const commandList = Object.keys(this.COMPONENT_METHODS);
     for (let i = 0; i < commandList.length; i++) {
       if (this.COMPONENT_METHODS[commandList[i]] === methodName) {
         commandName = commandList[i];
       }
     }
     if (commandName) {
-      this.dataTableConfig.customCommand.forEach(command => {
+      this.dataTableConfig.customCommand.forEach((command) => {
         if (command.command === commandName) {
-          command.commandContent.forEach(content => {
+          command.commandContent.forEach((content) => {
             if (content.type === 'ajaxConfig') {
               ajaxConfig = content.ajaxConfig;
               result = content.result;
@@ -875,22 +872,21 @@ export class SmtDataTableComponent extends SmtComponentBase implements OnInit {
     return {
       result: result,
       ajaxConfig: ajaxConfig,
-      commandConfig: commandConfig
-    }
+      commandConfig: commandConfig,
+    };
   }
 
   public async deleteRow(option: { ID: string }) {
     let response: any;
     const resObj = this.createCommandUrl('deleteRow');
 
-
     if (option.ID && option.ID !== null) {
       response = await this.executeHttp(resObj.ajaxConfig, option.ID, null);
     }
 
     if (resObj.result && resObj.result.length > 0) {
-      resObj.result.forEach(result => {
-        new SmtCommandResolver(this).afterOperate(result, this.createCommandModel(), this.componentService.modalService)
+      resObj.result.forEach((result) => {
+        new SmtCommandResolver(this).afterOperate(result, this.createCommandModel(), this.componentService.modalService);
       });
     }
 
@@ -906,8 +902,8 @@ export class SmtDataTableComponent extends SmtComponentBase implements OnInit {
     }
 
     if (option['result'] && option['result'].length > 0) {
-      option['result'].forEach(result => {
-        new SmtCommandResolver(this).afterOperate(result, this.createCommandModel(), this.componentService.modalService)
+      option['result'].forEach((result) => {
+        new SmtCommandResolver(this).afterOperate(result, this.createCommandModel(), this.componentService.modalService);
       });
     }
   }

@@ -7,6 +7,8 @@ import { BSN_COMPONENT_SERVICES, ISenderModel } from 'src/app/core/relations/bsn
 import { ComponentServiceProvider } from 'src/app/core/services/components/component.service';
 import { pageServerService } from 'src/app/core/services/page/page.service';
 import { CommonUtils } from 'src/app/core/utils/common-utils';
+import { SmtCommandResolver } from '../../resolver/smt-command/smt-command.resovel';
+import { SmtEventResolver } from '../../resolver/smt-event/smt-event-resolver';
 import { SmtComponentBase } from '../smt-component.base';
 
 interface ITreeBindProperties {
@@ -156,16 +158,6 @@ export class SmtTreeComponent extends SmtComponentBase implements OnInit, OnDest
         preCondition: [],
         declareParameters: [
           {
-            name: 'type',
-            type: 'value',
-            value: 'success',
-          },
-          {
-            name: 'message',
-            type: 'value',
-            value: '发送消息',
-          },
-          {
             name: 'ID',
             type: 'dataItem',
             valueName: 'ID',
@@ -183,13 +175,23 @@ export class SmtTreeComponent extends SmtComponentBase implements OnInit, OnDest
           {
             type: 'commandConfig',
             commandConfig: [
-              // {
-              //   "targetViewId": "treeDemo",
-              //   "commandType": "custom",
-              //   "command": "MESSAGE",
-              //   "parameters": [
-              //   ]
-              // }
+              {
+                targetViewId: 'Tk9X3Oi3WtZ7SEBAYGnuTttohHmqAW',
+                commandType: 'builtin',
+                command: 'MESSAGE',
+                parameters: [
+                  {
+                    name: 'type',
+                    type: 'value',
+                    value: 'success',
+                  },
+                  {
+                    name: 'message',
+                    type: 'value',
+                    value: '发送消息',
+                  },
+                ],
+              },
             ],
           },
         ],
@@ -277,22 +279,12 @@ export class SmtTreeComponent extends SmtComponentBase implements OnInit, OnDest
           {
             name: '$mode$',
             type: 'value',
-            value: 'RECURSIVE_QUERY',
+            value: 'UNIQUE_QUERY',
           },
           {
-            name: '_recursive',
+            name: '$mode$',
             type: 'value',
-            value: true,
-          },
-          {
-            name: '_deep',
-            type: 'value',
-            value: 2,
-          },
-          {
-            name: '_pcName',
-            type: 'value',
-            value: 'PARENT_ID',
+            value: 'UNIQUE_QUERY',
           },
         ], // 查询参数
         bodyParams: [], // 请求体参数
@@ -710,7 +702,7 @@ export class SmtTreeComponent extends SmtComponentBase implements OnInit, OnDest
     };
   }
 
-  getActions(state): any { }
+  getActions(state): any {}
 
   public deleteCheckedNodes(option) {
     if (option.ids) {
@@ -1132,9 +1124,9 @@ export class SmtTreeComponent extends SmtComponentBase implements OnInit, OnDest
     });
   }
 
-  public showUpload() { }
+  public showUpload() {}
 
-  public showBatchDialog() { }
+  public showBatchDialog() {}
 
   /**
    * 显示消息框
@@ -1180,20 +1172,20 @@ export class SmtTreeComponent extends SmtComponentBase implements OnInit, OnDest
 
   private _resolveRelations(eventConfig: any) {
     if (eventConfig.componentEvent) {
-      this._sender$ = new SmtComponentEventResolver(this).resolve(eventConfig.componentEvent);
+      this._sender$ = new SmtEventResolver(this).resolve(eventConfig.componentEvent);
       this._sender_subscription$ = this._sender$.subscribe();
     }
   }
 
   private _resolveReceiver(commandConfig: any) {
     if (commandConfig.customCommand && commandConfig.customCommand.length > 0) {
-      new SmtComponentCommandResolver(this).resolve(commandConfig.customCommand);
+      new SmtCommandResolver(this).resolve(commandConfig.customCommand);
     }
   }
 }
 
 export class SmtComponentEventResolver {
-  constructor(private _componentInstance: any) { }
+  constructor(private _componentInstance: any) {}
   public resolve(componentEvents: any[]): any {
     if (componentEvents && Array.isArray(componentEvents) && componentEvents.length > 0) {
       const source$ = from(componentEvents);
@@ -1226,11 +1218,11 @@ export class SmtComponentEventResolver {
     }
   }
 
-  private _resolvePreCondition(condition: any[]) { }
+  private _resolvePreCondition(condition: any[]) {}
 }
 
 export class ComponentEventSender {
-  constructor(private _componentInstance: any) { }
+  constructor(private _componentInstance: any) {}
 
   public sendEvent(eventName: string, senderModel: ISenderModel) {
     this._componentInstance['after'](this._componentInstance, this._componentInstance.COMPONENT_METHODS[eventName], () => {
@@ -1247,16 +1239,16 @@ export class ComponentEventSender {
 }
 
 export class SmtComponentCommandResolver {
-  constructor(private _componentInstance: any) { }
+  constructor(private _componentInstance: any) {}
   public resolve(customCommand: any[]): any {
     if (!this._componentInstance.subscription$) {
       console.log('==========》subscription');
-      // debugger;
+      debugger;
       this._componentInstance.subscription$ = this._componentInstance.componentService.smtRelationSubject.subscribe(
         (eventData: ISenderModel) => {
           console.log('commandItem');
           customCommand.map((cmdItem: any) => {
-            // debugger;
+            debugger;
             if (cmdItem.command === eventData.command && eventData.pageCode === this._componentInstance.dataServe.pageCode) {
               // 缺少pageCode 判断
               this._executeCommand(eventData.data, cmdItem);
