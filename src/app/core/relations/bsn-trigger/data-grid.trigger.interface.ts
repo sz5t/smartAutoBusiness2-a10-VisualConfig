@@ -47,6 +47,7 @@ export interface IDataGridTrigger {
 
     SAVE_ROW: string;
     SAVE_ROWS: string;
+    DELETE_ROW: string;
     DELETE_CURRENT_ROW: string;
     DELETE_CHECKED_ROWS: string;
     EXECUTE_CURRENT_ROW: string;
@@ -112,6 +113,7 @@ export const BSN_DATAGRID_TRIGGER: IDataGridTrigger = {
     // operation
     SAVE_ROW: 'SAVE_ROW',
     SAVE_ROWS: 'SAVE_ROWS',
+    DELETE_ROW: 'DELETE_ROW',
     DELETE_CURRENT_ROW: 'DELETE_CURRENT_ROW',
     DELETE_CHECKED_ROWS: 'DELETE_CHECKED_ROWS',
     EXECUTE_CURRENT_ROW: 'EXECUTE_CURRENT_ROW',

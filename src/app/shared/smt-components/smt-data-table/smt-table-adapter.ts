@@ -19,6 +19,8 @@ export class SmtDataTableAdapter {
         dataTableConfig['customCommand'] = config.hasOwnProperty('customCommand') ? config.customCommand : [];
         dataTableConfig['eventConent'] = config.hasOwnProperty('componentEvent') ? config.componentEvent : [];
         dataTableConfig['mainSource'] = config.hasOwnProperty('mainSource') ? config.mainSource : [];
+        dataTableConfig['loadingOnInit'] = config.hasOwnProperty('loadingOnInit') ? config.loadingOnInit : false;
+        dataTableConfig['async'] = config.hasOwnProperty('async') ? config.async : false;
         return dataTableConfig;
     }
 }

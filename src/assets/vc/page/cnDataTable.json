@@ -49,6 +49,12 @@
                                     "name": "showCheckBox"
                                 },
                                 {
+                                    "name": "loadingOnInit"
+                                },
+                                {
+                                    "name": "async"
+                                },
+                                {
                                     "name": "mainSource"
                                 }
                             ],
@@ -168,6 +174,24 @@
                                     "formName": "formControlName",
                                     "validations": [],
                                     "title": "是否可勾选"
+                                },
+                                {
+                                    "name": "loadingOnInit",
+                                    "type": "switch",
+                                    "componentConfig": {},
+                                    "formType": "value",
+                                    "formName": "formControlName",
+                                    "validations": [],
+                                    "title": "是否初始化加载"
+                                },
+                                {
+                                    "name": "async",
+                                    "type": "switch",
+                                    "componentConfig": {},
+                                    "formType": "value",
+                                    "formName": "formControlName",
+                                    "validations": [],
+                                    "title": "是否异步"
                                 },
                                 {
                                     "name": "mainSource",

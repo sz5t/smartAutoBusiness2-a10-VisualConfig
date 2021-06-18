@@ -16,6 +16,7 @@ export class SmtComponentComponent implements OnInit {
 
   ngOnInit(): void {
     this.config;
+    debugger;
     this.componentConfig = this.dataServe.componentsConfig[this.config.id];
     this.componentConfig['header'] = (this.config.children.length > 0 && this.config.children.findIndex(e => e.type === 'cnToolbar') > -1) ? true : false;
   }

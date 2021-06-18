@@ -2,8 +2,7 @@
     <span class="toolbarGroup" *ngIf="toolbar.type === 'button'">
         <ng-container *ngIf="toolbar.icon">
             <button style="font-weight: 500" [nzSize]="toolbar.size ? toolbar.size : 'default'"
-                [nzType]="toolbar.color ? toolbar.color : 'default'" nz-button type="button"
-                (click)="action(toolbar, config.originData)">
+                [nzType]="toolbar.color ? toolbar.color : 'default'" nz-button type="button" (click)="action(toolbar)">
                 <i nz-icon [nzType]="toolbar.icon ? toolbar.icon : 'edit'"
                     [nzTheme]="toolbar.theme ? toolbar.theme : 'outline'" [nzTwotoneColor]="'#A5A5B8'"></i>
                 {{toolbar.title}}
@@ -11,8 +10,7 @@
         </ng-container>
         <ng-container *ngIf="!toolbar.icon">
             <button style="font-weight: 500" [nzSize]="toolbar.size ? toolbar.size : 'default'"
-                [nzType]="toolbar.color ? toolbar.color : 'default'" nz-button type="button"
-                (click)="action(toolbar, config.originData)">
+                [nzType]="toolbar.color ? toolbar.color : 'default'" nz-button type="button" (click)="action(toolbar)">
                 {{toolbar.title}}
             </button>
 
@@ -28,7 +26,7 @@
         <nz-dropdown-menu #menu="nzDropdownMenu">
             <ul nz-menu>
                 <ng-template ngFor let-btn [ngForOf]="toolbar.children">
-                    <li nz-menu-item (click)="action(btn, config.originData)">
+                    <li nz-menu-item (click)="action(btn)">
                         <i nz-icon [nzType]="btn.icon ? btn.icon : 'edit'" [nzTheme]="btn.theme ? btn.theme : 'outline'"
                             [nzTwotoneColor]="'#A5A5B8'"></i> {{btn.title}}
                     </li>

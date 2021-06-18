@@ -41,10 +41,10 @@ export interface ISenderModel {
  * 业务消息模型
  */
 export class BsnRelativesMessageModel {
-  constructor(public trigger: any, public viewId: string, public options?: any) {}
+  constructor(public trigger: any, public viewId: string, public options?: any) { }
 }
 
 // 发送命令结构
 export class BsnCommandMessageModel {
-  constructor(public commandId: any, public pageCode: string, public sendComponent: string, public data: any) {}
+  constructor(public command: any, public pageCode: string, public targetViewId: string, public params: any[]) { }
 }
