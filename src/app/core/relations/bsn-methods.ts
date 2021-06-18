@@ -1,5 +1,4 @@
 import { IDataGridTrigger } from './bsn-trigger/data-grid.trigger.interface';
-import { IToolbarTrigger } from './bsn-trigger/toolbar.trigger.interface';
 
 export const CN_DATA_GRID_METHOD: IDataGridTrigger = {
     // state
@@ -19,6 +18,7 @@ export const CN_DATA_GRID_METHOD: IDataGridTrigger = {
     SHOW_INVALIDATE_EDITED_ROWS: 'showInvalidateEditedRows',
     DOWN_XLSX: 'down_xlsx',
     // action
+
     DIALOG: 'showDialog',
     WINDOW: 'showWindow',
     UPLOAD: 'showUpload',
@@ -46,6 +46,9 @@ export const CN_DATA_GRID_METHOD: IDataGridTrigger = {
     LOAD_BY_FILTER: 'loadByFilter',
     LOAD_REFRESH_DATA: 'loadRefreshData',
 
+    // command测试
+    SEND_COMMAND: 'sendCommand',
+
 
 
     // link
@@ -55,6 +58,7 @@ export const CN_DATA_GRID_METHOD: IDataGridTrigger = {
     // operation
     SAVE_ROW: 'saveRow',
     SAVE_ROWS: 'saveRows',
+    DELETE_ROW: 'deleteRow',
     DELETE_CURRENT_ROW: 'deleteCurrentRow',
     DELETE_CHECKED_ROWS: 'deleteCheckedRows',
     EXECUTE_CURRENT_ROW: 'executeCurrentRow',
@@ -66,13 +70,13 @@ export const CN_DATA_GRID_METHOD: IDataGridTrigger = {
     EXECUTE_ANALYSIS_LAYOUT: 'executeAnalysisLayout'
 };
 
-export const CN_TOOLBAR_METHOD: IToolbarTrigger = {
-    STATE_TO_TEXT: 'stateToText',
-    STATE_TO_EDIT: 'stateToEdit',
-    EXECUTE_NONE: 'executeNone',
-    EXECUTE_NONE_EDIT: 'executeNoneEdit',
-    SET_OPERATION_DATA: 'setOperationData',
-    EXECUTE: 'execute',
-    EXECUTE_ACTION: 'executeAction',
-    BUTTON_STATE_SWITCH: 'buttonStateSwitch'
-};
+// export const CN_TOOLBAR_METHOD: IToolbarTrigger = {
+//     STATE_TO_TEXT: 'stateToText',
+//     STATE_TO_EDIT: 'stateToEdit',
+//     EXECUTE_NONE: 'executeNone',
+//     EXECUTE_NONE_EDIT: 'executeNoneEdit',
+//     SET_OPERATION_DATA: 'setOperationData',
+//     EXECUTE: 'execute',
+//     EXECUTE_ACTION: 'executeAction',
+//     BUTTON_STATE_SWITCH: 'buttonStateSwitch'
+// };

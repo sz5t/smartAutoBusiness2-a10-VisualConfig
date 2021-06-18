@@ -6,7 +6,7 @@ import { Component, Input, OnInit } from '@angular/core';
   styles: [],
 })
 export class SmtComponentComponent implements OnInit {
-  constructor() {}
+  constructor() { }
   @Input() public config; // 结构树
   @Input() public dataServe;
   @Input() public initData;
@@ -17,7 +17,6 @@ export class SmtComponentComponent implements OnInit {
   ngOnInit(): void {
     this.config;
     this.componentConfig = this.dataServe.componentsConfig[this.config.id];
-    this.componentConfig['header'] =
-      this.config.children.length > 0 && this.config.children.findIndex((e) => e.type === 'cnToolbar') > -1 ? true : false;
+    this.componentConfig['header'] = (this.config.children.length > 0 && this.config.children.findIndex(e => e.type === 'cnToolbar') > -1) ? true : false;
   }
 }

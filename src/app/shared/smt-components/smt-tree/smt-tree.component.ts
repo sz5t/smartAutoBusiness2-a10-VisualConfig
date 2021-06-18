@@ -696,7 +696,7 @@ export class SmtTreeComponent extends SmtComponentBase implements OnInit, OnDest
     };
   }
 
-  getActions(state): any {}
+  getActions(state): any { }
 
   public deleteCheckedNodes(option) {
     if (option.ids) {
@@ -1118,9 +1118,9 @@ export class SmtTreeComponent extends SmtComponentBase implements OnInit, OnDest
     });
   }
 
-  public showUpload() {}
+  public showUpload() { }
 
-  public showBatchDialog() {}
+  public showBatchDialog() { }
 
   /**
    * 显示消息框
@@ -1179,7 +1179,7 @@ export class SmtTreeComponent extends SmtComponentBase implements OnInit, OnDest
 }
 
 export class SmtComponentEventResolver {
-  constructor(private _componentInstance: any) {}
+  constructor(private _componentInstance: any) { }
   public resolve(componentEvents: any[]): any {
     if (componentEvents && Array.isArray(componentEvents) && componentEvents.length > 0) {
       const source$ = from(componentEvents);
@@ -1212,11 +1212,11 @@ export class SmtComponentEventResolver {
     }
   }
 
-  private _resolvePreCondition(condition: any[]) {}
+  private _resolvePreCondition(condition: any[]) { }
 }
 
 export class ComponentEventSender {
-  constructor(private _componentInstance: any) {}
+  constructor(private _componentInstance: any) { }
 
   public sendEvent(eventName: string, senderModel: ISenderModel) {
     this._componentInstance['after'](this._componentInstance, this._componentInstance.COMPONENT_METHODS[eventName], () => {
@@ -1233,16 +1233,16 @@ export class ComponentEventSender {
 }
 
 export class SmtComponentCommandResolver {
-  constructor(private _componentInstance: any) {}
+  constructor(private _componentInstance: any) { }
   public resolve(customCommand: any[]): any {
     if (!this._componentInstance.subscription$) {
       console.log('==========》subscription');
-      debugger;
+      // debugger;
       this._componentInstance.subscription$ = this._componentInstance.componentService.smtRelationSubject.subscribe(
         (eventData: ISenderModel) => {
           console.log('commandItem');
           customCommand.map((cmdItem: any) => {
-            debugger;
+            // debugger;
             if (cmdItem.command === eventData.command && eventData.pageCode === this._componentInstance.dataServe.pageCode) {
               // 缺少pageCode 判断
               this._executeCommand(eventData.data, cmdItem);

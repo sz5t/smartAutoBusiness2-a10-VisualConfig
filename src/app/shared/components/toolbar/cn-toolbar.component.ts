@@ -3,11 +3,11 @@ import { Component, OnInit, OnDestroy, Inject, Input } from '@angular/core';
 import { BSN_COMPONENT_SERVICES } from 'src/app/core/relations/bsn-relatives';
 import { ComponentServiceProvider } from 'src/app/core/services/components/component.service';
 import { Subject, Subscription } from 'rxjs';
-import { CN_TOOLBAR_METHOD } from 'src/app/core/relations/bsn-methods';
 import { RelationResolver } from '../../resolver/relation/relation.resolver';
 import { environment } from '@env/environment';
 import { ButtonOperationResolver } from '../../resolver/buttonOperation/buttonOperation.resolver';
 import { ParameterResolver } from '../../resolver/parameter/parameter.resolver';
+import { CN_TOOLBAR_METHOD } from 'src/app/core/relations/bsn-methods/bsn-toolbar-method';
 
 @Component({
   // tslint:disable-next-line: component-selector
@@ -355,9 +355,9 @@ export class CnToolbarComponent extends CnComponentBase implements OnInit, OnDes
     btnResolver.toolbarAction(btn, option.targetViewId);
   }
 
-  public executeNone() {}
+  public executeNone() { }
 
-  public executeNoneEdit() {}
+  public executeNoneEdit() { }
 
   public ngOnDestroy() {
     // 释放级联对象
