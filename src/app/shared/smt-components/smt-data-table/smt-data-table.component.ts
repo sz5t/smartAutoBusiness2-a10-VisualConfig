@@ -51,33 +51,6 @@ export class SmtDataTableComponent extends SmtComponentBase implements OnInit {
   public dataList: any[] = [
     // 数据源数组
   ];
-  public execConfig = {
-    loading: {
-      loadingOninit: true,
-      id: 'loading',
-      urlType: 'inner', // 请求地址，inner 匹配的后台地址
-      urlContent: {
-        // 适配外部请求
-        name: 'system_url',
-        title: '权限系统访问地址',
-      },
-      url: 'resource/SQL_PERCENT/query/{pathParam1}',
-      headParams: [
-        // 头部参数
-      ],
-      ajaxType: 'post',
-      pathParams: [
-        // 路径参数
-        {
-          name: 'pathParam',
-          type: 'value',
-          value: 'ddd',
-        },
-      ],
-      queryParams: [], // 查询参数
-      bodyParams: [], // 请求体参数
-    },
-  };
   public _sortName;
   public _sortValue;
   public xlsx;
@@ -177,7 +150,7 @@ export class SmtDataTableComponent extends SmtComponentBase implements OnInit {
       // 执行命令发送后置
       if (resObj.result && resObj.result.length > 0) {
         resObj.result.forEach((result) => {
-          new SmtCommandResolver(this).afterOperate(result, this.createCommandModel(), this.componentService.modalService);
+          new SmtCommandResolver(this).afterOperate(result, this.componentService.modalService);
         });
       }
     }
@@ -458,7 +431,6 @@ export class SmtDataTableComponent extends SmtComponentBase implements OnInit {
   }
 
   public async load(iden) {
-    debugger;
     let response: any;
     // if (iden) {
     if (!this.dataSourceCfg.loadingConfig) {
@@ -477,7 +449,7 @@ export class SmtDataTableComponent extends SmtComponentBase implements OnInit {
 
       if (resObj.result && resObj.result.length > 0) {
         resObj.result.forEach((result) => {
-          new SmtCommandResolver(this).afterOperate(result, this.createCommandModel(), this.componentService.modalService);
+          new SmtCommandResolver(this).afterOperate(result, this.componentService.modalService);
         });
       }
     }
@@ -539,8 +511,8 @@ export class SmtDataTableComponent extends SmtComponentBase implements OnInit {
 
   // 有操作之后的刷新方法
   public loadRefreshData(option) {
-    if (this.execConfig.loading) {
-      this.executeHttp(this.execConfig.loading, 'buildParameters', 'paging').then(
+    if (this.dataSourceCfg.loadingConfig) {
+      this.executeHttp(this.dataSourceCfg.loadingConfig, 'buildParameters', 'paging').then(
         (response) => {
           if (response && response.data && response.data) {
             this.refreshData(response.data.resultDatas);
@@ -832,7 +804,7 @@ export class SmtDataTableComponent extends SmtComponentBase implements OnInit {
 
     if (option['result'] && option['result'].length > 0) {
       option['result'].forEach((result) => {
-        new SmtCommandResolver(this).afterOperate(result, this.createCommandModel(), this.componentService.modalService);
+        new SmtCommandResolver(this).afterOperate(result, this.componentService.modalService);
       });
     }
 
@@ -886,7 +858,7 @@ export class SmtDataTableComponent extends SmtComponentBase implements OnInit {
 
     if (resObj.result && resObj.result.length > 0) {
       resObj.result.forEach((result) => {
-        new SmtCommandResolver(this).afterOperate(result, this.createCommandModel(), this.componentService.modalService);
+        new SmtCommandResolver(this).afterOperate(result, this.componentService.modalService);
       });
     }
 
@@ -903,7 +875,7 @@ export class SmtDataTableComponent extends SmtComponentBase implements OnInit {
 
     if (option['result'] && option['result'].length > 0) {
       option['result'].forEach((result) => {
-        new SmtCommandResolver(this).afterOperate(result, this.createCommandModel(), this.componentService.modalService);
+        new SmtCommandResolver(this).afterOperate(result, this.componentService.modalService);
       });
     }
   }
@@ -1184,7 +1156,7 @@ export class SmtDataTableComponent extends SmtComponentBase implements OnInit {
       }
     });
     const data = [col.map((i) => i.title)];
-    const response: any = this.executeHttp(this.execConfig.loading, null, null);
+    const response: any = this.executeHttp(this.dataSourceCfg.loadingConfig, null, null);
     if (response.success && response.data.length > 0) {
       response.data.forEach((i) => {
         // console.log(i)
