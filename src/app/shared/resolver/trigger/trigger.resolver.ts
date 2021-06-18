@@ -3,7 +3,7 @@ import { BsnRelativesMessageModel } from 'src/app/core/relations/bsn-relatives';
 import { BSN_TRIGGER_TYPE } from 'src/app/core/relations/bsn-status';
 
 export class GridTrigger {
-  constructor(private _triggerMsg: BsnRelativesMessageModel, private _componentInstance) {}
+  constructor(private _triggerMsg: BsnRelativesMessageModel, private _componentInstance) { }
   public resolve() {
     switch (this._triggerMsg.trigger.triggerType) {
       case BSN_TRIGGER_TYPE.STATE:
@@ -61,27 +61,27 @@ export class GridTrigger {
 }
 
 export class FormTrigger {
-  constructor(private _triggerMsg: any, private _componentInstance) {}
-  public resolve() {}
+  constructor(private _triggerMsg: any, private _componentInstance) { }
+  public resolve() { }
 }
 
 export class TreeTrigger {
-  constructor(private _triggerMsg: any, private _componentInstance) {}
-  public resolve() {}
+  constructor(private _triggerMsg: any, private _componentInstance) { }
+  public resolve() { }
 }
 
 export class AsyncTreeTrigger {
-  constructor(private _triggerMsg: any, private _componentInstance) {}
-  public resolve() {}
+  constructor(private _triggerMsg: any, private _componentInstance) { }
+  public resolve() { }
 }
 
 export class TreeGridTrigger {
-  constructor(private _triggerMsg: any, private _componentInstance) {}
-  public resolve() {}
+  constructor(private _triggerMsg: any, private _componentInstance) { }
+  public resolve() { }
 }
 
 export class TriggerResolver {
-  constructor(private _triggerMsg: any, private _componentInstance: any) {}
+  constructor(private _triggerMsg: any, private _componentInstance: any) { }
 
   public resolve() {
     switch (this._triggerMsg.trigger.triggerType) {

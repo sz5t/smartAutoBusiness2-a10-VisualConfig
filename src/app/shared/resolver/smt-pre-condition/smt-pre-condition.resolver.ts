@@ -1,42 +1,20 @@
-import { NzModalService } from "ng-zorro-antd/modal";
 import { SmtParameterResolver } from "../smt-parameter/smt-parameter-resolver";
 
-export class SmtProCondition {
-  tempValue: any;
-  initValue: any;
-  item: any;
-  cacheValue: any;
-  beforeOperationCfg: any;
+export class SmtPreCondition {
   resultMap: any = {
     pass: true,
     prevent: false
   }
   constructor(
-    private _config: any,
-    private _initValue: any,
-    private _cacheValue: any,
-    private _tempValue: any,
-    private _item: any,
-    private _modal?: NzModalService,
+    private _componentInstance: any
   ) {
-    this.tempValue = _tempValue;
-    this.initValue = _initValue;
-    this.cacheValue = _cacheValue;
-    this.beforeOperationCfg = _config;
-    this.item = _item;
-    this.resolverBeforeOperation();
   }
 
-  private resolverBeforeOperation() {
-    const result = this.resolverBeforeOperationInfo();
-    return result;
-  }
-
-  private resolverBeforeOperationInfo() {
+  public resolverBeforeOperationInfo(config, modal) {
     let result = false;
-    for (let i = 0; i < this.beforeOperationCfg.length; i++) {
-      const result = this.analysisResult(this.beforeOperationCfg[i]['condition']);
-      const nextOperate = this.responseOperate(result, this.beforeOperationCfg[i]['reasult']);
+    for (let i = 0; i < config.length; i++) {
+      const result = this.analysisResult(config[i]['condition']);
+      const nextOperate = this.responseOperate(result, config[i]['reasult'], modal);
       if (nextOperate === 'next') { }
       else if (nextOperate === 'prevent') {
         return;
@@ -50,13 +28,13 @@ export class SmtProCondition {
     return result;
   }
 
-  private buildParameter(paramsCfg, value?) {
+  private buildParameter(paramsCfg) {
     const params = SmtParameterResolver.resolve({
       params: paramsCfg,
-      tempValue: this.tempValue,
-      initValue: this.initValue,
-      currentItem: value,
-      selectedItem: value
+      tempValue: this._componentInstance.TEMP_VALUE,
+      initValue: this._componentInstance.INIT_VALUE,
+      currentItem: this._componentInstance.CURRENT_ITEM,
+      selectedItem: this._componentInstance.SELECTED_ITEM
     });
     return params;
   }
@@ -93,17 +71,17 @@ export class SmtProCondition {
     return Result;
   }
 
-  private responseOperate(conditionResult, operation) {
+  private responseOperate(conditionResult, operation, modal) {
     let nextOperate: any;
     let returnValue: any;
     operation.forEach(e => {
       if (this.resultMap(e['info']) === conditionResult) {
         switch (e['type']) {
           case 'message':
-            nextOperate = this.showMessage(e['message'], returnValue);
+            nextOperate = this.showMessage(e['message'], returnValue, modal);
             break;
           case 'confirm':
-            nextOperate = this.showConfirm(e['confirm'], returnValue);
+            nextOperate = this.showConfirm(e['confirm'], returnValue, modal);
             break;
           case 'execution':
             nextOperate = this.showExecution(e['execution'], returnValue);
@@ -126,10 +104,10 @@ export class SmtProCondition {
         back['comput'] = expression['comput'];
       }
       if (expression['leftExpression']) {
-        back['left'] = this.buildParameter(expression['leftExpression'], this.item);
+        back['left'] = this.buildParameter(expression['leftExpression']);
       }
       if (expression['righitExpression']) {
-        back['righit'] = this.buildParameter(expression['righitExpression'], this.item);
+        back['righit'] = this.buildParameter(expression['righitExpression']);
       }
 
     } else {
@@ -186,8 +164,8 @@ export class SmtProCondition {
   }
 
   // 根据前置条件展示提示框
-  showMessage(cfg, returnValue) {
-    this._modal[cfg['type']]({
+  showMessage(cfg, returnValue, modal) {
+    modal[cfg['type']]({
       nzTitle: cfg['messageInfo']['title'] ? cfg['messageInfo']['title'] : '提示',
       nzContent: this.createContent(cfg['messageInfo'])
     })
@@ -195,8 +173,8 @@ export class SmtProCondition {
     return returnValue;
   }
 
-  showConfirm(cfg, returnValue) {
-    this._modal[cfg['type']]({
+  showConfirm(cfg, returnValue, modal) {
+    modal[cfg['type']]({
       nzTitle: cfg['contentInfo']['title'] ? cfg['contentInfo']['title'] : '提示',
       nzContent: this.createContent(cfg['contentInfo']),
       nzOkText: cfg['okInfo']['title'],
@@ -218,7 +196,7 @@ export class SmtProCondition {
 
   createContent(cfg) {
     let content = cfg['content'];
-    const params = this.buildParameter(cfg['parameters'], this.item);
+    const params = this.buildParameter(cfg['parameters']);
     const array = cfg['content'].match(/{(\S*)}/)
     for (let i = 1; i < array.length; i++) {
       const tempName = array[i];

@@ -42,11 +42,14 @@ export interface IDataGridTrigger {
     SET_SELECT_ROW: string;
     EXECUTE_POPUP_CLOSE: string;
 
+    SEND_COMMAND: string;
+
     LINK: string;
     LINK_TO: string;
 
     SAVE_ROW: string;
     SAVE_ROWS: string;
+    DELETE_ROW: string;
     DELETE_CURRENT_ROW: string;
     DELETE_CHECKED_ROWS: string;
     EXECUTE_CURRENT_ROW: string;
@@ -106,12 +109,15 @@ export const BSN_DATAGRID_TRIGGER: IDataGridTrigger = {
     CHECK_ROW: 'CHECK_ROW',
     EXECUTE_POPUP_CLOSE: 'EXECUTE_POPUP_CLOSE',
 
+    SEND_COMMAND: 'SEND_COMMAND',
+
     LINK: 'LINK',
     LINK_TO: 'LINK_TO',
 
     // operation
     SAVE_ROW: 'SAVE_ROW',
     SAVE_ROWS: 'SAVE_ROWS',
+    DELETE_ROW: 'DELETE_ROW',
     DELETE_CURRENT_ROW: 'DELETE_CURRENT_ROW',
     DELETE_CHECKED_ROWS: 'DELETE_CHECKED_ROWS',
     EXECUTE_CURRENT_ROW: 'EXECUTE_CURRENT_ROW',

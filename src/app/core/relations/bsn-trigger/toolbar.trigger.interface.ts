@@ -8,6 +8,7 @@ export interface IToolbarTrigger {
     EXECUTE: string;
     EXECUTE_ACTION: string;
     BUTTON_STATE_SWITCH: string;
+    ACTION: string;
 }
 
 /**
@@ -22,5 +23,7 @@ export const BSN_TOOLBAR_TRIGGER: IToolbarTrigger = {
     SET_OPERATION_DATA: 'SET_OPERATION_DATA',
     EXECUTE: 'EXECUTE',
     EXECUTE_ACTION: 'EXECUTE_ACTION',
-    BUTTON_STATE_SWITCH: 'BUTTON_STATE_SWITCH'
+    BUTTON_STATE_SWITCH: 'BUTTON_STATE_SWITCH',
+
+    ACTION: 'ACTION'
 };

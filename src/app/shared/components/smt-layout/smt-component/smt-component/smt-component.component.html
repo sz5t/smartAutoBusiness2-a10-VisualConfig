@@ -8,11 +8,11 @@
     <ng-template #extraTemplate>
         <div *ngFor="let cmp of config.children">
             <div *ngIf="cmp.type === 'cnToolbar'">
-                <div *ngFor="let cmp of cmp.children">
-                    <ng-container smtComponentResolverDirective [config]="cmp" [tempData]="tempData"
-                        [initData]="initData" [dataServe]="dataServe">
-                    </ng-container>
-                </div>
+                <!-- <div *ngFor="let cmpt of cmp.children">{{cmp.children.length}} -->
+                <ng-container smtComponentResolverDirective [config]="cmp" [tempData]="tempData" [initData]="initData"
+                    [dataServe]="dataServe">
+                </ng-container>
+                <!-- </div> -->
             </div>
         </div>
 

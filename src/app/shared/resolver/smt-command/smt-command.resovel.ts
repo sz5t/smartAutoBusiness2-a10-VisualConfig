@@ -1,42 +1,60 @@
-import { NzModalService } from "ng-zorro-antd/modal";
-import { SmtParameterResolver } from "../smt-parameter/smt-parameter-resolver";
-import { SmtProCondition } from "../smt-pro-condition/smt-pro-condition.resolver";
-import { SmtMessageSenderEnterResolver, SmtMessageSenderResolver } from "../smt-relation/smt-relation-resolver";
+import { ISenderModel } from "src/app/core/relations/bsn-relatives";
+import { SmtPreCondition } from "../smt-pre-condition/smt-pre-condition.resolver";
 
-export interface SmtCommandResolverModel {
-    initValue: any,
-    cacheValue: any,
-    tempValue: any,
-    item: any,
-    pageCode: string
-}
+// 命令解析，命令只关注于接收命令组件执行的方法，只有很少数的方法需要必须的参数传递，大部分的方法只需要调用方法执行即可
 
 export class SmtCommandResolver {
-    model: any;
-    constructor(private _componentInstance, model: SmtCommandResolverModel) {
-        this.model = model;
-    }
-    public resolver(commandArray, data?) {
-        const commandList = [];
-        for (let i = 0; i < commandArray.length; i++) {
-            const paramObj: any = this.declareParams(commandArray[i]['declareParameters']);
-            commandList.push(
-                {
-                    commandName: commandArray[i]['command'],
-                    declareParams: paramObj,
-                    commandContent: commandArray[i]['commandContent']
-                }
-            )
-            if (data) {
-                this.savePrams(commandArray[i]['declareParameters'], data);
-            }
+    constructor(private _componentInstance: any) { }
+    public resolve(customCommand: any[]): any {
+        if (!this._componentInstance.subscription$) {
+            console.log('==========》subscription');
+            // debugger;
+            this._componentInstance.subscription$ = this._componentInstance.componentService.smtRelationSubject.subscribe(
+                (eventData: ISenderModel) => {
+                    console.log('commandItem');
+                    customCommand.map((cmdItem: any) => {
+                        // debugger;
+                        if (cmdItem.command === eventData.command && eventData.pageCode === this._componentInstance.dataServe.pageCode) {
+                            // 缺少pageCode 判断
+                            this._executeCommand(eventData.data, cmdItem);
+                        }
+                    });
+                },
+            );
         }
-        return commandList;
+    }
+
+    private _executeCommand(eventData: any, cmd: any) {
+        if (cmd.preCondition) {
+        }
+        let _execParamsData: any = {};
+        if (cmd.declareParameters && cmd.declareParameters.length > 0) {
+            const declareParamValue = this._componentInstance.buildParameters(cmd.declareParameters, eventData, false);
+            cmd.declareParameters.map((p: any) => {
+                if (p.valueTo && this._componentInstance[p.valueTo]) {
+                    this._componentInstance[p.valueTo][p.name] = declareParamValue[p.name];
+                }
+            });
+            _execParamsData = { ...declareParamValue, ..._execParamsData };
+        }
+        if (cmd.localParameters && cmd.localParameters.length > 0) {
+            const localParamValue = this._componentInstance.buildParameters(cmd.localParameters);
+            cmd.localParameters.map((p: any) => {
+                if (p.valueTo && this._componentInstance[p.valueTo]) {
+                    this._componentInstance[p.valueTo][p.name] = localParamValue[p.name];
+                }
+            });
+
+            _execParamsData = { ...localParamValue, ..._execParamsData };
+        }
+        // 执行命令
+        const method = this._componentInstance.COMPONENT_METHODS[cmd.command];
+        this._componentInstance[method](_execParamsData);
     }
 
     public afterOperate(commandObj, model, modal) {
         if (commandObj['preCondition'] && commandObj['preCondition'].length > 0) {
-            const beforeOperation = new SmtProCondition(commandObj['preCondition'], model.initValue, model.cacheValue, model.tempValue, model.item)
+            const beforeOperation = new SmtPreCondition(this._componentInstance).resolverBeforeOperationInfo(commandObj.preCondition, this._componentInstance.componentService.modalService)
             if (beforeOperation) {
                 this.resultResolver(commandObj, modal);
             } else {
@@ -46,67 +64,6 @@ export class SmtCommandResolver {
             this.resultResolver(commandObj, modal);
         }
     }
-
-    private declareParams(params) {
-        const param = {};
-        params.forEach(p => {
-            param[p['name']] = p['type'];
-        });
-        return param;
-    }
-
-    private savePrams(params, data) {
-        params.forEach(p => {
-            if (p['valueTo']) {
-                switch (p.valueTo) {
-                    case 'tempValue':
-                        this._componentInstance.TEMP_VALUE[p.name] = data[p.name];
-                        break;
-                    case 'initValue':
-                        this._componentInstance.INIT_VALUE[p.name] = data[p.name];
-                        break;
-                    case 'staticComponentValue':
-                        this._componentInstance.STATIC_COMPONENT_VALUE[p.name] = data[p.name];
-                        break;
-                }
-            }
-        });
-    }
-
-    // private commandOperate(command, model) {
-    //     for (let i = 0; i < command.length; i++) {
-    //         if (command[i]['type'] === 'commandConfig') {
-    //             let sendResult = true;
-    //             // 解析命令，发送命令方法
-    //             const commandArray = command[i]['commandConfig'];
-    //             const commandObject = {
-    //                 targetComponentId: command['tagViewId'],
-    //                 targetComponentTitle: command['tagViewTitle'],
-    //                 pageCode: model.pageCode,
-    //                 commandType: command['commandType'],
-    //                 commandTitle: command['command'],
-    //                 params: command['parameters'],
-    //                 initValue: model.initValue,
-    //                 cacheValue: model.cacheValue,
-    //                 tempValue: model.tempValue,
-    //                 item: model.item
-    //             }
-    //             new SmtMessageSenderEnterResolver(this._componentInstance).resolve(commandArray, commandObject);
-    //             if (sendResult) {
-    //                 const nextOperate = this.resultResolver(command['reasult']);
-    //                 if (nextOperate === 'next') { }
-    //                 else if (nextOperate === 'prevent') {
-    //                     return;
-    //                 } else if (nextOperate === 'pass') {
-    //                     break;
-    //                 }
-    //             }
-    //         } else if (command[i]['type'] === 'ajaxConfig') {
-    //             this._componentInstance['executeHttp'](command[i]['ajaxConfig']);
-
-    //         }
-    //     }
-    // }
 
     private resultResolver(result, modal) {
         let nextOperate: any;
@@ -161,7 +118,7 @@ export class SmtCommandResolver {
         let params;
         let array;
         if (cfg['parameters'].length > 0) {
-            params = this.buildParameter(cfg['parameters'], this.model);
+            params = this._componentInstance.buildParameters(cfg['parameters'], null, false);
             array = cfg['content'].match(/{(\S*)}/)
             for (let i = 1; i < array.length; i++) {
                 const tempName = array[i];
@@ -175,17 +132,4 @@ export class SmtCommandResolver {
     nextOperate(type) {
         return type;
     }
-
-    private buildParameter(paramsCfg, model?) {
-        const params = SmtParameterResolver.resolve({
-            params: paramsCfg,
-            tempValue: model.tempValue,
-            initValue: model.initValue,
-            currentItem: model.item,
-            selectedItem: model.item
-        });
-        return params;
-    }
-
-
 }

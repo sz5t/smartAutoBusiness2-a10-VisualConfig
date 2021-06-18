@@ -45,6 +45,7 @@
         </thead>
         <tbody>
             <tr *ngFor="let rowData of dataList">
+                <td *ngIf="config.showCheckBox" [nzShowCheckbox]="config.showCheckBox"></td>
                 <ng-template ngFor let-col [ngForOf]="config.columns">
                     <td *ngIf="col.hasOwnProperty('titleHidden')? !col.titleHidden :!col.hidden">
 
