@@ -15,7 +15,7 @@
     <i nz-icon nzType="search"></i>
   </ng-template>
 
-  <nz-tree #treeComponentObj [nzData]="this.treeBindObj.nodes" [nzAsyncData]="this.dataSourceCfg.async"
+  <nz-tree #treeComponentObj [nzData]="this.treeBindObj.nodes" [nzAsyncData]="this.dataSourceObj.async"
     [nzExpandAll]="treeBindObj.expandAll" [nzBlockNode]="true" [nzCheckStrictly]="this.treeBindObj.checkStrictly"
     [nzCheckable]="this.treeBindObj.showCheckBox" [nzShowLine]="this.treeBindObj.showLine" (nzClick)="clickNode($event)"
     (nzExpandChange)="expandNode($event)" [nzTreeTemplate]="nzTreeTemplate"

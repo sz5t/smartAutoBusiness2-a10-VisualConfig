@@ -18,6 +18,7 @@ export class SmtEventResolver {
   }
 
   private _resolveEventContent(eventName: string, eventContent: any) {
+    debugger;
     // 判断前置条件
     if (eventContent && eventContent.length > 0) {
       new ComponentEventSender(this._componentInstance).sendEvent(eventName, eventContent);

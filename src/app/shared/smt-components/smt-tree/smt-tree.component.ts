@@ -10,34 +10,15 @@ import { CommonUtils } from 'src/app/core/utils/common-utils';
 import { SmtCommandResolver } from '../../resolver/smt-command/smt-command.resovel';
 import { SmtEventResolver } from '../../resolver/smt-event/smt-event-resolver';
 import { SmtComponentBase } from '../smt-component.base';
-
-interface ITreeBindProperties {
-  checkStrictly: boolean;
-  checkStrictlyShow: boolean;
-  nodeSelectionConfig: any[];
-  nodes: any[];
-  isAllChecked: boolean;
-  indeterminate: boolean;
-  checkedNumber: number;
-  showSearch: boolean;
-  searchValue: any;
-  expandAll: boolean;
-  showCheckBox: boolean;
-  showLine: boolean;
-  defaultSelectedKeys: string[];
-  enableState: boolean;
-  iconState: any[];
-  leftIconState: any;
-  rightIconState: any;
-  descField: string;
-}
+import { ISmtComponent } from '../smt-component.interface';
+import { ITreeBindProperties, SmtTreeDataAdapter } from './smt-tree.adapter';
 
 @Component({
   selector: 'smt-tree',
   templateUrl: './smt-tree.component.html',
   styles: [],
 })
-export class SmtTreeComponent extends SmtComponentBase implements OnInit, OnDestroy {
+export class SmtTreeComponent extends SmtComponentBase implements ISmtComponent, OnInit, OnDestroy {
   @Input()
   public config: any;
   @Input()
@@ -71,26 +52,7 @@ export class SmtTreeComponent extends SmtComponentBase implements OnInit, OnDest
       type: 'title',
     },
   ];
-  public treeBindObj: {
-    checkStrictly: boolean;
-    checkStrictlyShow: boolean;
-    nodeSelectionConfig: any[];
-    nodes: any[];
-    isAllChecked: boolean;
-    indeterminate: boolean;
-    checkedNumber: number;
-    showSearch: boolean;
-    searchValue: any;
-    expandAll: boolean;
-    showCheckBox: boolean;
-    showLine: boolean;
-    defaultSelectedKeys: string[];
-    enableState: boolean;
-    iconState: any[];
-    leftIconState: any;
-    rightIconState: any;
-    descField: string;
-  };
+  public treeBindObj: ITreeBindProperties;
 
   public mapOfDataState: {
     [key: string]: {
@@ -105,99 +67,11 @@ export class SmtTreeComponent extends SmtComponentBase implements OnInit, OnDest
     };
   } = {};
 
-  private eventConfig = {
-    componentEvent: [
-      {
-        eventTitle: '',
-        eventName: 'CLICK_NODE',
-        eventContent: [
-          {
-            targetViewTitle: '',
-            targetViewId: 'treeDemo',
-            preCondition: [],
-            commandType: 'custom',
-            command: 'MESSAGE',
-            parameters: [
-              {
-                name: 'ID',
-                type: 'selectedItem',
-                valueName: 'ID',
-              },
-              {
-                name: 'NAME',
-                type: 'selectedItem',
-                valueName: 'NAME',
-              },
-            ],
-          },
-          {
-            targetViewTitle: '',
-            targetViewId: 'Tk9X3Oi3WtZ7SEBAYGnuTttohHmqAW',
-            preCondition: [],
-            commandType: 'custom',
-            command: 'REFRESH_AS_CHILD',
-            parameters: [
-              {
-                name: 'CODE',
-                type: 'selectedItem',
-                valueName: 'CODE',
-              },
-            ],
-          },
-        ],
-      },
-    ],
-  };
+  private eventObjs: any[];
 
-  private commandConfig = {
-    customCommand: [
-      {
-        commandTitle: '',
-        commandType: 'custom',
-        command: 'MESSAGE',
-        preCondition: [],
-        declareParameters: [
-          {
-            name: 'ID',
-            type: 'dataItem',
-            valueName: 'ID',
-            valueTo: 'TEMP_VALUE',
-          },
-          {
-            name: 'NAME',
-            type: 'dataItem',
-            valueName: 'NAME',
-            valueTo: 'TEMP_VALUE',
-          },
-        ],
-        localParameters: [],
-        commandContent: [
-          {
-            type: 'commandConfig',
-            commandConfig: [
-              {
-                targetViewId: 'Tk9X3Oi3WtZ7SEBAYGnuTttohHmqAW',
-                commandType: 'builtin',
-                command: 'MESSAGE',
-                parameters: [
-                  {
-                    name: 'type',
-                    type: 'value',
-                    value: 'success',
-                  },
-                  {
-                    name: 'message',
-                    type: 'value',
-                    value: '发送消息',
-                  },
-                ],
-              },
-            ],
-          },
-        ],
-      },
-    ],
-  };
+  private commandObjs: any[];
+
+  public dataSourceObj: any;
 
   constructor(
     @Inject(BSN_COMPONENT_SERVICES)
@@ -207,135 +81,6 @@ export class SmtTreeComponent extends SmtComponentBase implements OnInit, OnDest
     this.TEMP_VALUE = {};
     this.INIT_VALUE = {};
     this.COMPONENT_METHODS = CN_TREE_METHOD;
-    this.dataSourceCfg = {
-      loadingOnInit: true,
-      expandConfig: {
-        id: 'loading',
-        urlType: 'inner', // 请求地址，inner 匹配的后台地址
-        urlContent: {
-          // 适配外部请求
-          name: 'system_url',
-          title: '权限系统访问地址',
-        },
-        url: 'smt-base/org/query',
-        headParams: [
-          // 头部参数
-        ],
-        ajaxType: 'get',
-        pathParams: [
-          // 路径参数
-          // {
-          //   name: 'pathParam',
-          //   type: 'value',
-          //   value: 'ddd'
-          // }
-        ],
-        queryParams: [
-          {
-            name: '$mode$',
-            type: 'value',
-            value: 'RECURSIVE_QUERY',
-          },
-          {
-            name: '_recursive',
-            type: 'value',
-            value: true,
-          },
-          {
-            name: '_deep',
-            type: 'value',
-            value: -1,
-          },
-          {
-            name: '_pcName',
-            type: 'value',
-            value: 'PARENT_ID',
-          },
-        ],
-        bodyParams: [], // 请求体参数
-      },
-      loadingItemConfig: {
-        id: 'loadingItem',
-        urlType: 'inner', // 请求地址，inner 匹配的后台地址
-        urlContent: {
-          // 适配外部请求
-          name: 'system_url',
-          title: '权限系统访问地址',
-        },
-        url: 'smt-base/org/query',
-        headParams: [
-          // 头部参数
-        ],
-        ajaxType: 'get',
-        pathParams: [
-          // 路径参数
-          // {
-          //   name: 'pathParam',
-          //   type: 'value',
-          //   value: 'ddd'
-          // }
-        ],
-        queryParams: [
-          {
-            name: '$mode$',
-            type: 'value',
-            value: 'UNIQUE_QUERY',
-          },
-          {
-            name: '$mode$',
-            type: 'value',
-            value: 'UNIQUE_QUERY',
-          },
-        ], // 查询参数
-        bodyParams: [], // 请求体参数
-      },
-      loadingConfig: {
-        id: 'loading',
-        urlType: 'inner', // 请求地址，inner 匹配的后台地址
-        urlContent: {
-          // 适配外部请求
-          name: 'system_url',
-          title: '权限系统访问地址',
-        },
-        url: 'smt-base/org/query',
-        headParams: [
-          // 头部参数
-        ],
-        ajaxType: 'get',
-        pathParams: [
-          // 路径参数
-          // {
-          //   name: 'pathParam',
-          //   type: 'value',
-          //   value: 'ddd'
-          // }
-        ],
-        queryParams: [
-          {
-            name: '$mode$',
-            type: 'value',
-            value: 'RECURSIVE_QUERY',
-          },
-          {
-            name: '_recursive',
-            type: 'value',
-            value: true,
-          },
-          {
-            name: '_deep',
-            type: 'value',
-            value: -1,
-          },
-          {
-            name: '_pcName',
-            type: 'value',
-            value: 'PARENT_ID',
-          },
-        ], // 查询参数
-        bodyParams: [], // 请求体参数
-      },
-      async: false,
-    };
   }
 
   private _initComponent(config: any) {
@@ -347,47 +92,25 @@ export class SmtTreeComponent extends SmtComponentBase implements OnInit, OnDest
       this.INIT_VALUE = this.initData;
     }
 
-    this.treeBindObj = this.setTreeBindObj(this.config);
-    this._buildIconState(this.treeBindObj, this.config);
-    this.setTreeBindObj(this.config);
-  }
+    const dataAdapter = new SmtTreeDataAdapter(this.config);
 
-  /**
-   * 未完成
-   * @param config
-   * @returns
-   */
-  private setTreeBindObj(config: any): ITreeBindProperties {
-    return {
-      checkStrictlyShow: config.checkStrictlyShow ? config.checkStrictlyShow : false,
-      checkStrictly: config.checkStrictly ? config.checkStrictly : false,
-      nodeSelectionConfig: config.nodeSelectionConfig ? config.nodeSelectionConfig : [],
-      nodes: [],
-      isAllChecked: config.isAllChecked ? config.isAllChecked : false,
-      indeterminate: false,
-      checkedNumber: 0,
-      showSearch: config.showSearch ? config.showSearch : false,
-      searchValue: '',
-      expandAll: config.expandAll ? config.expandAll : true,
-      showCheckBox: config.showCheckBox ? config.showCheckBox : false,
-      showLine: config.showLine ? config.showLine : false,
-      defaultSelectedKeys: [],
-      enableState: config.enableState ? config.enableState : false,
-      iconState: config.iconState ? config.iconState : [],
-      leftIconState: [],
-      rightIconState: [],
-      descField: config.descFile ? config.descField : null,
-    };
+    this.columns = dataAdapter.setColumns();
+    this.treeBindObj = dataAdapter.setTreeBindObj();
+    this.eventObjs = dataAdapter.setEventObjs();
+    this.dataSourceObj = dataAdapter.setDataSource();
+    this.commandObjs = dataAdapter.setCommandObjs();
+
+    this._buildIconState(this.treeBindObj, this.config);
   }
 
   ngOnInit(): void {
     this._initComponent(this.config);
 
-    this._resolveRelations(this.eventConfig);
+    this.initEvent(this.eventObjs);
 
-    this._resolveReceiver(this.commandConfig);
+    this.initCommand(this.commandObjs);
 
-    this.dataSourceCfg.loadingOnInit && this.load();
+    this.dataSourceObj.loadingOnInit && this.load();
   }
 
   ngOnDestroy(): void {
@@ -410,7 +133,7 @@ export class SmtTreeComponent extends SmtComponentBase implements OnInit, OnDest
   public async load() {
     this.IS_LOADING = true;
     this.treeBindObj.nodes = [];
-    const response = await this.executeHttp(this.dataSourceCfg.loadingConfig, {}, '');
+    const response = await this.executeHttp(this.dataSourceObj.loadingConfig, {}, '');
     if ((response && response.state === 1, response.data)) {
       response.data.map((item, index): void => {
         if (index === 0) {
@@ -448,7 +171,7 @@ export class SmtTreeComponent extends SmtComponentBase implements OnInit, OnDest
     };
 
     if (node.children && node.children.length > 0) {
-      if (!this.dataSourceCfg.async) {
+      if (!this.dataSourceObj.async) {
         node.expanded = this.treeBindObj.expandAll;
         node.children.map((n: any) => {
           this._setTreeNode(n);
@@ -468,7 +191,7 @@ export class SmtTreeComponent extends SmtComponentBase implements OnInit, OnDest
     } else {
       currentNode = $event.node;
     }
-    if (!this.dataSourceCfg.async) {
+    if (!this.dataSourceObj.async) {
       return true;
     }
 
@@ -598,8 +321,8 @@ export class SmtTreeComponent extends SmtComponentBase implements OnInit, OnDest
 
   public loadRefreshData(option) {
     this.IS_LOADING = true;
-    const url = this.dataSourceCfg.loadingConfig.url;
-    const method = this.dataSourceCfg.loadingConfig.ajaxType;
+    const url = this.dataSourceObj.loadingConfig.url;
+    const method = this.dataSourceObj.loadingConfig.ajaxType;
     const param1: any = {};
     if (option && Array.isArray(option)) {
       const rids = [];
@@ -879,7 +602,7 @@ export class SmtTreeComponent extends SmtComponentBase implements OnInit, OnDest
 
   public async appendChildToRootNode(option) {
     let appendNodeData: any = {};
-    if (this.dataSourceCfg.loadingItemConfig) {
+    if (this.dataSourceObj.loadingItemConfig) {
       option = await this.loadItem(option);
     }
 
@@ -905,7 +628,7 @@ export class SmtTreeComponent extends SmtComponentBase implements OnInit, OnDest
   }
 
   public async loadItem(data?) {
-    const response = await this.executeHttp(this.dataSourceCfg, data, null);
+    const response = await this.executeHttp(this.dataSourceObj, data, null);
     let data_form;
     if (Array.isArray(response.data)) {
       if (response.data && response.data.length > 0) {
@@ -1170,120 +893,16 @@ export class SmtTreeComponent extends SmtComponentBase implements OnInit, OnDest
     }
   }
 
-  private _resolveRelations(eventConfig: any) {
-    if (eventConfig.componentEvent) {
-      this._sender$ = new SmtEventResolver(this).resolve(eventConfig.componentEvent);
+  public initEvent(_eventObjs: any) {
+    if (_eventObjs) {
+      this._sender$ = new SmtEventResolver(this).resolve(_eventObjs);
       this._sender_subscription$ = this._sender$.subscribe();
     }
   }
 
-  private _resolveReceiver(commandConfig: any) {
-    if (commandConfig.customCommand && commandConfig.customCommand.length > 0) {
-      new SmtCommandResolver(this).resolve(commandConfig.customCommand);
+  public initCommand(_commandObjs: any) {
+    if (_commandObjs && _commandObjs.length > 0) {
+      new SmtCommandResolver(this).resolve(_commandObjs);
     }
-  }
-}
-
-export class SmtComponentEventResolver {
-  constructor(private _componentInstance: any) {}
-  public resolve(componentEvents: any[]): any {
-    if (componentEvents && Array.isArray(componentEvents) && componentEvents.length > 0) {
-      const source$ = from(componentEvents);
-      const subscribe$ = source$.pipe(
-        map((evt: any) => {
-          this._resolveEventContent(evt.eventName, evt.eventContent);
-        }),
-      );
-      return subscribe$;
-    }
-  }
-
-  private _resolveEventContent(eventName: string, eventContent: any) {
-    // 判断前置条件
-    if (eventContent && eventContent.length > 0) {
-      eventContent.map((evt: any) => {
-        if (evt.preCondition) {
-          this._resolvePreCondition(evt.preCondition);
-        }
-        if (evt.targetViewId && evt.command && evt.commandType) {
-          new ComponentEventSender(this._componentInstance).sendEvent(eventName, {
-            targetViewId: evt.targetViewId,
-            command: evt.command,
-            params: evt.parameters,
-            pageCode: this._componentInstance.dataServe.pageCode,
-            data: {},
-          });
-        }
-      });
-    }
-  }
-
-  private _resolvePreCondition(condition: any[]) {}
-}
-
-export class ComponentEventSender {
-  constructor(private _componentInstance: any) {}
-
-  public sendEvent(eventName: string, senderModel: ISenderModel) {
-    this._componentInstance['after'](this._componentInstance, this._componentInstance.COMPONENT_METHODS[eventName], () => {
-      const sendData = {
-        targetViewId: senderModel.targetViewId,
-        pageCode: senderModel.pageCode,
-        command: senderModel.command,
-        data: this._componentInstance.buildParameters(senderModel.params),
-      };
-      console.log('sendmessage', sendData);
-      this._componentInstance.componentService.smtRelationSubject.next(sendData);
-    });
-  }
-}
-
-export class SmtComponentCommandResolver {
-  constructor(private _componentInstance: any) {}
-  public resolve(customCommand: any[]): any {
-    if (!this._componentInstance.subscription$) {
-      console.log('==========》subscription');
-      debugger;
-      this._componentInstance.subscription$ = this._componentInstance.componentService.smtRelationSubject.subscribe(
-        (eventData: ISenderModel) => {
-          console.log('commandItem');
-          customCommand.map((cmdItem: any) => {
-            debugger;
-            if (cmdItem.command === eventData.command && eventData.pageCode === this._componentInstance.dataServe.pageCode) {
-              // 缺少pageCode 判断
-              this._executeCommand(eventData.data, cmdItem);
-            }
-          });
-        },
-      );
-    }
-  }
-
-  private _executeCommand(eventData: any, cmd: any) {
-    if (cmd.preCondition) {
-    }
-    let _execParamsData: any = {};
-    if (cmd.declareParameters && cmd.declareParameters.length > 0) {
-      const declareParamValue = this._componentInstance.buildParameters(cmd.declareParameters, eventData, false);
-      cmd.declareParameters.map((p: any) => {
-        if (p.valueTo && this._componentInstance[p.valueTo]) {
-          this._componentInstance[p.valueTo][p.name] = declareParamValue[p.name];
-        }
-      });
-      _execParamsData = { ...declareParamValue, ..._execParamsData };
-    }
-    if (cmd.localParameters && cmd.localParameters.length > 0) {
-      const localParamValue = this._componentInstance.buildParameters(cmd.localParameters);
-      cmd.localParameters.map((p: any) => {
-        if (p.valueTo && this._componentInstance[p.valueTo]) {
-          this._componentInstance[p.valueTo][p.name] = localParamValue[p.name];
-        }
-      });
-
-      _execParamsData = { ...localParamValue, ..._execParamsData };
-    }
-    // 执行命令
-    const method = this._componentInstance.COMPONENT_METHODS[cmd.command];
-    this._componentInstance[method](_execParamsData);
   }
 }
