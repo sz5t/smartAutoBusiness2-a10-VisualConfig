@@ -115,7 +115,7 @@ export class CfgPageCmptFormComponent implements OnInit {
   body_style: any = { 'padding': '1px 2px' }
   body_style_selected: any = { 'padding': '1px 2px', 'border': "3px dashed red" }
   ngOnInit(): void {
-    this.config = this.fromDataService.layoutSourceData[this.l_config['id']].length > 0 ? this.fromDataService.layoutSourceData[this.l_config['id']] : this.config;
+    this.config = this.fromDataService.layoutSourceData[this.l_config['id']];
     this.load(this.config);
   }
 
@@ -186,6 +186,11 @@ export class CfgPageCmptFormComponent implements OnInit {
             console.log('当前弹出表单值：', componentInstance)
             this.config['formLayout'] = componentInstance.fromDataService.layoutTreeInstance['layoutTree'];
             this.config['componentJson'] = componentInstance.fromDataService.layoutSourceData;
+
+            this.fromDataService.layoutSourceData[this.l_config['id']]['formLayout'] = componentInstance.fromDataService.layoutTreeInstance['layoutTree'];
+
+            this.fromDataService.layoutSourceData[this.l_config['id']]['componentJson'] = componentInstance.fromDataService.layoutSourceData;
+
             // this.loadShowValue();
             // console.log('当前弹出表单值：', componentInstance['staticForm']['validateForm']['value'])
             dialog.close();

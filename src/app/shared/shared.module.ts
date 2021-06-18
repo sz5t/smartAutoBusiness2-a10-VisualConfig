@@ -260,6 +260,7 @@ import { SmtDynamicPageComponent } from './smt-components/smt-dynamic-page/smt-d
 import { SmtTreeComponent } from './smt-components/smt-tree/smt-tree.component';
 import { SmtComponentComponent } from './components/smt-layout/smt-component/smt-component/smt-component.component';
 import { SmtComponentBase } from './smt-components/smt-component.base';
+import { SmtFormItemDirective } from './smt-components/smt-form/smt-form-items/smt-form-item.directive';
 
 // #region third libs
 
@@ -537,6 +538,7 @@ const DIRECTIVES = [
   SmtDynamicLayoutResolverDirective,
   SmtComponentResolverDirective,
   CfgFormDesignLayoutItemDirective,
+  SmtFormItemDirective,
 ];
 // #endregion
 
@@ -565,19 +567,6 @@ const DIRECTIVES = [
     SafeUrlPipe,
     CfgAttributeRanksRowModalComponent,
     ToolAttrJsonComponent,
-
-
-
-
-
-
-
-
-
-
-
-
-
     SmtComponentComponent,
   ],
   exports: [

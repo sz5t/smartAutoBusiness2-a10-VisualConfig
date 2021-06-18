@@ -13,6 +13,7 @@ import { SmtToolbar } from './smt-toolbar';
 import { SmtToolbarComponent } from '../../smt-components/smt-toolbar/smt-toolbar.component';
 import { SmtTreeTableComponent } from '../../smt-components/smt-tree-table/smt-tree-table.component';
 import { SmtTreeComponent } from '../../smt-components/smt-tree/smt-tree.component';
+import { SmtFormComponent } from '../../smt-components/smt-form/smt-form.component';
 const components: { [type: string]: Type<any> } = {
   cnDataTable: SmtDataTableComponent,
   tabs: SmtTabsComponent,
@@ -22,6 +23,7 @@ const components: { [type: string]: Type<any> } = {
   cnTree: SmtTreeComponent,
   smtLayOut: SmtLayoutComponent,
   smtPage: SmtPageComponent,
+  cnForm: SmtFormComponent
 };
 
 @Directive({
