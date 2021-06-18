@@ -128,6 +128,20 @@ export class SmtTreeComponent extends SmtComponentBase implements OnInit, OnDest
               },
             ],
           },
+          {
+            targetViewTitle: '',
+            targetViewId: 'Tk9X3Oi3WtZ7SEBAYGnuTttohHmqAW',
+            preCondition: [],
+            commandType: 'custom',
+            command: 'REFRESH_AS_CHILD',
+            parameters: [
+              {
+                name: 'CODE',
+                type: 'selectedItem',
+                valueName: 'CODE',
+              },
+            ],
+          },
         ],
       },
     ],
@@ -149,7 +163,7 @@ export class SmtTreeComponent extends SmtComponentBase implements OnInit, OnDest
           {
             name: 'message',
             type: 'value',
-            value: '弹出消息成功',
+            value: '发送消息',
           },
           {
             name: 'ID',
