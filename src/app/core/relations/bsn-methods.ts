@@ -46,6 +46,9 @@ export const CN_DATA_GRID_METHOD: IDataGridTrigger = {
     LOAD_BY_FILTER: 'loadByFilter',
     LOAD_REFRESH_DATA: 'loadRefreshData',
 
+    // command测试
+    SEND_COMMAND: 'sendCommand',
+
 
 
     // link

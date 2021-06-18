@@ -136,44 +136,6 @@ export class SmtDataTableComponent extends SmtComponentBase implements OnInit {
   private _trigger_receiver_subscription$: Subscription;
 
   public async ngOnInit() {
-    // console.log(this.config);
-    // console.log(this.initData);
-    // console.log(this.tempData);
-    // console.log(this.dataServe);
-
-    // this.dataSourceCfg = {
-    //   loadingOnInit: true,
-    //   loadingConfig: {
-    //     id: 'loading',
-    //     urlType: 'inner', // 请求地址，inner 匹配的后台地址
-    //     urlContent: { // 适配外部请求
-    //       name: "system_url",
-    //       title: "权限系统访问地址"
-    //     },
-    //     url: 'smt-app/resource/TEST_TABLE/query',
-    //     headParams: [ // 头部参数
-
-    //     ],
-    //     ajaxType: 'get',
-    //     pathParams: [  // 路径参数
-    //       // {
-    //       //   name: 'pathParam',
-    //       //   type: 'value',
-    //       //   value: 'ddd'
-    //       // }
-    //     ],
-    //     queryParams: [
-    //       // {
-    //       //   name: 'PROJECT_CODE',
-    //       //   type: 'value',
-    //       //   value: 'SMT_VC'
-    //       // }
-    //     ], // 查询参数
-    //     bodyParams: [], // 请求体参数
-    //   },
-    //   async: false
-    // }
-
     // 解析对应的组件配置
     this.createTableConfig(this.config);
 
@@ -184,14 +146,11 @@ export class SmtDataTableComponent extends SmtComponentBase implements OnInit {
 
     // 初始化配置属性
     this.initProperty();
-    // console.log(this.dataTableConfig, this.tableColumns);
 
     // 是否需要进行初始化数据加载
-    // if (this.dataTableConfig['mainSource']['loadingOnInit']) {
-
-
-    await this.load('init');
-    // }
+    if (this.dataSourceCfg['loadingOnInit']) {
+      await this.load('init');
+    }
     // 初始化解析表个的内容：命令，行为，消息
     this.initAnalysis();
   }
@@ -211,19 +170,26 @@ export class SmtDataTableComponent extends SmtComponentBase implements OnInit {
   }
   public createCommandList() {
     new SmtCommandResolver(this).resolve(this.dataTableConfig['customCommand']);
-    // const model = this.createCommandModel();
-    // this.commandList = new SmtCommandResolver(this, model).resolver(this.dataTableConfig['customCommand']);
-    // // console.log('commandList', this.commandList);
-    // new SmtMessageReceiverResolver(this).resolve(this.commandList);
+  }
+
+  public sendCommand() {
+    const resObj = this.createCommandUrl('sendCommand');
+    // 发送命令
+    for (let i = 0; i < resObj.commandConfig.length; i++) {
+      new SmtMessageSenderResolver(this).resolve(resObj.commandConfig[i]);
+      // 执行命令发送后置
+      if (resObj.result && resObj.result.length > 0) {
+        resObj.result.forEach(result => {
+          new SmtCommandResolver(this).afterOperate(result, this.createCommandModel(), this.componentService.modalService)
+        });
+      }
+    }
   }
 
   public operateReceiveCommand(commandName, params?) {
     let paramsNameArray: any;
     let paramsobj = {};
     const methodName = this.commandList[this.commandList.findIndex(e => e['commandName'] === commandName)];
-    // const paramsNameArray = Object.keys(methodName['declareParams']).map(val => ({
-    //   key: val
-    // }));
     if (methodName['declareParams'] && methodName['declareParams'].length > 0) {
       paramsNameArray = Object.keys(methodName['declareParams']);
       paramsNameArray.forEach(e => {
@@ -883,6 +849,7 @@ export class SmtDataTableComponent extends SmtComponentBase implements OnInit {
     let commandName: any;
     let ajaxConfig: any;
     let result: any;
+    let commandConfig: any;
     const commandList = Object.keys(this.COMPONENT_METHODS)
     for (let i = 0; i < commandList.length; i++) {
       if (this.COMPONENT_METHODS[commandList[i]] === methodName) {
@@ -896,6 +863,9 @@ export class SmtDataTableComponent extends SmtComponentBase implements OnInit {
             if (content.type === 'ajaxConfig') {
               ajaxConfig = content.ajaxConfig;
               result = content.result;
+            } else if (content.type === 'commandConfig') {
+              commandConfig = content.commandConfig;
+              result = content.result;
             }
           });
         }
@@ -904,7 +874,8 @@ export class SmtDataTableComponent extends SmtComponentBase implements OnInit {
 
     return {
       result: result,
-      ajaxConfig: ajaxConfig
+      ajaxConfig: ajaxConfig,
+      commandConfig: commandConfig
     }
   }
 

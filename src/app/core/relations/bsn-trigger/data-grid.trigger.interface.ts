@@ -42,6 +42,8 @@ export interface IDataGridTrigger {
     SET_SELECT_ROW: string;
     EXECUTE_POPUP_CLOSE: string;
 
+    SEND_COMMAND: string;
+
     LINK: string;
     LINK_TO: string;
 
@@ -106,6 +108,8 @@ export const BSN_DATAGRID_TRIGGER: IDataGridTrigger = {
     SET_SELECT_ROW: 'SET_SELECT_ROW',
     CHECK_ROW: 'CHECK_ROW',
     EXECUTE_POPUP_CLOSE: 'EXECUTE_POPUP_CLOSE',
+
+    SEND_COMMAND: 'SEND_COMMAND',
 
     LINK: 'LINK',
     LINK_TO: 'LINK_TO',

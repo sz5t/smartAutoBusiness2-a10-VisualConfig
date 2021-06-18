@@ -1326,6 +1326,15 @@
                                                                                 "title": "绑定组件"
                                                                             },
                                                                             {
+                                                                                "name": "targetPageId",
+                                                                                "type": "input",
+                                                                                "componentConfig": {},
+                                                                                "formType": "value",
+                                                                                "formName": "formControlName",
+                                                                                "validations": [],
+                                                                                "title": "绑定页面"
+                                                                            },
+                                                                            {
                                                                                 "name": "commandType",
                                                                                 "type": "select",
                                                                                 "componentConfig": {
