@@ -237,9 +237,9 @@ class DataItemParameter extends BaseParameter implements IParameter {
     super();
   }
   public buildParameter() {
-    if (this._model.item) {
+    if (this._model.dataItem) {
       // 判断组件取值是否为null
-      if (this._model.item[this._param.valueName] === null || this._model.item[this._param.valueName] === undefined) {
+      if (this._model.dataItem[this._param.valueName] === null || this._model.dataItem[this._param.valueName] === undefined) {
         if (this._param.value !== undefined) {
           if (this._param.conditionType) {
             this._result = this.getParameter(this._param.conditionType, this._param.value);
@@ -250,13 +250,13 @@ class DataItemParameter extends BaseParameter implements IParameter {
             this._result = this._param.value;
           }
         } else if (!this._param.valueName) {
-          this._result = this._model.item; // 不配valueName，则将当前属性给他 object
+          this._result = this._model.dataItem; // 不配valueName，则将当前属性给他 object
         }
       } else {
         if (this._param.conditionType) {
-          this._result = this.getParameter(this._param.conditionType, this._model.item[this._param.valueName]);
+          this._result = this.getParameter(this._param.conditionType, this._model.dataItem[this._param.valueName]);
         } else {
-          this._result = this._model.item[this._param.valueName];
+          this._result = this._model.dataItem[this._param.valueName];
         }
       }
     }

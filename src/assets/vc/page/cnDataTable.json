@@ -984,6 +984,26 @@
                                                                         "formName": "formControlName",
                                                                         "validations": [],
                                                                         "title": "参数取值字段"
+                                                                    },
+                                                                    {
+                                                                        "name": "valueTo",
+                                                                        "type": "select",
+                                                                        "componentConfig": {
+                                                                            "options": [
+                                                                                {
+                                                                                    "label": "临时变量",
+                                                                                    "value": "TEMP_VALUE"
+                                                                                },
+                                                                                {
+                                                                                    "label": "初始变量",
+                                                                                    "value": "INIT_VALUE"
+                                                                                }
+                                                                            ]
+                                                                        },
+                                                                        "formType": "value",
+                                                                        "formName": "formControlName",
+                                                                        "validations": [],
+                                                                        "title": "参数存储"
                                                                     }
                                                                 ]
                                                             }
