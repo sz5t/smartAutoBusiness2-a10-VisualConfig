@@ -12,7 +12,7 @@ import { SmtParameterResolver } from '../resolver/smt-parameter/smt-parameter-re
  * 5、弹出页面
  */
 export class SmtComponentBase {
-  constructor(public componentService: ComponentServiceProvider) {}
+  constructor(public componentService: ComponentServiceProvider) { }
   //#region 组件公共属性定义
 
   private _IS_LOADING: boolean;
@@ -686,4 +686,161 @@ export class SmtComponentBase {
     return target;
   }
   //#endregion
+
+
+
+
+  // 表达式结果分析【true/false】
+  public analysisResult(option, data?) {
+
+    // 数组 第一个 【and true  】【 or  false】  合并进去。
+    // 返回 结果是否通过
+    let Result = false;
+    option.forEach((element, index) => {
+
+      if (element['type'] === 'expression') {
+        element['value'] = this.getExpressionResult(element['expression'], data);
+      }
+      if (element['type'] === 'brackets') {
+        element['value'] = this.analysisResult(element['brackets'], data);
+      }
+
+      // 计算出当前条件最终值
+      if (element['conditionType'] === 'and') {
+        if (index === 0) {
+          Result = true;
+        }
+        Result = Result && element['value'];
+      }
+      if (element['conditionType'] === 'or') {
+        if (index === 0) {
+          Result = false;
+        }
+        Result = Result || element['value'];
+      }
+    });
+    return Result;
+
+  }
+
+  // 计算表达式
+  computeExpression(expression) {
+
+    let Expression;
+    let result = false;
+    switch (expression.comput) {
+
+      case 'empty':
+        break;
+      case 'notempty':
+        break;
+      case 'null':
+        break;
+      case 'notnull':
+        break;
+      case 'true':
+        result = this.expression_true(expression);
+        break;
+      case 'false':
+        result = this.expression_false(expression);
+        break;
+      case 'regular':
+        result = this.expression_regular(expression);
+        break;
+      case 'equal':
+        result = this.expression_equal(expression);
+        break;
+      case 'notequal':
+        break;
+
+
+    }
+
+    return result;
+
+
+  }
+
+  // 表达式取值
+  getExpressionResult(expression, data?) {
+    let back = {
+      left: null,
+      comput: null,
+      righit: null
+    }
+    if (expression) {
+
+      if (expression['comput']) {
+        back['comput'] = expression['comput'];
+      }
+      if (expression['leftExpression']) {
+        back['left'] = this.getExpressionValue(expression['leftExpression'], data);
+      }
+      if (expression['righitExpression']) {
+        back['righit'] = this.getExpressionValue(expression['righitExpression'], data);
+      }
+
+    } else {
+
+    }
+
+    return this.computeExpression(back);
+
+  }
+
+  getExpressionValue(option, data?) {
+    let value = null;
+    switch (option['type']) {
+      case 'value':
+        value = option['value'];
+        break;
+      case 'componentValue':
+        value = this.COMPONENT_VALUE[option['valueName']];
+        break;
+      case 'tempValue':
+        value = this.TEMP_VALUE[option['valueName']];
+        break;
+      case 'initValue':
+        value = this.INIT_VALUE[option['valueName']];
+        break;
+      case 'item':
+        value = data[option['valueName']];
+        break;
+
+
+      // ......多种取值方式
+      default:
+        value = option['value'];
+        break;
+    }
+
+    return value;
+
+  }
+
+
+  // 计算表达式
+  expression_regular(option) {
+
+    let regularflag = false;
+    const reg1 = new RegExp(option.righit);
+    regularflag = reg1.test(option.left);
+    return regularflag;
+  }
+  expression_true(option) {
+    let regularflag = false;
+    regularflag = option.left === true ? true : false;
+    return regularflag;
+  }
+  expression_false(option) {
+    let regularflag = false;
+    regularflag = option.left === false ? true : false;
+    return regularflag;
+  }
+  expression_equal(option) {
+    let regularflag = false;
+    regularflag = option.left === option.righit ? true : false;
+    return regularflag;
+  }
+
 }

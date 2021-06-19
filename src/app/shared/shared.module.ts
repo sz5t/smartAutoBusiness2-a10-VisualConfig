@@ -261,6 +261,7 @@ import { SmtTreeComponent } from './smt-components/smt-tree/smt-tree.component';
 import { SmtComponentComponent } from './components/smt-layout/smt-component/smt-component/smt-component.component';
 import { SmtComponentBase } from './smt-components/smt-component.base';
 import { SmtFormItemDirective } from './smt-components/smt-form/smt-form-items/smt-form-item.directive';
+import { SmtPopPageComponent } from './smt-components/smt-pop-page/smt-pop-page.component';
 
 // #region third libs
 
@@ -523,6 +524,8 @@ const COMPONENTS = [
   SmtFormCodeEditComponent,
   SmtFormPickerRangeComponent,
   SmtTreeComponent,
+  // 弹出页
+  SmtPopPageComponent,
 ];
 const DIRECTIVES = [
   CnLayoutResolverDirective,
@@ -568,6 +571,7 @@ const DIRECTIVES = [
     CfgAttributeRanksRowModalComponent,
     ToolAttrJsonComponent,
     SmtComponentComponent,
+
   ],
   exports: [
     CommonModule,

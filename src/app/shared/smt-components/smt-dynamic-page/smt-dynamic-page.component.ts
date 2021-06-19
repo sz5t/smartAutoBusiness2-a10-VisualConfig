@@ -5,7 +5,7 @@ import { pageServerService } from 'src/app/core/services/page/page.service';
 import { CnComponentBase } from '../../components/cn-component.base';
 
 @Component({
-  selector: 'app-smt-dynamic-page',
+  selector: 'app-smt-dynamic-page,[smt-dynamic-page]',
   templateUrl: './smt-dynamic-page.component.html',
   styles: [],
   providers: [pageServerService],
