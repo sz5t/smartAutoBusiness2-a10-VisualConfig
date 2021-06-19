@@ -42,6 +42,7 @@ export class SmtDataTableComponent extends SmtComponentBase implements OnInit {
     this.dataSourceCfg = {};
     this.COMPONENT_METHODS = CN_DATA_GRID_METHOD;
     this.CACHE_VALUE = this.componentService.cacheService;
+    this.IS_LOADING = false
   }
   @Input() public config; // dataTables 的配置参数
   @Input() public initData;
@@ -81,13 +82,6 @@ export class SmtDataTableComponent extends SmtComponentBase implements OnInit {
   public isAllChecked = false;
   public indeterminate = false;
 
-  public obj = {
-    age: 18,
-    name: 'zhangsan',
-    valueName: 'aaa',
-    valueName2: 'bbb',
-  };
-
   public ROW_SELECTED: any;
   public ROWS_CHECKED: any[] = [];
 
@@ -115,7 +109,7 @@ export class SmtDataTableComponent extends SmtComponentBase implements OnInit {
 
     // 是否需要进行初始化数据加载
     if (this.dataSourceCfg['loadingOnInit'] === true) {
-      await this.load('init');
+      await this.load();
     }
     // 初始化解析表个的内容：命令，行为，消息
     this.initAnalysis();
@@ -254,7 +248,6 @@ export class SmtDataTableComponent extends SmtComponentBase implements OnInit {
       },
     };
     this._buildColumns(this.dataTableConfig.columns, this.dataTableConfig);
-    this.createTableMapping();
   }
 
   private _buildColumns(columns, cfg) {
@@ -427,10 +420,11 @@ export class SmtDataTableComponent extends SmtComponentBase implements OnInit {
     }
     this.isAllChecked = false;
     this.indeterminate = false;
-    this.load('init');
+    this.load();
   }
 
-  public async load(iden) {
+  public async load() {
+    this.IS_LOADING = true;
     let response: any;
     // if (iden) {
     if (!this.dataSourceCfg.loadingConfig) {
@@ -442,25 +436,17 @@ export class SmtDataTableComponent extends SmtComponentBase implements OnInit {
       response = await this.executeHttp(this.dataSourceCfg['loadingConfig'], null, 'paging');
     }
 
-    if (typeof iden !== 'string') {
-      const resObj = this.createCommandUrl('load');
-
-      // response = await this.executeHttp(resObj.ajaxConfig, null, 'paging');
-
-      if (resObj.result && resObj.result.length > 0) {
-        resObj.result.forEach((result) => {
-          new SmtCommandResolver(this).afterOperate(result, this.componentService.modalService);
-        });
-      }
-    }
-
     this.dataList = response.data.resultDatas;
     this.total = response.data.count;
 
-    this.mapOfDataState = {};
-
     this.createTableMapping();
     this.initSelectedRow();
+    this.IS_LOADING = false;
+
+    return {
+      state: 1,
+      resultData: {}
+    }
   }
 
   public _buildPaging() {
@@ -856,11 +842,16 @@ export class SmtDataTableComponent extends SmtComponentBase implements OnInit {
       response = await this.executeHttp(resObj.ajaxConfig, option.ID, null);
     }
 
-    if (resObj.result && resObj.result.length > 0) {
-      resObj.result.forEach((result) => {
-        new SmtCommandResolver(this).afterOperate(result, this.componentService.modalService);
-      });
+    return {
+      state: 1,
+      resultData: { ...response }
     }
+
+    // if (resObj.result && resObj.result.length > 0) {
+    //   resObj.result.forEach((result) => {
+    //     new SmtCommandResolver(this).afterOperate(result, this.componentService.modalService);
+    //   });
+    // }
 
     // this.dataList = this.dataList.filter((d) => d[this.KEY_ID] !== response['data'][this.KEY_ID]);
   }

@@ -2087,8 +2087,10 @@
                                                                     },
                                                                     {
                                                                         "name": "tagViewId",
-                                                                        "type": "input",
-                                                                        "componentConfig": {},
+                                                                        "type": "treeSelect",
+                                                                        "componentConfig": {
+                                                                            "loadingMode": "dataService"
+                                                                        },
                                                                         "formType": "value",
                                                                         "formName": "formControlName",
                                                                         "validations": [],

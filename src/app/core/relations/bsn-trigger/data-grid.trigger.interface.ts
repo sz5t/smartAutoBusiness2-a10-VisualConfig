@@ -44,6 +44,9 @@ export interface IDataGridTrigger {
 
     SEND_COMMAND: string;
 
+    STATE_TO_TEXT: string;
+    STATE_TO_EDIT: string;
+
     LINK: string;
     LINK_TO: string;
 
@@ -110,6 +113,8 @@ export const BSN_DATAGRID_TRIGGER: IDataGridTrigger = {
     EXECUTE_POPUP_CLOSE: 'EXECUTE_POPUP_CLOSE',
 
     SEND_COMMAND: 'SEND_COMMAND',
+    STATE_TO_TEXT: 'STATE_TO_TEXT',
+    STATE_TO_EDIT: 'STATE_TO_EDIT',
 
     LINK: 'LINK',
     LINK_TO: 'LINK_TO',

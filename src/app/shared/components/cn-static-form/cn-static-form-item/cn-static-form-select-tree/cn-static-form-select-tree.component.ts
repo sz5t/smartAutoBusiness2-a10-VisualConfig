@@ -79,6 +79,9 @@ export class CnStaticFormSelectTreeComponent extends VcComponentBase implements 
         case "ajax":
           this.load();
           break;
+        case "dataService":
+          this.loadDataService();
+          break;
         default:
           this.nodes = this.config['componentConfig']['options'];
           break;
@@ -160,6 +163,10 @@ export class CnStaticFormSelectTreeComponent extends VcComponentBase implements 
     else {
       this.nodes = [];
     }
+  }
+
+  public loadDataService() {
+    this.nodes = this.fromDataService.layoutTreeInstance.layoutTree;
   }
 
 
