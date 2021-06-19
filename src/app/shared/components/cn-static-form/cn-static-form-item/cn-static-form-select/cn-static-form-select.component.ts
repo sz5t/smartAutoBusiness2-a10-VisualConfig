@@ -67,6 +67,12 @@ export class CnStaticFormSelectComponent extends VcComponentBase implements OnIn
     console.log('select:', this.config);
 
 
+    if (this.fromDataService) {
+      if (this.fromDataService.hasOwnProperty('initValue')) {
+        this.initValue = this.fromDataService['initValue'];
+      }
+    }
+
 
 
 

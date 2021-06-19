@@ -22,12 +22,16 @@
             </nz-card>
 
             <ng-template #delextraTemplate let-i>
-                <button nz-button nzType="primary" (click)="delItem(i)">删除</button>
+                <button
+                    [hidden]="config.componentConfig['defaultActionDeleteHidden']?config.componentConfig['defaultActionDeleteHidden']:false"
+                    nz-button nzType="primary" (click)="delItem(i)">删除</button>
             </ng-template>
 
         </div>
     </div>
-    <button nz-button type="button" nzType="dashed" nzBlock="true" nzSize="default" style="margin-bottom: 3px;"
+    <button
+        [hidden]="config.componentConfig['defaultActionAddHidden']?config.componentConfig['defaultActionAddHidden']:false"
+        nz-button type="button" nzType="dashed" nzBlock="true" nzSize="default" style="margin-bottom: 3px;"
         (click)="add()"><i nz-icon nzType="plus"></i>
         添加</button>
 </ng-template>

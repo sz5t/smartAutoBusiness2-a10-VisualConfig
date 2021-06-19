@@ -448,7 +448,7 @@ export class CnDataTableComponent extends CnComponentBase implements OnInit, Aft
               data: d,
               originData: { ...d },
               validation: true,
-              actions: this.getRowActions('text'),
+              actions: this.getRowActions('text', d),
               mergeData: {},
               style: _style ? _style : null,
             };
@@ -548,7 +548,7 @@ export class CnDataTableComponent extends CnComponentBase implements OnInit, Aft
           data: d,
           originData: { ...d },
           validation: true,
-          actions: this.getRowActions('text'),
+          actions: this.getRowActions('text', d),
           mergeData: {},
           style: _style ? _style : null,
         };
@@ -595,7 +595,7 @@ export class CnDataTableComponent extends CnComponentBase implements OnInit, Aft
           data: d,
           originData: { ...d },
           validation: true,
-          actions: this.getRowActions('text'),
+          actions: this.getRowActions('text', d),
           mergeData: {},
           style: _style ? _style : null,
         };
@@ -1098,7 +1098,7 @@ export class CnDataTableComponent extends CnComponentBase implements OnInit, Aft
       checked: true, // index === 0 ? true : false,
       selected: false, // index === 0 ? true : false,
       state: 'new',
-      actions: this.getRowActions('new'),
+      actions: this.getRowActions('new', newData),
       mergeData: {},
     };
 
@@ -1655,7 +1655,7 @@ export class CnDataTableComponent extends CnComponentBase implements OnInit, Aft
         const mapData = this.mapOfDataState[newData[this.KEY_ID]];
         if (mapData) {
           mapData.state = 'text';
-          mapData.actions = this.getRowActions('text');
+          mapData.actions = this.getRowActions('text', newData);
           mapData.data = newData;
           mapData.originData = { ...newData };
         } else {
@@ -1668,7 +1668,7 @@ export class CnDataTableComponent extends CnComponentBase implements OnInit, Aft
             selected: false, // index === 0 ? true : false,
             state: 'text',
             validation: true,
-            actions: this.getRowActions('text'),
+            actions: this.getRowActions('text', newData),
             mergeData: {},
           };
         }
@@ -2164,6 +2164,8 @@ export class CnDataTableComponent extends CnComponentBase implements OnInit, Aft
       });
     }
 
+    const that = this;
+
     const dialogOptional = {
       nzTitle: dialogCfg.title ? dialogCfg.title : '',
       nzWidth: dialogCfg.width ? dialogCfg.width : '600px',
@@ -2175,6 +2177,7 @@ export class CnDataTableComponent extends CnComponentBase implements OnInit, Aft
         customPageId: dialogCfg.layoutName, // "0MwdEVnpL0PPFnGISDWYdkovXiQ2cIOG",
         // initData:this.initData
         changeValue: option.changeValue ? option.changeValue.params : [],
+        dialogW: that
       },
       nzFooter: [
         {
@@ -2458,19 +2461,192 @@ export class CnDataTableComponent extends CnComponentBase implements OnInit, Aft
     $event && $event.preventDefault();
   }
 
-  getRowActions(state): any[] {
+  getRowActions(state, rowData?): any[] {
     const orginAction = this.tableColumns.find((c) => c.type === 'action');
     const copyAction = [];
     if (orginAction) {
       if (this.tableColumns.find((c) => c.type === 'action').action) {
-        const actions = JSON.parse(
-          JSON.stringify(this.tableColumns.find((c) => c.type === 'action').action.filter((c) => c.state === state)),
+        let actions = JSON.parse(
+          JSON.stringify(
+            this.tableColumns.find((c) => c.type === 'action').action.filter((c) => c.state === state))
         );
+        actions = this.actionsRowState(actions, rowData);
         copyAction.push(...actions);
       }
     }
+    console.log('hang操作', copyAction, rowData);
     return copyAction;
   }
+
+  actionsRowState(action, row) {
+
+    let new_action = [];
+    action.forEach(ac => {
+      if (ac.hasOwnProperty('condition')) {
+
+        let back = this.analysisResult(ac['condition'], row);
+        if (back) {
+          new_action.push(ac);
+        }
+      } else {
+        new_action.push(ac);
+      }
+    });
+    return new_action;
+
+  }
+
+  analysisResult(option, data) {
+
+    // 数组 第一个 【and true  】【 or  false】  合并进去。
+
+    // 返回 结果是否通过
+
+    let Result = false;
+    option.forEach((element, index) => {
+
+      if (element['type'] === 'expression') {
+        element['value'] = this.getExpressionResult(element['expression'], data);
+      }
+      if (element['type'] === 'brackets') {
+        element['value'] = this.analysisResult(element['brackets'], data);
+      }
+
+      // 计算出当前条件最终值
+      if (element['conditionType'] === 'and') {
+        if (index === 0) {
+          Result = true;
+        }
+        Result = Result && element['value'];
+      }
+      if (element['conditionType'] === 'or') {
+        if (index === 0) {
+          Result = false;
+        }
+        Result = Result || element['value'];
+      }
+    });
+
+
+
+    return Result;
+
+  }
+
+  // 计算表达式
+  computeExpression(expression) {
+
+    let Expression;
+    let result = false;
+    switch (expression.comput) {
+
+      case 'empty':
+        break;
+      case 'notempty':
+        break;
+      case 'null':
+        break;
+      case 'notnull':
+        break;
+      case 'true':
+        break;
+      case 'false':
+        break;
+      case 'regular':
+        result = this.Expression_regular(expression);
+        break;
+      case 'equal':
+        break;
+      case 'notequal':
+        break;
+
+
+    }
+
+    return result;
+
+
+  }
+
+
+
+
+
+  // 表达式取值
+  getExpressionResult(expression, data) {
+    let back = {
+      left: null,
+      comput: null,
+      righit: null
+    }
+    if (expression) {
+      let expression1 = {
+        "comput": 'regular', // 正则、数学计算、非空、bool值
+        "leftExpression": {
+          "type": 'value',
+          "value": 'ddd',
+          "valueName": ''
+        },
+        "righitExpression": {
+          "type": 'value',
+          "value": '^0$'
+        }
+      }
+
+      if (expression['comput']) {
+        back['comput'] = expression['comput'];
+      }
+      if (expression['leftExpression']) {
+        back['left'] = this.getExpressionValue(expression['leftExpression'], data);
+      }
+      if (expression['righitExpression']) {
+        back['righit'] = this.getExpressionValue(expression['righitExpression'], data);
+      }
+
+    } else {
+
+    }
+
+    return this.computeExpression(back);
+
+  }
+
+  getExpressionValue(option, data?) {
+    let value = null;
+    switch (option['type']) {
+      case 'value':
+        value = option['value'];
+        break;
+      case 'componentValue':
+        value = data[option['valueName']];
+        break;
+      case 'item':
+        value = data[option['valueName']];
+        break;
+
+
+      // ......多种取值方式
+      default:
+        value = option['value'];
+        break;
+    }
+
+    return value;
+
+  }
+
+
+  // 计算表达式
+  Expression_regular(option) {
+
+    let regularflag = false;
+    const reg1 = new RegExp(option.righit);
+    regularflag = reg1.test(option.left);
+    return regularflag;
+  }
+
+
+
   public valueChange(v?) {
     console.log('行返回', v);
     this.mapOfDataState[v.id].data[v.name] = v.value;

@@ -30,6 +30,7 @@ export class CnPageComponent extends CnComponentBase implements OnInit, OnDestro
   @Input() customPageId;
   @Input() public initData;
   @Input() childrenPage;
+  dialogW;
   /**
    * 组件名称
    * 所有组件实现此属性
@@ -6371,6 +6372,7 @@ export class CnPageComponent extends CnComponentBase implements OnInit, OnDestro
   };
   async ngOnInit() {
     this.componentDataService.data.push({ id: 1 });
+    this.componentDataService.setComponentInstace('window_cn_page', this);
     const n = this.componentDataService.getInstanceAll();
     console.log('cccccccccccccccccccc', n);
     this.setChangeValue(this.changeValue);

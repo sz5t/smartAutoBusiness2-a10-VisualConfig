@@ -1,0 +1,46 @@
+<button (click)="getComponentValue_VC()">输出业务流组件值</button>
+
+
+<nz-breadcrumb>
+    <nz-breadcrumb-item>业务流</nz-breadcrumb-item>
+    <ng-template ngFor let-btn [ngForOf]="config.innerToolbar">
+        <button style="font-weight: 500" *ngIf="!btn.hidden" [nzSize]="btn.size ? btn.size : 'default'"
+            [nzType]="btn.color ? btn.color : 'default'" [disabled]="btn.disabled" nz-button type="button"
+            (click)="inner_action(btn)">
+            <i nz-icon *ngIf="btn.icon" [nzType]="btn.icon" [nzTheme]="btn.theme ? btn.theme : 'outline'"
+                [nzTwotoneColor]="'#A5A5B8'"></i>
+            {{btn.text}}
+        </button>
+    </ng-template>
+
+
+</nz-breadcrumb>
+<nz-collapse>
+    <nz-collapse-panel [nzHeader]="'流程基本信息'">
+
+        <app-cn-static-form *ngIf="form_process_config && sourceData" #staticForm [config]="form_process_config"
+            [staticData]="sourceData" (updateValue)="staticFormValueChange($event)">
+        </app-cn-static-form>
+    </nz-collapse-panel>
+</nz-collapse>
+
+<nz-layout>
+    <nz-sider>
+        <div style="width: 200px; height: 1000px;" #checkContainer> </div>
+    </nz-sider>
+    <nz-content>
+        <div #refContainer style="width: 1000px; height: 1000px;">
+        </div>
+    </nz-content>
+</nz-layout>
+
+<nz-dropdown-menu #menu="nzDropdownMenu">
+    <ul nz-menu>
+
+        <li nz-menu-item *ngFor="let item of config.dropdownMenu" (click)="dropdown_change(item.execute)">
+            <i nz-icon *ngIf="item.icon" [nzType]="item.icon" [nzTheme]="item.theme ? item.theme : 'outline'"
+                [nzTwotoneColor]="'#A5A5B8'"></i>
+            {{item.text}}
+        </li>
+    </ul>
+</nz-dropdown-menu>

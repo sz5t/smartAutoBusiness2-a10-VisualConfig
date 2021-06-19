@@ -8,14 +8,14 @@ import { ParameterResolver } from "../resolver/parameter/parameter.resolver";
 export class VcComponentBase {
 
     constructor(private _componentService: ComponentServiceProvider) {
-
+        this.initValue = {};
     }
 
     public initValue;
     public tempValue;
     public cacheValue;
     public routerValue;
-    public cascadeValue;
+    // public cascadeValue;
     public userValue;
     private _componentValue: any;
     public get componentValue(): any {
@@ -128,7 +128,7 @@ export class VcComponentBase {
             initValue: this.initValue,
             cacheValue: this.cacheValue,
             router: this.routerValue,
-            cascadeValue: this.cascadeValue,
+            // cascadeValue: this.cascadeValue,
             userValue: this.userValue,
         });
     }
@@ -434,7 +434,7 @@ export class VcComponentBase {
         }
     }
 
-    public analysis_Data(param_data?, resultConfig?) {
+    public analysis_Data(param_data?, resultConfig?, isSub = false) {
         let data = JSON.parse(JSON.stringify(param_data));
         let backInfo: any;
         let dd = {
@@ -450,17 +450,26 @@ export class VcComponentBase {
 
         let result: any;
 
-        if (resultConfig['enableResultDataMore']) {
-            if (resultConfig.hasOwnProperty('resultDataType')) {
-                if (environment['resultDataRule']) {
-                    result = environment['resultDataRule'][resultConfig['resultDataType']['name']];
+        if (isSub) {
+            result = resultConfig;
+        } else {
+            if (resultConfig['enableResultDataMore']) {
+                if (resultConfig.hasOwnProperty('resultDataType')) {
+                    if (environment['resultDataRule']) {
+                        result = environment['resultDataRule'][resultConfig['resultDataType']['name']];
+                    }
+                } else {
+                    if (resultConfig.hasOwnProperty('resultDataMore')) {
+                        result = resultConfig['resultDataMore'];
+                    }
+                }
+            } else {
+                if (resultConfig.hasOwnProperty('resultDataMore')) {
+                    result = resultConfig['resultDataMore'];
                 }
             }
-        } else {
-            if (resultConfig.hasOwnProperty('resultDataMore')) {
-                result = resultConfig['resultDataMore'];
-            }
         }
+
 
         if (!result) {
             result = {};
@@ -471,15 +480,15 @@ export class VcComponentBase {
         // 解析出当前数据
         if (result['dataProperties']) {
             switch (result['dataProperties']['dataType']) {
-                case 'OBJECT':
+                case 'object':
                     // 执行代码块 1
                     backInfo = {};
                     break;
-                case 'ARRAY':
+                case 'array':
                     // 执行代码块 1
                     backInfo = [];
                     break;
-                case 'VALUE':
+                case 'value':
                     // 执行代码块 1
                     break;
             }
@@ -503,10 +512,10 @@ export class VcComponentBase {
 
         if (result.hasOwnProperty('objectProperties')) {
             let objectProperties = result['objectProperties'];
-            objectProperties['setProperties'].forEach((element) => {
-                backInfo[element['name']] = this.analysis_Data(data, element);
+            objectProperties['setProperties'] && objectProperties['setProperties'].forEach((element) => {
+                backInfo[element['name']] = this.analysis_Data(data, element, true);
             });
-            objectProperties['removeProperties'].forEach((element) => {
+            objectProperties['removeProperties'] && objectProperties['removeProperties'].forEach((element) => {
                 if (backInfo && backInfo.hasOwnProperty(element['name'])) {
                     delete backInfo[element['name']];
                 }

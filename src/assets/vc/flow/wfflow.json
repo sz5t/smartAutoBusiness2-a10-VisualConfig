@@ -1,0 +1,128 @@
+{
+    "type": "staticForm",
+    "backName": "title",
+    "backConfig": [
+        {
+            "name": "id"
+        },
+        {
+            "name": "typeId"
+        },
+        {
+            "name": "strict"
+        },
+        {
+            "name": "code"
+        },
+        {
+            "name": "version"
+        },
+        {
+            "name": "name"
+        },
+        {
+            "name": "title"
+        },
+        {
+            "name": "pageID"
+        },
+        {
+            "name": "description"
+        }
+    ],
+    "properties": [
+        {
+            "code":"001",
+            "name": "id",
+            "type": "input",
+            "componentConfig": {},
+            "formType": "value",
+            "formName": "formControlName",
+            "validations": [],
+            "title": "标识"
+        },
+        {
+            "code":"002",
+            "name": "typeId",
+            "type": "select",
+            "componentConfig": {
+            },
+            "formType": "value",
+            "formName": "formControlName",
+            "validations": [],
+            "title": "类型"
+        },
+        {
+            "code":"003",
+            "name": "strict",
+            "type": "switch",
+            "componentConfig": {},
+            "formType": "value",
+            "formName": "formControlName",
+            "validations": [],
+            "title": "是否强制保存"
+        },  
+        {
+            "code":"004",
+            "name": "code",
+            "type": "select",
+            "componentConfig": {
+            },
+            "formType": "value",
+            "formName": "formControlName",
+            "validations": [],
+            "title": "编号"
+        },
+        {
+            "code":"005",
+            "name": "version",
+            "type": "input",
+            "componentConfig": {},
+            "formType": "value",
+            "formName": "formControlName",
+            "validations": [],
+            "title": "版本"
+        },
+        {
+            "code":"006",
+            "name": "name",
+            "type": "input",
+            "componentConfig": {},
+            "formType": "value",
+            "formName": "formControlName",
+            "validations": [],
+            "title": "名称"
+        },
+        {
+            "code":"007",
+            "name": "title",
+            "type": "input",
+            "componentConfig": {},
+            "formType": "value",
+            "formName": "formControlName",
+            "validations": [],
+            "title": "标题"
+        },
+        {
+            "code":"008",
+            "name": "pageID",
+            "type": "textarea",
+            "componentConfig": {},
+            "formType": "value",
+            "formName": "formControlName",
+            "validations": [],
+            "title": "页面"
+        },
+        {
+            "code":"009",
+            "name": "description",
+            "type": "textarea",
+            "componentConfig": {},
+            "formType": "value",
+            "formName": "formControlName",
+            "validations": [],
+            "title": "描述"
+        }     
+        
+    ]
+}

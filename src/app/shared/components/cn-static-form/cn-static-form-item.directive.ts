@@ -5,6 +5,7 @@ import { CnStaticFormTreeObjectComponent } from './cn-static-form-cmpt/cn-static
 import { CnStaticFormArrayCardComponent } from './cn-static-form-item/cn-static-form-array-card/cn-static-form-array-card.component';
 import { CnStaticFormArrayCollapseComponent } from './cn-static-form-item/cn-static-form-array-collapse/cn-static-form-array-collapse.component';
 import { CnStaticFormArrayTableComponent } from './cn-static-form-item/cn-static-form-array-table/cn-static-form-array-table.component';
+import { CnStaticFormBusiPopApiComponent } from './cn-static-form-item/cn-static-form-busi-pop-api/cn-static-form-busi-pop-api.component';
 import { CnStaticFormChildArrayComponent } from './cn-static-form-item/cn-static-form-child-array/cn-static-form-child-array.component';
 import { CnStaticFormCustomInputSelectComponent } from './cn-static-form-item/cn-static-form-custom-input-select/cn-static-form-custom-input-select.component';
 import { CnStaticFormCustomSelectComponent } from './cn-static-form-item/cn-static-form-custom-select/cn-static-form-custom-select.component';
@@ -19,6 +20,7 @@ import { CnStaticFormSelectComponent } from './cn-static-form-item/cn-static-for
 import { CnStaticFormSliderComponent } from './cn-static-form-item/cn-static-form-slider/cn-static-form-slider.component';
 import { CnStaticFormSubComponentComponent } from './cn-static-form-item/cn-static-form-sub-component/cn-static-form-sub-component.component';
 import { CnStaticFormSwitchComponent } from './cn-static-form-item/cn-static-form-switch/cn-static-form-switch.component';
+import { CnStaticFormTextareaComponent } from './cn-static-form-item/cn-static-form-textarea/cn-static-form-textarea.component';
 
 const components: { [type: string]: Type<any> } = {
   input: CnStaticFormInputComponent,
@@ -38,7 +40,9 @@ const components: { [type: string]: Type<any> } = {
   childArray: CnStaticFormChildArrayComponent,
   popApi: CnStaticFormPopApiComponent,
   subComponent: CnStaticFormSubComponentComponent,
-  treeSelect: CnStaticFormSelectTreeComponent
+  treeSelect: CnStaticFormSelectTreeComponent,
+  textarea: CnStaticFormTextareaComponent,
+  busiPopApi: CnStaticFormBusiPopApiComponent
 
 }
 @Directive({

@@ -1,0 +1,210 @@
+{
+    "type": "staticForm",
+    "backName": "title",
+    "backConfig": [
+      {
+        "name": "id"
+      },
+      {
+        "name": "name"
+      },
+      {
+        "name": "description"
+      },
+      {
+        "name": "params"
+      }
+    ],
+    "properties": [
+      {
+        "code": "001",
+        "name": "id",
+        "type": "label",
+        "componentConfig": {},
+        "formType": "value",
+        "formName": "formControlName",
+        "validations": [],
+        "title": "标识"
+      },
+      {
+        "code": "002",
+        "name": "name",
+        "type": "input",
+        "componentConfig": {
+        },
+        "formType": "value",
+        "formName": "formControlName",
+        "validations": [],
+        "title": "名称"
+      },
+      {
+        "code": "003",
+        "name": "description",
+        "type": "input",
+        "componentConfig": {},
+        "formType": "value",
+        "formName": "formControlName",
+        "validations": [],
+        "title": "描述"
+      },
+      {
+        "code": "004",
+        "name": "params",
+        "type": "arrayCollapse",
+        "componentConfig": {
+        },
+        "formType": "array",
+        "formName": "formControlName",
+        "validations": [],
+        "title": "参数",
+        "properties": [
+          {
+            "name": "id",
+            "type": "input",
+            "componentConfig": {},
+            "formType": "value",
+            "formName": "formControlName",
+            "validations": [],
+            "title": "主键"
+          },
+          {
+            "name": "scope",
+            "type": "select",
+            "componentConfig": {
+              "options": [
+                {
+                  "label": "输入参数",
+                  "value": 1
+                },
+                {
+                  "label": "输入输出参数",
+                  "value": 2
+                },
+                {
+                  "label": "输出参数",
+                  "value": 3
+                },
+                {
+                  "label": "全局参数",
+                  "value": 4
+                },
+                {
+                  "label": "本地参数",
+                  "value": 5
+                }
+              ],
+              "labelName": "label",
+              "valueName": "value"
+            },
+            "formType": "value",
+            "formName": "formControlName",
+            "validations": [],
+            "title": "参数范围"
+          },
+          {
+            "name": "name",
+            "type": "input",
+            "componentConfig": {},
+            "formType": "value",
+            "formName": "formControlName",
+            "validations": [],
+            "title": "名称"
+          },
+          {
+            "name": "dataType",
+            "type": "select",
+            "componentConfig": {
+              "options": [
+                {
+                  "label": "object",
+                  "value": "object"
+                },
+                {
+                  "label": "string",
+                  "value": "string"
+                },
+                {
+                  "label": "byte",
+                  "value": "byte"
+                },
+                {
+                  "label": "short",
+                  "value": "short"
+                },
+                {
+                  "label": "integer",
+                  "value": "integer"
+                },
+                {
+                  "label": "long",
+                  "value": "long"
+                },
+                {
+                  "label": "float",
+                  "value": "float"
+                },
+                {
+                  "label": "double",
+                  "value": "double"
+                },
+                {
+                  "label": "boolean",
+                  "value": "boolean"
+                },
+                {
+                  "label": "date",
+                  "value": "date"
+                },
+                {
+                  "label": "list",
+                  "value": "list"
+                },
+                {
+                  "label": "object",
+                  "value": "object"
+                }
+              ],
+              "labelName": "label",
+              "valueName": "value"
+            },
+            "formType": "value",
+            "formName": "formControlName",
+            "validations": [],
+            "title": "类型"
+          },
+          {
+            "name": "defaultValue",
+            "type": "input",
+            "componentConfig": {},
+            "formType": "value",
+            "formName": "formControlName",
+            "validations": [],
+            "title": "默认值"
+          },
+          {
+            "name": "required",
+            "type": "switch",
+            "componentConfig": {
+              "options": [
+                {
+                    "label": "是",
+                    "value": true
+                },
+                {
+                    "label": "否",
+                    "value": false
+                }
+            ],
+            "labelName": "label",
+            "valueName": "value"
+            },
+            "formType": "value",
+            "formName": "formControlName",
+            "validations": [],
+            "title": "是否必须"
+          }
+        ]
+      }
+
+    ]
+  }
