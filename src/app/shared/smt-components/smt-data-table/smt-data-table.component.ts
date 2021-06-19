@@ -42,6 +42,7 @@ export class SmtDataTableComponent extends SmtComponentBase implements OnInit {
     this.dataSourceCfg = {};
     this.COMPONENT_METHODS = CN_DATA_GRID_METHOD;
     this.CACHE_VALUE = this.componentService.cacheService;
+    this.IS_LOADING = false
   }
   @Input() public config; // dataTables 的配置参数
   @Input() public initData;
@@ -51,33 +52,6 @@ export class SmtDataTableComponent extends SmtComponentBase implements OnInit {
   public dataList: any[] = [
     // 数据源数组
   ];
-  public execConfig = {
-    loading: {
-      loadingOninit: true,
-      id: 'loading',
-      urlType: 'inner', // 请求地址，inner 匹配的后台地址
-      urlContent: {
-        // 适配外部请求
-        name: 'system_url',
-        title: '权限系统访问地址',
-      },
-      url: 'resource/SQL_PERCENT/query/{pathParam1}',
-      headParams: [
-        // 头部参数
-      ],
-      ajaxType: 'post',
-      pathParams: [
-        // 路径参数
-        {
-          name: 'pathParam',
-          type: 'value',
-          value: 'ddd',
-        },
-      ],
-      queryParams: [], // 查询参数
-      bodyParams: [], // 请求体参数
-    },
-  };
   public _sortName;
   public _sortValue;
   public xlsx;
@@ -108,13 +82,6 @@ export class SmtDataTableComponent extends SmtComponentBase implements OnInit {
   public isAllChecked = false;
   public indeterminate = false;
 
-  public obj = {
-    age: 18,
-    name: 'zhangsan',
-    valueName: 'aaa',
-    valueName2: 'bbb',
-  };
-
   public ROW_SELECTED: any;
   public ROWS_CHECKED: any[] = [];
 
@@ -142,7 +109,7 @@ export class SmtDataTableComponent extends SmtComponentBase implements OnInit {
 
     // 是否需要进行初始化数据加载
     if (this.dataSourceCfg['loadingOnInit'] === true) {
-      await this.load('init');
+      await this.load();
     }
     // 初始化解析表个的内容：命令，行为，消息
     this.initAnalysis();
@@ -177,7 +144,7 @@ export class SmtDataTableComponent extends SmtComponentBase implements OnInit {
       // 执行命令发送后置
       if (resObj.result && resObj.result.length > 0) {
         resObj.result.forEach((result) => {
-          new SmtCommandResolver(this).afterOperate(result, this.createCommandModel(), this.componentService.modalService);
+          new SmtCommandResolver(this).afterOperate(result, this.componentService.modalService);
         });
       }
     }
@@ -281,7 +248,6 @@ export class SmtDataTableComponent extends SmtComponentBase implements OnInit {
       },
     };
     this._buildColumns(this.dataTableConfig.columns, this.dataTableConfig);
-    this.createTableMapping();
   }
 
   private _buildColumns(columns, cfg) {
@@ -454,11 +420,11 @@ export class SmtDataTableComponent extends SmtComponentBase implements OnInit {
     }
     this.isAllChecked = false;
     this.indeterminate = false;
-    this.load('init');
+    this.load();
   }
 
-  public async load(iden) {
-    debugger;
+  public async load() {
+    this.IS_LOADING = true;
     let response: any;
     // if (iden) {
     if (!this.dataSourceCfg.loadingConfig) {
@@ -470,25 +436,17 @@ export class SmtDataTableComponent extends SmtComponentBase implements OnInit {
       response = await this.executeHttp(this.dataSourceCfg['loadingConfig'], null, 'paging');
     }
 
-    if (typeof iden !== 'string') {
-      const resObj = this.createCommandUrl('load');
-
-      // response = await this.executeHttp(resObj.ajaxConfig, null, 'paging');
-
-      if (resObj.result && resObj.result.length > 0) {
-        resObj.result.forEach((result) => {
-          new SmtCommandResolver(this).afterOperate(result, this.createCommandModel(), this.componentService.modalService);
-        });
-      }
-    }
-
     this.dataList = response.data.resultDatas;
     this.total = response.data.count;
 
-    this.mapOfDataState = {};
-
     this.createTableMapping();
     this.initSelectedRow();
+    this.IS_LOADING = false;
+
+    return {
+      state: 1,
+      resultData: {}
+    }
   }
 
   public _buildPaging() {
@@ -539,8 +497,8 @@ export class SmtDataTableComponent extends SmtComponentBase implements OnInit {
 
   // 有操作之后的刷新方法
   public loadRefreshData(option) {
-    if (this.execConfig.loading) {
-      this.executeHttp(this.execConfig.loading, 'buildParameters', 'paging').then(
+    if (this.dataSourceCfg.loadingConfig) {
+      this.executeHttp(this.dataSourceCfg.loadingConfig, 'buildParameters', 'paging').then(
         (response) => {
           if (response && response.data && response.data) {
             this.refreshData(response.data.resultDatas);
@@ -832,7 +790,7 @@ export class SmtDataTableComponent extends SmtComponentBase implements OnInit {
 
     if (option['result'] && option['result'].length > 0) {
       option['result'].forEach((result) => {
-        new SmtCommandResolver(this).afterOperate(result, this.createCommandModel(), this.componentService.modalService);
+        new SmtCommandResolver(this).afterOperate(result, this.componentService.modalService);
       });
     }
 
@@ -884,11 +842,16 @@ export class SmtDataTableComponent extends SmtComponentBase implements OnInit {
       response = await this.executeHttp(resObj.ajaxConfig, option.ID, null);
     }
 
-    if (resObj.result && resObj.result.length > 0) {
-      resObj.result.forEach((result) => {
-        new SmtCommandResolver(this).afterOperate(result, this.createCommandModel(), this.componentService.modalService);
-      });
+    return {
+      state: 1,
+      resultData: { ...response }
     }
+
+    // if (resObj.result && resObj.result.length > 0) {
+    //   resObj.result.forEach((result) => {
+    //     new SmtCommandResolver(this).afterOperate(result, this.componentService.modalService);
+    //   });
+    // }
 
     // this.dataList = this.dataList.filter((d) => d[this.KEY_ID] !== response['data'][this.KEY_ID]);
   }
@@ -903,7 +866,7 @@ export class SmtDataTableComponent extends SmtComponentBase implements OnInit {
 
     if (option['result'] && option['result'].length > 0) {
       option['result'].forEach((result) => {
-        new SmtCommandResolver(this).afterOperate(result, this.createCommandModel(), this.componentService.modalService);
+        new SmtCommandResolver(this).afterOperate(result, this.componentService.modalService);
       });
     }
   }
@@ -1184,7 +1147,7 @@ export class SmtDataTableComponent extends SmtComponentBase implements OnInit {
       }
     });
     const data = [col.map((i) => i.title)];
-    const response: any = this.executeHttp(this.execConfig.loading, null, null);
+    const response: any = this.executeHttp(this.dataSourceCfg.loadingConfig, null, null);
     if (response.success && response.data.length > 0) {
       response.data.forEach((i) => {
         // console.log(i)

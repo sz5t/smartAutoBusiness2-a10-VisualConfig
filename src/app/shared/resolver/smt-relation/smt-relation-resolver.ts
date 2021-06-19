@@ -11,6 +11,7 @@ export class SmtMessageSenderResolver {
                 cfg['targetPageId'],
                 cfg['targetViewId'],
                 cfg.parameters,
+                cfg.commandType
             )
         );
     }
