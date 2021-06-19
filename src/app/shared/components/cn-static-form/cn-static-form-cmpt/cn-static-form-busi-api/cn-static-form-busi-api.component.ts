@@ -162,7 +162,7 @@ export class CnStaticFormBusiApiComponent implements OnInit, AfterViewInit {
   }
 
   async getApiInfo(node?) {
-    let url = "smt-app/column/queryParamByResourceId";
+    let url = "smt-app/column/queryTableParamByResourceId";
     let method = "get";
     let params = {
       resourceId: node['apiId'] //'J3neTLLwky15pkBxrlZamVsL4k8MxREyD79M'
