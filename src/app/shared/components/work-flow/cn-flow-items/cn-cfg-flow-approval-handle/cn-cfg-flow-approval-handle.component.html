@@ -1,0 +1,3 @@
+<app-cn-static-form *ngIf="form_process_config" #staticForm [config]="form_process_config" [staticData]="sourceData"
+    [fromDataService]="fromDataService" (updateValue)="staticFormValueChange($event)">
+</app-cn-static-form>

@@ -102,18 +102,32 @@ export class CnStaticFormArrayCollapseComponent implements OnInit {
 
 
   getStringByshow(_value, _config) {
-    let str: any;
+    let str: any = "";
+    let backstr: any = "";
     _config.forEach(element => {
       if (_value && _value.hasOwnProperty(element['name'])) {
-        str = _value[element['name']];
-        if (element['children'] && element['children'].length > 0) {
-          str = this.getStringByshow(str, element['children'])
+
+        if (element['type'] && element['type'] === 'value' && _value[element['name']]) {
+
+          str = element['value'];
+
+        } else {
+          str = _value[element['name']];
+          if (element['children'] && element['children'].length > 0) {
+            str = this.getStringByshow(str, element['children'])
+          }
         }
+
+
+        if (str) {
+          backstr = backstr + str;
+        }
+
       }
 
     });
 
-    return str;
+    return backstr;
 
   }
 

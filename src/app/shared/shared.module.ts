@@ -228,10 +228,40 @@ import { CfgFormCheckComponent } from './config-components/cfg-form-design/cfg-f
 import { CfgFormDesignLayoutItemDirective } from './config-components/cfg-form-design/cfg-form-design-layout/cfg-form-design-layout-item.directive';
 import { CnStaticFormSubComponentComponent } from './components/cn-static-form/cn-static-form-item/cn-static-form-sub-component/cn-static-form-sub-component.component';
 import { CnStaticFormSelectTreeComponent } from './components/cn-static-form/cn-static-form-item/cn-static-form-select-tree/cn-static-form-select-tree.component';
+import { CnCfgFlowDesignComponent } from './components/work-flow/cn-cfg-flow-design/cn-cfg-flow-design.component';
+import { CnCfgFlowAttrSettingComponent } from './components/work-flow/cn-flow-items/cn-cfg-flow-attr-setting/cn-cfg-flow-attr-setting.component';
+import { CnStaticFormTextareaComponent } from './components/cn-static-form/cn-static-form-item/cn-static-form-textarea/cn-static-form-textarea.component';
+import { CnCfgBusiFlowComponent } from './components/work-flow/cn-cfg-busi-flow/cn-cfg-busi-flow.component';
+import { CnCfgFlowStartComponent } from './components/work-flow/cn-flow-items/cn-cfg-flow-start/cn-cfg-flow-start.component';
+import { CnCfgFlowApprovalComponent } from './components/work-flow/cn-flow-items/cn-cfg-flow-approval/cn-cfg-flow-approval.component';
+import { CnCfgFlowApprovalHandleComponent } from './components/work-flow/cn-flow-items/cn-cfg-flow-approval-handle/cn-cfg-flow-approval-handle.component';
+import { CnCfgFlowPreviewComponent } from './components/work-flow/cn-cfg-flow-preview/cn-cfg-flow-preview.component';
+import { CnStaticFormBusiPopApiComponent } from './components/cn-static-form/cn-static-form-item/cn-static-form-busi-pop-api/cn-static-form-busi-pop-api.component';
+import { CnStaticFormBusiApiComponent } from './components/cn-static-form/cn-static-form-cmpt/cn-static-form-busi-api/cn-static-form-busi-api.component';
+import { SmtFormComponent } from './smt-components/smt-form/smt-form.component';
+import { SmtFormInputComponent } from './smt-components/smt-form/smt-form-items/smt-form-input/smt-form-input.component';
+import { SmtFormSelectComponent } from './smt-components/smt-form/smt-form-items/smt-form-select/smt-form-select.component';
+import { SmtFormLabelComponent } from './smt-components/smt-form/smt-form-items/smt-form-label/smt-form-label.component';
+import { SmtFormSpanComponent } from './smt-components/smt-form/smt-form-items/smt-form-span/smt-form-span.component';
+import { SmtFormCheckComponent } from './smt-components/smt-form/smt-form-items/smt-form-check/smt-form-check.component';
+import { SmtFormSwitchComponent } from './smt-components/smt-form/smt-form-items/smt-form-switch/smt-form-switch.component';
+import { SmtFormTreeSelectComponent } from './smt-components/smt-form/smt-form-items/smt-form-tree-select/smt-form-tree-select.component';
+import { SmtFormTextareaComponent } from './smt-components/smt-form/smt-form-items/smt-form-textarea/smt-form-textarea.component';
+import { SmtFormRadioComponent } from './smt-components/smt-form/smt-form-items/smt-form-radio/smt-form-radio.component';
+import { SmtFormTagComponent } from './smt-components/smt-form/smt-form-items/smt-form-tag/smt-form-tag.component';
+import { SmtFormPickerYearComponent } from './smt-components/smt-form/smt-form-items/smt-form-picker-year/smt-form-picker-year.component';
+import { SmtFormPickerWeekComponent } from './smt-components/smt-form/smt-form-items/smt-form-picker-week/smt-form-picker-week.component';
+import { SmtFormPickerMonthComponent } from './smt-components/smt-form/smt-form-items/smt-form-picker-month/smt-form-picker-month.component';
+import { SmtFormPickerDateComponent } from './smt-components/smt-form/smt-form-items/smt-form-picker-date/smt-form-picker-date.component';
+import { SmtFormCodeEditComponent } from './smt-components/smt-form/smt-form-items/smt-form-code-edit/smt-form-code-edit.component';
+import { SmtFormPickerRangeComponent } from './smt-components/smt-form/smt-form-items/smt-form-picker-range/smt-form-picker-range.component';
+
 import { SmtDynamicPageComponent } from './smt-components/smt-dynamic-page/smt-dynamic-page.component';
 import { SmtTreeComponent } from './smt-components/smt-tree/smt-tree.component';
 import { SmtComponentComponent } from './components/smt-layout/smt-component/smt-component/smt-component.component';
 import { SmtComponentBase } from './smt-components/smt-component.base';
+import { SmtFormItemDirective } from './smt-components/smt-form/smt-form-items/smt-form-item.directive';
+import { SmtPopPageComponent } from './smt-components/smt-pop-page/smt-pop-page.component';
 
 // #region third libs
 
@@ -443,6 +473,8 @@ const COMPONENTS = [
   CnStaticFormPopApiComponent,
   CnStaticFormSubComponentComponent,
   CnStaticFormSelectTreeComponent,
+  CnStaticFormTextareaComponent,
+  CnStaticFormBusiApiComponent,
   // --静态表单内特殊组件结构--
   CnStaticFormAjaxComponent,
   CnStaticFormFormItemComponent,
@@ -454,6 +486,16 @@ const COMPONENTS = [
   CnStaticFormSwitchConentComponent,
   CnStaticFormMainResourceComponent,
   CnStaticFormApiComponent,
+  CnStaticFormBusiPopApiComponent,
+
+  // --流程--
+  CnCfgFlowDesignComponent,
+  CnCfgFlowAttrSettingComponent,
+  CnCfgFlowStartComponent,
+  CnCfgFlowApprovalComponent,
+  CnCfgBusiFlowComponent,
+  CnCfgFlowApprovalHandleComponent,
+  CnCfgFlowPreviewComponent,
   // 解析布局组件
   SmtPageComponent,
   SmtDynamicPageComponent,
@@ -463,7 +505,27 @@ const COMPONENTS = [
   SmtDataTableComponent,
   SmtToolbarComponent,
   SmtTreeTableComponent,
+  // 新表单
+  SmtFormComponent,
+  SmtFormInputComponent,
+  SmtFormSelectComponent,
+  SmtFormLabelComponent,
+  SmtFormSpanComponent,
+  SmtFormCheckComponent,
+  SmtFormSwitchComponent,
+  SmtFormTreeSelectComponent,
+  SmtFormTextareaComponent,
+  SmtFormRadioComponent,
+  SmtFormTagComponent,
+  SmtFormPickerYearComponent,
+  SmtFormPickerWeekComponent,
+  SmtFormPickerMonthComponent,
+  SmtFormPickerDateComponent,
+  SmtFormCodeEditComponent,
+  SmtFormPickerRangeComponent,
   SmtTreeComponent,
+  // 弹出页
+  SmtPopPageComponent,
 ];
 const DIRECTIVES = [
   CnLayoutResolverDirective,
@@ -479,6 +541,7 @@ const DIRECTIVES = [
   SmtDynamicLayoutResolverDirective,
   SmtComponentResolverDirective,
   CfgFormDesignLayoutItemDirective,
+  SmtFormItemDirective,
 ];
 // #endregion
 
@@ -507,8 +570,8 @@ const DIRECTIVES = [
     SafeUrlPipe,
     CfgAttributeRanksRowModalComponent,
     ToolAttrJsonComponent,
-
     SmtComponentComponent,
+
   ],
   exports: [
     CommonModule,
@@ -532,4 +595,4 @@ const DIRECTIVES = [
   entryComponents: [...COMPONENTS],
   providers: [],
 })
-export class SharedModule {}
+export class SharedModule { }

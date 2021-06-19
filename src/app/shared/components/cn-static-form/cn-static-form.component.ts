@@ -1,8 +1,11 @@
-import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter, Inject } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { itemIntersectByLine } from '@antv/g6/lib/util/math';
 import { SFSchema } from '@delon/form';
+import { BSN_COMPONENT_SERVICES } from 'src/app/core/relations/bsn-relatives';
+import { ComponentServiceProvider } from 'src/app/core/services/components/component.service';
 import { configFormDataServerService } from 'src/app/core/services/config/form-data.service';
+import { VcComponentBase } from '../../vc-components/vc-component';
 import { CustomValidator } from '../data-form/form-validator/CustomValidator';
 
 @Component({
@@ -11,7 +14,7 @@ import { CustomValidator } from '../data-form/form-validator/CustomValidator';
   styles: [
   ]
 })
-export class CnStaticFormComponent implements OnInit {
+export class CnStaticFormComponent extends VcComponentBase implements OnInit {
 
 
   @Input() public config;
@@ -23,9 +26,9 @@ export class CnStaticFormComponent implements OnInit {
   formCascade;
   formValue;
 
-  constructor(private fb: FormBuilder) {
-
-
+  constructor(private fb: FormBuilder, @Inject(BSN_COMPONENT_SERVICES)
+  public componentService: ComponentServiceProvider,) {
+    super(componentService);
   }
 
   ngOnInit(): void {
@@ -672,7 +675,7 @@ export class CnStaticFormComponent implements OnInit {
 
 
   // 值级联
-  cascadeValue(back?) {
+  cascadeValueEmit(back?) {
 
     let v1 = [
       {
@@ -969,6 +972,28 @@ export class CnStaticFormComponent implements OnInit {
     const reg1 = new RegExp(option.righit);
     regularflag = reg1.test(option.left);
     return regularflag;
+  }
+
+
+
+  // 执行异步请求
+  async execAjaxCommand(ajaxConfig?) {
+    // 
+    this.componentValue = this.staticData;
+    let response: any;
+    if (ajaxConfig['enableAjaxMore']) {
+      response = await this.executeHttpMore(ajaxConfig, {}, 'buildParameters', null);
+    } else {
+      const url = ajaxConfig.url;
+      const method = ajaxConfig.ajaxType;
+      const params = {
+        ...this.buildParameters(ajaxConfig.params)
+      };
+      // 考虑满足 get 对象，集合，存储过程【指定dataset 来接收数据】，加载错误的信息提示
+      response = await this.componentService.apiService.getRequest(url, method, { params }).toPromise();
+    }
+    return response;
+
   }
 
 

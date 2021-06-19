@@ -67,9 +67,10 @@
         <ng-container *ngFor="let r of config['properties']">
 
 
-            <div [hidden]="r['hidden']">
+            <div [hidden]="r['hidden']" *ngIf="!r['hiddenIf']">
                 <ng-container CnStaticFormItemDirective [validateForm]="validateForm" [config]="r"
-                    [globalConfig]="config" [fromDataService]="fromDataService" (cascadeValue)="cascadeValue($event)">
+                    [globalConfig]="config" [fromDataService]="fromDataService"
+                    (cascadeValue)="cascadeValueEmit($event)">
                 </ng-container>
 
             </div>
@@ -93,10 +94,12 @@
                 [ngStyle]="{'display': c.display ? c.display : null}">
 
                 <ng-container *ngIf="c['container']==='control'">
-                    <div [hidden]="r['hidden']">
+                    <div [hidden]="config['properties'][c['controlIndex']]['hidden']"
+                        *ngIf="!config['properties'][c['controlIndex']]['hiddenIf']">
+
                         <ng-container CnStaticFormItemDirective [validateForm]="validateForm"
                             [config]="config['properties'][c['controlIndex']]" [globalConfig]="config"
-                            [fromDataService]="fromDataService" (cascadeValue)="cascadeValue($event)">
+                            [fromDataService]="fromDataService" (cascadeValue)="cascadeValueEmit($event)">
                         </ng-container>
                     </div>
 
@@ -108,10 +111,11 @@
                             [ngStyle]="{'display': c_c.display ? c_c.display : null}">
 
                             <ng-container *ngIf="c_c['container']==='control'">
-                                <div [hidden]="r['hidden']">
+                                <div [hidden]="config['properties'][c['controlIndex']]['hidden']"
+                                    *ngIf="!config['properties'][c['controlIndex']]['hiddenIf']">
                                     <ng-container CnStaticFormItemDirective [validateForm]="validateForm"
                                         [config]="config['properties'][c_c['controlIndex']]" [globalConfig]="config"
-                                        [fromDataService]="fromDataService" (cascadeValue)="cascadeValue($event)">
+                                        [fromDataService]="fromDataService" (cascadeValue)="cascadeValueEmit($event)">
                                     </ng-container>
                                 </div>
                             </ng-container>
