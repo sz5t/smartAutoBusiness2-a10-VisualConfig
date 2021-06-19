@@ -6,6 +6,7 @@ import { ComponentServiceProvider } from 'src/app/core/services/components/compo
 import { CustomValidator } from '../../components/data-form/form-validator/CustomValidator';
 import { SmtComponentBase } from '../smt-component.base';
 import { SmtPopPageComponent } from '../smt-pop-page/smt-pop-page.component';
+import { SmtExec } from './smt-exec';
 interface IFormBindProperties {
   id: boolean;
   formLayout: any[];
@@ -44,14 +45,16 @@ export class SmtFormComponent extends SmtComponentBase implements OnInit, OnDest
   constructor(private fb: FormBuilder, @Inject(BSN_COMPONENT_SERVICES)
   public componentService: ComponentServiceProvider,
   ) {
+
     super(componentService);
     this.INIT_VALUE = {};
     this.TEMP_VALUE = {};
     this.COMPONENT_VALUE = {};
+    this.EXEC_THAT = new SmtExec(this);
 
   }
 
-
+  EXEC_THAT: any;
   loading = false;
 
   ngOnInit(): void {
@@ -507,7 +510,69 @@ export class SmtFormComponent extends SmtComponentBase implements OnInit, OnDest
   }
 
 
+  public showWindow(option, params?) {
+
+    // 弹出准备参数
+    // 弹出 事件响应
 
 
+    let d = {
+      "id": "business_object_page_1",
+      "layoutName": "0MwdEVnpL0PPFnGISDWYdkovXiQ2cIOG",
+      "type": "confirm",
+      "width": "100%",
+      "title": "业务对象页面",
+      "cancelText": "取消",
+      "okText": "提交",
+      "footerButton": [
+        {
+          "name": 'ok',  // 确定按钮
+          "text": "【确定】",
+          "customActionId": '001'
+        },
+        {
+          "name": 'cancel', // 取消按钮
+          "text": "【取消】",
+          "customActionId": '002'
+        },
+        {
+          "name": 'cancel', // 取消按钮
+          "text": "【自定义】",
+          "customActionId": '002'
+        },
+        {
+          "name": 'cancel', // 取消按钮
+          "text": "【按钮大全】",
+          "customActionId": '002',
+          // 需要连续动作
+          "eventConent": [
+            {
+              "type": "pop",
+              "targetPageId": "pop",
+              "targetViewId": "001",
+              "command": "add_row"
+            },
+            {
+              "type": "parent",
+              "targetPageId": "parent",
+              "targetViewId": "001",
+              "command": "add_row"
+            }
+          ]
+        }
+      ]
+
+    }
+
+    console.log('弹出配置');
+  }
+
+
+
+  _testTHAT() {
+    console.log('执行');
+    this.EXEC_THAT.testTHAT();
+
+  }
 
 }

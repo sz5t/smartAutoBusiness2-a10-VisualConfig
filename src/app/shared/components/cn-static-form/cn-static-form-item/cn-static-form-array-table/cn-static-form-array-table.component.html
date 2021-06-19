@@ -23,7 +23,7 @@
             <tr>
                 <ng-container *ngFor="let r_arr of  config['properties'];let i1 = index;">
 
-                    <th [hidden]="r_arr['hidden']">{{r_arr['title']}}</th>
+                    <th [hidden]="r_arr['hidden']" [nzWidth]="r_arr['width']">{{r_arr['title']}}</th>
 
                 </ng-container>
                 <th
