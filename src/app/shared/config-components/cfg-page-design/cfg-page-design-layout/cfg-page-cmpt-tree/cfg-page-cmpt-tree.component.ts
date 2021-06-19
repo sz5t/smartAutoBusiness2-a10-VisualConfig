@@ -12,36 +12,42 @@ export class CfgPageCmptTreeComponent implements OnInit {
   @Input() public selectedItem: any;
   @Input() public cmptState: any;
   @Input() public fromDataService: configFormDataServerService;
+
+  public config: any;
+  private titleRoot = '根节点';
+  private titleChild = '子节点';
   constructor() {}
 
-  public nodes = [
-    {
-      title: 'parent 1',
-      key: '100',
-      children: [
-        {
-          title: 'parent 1-0',
-          key: '1001',
-          children: [
-            { title: 'leaf 1-0-0', key: '10010', isLeaf: true },
-            { title: 'leaf 1-0-1', key: '10011', isLeaf: true },
-          ],
-        },
-      ],
-    },
-  ];
+  public nodes = [];
 
-  public config = {
-    showCheckBox: false,
-    expandAll: true,
-  };
-  body_style: any = { padding: '1px 2px' };
-  body_style_selected: any = { padding: '1px 2px', border: '3px dashed red' };
+  body_style: any = { padding: '2px 2px' };
+  body_style_selected: any = { padding: '2px 2px', border: '2px dashed red' };
   ngOnInit(): void {
     this.load();
   }
 
-  public load() {}
+  load() {
+    this.config = this.fromDataService.layoutSourceData[this.l_config['id']];
+    this.nodes = [
+      {
+        title: this.config.columns ? `#${this.config.columns[0].field}` : '根节点',
+        key: '100',
+        children: [
+          {
+            title: this.config.columns ? `#${this.config.columns[0].field}` : '子节点',
+            key: '1001',
+            children: [
+              {
+                title: `#${this.config.columns ? `${this.config.columns[0].field}` : '子节点'}`,
+                key: '10bnbjbnbnbnmbnmdfggrtdf010',
+                isLeaf: true,
+              },
+            ],
+          },
+        ],
+      },
+    ];
+  }
 
   click(e?) {
     e.stopPropagation();
@@ -52,6 +58,8 @@ export class CfgPageCmptTreeComponent implements OnInit {
     this.fromDataService.layoutNodeSelected(this.l_config);
     console.log('选中当前tabs', this.selectedItem);
   }
+
+  change($event) {}
 
   public f_ondrop(e?, d?) {
     e.preventDefault();

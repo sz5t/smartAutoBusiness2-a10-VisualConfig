@@ -522,6 +522,10 @@
                                                     {
                                                         "label": "自定义",
                                                         "value": "custom"
+                                                    },
+                                                    {
+                                                        "label": "系统内置",
+                                                        "value": "builtin"
                                                     }
                                                 ],
                                                 "labelName": "label",
@@ -999,6 +1003,10 @@
                                                                                         {
                                                                                             "label": "自定义",
                                                                                             "value": "custom"
+                                                                                        },
+                                                                                        {
+                                                                                            "label": "系统内置",
+                                                                                            "value": "builtin"
                                                                                         }
                                                                                     ],
                                                                                     "labelName": "label",
@@ -2202,6 +2210,10 @@
                                                                                                 {
                                                                                                     "label": "自定义",
                                                                                                     "value": "custom"
+                                                                                                },
+                                                                                                {
+                                                                                                    "label": "系统内置",
+                                                                                                    "value": "builtin"
                                                                                                 }
                                                                                             ],
                                                                                             "labelName": "label",
@@ -2509,6 +2521,10 @@
                                                                                 {
                                                                                     "label": "自定义",
                                                                                     "value": "custom"
+                                                                                },
+                                                                                {
+                                                                                    "label": "系统内置",
+                                                                                    "value": "builtin"
                                                                                 }
                                                                             ],
                                                                             "labelName": "label",
