@@ -14,11 +14,11 @@ export class SmtCommandResolver {
             this._componentInstance.subscription$ = this._componentInstance.componentService.smtRelationSubject.subscribe(
                 (eventData: ISenderModel) => {
                     console.log('commandItem');
-                    customCommand.map((cmdItem: any) => {
+                    customCommand.map(async (cmdItem: any) => {
                         // debugger;
                         if (cmdItem.command === eventData.command && eventData.pageCode === this._componentInstance.dataServe.pageCode) {
                             // 缺少pageCode 判断
-                            this._executeCommand(eventData.data, cmdItem);
+                            await this._executeCommand(eventData.data, cmdItem);
                         }
                     });
                 },
@@ -26,7 +26,7 @@ export class SmtCommandResolver {
         }
     }
 
-    private _executeCommand(eventData: any, cmd: any) {
+    private async _executeCommand(eventData: any, cmd: any) {
         if (cmd.preCondition) {
         }
         let _execParamsData: any = {};
@@ -52,7 +52,10 @@ export class SmtCommandResolver {
         // 执行命令
         if (cmd.commandType === 'builtin') {
             const method = this._componentInstance.COMPONENT_METHODS[cmd.command];
-            this._componentInstance[method](_execParamsData);
+            const result = await this._componentInstance[method](_execParamsData);
+            if (result.state === 1) {
+                this.showDefaultMessage();
+            }
         } else if (cmd.commandType === 'custom') {
             cmd.commandContent.forEach(async (command) => {
                 if (command.type === 'ajaxConfig') {
@@ -60,6 +63,8 @@ export class SmtCommandResolver {
                     const response = await this._componentInstance.executeHttp(command.ajaxConfig, data, null);
                     if (response.state === 1) {
                         for (let i = 0; i < command.result.length; i++) {
+                            // if (command.result[i]['enableCondition'] === 'true') {
+                            // }
                             this.afterOperate(command.result[i], this._componentInstance.componentService.modalService)
                         }
                     }
@@ -112,7 +117,7 @@ export class SmtCommandResolver {
 
     // 根据前置条件展示提示框
     showMessage(cfg, returnValue, modal) {
-        modal[cfg['type']]({
+        modal['message']({
             nzTitle: cfg['messageInfo']['title'] ? cfg['messageInfo']['title'] : '提示',
             nzContent: this.createContent(cfg['messageInfo']),
         });
@@ -121,7 +126,7 @@ export class SmtCommandResolver {
     }
 
     showConfirm(cfg, returnValue, modal) {
-        modal[cfg['type']]({
+        modal['confirm']({
             nzTitle: cfg['contentInfo']['title'] ? cfg['contentInfo']['title'] : '提示',
             nzContent: this.createContent(cfg['contentInfo']),
             nzOkText: cfg['okInfo']['title'],
@@ -159,5 +164,12 @@ export class SmtCommandResolver {
 
     nextOperate(type) {
         return type;
+    }
+
+    showDefaultMessage() {
+        this._componentInstance.componentService.modalService.success({
+            nzTitle: '提示',
+            nzContent: '执行成功',
+        });
     }
 }
