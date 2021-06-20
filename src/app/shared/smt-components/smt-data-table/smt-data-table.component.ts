@@ -391,10 +391,7 @@ export class SmtDataTableComponent extends SmtComponentBase implements OnInit {
     this.initSelectedRow();
     this.IS_LOADING = false;
 
-    return {
-      state: 1,
-      resultData: {}
-    }
+    return this.getExecuteResult(response, false);
   }
 
   public _buildPaging() {

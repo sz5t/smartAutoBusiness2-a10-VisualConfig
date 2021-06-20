@@ -57,10 +57,11 @@ export class SmtCommandResolver {
         this.showDefaultMessage();
       }
     } else if (cmd.commandType === 'custom') {
-      let next: any;
+      let next: any = 'prevent';
       for (let i = 0; i < cmd.commandContent.length; i++) {
         if (cmd.commandContent[i].type === 'ajaxConfig') {
-          next = await this.resolveCommandOfAjax(cmd.commandContent[i], _execParamsData);
+          const nextResult = await this.resolveCommandOfAjax(cmd.commandContent[i], _execParamsData);
+          next = nextResult === undefined ? next : nextResult
           switch (next) {
             case 'next':
               continue;
@@ -70,7 +71,8 @@ export class SmtCommandResolver {
               return;
           }
         } else if (cmd.commandContent[i].type === 'commandConfig') {
-          next = await this.resolveCommandOfCommand(cmd.commandContent[i], _execParamsData);
+          const nextResult = await this.resolveCommandOfCommand(cmd.commandContent[i], _execParamsData);
+          next = nextResult === undefined ? next : nextResult
           switch (next) {
             case 'next':
               continue;
@@ -114,12 +116,13 @@ export class SmtCommandResolver {
   }
 
   private async resolveCommandOfAjax(command, execParamsData) {
-    let next: any;
+    let next: any = 'prevent';
     const data = execParamsData === {} ? null : execParamsData;
     const response = await this._componentInstance.executeHttp(command.ajaxConfig, data, null);
     if (response.state === 1) {
       for (let i = 0; i < command.result.length; i++) {
-        next = this.afterOperate(command.result[i], this._componentInstance.componentService.modalService);
+        const nextResult = this.afterOperate(command.result[i], this._componentInstance.componentService.modalService, data);
+        next = nextResult === undefined ? next : nextResult
         switch (next) {
           case 'next':
             continue;
@@ -130,30 +133,45 @@ export class SmtCommandResolver {
         }
       }
     }
+    return next;
   }
 
   private async resolveCommandOfCommand(command, execParamsData) {
+    let next = 'prevent';
+    const data = execParamsData === {} ? null : execParamsData;
     for (let i = 0; i < command.commandConfig.length; i++) {
       if (command.commandConfig[i].commandType === 'custom') {
         new SmtMessageSenderResolver(this._componentInstance).resolve(command.commandConfig[i]);
       } else {
         const method = this._componentInstance.COMPONENT_METHODS[command.commandConfig[i].command];
-        const result = await this._componentInstance[method](execParamsData);
-        if (result.state === 1) {
-          this.showDefaultMessage();
+        const response = await this._componentInstance[method](execParamsData);
+        if (response.state === 1) {
+          for (let i = 0; i < command.result.length; i++) {
+            const nextResult = this.afterOperate(command.result[i], this._componentInstance.componentService.modalService, data);
+            next = nextResult === undefined ? next : nextResult
+            switch (next) {
+              case 'next':
+                continue;
+              case 'pass':
+                break;
+              case 'prevent':
+                return;
+            }
+          }
         }
       }
     }
+    return next;
   }
 
-  public afterOperate(commandObj, modal) {
+  public afterOperate(commandObj, modal, data?) {
     let nextCommand: any;
-    if (commandObj['preCondition'] && commandObj['preCondition'].length > 0) {
-      const beforeOperation = new SmtPreCondition(this._componentInstance).resolverBeforeOperationInfo(
-        commandObj.preCondition,
-        this._componentInstance.componentService.modalService,
+    if (commandObj['condition'] && commandObj['condition'].length > 0) {
+      const conditionResult = this._componentInstance.analysisResult(
+        commandObj['condition'],
+        data,
       );
-      if (beforeOperation) {
+      if (conditionResult) {
         nextCommand = this.resultResolver(commandObj, modal);
       } else {
         return 'prevent';
