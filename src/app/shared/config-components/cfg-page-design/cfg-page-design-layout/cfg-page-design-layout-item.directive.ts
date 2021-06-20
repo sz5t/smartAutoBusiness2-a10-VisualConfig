@@ -13,7 +13,13 @@ const components: { [type: string]: Type<any> } = {
   // cnTreeTable: 'cnTreeTable',
   cnToolbar: CfgPageCmptToolbarComponent,
   cnRowToolbar: CfgPageCmptToolbarComponent,
-  tabs: CfgPageCmptTabsComponent
+  tabs: CfgPageCmptTabsComponent,
+
+  smtForm: CfgPageCmptFormComponent,
+  smtDataTable: CfgPageCmptTableComponent,
+  smtTree: CfgPageCmptTreeComponent,
+  smtToolbar: CfgPageCmptToolbarComponent,
+  smtRowToolbar: CfgPageCmptToolbarComponent,
 
 
 };

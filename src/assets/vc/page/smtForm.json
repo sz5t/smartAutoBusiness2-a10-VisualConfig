@@ -2392,6 +2392,10 @@
                                                 {
                                                     "name": "eventTitle",
                                                     "children": []
+                                                },
+                                                {
+                                                    "name": "eventName",
+                                                    "children": []
                                                 }
                                             ]
                                         }
@@ -2399,7 +2403,7 @@
                                     "properties": [
                                         {
                                             "name": "eventTitle",
-                                            "type": "input",
+                                            "type": "label",
                                             "componentConfig": {},
                                             "formType": "value",
                                             "formName": "formControlName",
@@ -2408,7 +2412,7 @@
                                         },
                                         {
                                             "name": "eventName",
-                                            "type": "input",
+                                            "type": "label",
                                             "componentConfig": {},
                                             "formType": "value",
                                             "formName": "formControlName",
@@ -2504,14 +2508,15 @@
                                                                                 },
                                                                                 "sourceData": {
                                                                                     "type": "root",
-                                                                                    "name": "title"
+                                                                                    "name": "preCondition"
                                                                                 },
                                                                                 "saveData": {
                                                                                     "type": "_root",
-                                                                                    "name": "arrayliu"
+                                                                                    "name": "preCondition"
                                                                                 }
                                                                             },
                                                                             "showConfig": {
+                                                                                "type":"exist",
                                                                                 "showString": [
                                                                                     {
                                                                                         "name": "type"
@@ -2636,6 +2641,7 @@
                                                     }
                                                 },
                                                 "showConfig": {
+                                                    "type":"exist",
                                                     "showString": [
                                                         {
                                                             "name": "type"

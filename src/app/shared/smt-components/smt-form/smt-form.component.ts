@@ -1,19 +1,18 @@
 import { Component, Inject, Input, OnDestroy, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Subject, Subscription } from 'rxjs';
+import { SMT_FORM_METHOD } from 'src/app/core/relations/bsn-methods/smt-form-methods';
 import { BSN_COMPONENT_SERVICES } from 'src/app/core/relations/bsn-relatives';
 import { ComponentServiceProvider } from 'src/app/core/services/components/component.service';
+import { CommonUtils } from 'src/app/core/utils/common-utils';
 import { CustomValidator } from '../../components/data-form/form-validator/CustomValidator';
+import { SmtCommandResolver } from '../../resolver/smt-command/smt-command.resovel';
+import { SmtEventResolver } from '../../resolver/smt-event/smt-event-resolver';
 import { SmtComponentBase } from '../smt-component.base';
 import { SmtPopPageComponent } from '../smt-pop-page/smt-pop-page.component';
 import { SmtExec } from './smt-exec';
-interface IFormBindProperties {
-  id: boolean;
-  formLayout: any[];
-  componentJson: any;
-  fields: any[];
+import { SmtFormDataAdapter } from './smt-form.adapter';
 
-}
 @Component({
   selector: 'app-smt-form',
   templateUrl: './smt-form.component.html',
@@ -31,12 +30,11 @@ export class SmtFormComponent extends SmtComponentBase implements OnInit, OnDest
   @Input() dataServe: any;
 
   fromDataService: any;
-  formBindObj: {
-    id: any;
-    formLayout: any[];
-    componentJson: {};
-    fields: any[];
-  }
+  public formBindObj: any;
+  private eventObjs: any[];
+  private commandObjs: any[];
+  public dataSourceObj: any;
+
 
   private _sender$: Subject<any>;
   private _sender_subscription$: Subscription;
@@ -50,6 +48,7 @@ export class SmtFormComponent extends SmtComponentBase implements OnInit, OnDest
     this.INIT_VALUE = {};
     this.TEMP_VALUE = {};
     this.COMPONENT_VALUE = {};
+    this.COMPONENT_METHODS = SMT_FORM_METHOD;
     this.EXEC_THAT = new SmtExec(this);
 
   }
@@ -58,8 +57,9 @@ export class SmtFormComponent extends SmtComponentBase implements OnInit, OnDest
   loading = false;
 
   ngOnInit(): void {
+    this._initComponent(this.config);
     this.validateForm = this.fb.group({});
-    this.formBindObj = this.setFormBindObj(this.config);
+    // this.formBindObj = this.setFormBindObj(this.config);
     this.dataSourceCfg = {
       loadingOnInit: true,
       loadingConfig: {
@@ -98,6 +98,43 @@ export class SmtFormComponent extends SmtComponentBase implements OnInit, OnDest
       console.log('form', data);
     });
     console.log('表单配置', this.formBindObj);
+
+    this.initEvent(this.eventObjs);
+
+    this.initCommand(this.commandObjs);
+
+    //  this.dataSourceObj.loadingOnInit && this.load();
+  }
+
+  private _initComponent(config: any) {
+    this.KEY_ID = this.config.keyId ? this.config.keyId : 'ID';
+    if (this.tempData) {
+      this.TEMP_VALUE = this.tempData;
+    }
+    if (this.initData) {
+      this.INIT_VALUE = this.initData;
+    }
+
+    const dataAdapter = new SmtFormDataAdapter(this.config);
+
+    this.formBindObj = dataAdapter.setFormBindObj();
+    this.eventObjs = dataAdapter.setEventObjs();
+    this.dataSourceObj = dataAdapter.setDataSource();
+    this.commandObjs = dataAdapter.setCommandObjs();
+
+  }
+
+  public initEvent(_eventObjs: any) {
+    if (_eventObjs) {
+      this._sender$ = new SmtEventResolver(this).resolve(_eventObjs);
+      this._sender_subscription$ = this._sender$.subscribe();
+    }
+  }
+
+  public initCommand(_commandObjs: any) {
+    if (_commandObjs && _commandObjs.length > 0) {
+      new SmtCommandResolver(this).resolve(_commandObjs);
+    }
   }
 
 
@@ -155,14 +192,7 @@ export class SmtFormComponent extends SmtComponentBase implements OnInit, OnDest
   // 校验【执行前置】
   // 默认值
 
-  private setFormBindObj(config: any): IFormBindProperties {
-    return {
-      id: config['id'],
-      formLayout: config['formLayout'],
-      componentJson: config['componentJson'],
-      fields: config['fields']
-    }
-  }
+
 
   /**
    * 生成表单项
@@ -406,7 +436,7 @@ export class SmtFormComponent extends SmtComponentBase implements OnInit, OnDest
    * @param params 
    * @returns 
    */
-  public async execAjax(option, params?) {
+  public async execute(option, params?) {
     let response: any;
     if (params !== null) {
       response = await this.executeHttp(option.ajaxConfig, params, null);
@@ -416,22 +446,6 @@ export class SmtFormComponent extends SmtComponentBase implements OnInit, OnDest
     return response;
   }
 
-  // 结果分析 参数：配置、结果  返回：next、阻止
-  public execReasult(reasult, data?) {
-
-    return "";
-
-  }
-
-  // 执行命令内容【叶子节点】
-  public execCommand() {
-
-    // 执行 命令（根据类型 内置执行、调用自定义命令）
-    let r_data = this.execAjax({});
-    // 执行 异步
-    this.execReasult({});
-
-  }
 
   // 值传递 
   public transferValue(option?) {
@@ -456,12 +470,65 @@ export class SmtFormComponent extends SmtComponentBase implements OnInit, OnDest
       maskClosable: true,
       cancelText: '取消',
       okText: '确定',
-      footerButton: null,
       customAction: [],
       customContent: 'api',
       customPageConfig: {
 
-      }
+      },
+      // 自定义按钮
+      "footerButton": [
+        {
+          "name": 'ok',  // 确定按钮
+          "text": "【确定】",
+          "customActionId": '001',
+          "eventConent": [
+            {
+              "type": "pop", // 弹出页面对象
+              "targetPageId": "pop",
+              "targetViewId": "001",
+              "command": "load"
+            }
+          ]
+        },
+        {
+          "name": 'cancel', // 取消按钮
+          "text": "【取消】",
+          "customActionId": '002',
+          "eventConent": [
+            {
+              "type": "pop", // 弹出页面对象
+              "targetPageId": "pop",
+              "targetViewId": "001",
+              "command": "setFormValue"
+            }
+          ]
+        },
+        {
+          "name": 'cancel', // 取消按钮
+          "text": "【自定义】",
+          "customActionId": '002'
+        },
+        {
+          "name": 'cancel', // 取消按钮
+          "text": "【按钮大全】",
+          "customActionId": '002',
+          // 需要连续动作
+          "eventConent": [
+            {
+              "type": "pop", // 弹出页面对象
+              "targetPageId": "pop",
+              "targetViewId": "001",
+              "command": "add_row"
+            },
+            {
+              "type": "current", // 当前 父对象
+              "targetPageId": "parent",
+              "targetViewId": "001",
+              "command": "add_row"
+            }
+          ]
+        }
+      ]
     }
     if (!dialogCfg) {
       return;
@@ -505,6 +572,25 @@ export class SmtFormComponent extends SmtComponentBase implements OnInit, OnDest
       ],
     };
 
+    // 自定义 操作按钮
+    if (dialogCfg.footerButton && dialogCfg.footerButton.length > 0) {
+      dialogOptional.nzFooter = [];
+
+      dialogCfg.footerButton.forEach((_button) => {
+        dialogOptional.nzFooter.push({
+          label: _button.text,
+          onClick: (componentInstance) => {
+
+            console.log(_button);
+            // 获取当前目标实例
+            let target = componentInstance.popPage.pageService.componentInstance['exYPv7ZuLekRlIyWCCoJcRGLDOXdKm'];
+
+            this.execCustomAction(_button, target);
+          },
+        });
+      });
+    }
+
     dialog = this.componentService.modalService.create(dialogOptional);
     this.windowDialog = dialog;
   }
@@ -527,13 +613,30 @@ export class SmtFormComponent extends SmtComponentBase implements OnInit, OnDest
       "footerButton": [
         {
           "name": 'ok',  // 确定按钮
-          "text": "【确定】",
-          "customActionId": '001'
+          "text": "【加载】",
+          "customActionId": '001',
+          "eventConent": [
+            {
+              "type": "pop", // 弹出页面对象
+              "targetPageId": "pop",
+              "targetViewId": "001",
+              "command": "load"
+            }
+          ]
         },
         {
           "name": 'cancel', // 取消按钮
-          "text": "【取消】",
-          "customActionId": '002'
+          "text": "【赋值】",
+          "customActionId": '002',
+          "eventConent": [
+            {
+              "type": "pop", // 弹出页面对象
+              "execType": "", // 实例控制、消息响应
+              "targetPageId": "pop",
+              "targetViewId": "001",
+              "command": "setFormValue"
+            }
+          ]
         },
         {
           "name": 'cancel', // 取消按钮
@@ -547,13 +650,13 @@ export class SmtFormComponent extends SmtComponentBase implements OnInit, OnDest
           // 需要连续动作
           "eventConent": [
             {
-              "type": "pop",
+              "type": "pop", // 弹出页面对象
               "targetPageId": "pop",
               "targetViewId": "001",
               "command": "add_row"
             },
             {
-              "type": "parent",
+              "type": "current", // 当前 父对象
               "targetPageId": "parent",
               "targetViewId": "001",
               "command": "add_row"
@@ -569,10 +672,166 @@ export class SmtFormComponent extends SmtComponentBase implements OnInit, OnDest
 
 
 
+  execCustomAction(_button, target) {
+    console.log('执行事件');
+    _button['eventConent'] && _button['eventConent'].forEach(element => {
+      target[element['command']]();
+    });
+  }
   _testTHAT() {
     console.log('执行');
     this.EXEC_THAT.testTHAT();
 
   }
+
+
+
+  createDefault() {
+    let d = {
+
+      "name": "data",
+      "type": "label",
+      "componentConfig": {},
+      "formType": "object",
+      "title": "主键",
+      "data": null,
+      "properties": [
+        {
+          "name": "id",
+          "defaultType": "custom",
+          "customValue": {
+            "type": "GUID",
+            "valueName": "",
+            "value": ""
+          },
+          "formType": "value",
+          "title": "主键"
+        },
+        {
+          "name": "name",
+          "defaultType": "default",  // default  custom 
+          "customValue": {
+            "type": "",
+            "valueName": "",
+            "value": ""
+          },
+          "formType": "value"
+        }
+      ]
+
+    }
+
+    let d1 = {
+
+      "name": "formData",
+      "type": "label",
+      "formType": "object",
+      "title": "表单值",
+      "data": {
+        "componentEvent": [
+          {
+            "eventTitle": "刷新",
+            "eventName": "load",
+            "eventContent": null
+          },
+          {
+            "eventTitle": "点击事件",
+            "eventName": "action",
+            "eventContent": null
+          }
+        ]
+      },
+      "properties": [
+        {
+          "name": "componentEvent",
+          "defaultType": "default",
+          "formType": "array",
+          "properties": [
+            {
+              "name": "eventTitle",
+              "defaultType": "default",
+              "formType": "value"
+            },
+            {
+              "name": "eventName",
+              "defaultType": "default",
+              "formType": "value"
+            }
+          ]
+        }
+      ]
+
+    }
+
+    let defaultValue: any;
+
+    defaultValue = this.jx_object(d1['properties'], d1['data']);
+
+
+    console.log('默认值', defaultValue);
+
+  }
+
+
+  jx_object(d_config, data?) {
+    let v = {};
+    d_config.forEach(element => {
+
+      let formType = "value";
+
+      if (element['formType']) {
+        formType = element['formType']
+      }
+      if (formType === 'object') {
+        v[element['name']] = this.jx_object(element['properties'], data[element['name']]);
+      }
+      if (formType === 'array') {
+        v[element['name']] = this.jx_array(element['properties'], data[element['name']]);
+      }
+      if (formType === 'value') {
+        v[element['name']] = this.jx_value(element, data);
+      }
+
+    });
+    v = { ...data, ...v }
+    return v;
+  }
+
+  jx_array(d_config, data) {
+
+    let v = [];
+    if (data) {
+      data.forEach(element => {
+        let obj = this.jx_object(d_config, element);
+        obj = { ...element, ...obj }
+        v.push(obj);
+      });
+    }
+    return v;
+  }
+
+  jx_value(d_config, data) {
+
+    let v: any;
+    if (d_config['defaultType'] === 'custom') {
+      v = this.jx_coustomValue(d_config['customValue']);
+
+    } else {
+      v = data[d_config['name']];
+    }
+    return v;
+  }
+  jx_coustomValue(d_config) {
+    let v: any;
+    if (d_config['type'] === 'value') {
+      v = d_config['value'];
+    }
+    if (d_config['type'] === 'GUID') {
+      v = CommonUtils.uuID(36)
+    }
+    return v;
+  }
+
+
 
 }

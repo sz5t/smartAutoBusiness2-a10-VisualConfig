@@ -170,14 +170,15 @@ export class CfgPageCmptTableComponent implements OnInit {
     // console.log('拖拽JSON', dropData);
 
     let dropName = dropData['dropName'];
-    if (dropData['dropName'] === 'cnToolbar') {
+    if (dropData['dropName'] === 'cnToolbar' || dropData['dropName'] === 'smtToolbar') {
       const cmpTypeMapping = {
         cnForm: 'cnForm',
         cnTable: 'cnDataTable',
         cnTree: 'cnTree',
         cnTreeTable: 'cnTreeTable',
         cnToolbar: 'cnToolbar',
-        tabs: 'tabs'
+        tabs: 'tabs',
+        smtToolbar: 'smtToolbar'
       }
 
       if (!cmpTypeMapping[dropName]) {
@@ -206,10 +207,10 @@ export class CfgPageCmptTableComponent implements OnInit {
   addRowToolbar(d?) {
 
 
-    let ss = 'cnRowToolbar';
-    if (ss === 'cnRowToolbar') {
+    let ss = 'smtRowToolbar';
+    if (ss === 'smtRowToolbar') {
       const cmpTypeMapping = {
-        cnRowToolbar: 'cnRowToolbar'
+        smtRowToolbar: 'smtRowToolbar'
       }
 
       if (!cmpTypeMapping[ss]) {

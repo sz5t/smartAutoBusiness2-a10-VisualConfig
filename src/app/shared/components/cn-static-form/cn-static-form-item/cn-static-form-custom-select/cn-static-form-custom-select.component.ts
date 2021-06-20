@@ -120,13 +120,31 @@ export class CnStaticFormCustomSelectComponent implements OnInit {
   }
 
   loadShowValue() {
+    let _valueStrConfig_base = this.config.componentConfig['showConfig']
     let d = this.validateForm.controls[this.config['name']].value;
     if (d) {
-      let _valueStrConfig = this.config.componentConfig['showConfig']['showString'];
+      if (_valueStrConfig_base['type'] && _valueStrConfig_base['type'] === 'exist') {
+        if (Array.isArray(d)) {
+          if (d.length > 0) {
 
-      this.showValue = this.getStringByshow(d, _valueStrConfig);
+            this.showValue = "已设置[" + d.length + "]项";
+          } else {
+            this.showValue = "";
+          }
+
+        } else {
+          this.showValue = "已设置";
+        }
+      } else {
+        let _valueStrConfig = _valueStrConfig_base['showString'];
+
+        this.showValue = this.getStringByshow(d, _valueStrConfig);
+
+      }
 
       // this.showValue = d['style']['span'];
+    } else {
+      this.showValue = "";
     }
   }
 

@@ -128,7 +128,7 @@ export class CfgPageCmptFormComponent implements OnInit {
     // this.optionState = true;
     // 选中
     this.selectedItem['item'] = this.l_config;
-    this.selectedItem['active'] = 'cnForm';
+    this.selectedItem['active'] = 'smtForm';
     this.fromDataService.layoutNodeSelected(this.l_config);
     console.log('选中当前tabs', this.selectedItem);
 
