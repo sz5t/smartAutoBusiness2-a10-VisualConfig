@@ -111,17 +111,16 @@
                                             [attr.colspan]="mapOfDataState[rowData[KEY_ID]]['mergeData'][col.field]?(mapOfDataState[rowData[KEY_ID]]['mergeData'][col.field]['colgroupIndex']===1 ? mapOfDataState[rowData[KEY_ID]]['mergeData'][col.field]['colgroupNum'] : 1):1"
                                             *ngIf="!mapOfDataState[rowData[KEY_ID]]['mergeData'][col.field] || ( mapOfDataState[rowData[KEY_ID]]['mergeData'][col.field]['groupIndex'] === 1 && mapOfDataState[rowData[KEY_ID]]['mergeData'][col.field]['colgroupIndex'] === 1 )">
 
-                                            <!-- <ng-container CnGridItemDirective *ngIf="col.custom; else innerText"
-                                            [state]="'edit'" [dataTableConfig]="col.custom"
-                                            [rowData]="mapOfDataState[rowData[KEY_ID]]['data']" [initData]="initData"
-                                            [tempData]="tempData"
-                                            [valueConfig]="{'id':rowData[KEY_ID],'value':mapOfDataState[rowData[KEY_ID]]['data']}"
-                                            (updateValue)="valueChange($event)"
-                                            [formCascade]="formCascade[rowData[KEY_ID]]?formCascade[rowData[KEY_ID]][col.custom.field]:null">
-                                        </ng-container> -->
-                                            <ng-template #innerText>{{
-                                                mapOfDataState[rowData[KEY_ID]]['originData'][col.field]
-                                                }}
+                                            <ng-container CnGridItemDirective *ngIf="col.custom; else innerText"
+                                                [state]="'edit'" [config]="col.custom"
+                                                [rowData]="mapOfDataState[rowData[KEY_ID]]['data']"
+                                                [initData]="initData" [tempData]="tempData"
+                                                [valueConfig]="{'id':rowData[KEY_ID],'value':mapOfDataState[rowData[KEY_ID]]['data']}"
+                                                (updateValue)="valueChange($event)"
+                                                [formCascade]="formCascade[rowData[KEY_ID]]?formCascade[rowData[KEY_ID]][col.custom.field]:null">
+                                            </ng-container>
+                                            <ng-template #innerText>
+                                                {{ mapOfDataState[rowData[KEY_ID]]['originData'][col.field] }}
                                             </ng-template>
                                         </td>
                                     </ng-container>

@@ -691,6 +691,7 @@ export class SmtComponentBase {
 
 
   // 表达式结果分析【true/false】
+  // option是条件配置数组，data是当前操作数据项
   public analysisResult(option, data?) {
 
     // 数组 第一个 【and true  】【 or  false】  合并进去。
@@ -803,7 +804,7 @@ export class SmtComponentBase {
       case 'initValue':
         value = this.INIT_VALUE[option['valueName']];
         break;
-      case 'item':
+      case 'dataItem':
         value = data[option['valueName']];
         break;
 

@@ -150,58 +150,6 @@ export class SmtDataTableComponent extends SmtComponentBase implements OnInit {
     }
   }
 
-  public operateReceiveCommand(commandName, params?) {
-    let paramsNameArray: any;
-    let paramsobj = {};
-    const methodName = this.commandList[this.commandList.findIndex((e) => e['commandName'] === commandName)];
-    if (methodName['declareParams'] && methodName['declareParams'].length > 0) {
-      paramsNameArray = Object.keys(methodName['declareParams']);
-      paramsNameArray.forEach((e) => {
-        paramsobj[e] = params[e];
-      });
-      this.analysisCommand(methodName['commandName'], methodName['commandContent'], paramsobj);
-    } else {
-      this.analysisCommand(methodName['commandName'], methodName['commandContent'], null);
-    }
-
-    // this[methodName['commandName']](paramsobj);
-  }
-
-  public analysisCommand(methodName, content, params) {
-    for (let i = 0; i < content.length; i++) {
-      switch (content[i]['type']) {
-        case 'ajaxConfig':
-          this[methodName](content[i], params);
-          break;
-        case 'commandConfig':
-          for (let j = 0; j < content[i].commandConfig.length; j++) {
-            new SmtMessageSenderResolver(this).resolve(content[i]['commandConfig'][j]);
-          }
-      }
-    }
-  }
-
-  public createCommandModel() {
-    return {
-      initValue: this.INIT_VALUE,
-      cacheValue: this.CACHE_VALUE,
-      tempValue: this.TEMP_VALUE,
-      item: this.SELECTED_ITEM,
-      pageCode: this.CACHE_VALUE.getNone('activeMenu')['mainPageId'],
-    };
-  }
-
-  public buildParam() {
-    return {
-      tempValue: this.TEMP_VALUE,
-      componentValue: this.SELECTED_ITEM,
-      initValue: this.INIT_VALUE,
-      cacheValue: this.CACHE_VALUE,
-      selectedItem: this.SELECTED_ITEM,
-      currentItem: this.SELECTED_ITEM,
-    };
-  }
-
   public createTableConfig(cfg) {
     const newConfig = new SmtDataTableAdapter();
     this.dataTableConfig = newConfig.transformConfigToDataTbale(cfg);
@@ -311,7 +259,7 @@ export class SmtDataTableComponent extends SmtComponentBase implements OnInit {
         style: null,
       };
     });
-    // console.log(this.mapOfDataState);
+    console.log(this.mapOfDataState);
   }
 
   public dataCheckedStatusChange() {
@@ -630,11 +578,21 @@ export class SmtDataTableComponent extends SmtComponentBase implements OnInit {
     this.dataCheckedStatusChange();
   }
 
-  private addEditRows(item) {
-    const index = this.EDITED_ITEMS.findIndex((r) => r[this.KEY_ID] === item[this.KEY_ID]);
-    if (index < 0) {
-      this.EDITED_ITEMS = [item, ...this.EDITED_ITEMS];
+  public editRow(option) {
+    // console.log('edit====', option);
+    if (option.data) {
+      this.addEditRows(option);
+      this.startToEdit(option);
+      // 2020.7.27 计算合并列
+      // if (this.config.mergeconfig) {
+      //   this._createMapd_new(this.config.mergeconfig, this.dataList);
+      // }
     }
+    return true;
+  }
+
+  private startToEdit(option) {
+
   }
 
   public editRows(option) {
@@ -649,16 +607,11 @@ export class SmtDataTableComponent extends SmtComponentBase implements OnInit {
     });
   }
 
-  public editRow(option) {
-    // console.log('edit====', option);
-    if (option.data) {
-      this.addEditRows(option.data.data);
-      // 2020.7.27 计算合并列
-      // if (this.config.mergeconfig) {
-      //   this._createMapd_new(this.config.mergeconfig, this.dataList);
-      // }
+  private addEditRows(item) {
+    const index = this.EDITED_ITEMS.findIndex((r) => r[this.KEY_ID] === item[this.KEY_ID]);
+    if (index < 0) {
+      this.EDITED_ITEMS = [item, ...this.EDITED_ITEMS];
     }
-    return true;
   }
 
   // 取消添加的新行 数据

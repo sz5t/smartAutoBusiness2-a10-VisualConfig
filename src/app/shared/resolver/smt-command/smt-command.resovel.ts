@@ -6,7 +6,7 @@ import { SmtMessageSenderResolver } from '../smt-relation/smt-relation-resolver'
 // 命令解析，命令只关注于接收命令组件执行的方法，只有很少数的方法需要必须的参数传递，大部分的方法只需要调用方法执行即可
 
 export class SmtCommandResolver {
-  constructor(private _componentInstance: any) {}
+  constructor(private _componentInstance: any) { }
   public resolve(customCommand: any[]): any {
     if (!this._componentInstance.subscription$) {
       console.log('==========》subscription');
@@ -57,52 +57,111 @@ export class SmtCommandResolver {
         this.showDefaultMessage();
       }
     } else if (cmd.commandType === 'custom') {
-      cmd.commandContent.forEach(async (command) => {
-        if (command.type === 'ajaxConfig') {
-          const data = _execParamsData === {} ? null : _execParamsData;
-          const response = await this._componentInstance.executeHttp(command.ajaxConfig, data, null);
-          if (response.state === 1) {
-            for (let i = 0; i < command.result.length; i++) {
-              // if (command.result[i]['enableCondition'] === 'true') {
-              // }
-              this.afterOperate(command.result[i], this._componentInstance.componentService.modalService);
-            }
+      let next: any;
+      for (let i = 0; i < cmd.commandContent.length; i++) {
+        if (cmd.commandContent[i].type === 'ajaxConfig') {
+          next = await this.resolveCommandOfAjax(cmd.commandContent[i], _execParamsData);
+          switch (next) {
+            case 'next':
+              continue;
+            case 'pass':
+              break;
+            case 'prevent':
+              return;
           }
-        } else if (command.type === 'commandConfig') {
-          for (let i = 0; i < command.commandConfig.length; i++) {
-            if (command.commandConfig[i].commandType === 'custom') {
-              new SmtMessageSenderResolver(this._componentInstance).resolve(command.commandConfig[i]);
-            } else {
-              const method = this._componentInstance.COMPONENT_METHODS[command.commandConfig[i].command];
-              const result = await this._componentInstance[method](_execParamsData);
-              if (result.state === 1) {
-                this.showDefaultMessage();
-              }
-            }
-          }
-
-          for (let j = 0; j < command.result.length; j++) {
-            this.afterOperate(command.result[j], this._componentInstance.componentService.modalService);
+        } else if (cmd.commandContent[i].type === 'commandConfig') {
+          next = await this.resolveCommandOfCommand(cmd.commandContent[i], _execParamsData);
+          switch (next) {
+            case 'next':
+              continue;
+            case 'pass':
+              break;
+            case 'prevent':
+              return;
           }
         }
-      });
+      }
+      // cmd.commandContent.forEach(async (command) => {
+      //   if (command.type === 'ajaxConfig') {
+      //     const data = _execParamsData === {} ? null : _execParamsData;
+      //     const response = await this._componentInstance.executeHttp(command.ajaxConfig, data, null);
+      //     if (response.state === 1) {
+      //       for (let i = 0; i < command.result.length; i++) {
+      //         // if (command.result[i]['enableCondition'] === 'true') {
+      //         // }
+      //         this.afterOperate(command.result[i], this._componentInstance.componentService.modalService);
+      //       }
+      //     }
+      //   } else if (command.type === 'commandConfig') {
+      //     for (let i = 0; i < command.commandConfig.length; i++) {
+      //       if (command.commandConfig[i].commandType === 'custom') {
+      //         new SmtMessageSenderResolver(this._componentInstance).resolve(command.commandConfig[i]);
+      //       } else {
+      //         const method = this._componentInstance.COMPONENT_METHODS[command.commandConfig[i].command];
+      //         const result = await this._componentInstance[method](_execParamsData);
+      //         if (result.state === 1) {
+      //           // this.showDefaultMessage();
+      //         }
+      //       }
+      //     }
+
+      //     // for (let j = 0; j < command.result.length; j++) {
+      //     //   this.afterOperate(command.result[j], this._componentInstance.componentService.modalService);
+      //     // }
+      //   }
+      // });
+    }
+  }
+
+  private async resolveCommandOfAjax(command, execParamsData) {
+    let next: any;
+    const data = execParamsData === {} ? null : execParamsData;
+    const response = await this._componentInstance.executeHttp(command.ajaxConfig, data, null);
+    if (response.state === 1) {
+      for (let i = 0; i < command.result.length; i++) {
+        next = this.afterOperate(command.result[i], this._componentInstance.componentService.modalService);
+        switch (next) {
+          case 'next':
+            continue;
+          case 'pass':
+            break;
+          case 'prevent':
+            return;
+        }
+      }
+    }
+  }
+
+  private async resolveCommandOfCommand(command, execParamsData) {
+    for (let i = 0; i < command.commandConfig.length; i++) {
+      if (command.commandConfig[i].commandType === 'custom') {
+        new SmtMessageSenderResolver(this._componentInstance).resolve(command.commandConfig[i]);
+      } else {
+        const method = this._componentInstance.COMPONENT_METHODS[command.commandConfig[i].command];
+        const result = await this._componentInstance[method](execParamsData);
+        if (result.state === 1) {
+          this.showDefaultMessage();
+        }
+      }
     }
   }
 
   public afterOperate(commandObj, modal) {
+    let nextCommand: any;
     if (commandObj['preCondition'] && commandObj['preCondition'].length > 0) {
       const beforeOperation = new SmtPreCondition(this._componentInstance).resolverBeforeOperationInfo(
         commandObj.preCondition,
         this._componentInstance.componentService.modalService,
       );
       if (beforeOperation) {
-        this.resultResolver(commandObj, modal);
+        nextCommand = this.resultResolver(commandObj, modal);
       } else {
-        return;
+        return 'prevent';
       }
     } else {
-      this.resultResolver(commandObj, modal);
+      nextCommand = this.resultResolver(commandObj, modal);
     }
+    return nextCommand;
   }
 
   private resultResolver(result, modal) {
@@ -124,7 +183,7 @@ export class SmtCommandResolver {
 
   // 根据前置条件展示提示框
   showMessage(cfg, returnValue, modal) {
-    modal['message']({
+    modal[cfg.type]({
       nzTitle: cfg['messageInfo']['title'] ? cfg['messageInfo']['title'] : '提示',
       nzContent: this.createContent(cfg['messageInfo']),
     });
@@ -133,7 +192,7 @@ export class SmtCommandResolver {
   }
 
   showConfirm(cfg, returnValue, modal) {
-    modal['confirm']({
+    modal[cfg.type]({
       nzTitle: cfg['contentInfo']['title'] ? cfg['contentInfo']['title'] : '提示',
       nzContent: this.createContent(cfg['contentInfo']),
       nzOkText: cfg['okInfo']['title'],
