@@ -49,6 +49,10 @@ export const CN_DATA_GRID_METHOD: IDataGridTrigger = {
     // command测试
     SEND_COMMAND: 'sendCommand',
 
+    // 按钮操作状态
+    STATE_TO_TEXT: 'stateToText',
+    STATE_TO_EDIT: 'stateToEdit',
+
 
 
     // link

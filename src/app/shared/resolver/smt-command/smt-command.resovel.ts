@@ -1,5 +1,7 @@
+import { async } from '@angular/core/testing';
 import { ISenderModel } from 'src/app/core/relations/bsn-relatives';
 import { SmtPreCondition } from '../smt-pre-condition/smt-pre-condition.resolver';
+import { SmtMessageSenderResolver } from '../smt-relation/smt-relation-resolver';
 
 // 命令解析，命令只关注于接收命令组件执行的方法，只有很少数的方法需要必须的参数传递，大部分的方法只需要调用方法执行即可
 
@@ -12,11 +14,11 @@ export class SmtCommandResolver {
       this._componentInstance.subscription$ = this._componentInstance.componentService.smtRelationSubject.subscribe(
         (eventData: ISenderModel) => {
           console.log('commandItem');
-          customCommand.map((cmdItem: any) => {
+          customCommand.map(async (cmdItem: any) => {
             // debugger;
             if (cmdItem.command === eventData.command && eventData.pageCode === this._componentInstance.dataServe.pageCode) {
               // 缺少pageCode 判断
-              this._executeCommand(eventData.data, cmdItem);
+              await this._executeCommand(eventData.data, cmdItem);
             }
           });
         },
@@ -24,7 +26,7 @@ export class SmtCommandResolver {
     }
   }
 
-  private _executeCommand(eventData: any, cmd: any) {
+  private async _executeCommand(eventData: any, cmd: any) {
     if (cmd.preCondition) {
     }
     let _execParamsData: any = {};
@@ -48,11 +50,46 @@ export class SmtCommandResolver {
       _execParamsData = { ...localParamValue, ..._execParamsData };
     }
     // 执行命令
-    const method = this._componentInstance.COMPONENT_METHODS[cmd.command];
-    this._componentInstance[method](_execParamsData);
+    if (cmd.commandType === 'builtin') {
+      const method = this._componentInstance.COMPONENT_METHODS[cmd.command];
+      const result = await this._componentInstance[method](_execParamsData);
+      if (result.state === 1) {
+        this.showDefaultMessage();
+      }
+    } else if (cmd.commandType === 'custom') {
+      cmd.commandContent.forEach(async (command) => {
+        if (command.type === 'ajaxConfig') {
+          const data = _execParamsData === {} ? null : _execParamsData;
+          const response = await this._componentInstance.executeHttp(command.ajaxConfig, data, null);
+          if (response.state === 1) {
+            for (let i = 0; i < command.result.length; i++) {
+              // if (command.result[i]['enableCondition'] === 'true') {
+              // }
+              this.afterOperate(command.result[i], this._componentInstance.componentService.modalService);
+            }
+          }
+        } else if (command.type === 'commandConfig') {
+          for (let i = 0; i < command.commandConfig.length; i++) {
+            if (command.commandConfig[i].commandType === 'custom') {
+              new SmtMessageSenderResolver(this._componentInstance).resolve(command.commandConfig[i]);
+            } else {
+              const method = this._componentInstance.COMPONENT_METHODS[command.commandConfig[i].command];
+              const result = await this._componentInstance[method](_execParamsData);
+              if (result.state === 1) {
+                this.showDefaultMessage();
+              }
+            }
+          }
+
+          for (let j = 0; j < command.result.length; j++) {
+            this.afterOperate(command.result[j], this._componentInstance.componentService.modalService);
+          }
+        }
+      });
+    }
   }
 
-  public afterOperate(commandObj, model, modal) {
+  public afterOperate(commandObj, modal) {
     if (commandObj['preCondition'] && commandObj['preCondition'].length > 0) {
       const beforeOperation = new SmtPreCondition(this._componentInstance).resolverBeforeOperationInfo(
         commandObj.preCondition,
@@ -87,7 +124,7 @@ export class SmtCommandResolver {
 
   // 根据前置条件展示提示框
   showMessage(cfg, returnValue, modal) {
-    modal[cfg['type']]({
+    modal['message']({
       nzTitle: cfg['messageInfo']['title'] ? cfg['messageInfo']['title'] : '提示',
       nzContent: this.createContent(cfg['messageInfo']),
     });
@@ -96,7 +133,7 @@ export class SmtCommandResolver {
   }
 
   showConfirm(cfg, returnValue, modal) {
-    modal[cfg['type']]({
+    modal['confirm']({
       nzTitle: cfg['contentInfo']['title'] ? cfg['contentInfo']['title'] : '提示',
       nzContent: this.createContent(cfg['contentInfo']),
       nzOkText: cfg['okInfo']['title'],
@@ -134,5 +171,12 @@ export class SmtCommandResolver {
 
   nextOperate(type) {
     return type;
+  }
+
+  showDefaultMessage() {
+    this._componentInstance.componentService.modalService.success({
+      nzTitle: '提示',
+      nzContent: '执行成功',
+    });
   }
 }

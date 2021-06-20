@@ -522,6 +522,10 @@
                                                     {
                                                         "label": "自定义",
                                                         "value": "custom"
+                                                    },
+                                                    {
+                                                        "label": "系统内置",
+                                                        "value": "builtin"
                                                     }
                                                 ],
                                                 "labelName": "label",
@@ -979,7 +983,7 @@
                                                                     },
                                                                     {
                                                                         "name": "commandConfig",
-                                                                        "type": "objectEmpty",
+                                                                        "type": "arrayCard",
                                                                         "componentConfig": {},
                                                                         "properties": [
                                                                             {
@@ -999,6 +1003,10 @@
                                                                                         {
                                                                                             "label": "自定义",
                                                                                             "value": "custom"
+                                                                                        },
+                                                                                        {
+                                                                                            "label": "系统内置",
+                                                                                            "value": "builtin"
                                                                                         }
                                                                                     ],
                                                                                     "labelName": "label",
@@ -1086,7 +1094,7 @@
                                                                                 "title": "参数设置"
                                                                             }
                                                                         ],
-                                                                        "formType": "object",
+                                                                        "formType": "array",
                                                                         "formName": "formControlName",
                                                                         "validations": [],
                                                                         "title": "组件行为配置"
@@ -2202,6 +2210,10 @@
                                                                                                 {
                                                                                                     "label": "自定义",
                                                                                                     "value": "custom"
+                                                                                                },
+                                                                                                {
+                                                                                                    "label": "系统内置",
+                                                                                                    "value": "builtin"
                                                                                                 }
                                                                                             ],
                                                                                             "labelName": "label",
@@ -2509,6 +2521,10 @@
                                                                                 {
                                                                                     "label": "自定义",
                                                                                     "value": "custom"
+                                                                                },
+                                                                                {
+                                                                                    "label": "系统内置",
+                                                                                    "value": "builtin"
                                                                                 }
                                                                             ],
                                                                             "labelName": "label",
