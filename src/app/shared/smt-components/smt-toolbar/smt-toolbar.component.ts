@@ -14,8 +14,8 @@ import { SmtComponentBase } from '../smt-component.base';
       .toolbarGroup {
         margin-right: 8px;
       }
-    `
-  ]
+    `,
+  ],
 })
 export class SmtToolbarComponent extends SmtComponentBase implements OnInit, OnDestroy {
   constructor(
@@ -39,8 +39,7 @@ export class SmtToolbarComponent extends SmtComponentBase implements OnInit, OnD
   private _sender_subscription$: Subscription;
   private _trigger_receiver_subscription$: Subscription;
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   public ngOnDestroy() {
     // 释放级联对象
@@ -82,7 +81,7 @@ export class SmtToolbarComponent extends SmtComponentBase implements OnInit, OnD
     cfg['customCommand'] = this.dataServe['componentsConfig'][cfg['id']]['customCommand'];
     for (let i = 0; i < cfg['eventConent'].length; i++) {
       for (let j = 0; j < cfg['eventConent'][i]['eventContent'].length; j++) {
-        new SmtMessageSenderResolver(this).resolve(cfg['eventConent'][i]['eventContent'][j])
+        new SmtMessageSenderResolver(this).resolve(cfg['eventConent'][i]['eventContent'][j]);
       }
     }
   }

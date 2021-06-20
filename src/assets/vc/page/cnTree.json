@@ -983,7 +983,7 @@
                                                                     },
                                                                     {
                                                                         "name": "commandConfig",
-                                                                        "type": "objectEmpty",
+                                                                        "type": "arrayCard",
                                                                         "componentConfig": {},
                                                                         "properties": [
                                                                             {
@@ -1094,7 +1094,7 @@
                                                                                 "title": "参数设置"
                                                                             }
                                                                         ],
-                                                                        "formType": "object",
+                                                                        "formType": "array",
                                                                         "formName": "formControlName",
                                                                         "validations": [],
                                                                         "title": "组件行为配置"
