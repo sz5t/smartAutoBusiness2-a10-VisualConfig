@@ -10,7 +10,7 @@ import { CommonUtils } from 'src/app/core/utils/common-utils';
 import { SmtCommandResolver } from '../../resolver/smt-command/smt-command.resovel';
 import { SmtEventResolver } from '../../resolver/smt-event/smt-event-resolver';
 import { SmtComponentBase } from '../smt-component.base';
-import { ISmtComponent } from '../smt-component.interface';
+import { IExecuteResult, ISmtComponent } from '../smt-component.interface';
 import { ITreeBindProperties, SmtTreeDataAdapter } from './smt-tree.adapter';
 
 @Component({
@@ -133,24 +133,33 @@ export class SmtTreeComponent extends SmtComponentBase implements ISmtComponent,
   public async load() {
     this.IS_LOADING = true;
     this.treeBindObj.nodes = [];
-    const response = await this.executeHttp(this.dataSourceObj.loadingConfig, {}, '');
-    if ((response && response.state === 1, response.data)) {
-      response.data.map((item, index): void => {
-        if (index === 0) {
-          this.ACTIVED_NODE = {};
-          this.ACTIVED_NODE['origin'] = item;
-        }
-        this._setTreeNode(item);
-      });
+    let result: IExecuteResult;
+    let response: any;
+    try {
+      response = await this.executeHttp(this.dataSourceObj.loadingConfig, {}, '');
+      if ((response && response.state === 1, response.data)) {
+        response.data.map((item, index): void => {
+          if (index === 0) {
+            this.ACTIVED_NODE = {};
+            this.ACTIVED_NODE['origin'] = item;
+          }
+          this._setTreeNode(item);
+        });
 
-      this.treeBindObj.nodes = response.data;
-      this.IS_LOADING = false;
-    } else {
-      this.IS_LOADING = false;
+        this.treeBindObj.nodes = response.data;
+        this.IS_LOADING = false;
+      } else {
+        this.IS_LOADING = false;
+      }
+      if (this.treeBindObj.nodes.length <= 0) {
+        this.emptyLoad();
+      }
+      result = this.getExecuteResult(response, false);
+    } catch {
+      result = this.getCatchResult();
     }
-    if (this.treeBindObj.nodes.length <= 0) {
-      this.emptyLoad();
-    }
+
+    return result;
   }
 
   emptyLoad() {
