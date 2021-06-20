@@ -262,6 +262,8 @@ import { SmtComponentComponent } from './components/smt-layout/smt-component/smt
 import { SmtComponentBase } from './smt-components/smt-component.base';
 import { SmtFormItemDirective } from './smt-components/smt-form/smt-form-items/smt-form-item.directive';
 import { SmtPopPageComponent } from './smt-components/smt-pop-page/smt-pop-page.component';
+import { SmtDataTableItemDirective } from './smt-components/smt-data-table/smt-data-table-items/smt-data-table-item.directive';
+import { SmtDataTableInputComponent } from './smt-components/smt-data-table/smt-data-table-items/smt-data-table-input/smt-data-table-input.component';
 
 // #region third libs
 
@@ -526,6 +528,8 @@ const COMPONENTS = [
   SmtTreeComponent,
   // 弹出页
   SmtPopPageComponent,
+  // 新表格小组件
+  SmtDataTableInputComponent
 ];
 const DIRECTIVES = [
   CnLayoutResolverDirective,
@@ -542,6 +546,7 @@ const DIRECTIVES = [
   SmtComponentResolverDirective,
   CfgFormDesignLayoutItemDirective,
   SmtFormItemDirective,
+  SmtDataTableItemDirective,
 ];
 // #endregion
 

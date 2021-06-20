@@ -1,4 +1,4 @@
-import { Component, Inject, Input, OnInit } from '@angular/core';
+import { Component, Inject, Input, OnInit, Output } from '@angular/core';
 import { ComponentServiceProvider } from 'src/app/core/services/components/component.service';
 import { BSN_COMPONENT_SERVICES } from 'src/app/core/relations/bsn-relatives';
 import { SmtComponentBase } from '../smt-component.base';
@@ -13,6 +13,7 @@ import { CN_DATA_GRID_METHOD } from 'src/app/core/relations/bsn-methods';
 import { SmtEventResolver } from '../../resolver/smt-event/smt-event-resolver';
 import { SmtCommandResolver } from '../../resolver/smt-command/smt-command.resovel';
 import { SmtMessageSenderResolver } from '../../resolver/smt-relation/smt-relation-resolver';
+import EventEmitter from 'wolfy87-eventemitter';
 
 @Component({
   selector: 'app-smt-data-table',
@@ -48,6 +49,7 @@ export class SmtDataTableComponent extends SmtComponentBase implements OnInit {
   @Input() public initData;
   @Input() public tempData;
   @Input() public dataServe;
+  @Output() public updateValue = new EventEmitter();
 
   public dataList: any[] = [
     // 数据源数组
@@ -87,13 +89,10 @@ export class SmtDataTableComponent extends SmtComponentBase implements OnInit {
 
   public commandList: any[];
 
-  private _sender_source$: Subject<any>;
-  private _receiver_source$: Subject<any>;
-  private _trigger_source$: Subject<any>;
+  formCascade = {};
 
-  private _receiver_subscription$: Subscription;
+  private _sender_source$: Subject<any>;
   private _sender_subscription$: Subscription;
-  private _trigger_receiver_subscription$: Subscription;
 
   public async ngOnInit() {
     // 解析对应的组件配置
@@ -589,7 +588,7 @@ export class SmtDataTableComponent extends SmtComponentBase implements OnInit {
   }
 
   private startToEdit(option) {
-
+    this.mapOfDataState[option[this.KEY_ID]].state = 'edit';
   }
 
   public editRows(option) {
@@ -1183,26 +1182,5 @@ export class SmtDataTableComponent extends SmtComponentBase implements OnInit {
     dialog = this.componentService.modalService.create(dialogOptional);
   }
 
-  public testAction() {
-    console.log(this.SELECTED_ITEM);
-    console.log(this.CHECKED_ITEMS_IDS);
-  }
-
-  // private resolveRelations() {
-  //   if (this.bindObj.eventConent && this.config.cascade.messageSender) {
-  //     if (!this._sender_source$) {
-  //       // 解析组件发送消息配置,并注册消息发送对象
-  //       this._sender_source$ = new SmtMessageSenderEnterResolver(this).resolve(this.config);
-  //       this._sender_subscription$ = this._sender_source$.subscribe();
-  //     }
-  //   }
-  //   if (this.config.cascade && this.config.cascade.messageReceiver) {
-  //     // 解析消息接受配置,并注册消息接收对象
-  //     // this._receiver_source$ = new RelationResolver(this).resolveReceiver(this.config);
-  //     // this._receiver_subscription$ = this._receiver_source$.subscribe();
-  //     new RelationResolver(this).resolveReceiver(this.config);
-  //   }
-
-  //   this._trigger_source$ = new RelationResolver(this).resolve();
-  // }
+  public valueChange(v?) { }
 }

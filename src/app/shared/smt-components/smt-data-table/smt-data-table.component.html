@@ -78,13 +78,12 @@
                                             [attr.colspan]="mapOfDataState[rowData[KEY_ID]]['mergeData'][col.field]?(mapOfDataState[rowData[KEY_ID]]['mergeData'][col.field]['colgroupIndex']===1 ? mapOfDataState[rowData[KEY_ID]]['mergeData'][col.field]['colgroupNum'] : 1):1"
                                             *ngIf="!mapOfDataState[rowData[KEY_ID]]['mergeData'][col.field] || ( mapOfDataState[rowData[KEY_ID]]['mergeData'][col.field]['groupIndex'] === 1 && mapOfDataState[rowData[KEY_ID]]['mergeData'][col.field]['colgroupIndex'] === 1 )">
 
-                                            <!-- <ng-container CnGridItemDirective [state]="'edit'" *ngIf="col.editor ; else t2"
-                                            [bindObj]="col.editor" [rowData]="mapOfDataState[rowData[KEY_ID]]['data']"
-                                            [initData]="initData" [tempData]="tempData"
-                                            [valueConfig]="{'id':rowData[KEY_ID],'value':mapOfDataState[rowData[KEY_ID]]['data'][col.editor.field]}"
-                                            (updateValue)="valueChange($event)"
-                                            [formCascade]="formCascade[rowData[KEY_ID]]?formCascade[rowData[KEY_ID]][col.editor.field]:null">
-                                        </ng-container> -->
+                                            <ng-container appSmtDataTableItem [state]="'edit'"
+                                                *ngIf="col.editor ; else t2" [config]="col.editor"
+                                                [valueConfig]="{'id':rowData[KEY_ID],'value':mapOfDataState[rowData[KEY_ID]]['data'][col.editor.field]}"
+                                                (cascadeValue)="valueChange($event)" [dataTableDataService]=""
+                                                [formCascade]="formCascade[rowData[KEY_ID]]?formCascade[rowData[KEY_ID]][col.editor.field]:null">
+                                            </ng-container>
                                             <ng-template #t2>
                                                 <ng-container [ngSwitch]="mapOfDataState[rowData[KEY_ID]]['state']">
                                                     <ng-container *ngSwitchCase="'new'">
@@ -167,7 +166,7 @@
                                 <ng-container *ngIf="col['children'].length>0">
                                     <ng-container *ngFor="let child of col['children']">
                                         <ng-container smtComponentResolverDirective [config]="child"
-                                            [dataServe]="dataServe">
+                                            [tempData]="rowData" [dataServe]="dataServe">
                                         </ng-container>
                                     </ng-container>
                                 </ng-container>
