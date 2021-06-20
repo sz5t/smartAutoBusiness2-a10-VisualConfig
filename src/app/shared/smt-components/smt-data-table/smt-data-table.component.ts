@@ -56,7 +56,7 @@ export class SmtDataTableComponent extends SmtComponentBase implements OnInit {
   public _sortValue;
   public xlsx;
   public _url = environment.SERVER_URL;
-  public dataTableConfig: any = {};
+  public bindObj: any = {};
   public pageIndex = 1;
   public pageSize: number;
   public total = 0;
@@ -99,7 +99,7 @@ export class SmtDataTableComponent extends SmtComponentBase implements OnInit {
     // 解析对应的组件配置
     this.createTableConfig(this.config);
 
-    console.log(this.dataTableConfig);
+    console.log(this.bindObj);
 
     // 初始化组件值
     this.initComponentValue();
@@ -125,14 +125,14 @@ export class SmtDataTableComponent extends SmtComponentBase implements OnInit {
   }
 
   public createEvent() {
-    if (this.dataTableConfig.eventConent.length > 0) {
-      this._sender_source$ = new SmtEventResolver(this).resolve(this.dataTableConfig.eventConent);
+    if (this.bindObj.eventConent.length > 0) {
+      this._sender_source$ = new SmtEventResolver(this).resolve(this.bindObj.eventConent);
       this._sender_subscription$ = this._sender_source$.subscribe();
     }
   }
   public createCommandList() {
-    if (this.dataTableConfig['customCommand'].length > 0) {
-      new SmtCommandResolver(this).resolve(this.dataTableConfig['customCommand']);
+    if (this.bindObj['customCommand'].length > 0) {
+      new SmtCommandResolver(this).resolve(this.bindObj['customCommand']);
     }
   }
 
@@ -152,7 +152,7 @@ export class SmtDataTableComponent extends SmtComponentBase implements OnInit {
 
   public createTableConfig(cfg) {
     const newConfig = new SmtDataTableAdapter();
-    this.dataTableConfig = newConfig.transformConfigToDataTbale(cfg);
+    this.bindObj = newConfig.transformConfigToDataTbale(cfg);
   }
 
   public initComponentValue() {
@@ -169,33 +169,33 @@ export class SmtDataTableComponent extends SmtComponentBase implements OnInit {
   }
 
   public initProperty() {
-    this.KEY_ID = this.dataTableConfig.keyId;
+    this.KEY_ID = this.bindObj.keyId;
     this.pageSize =
-      typeof this.dataTableConfig.pageSize === 'string' ? parseInt(this.dataTableConfig.pageSize) : this.dataTableConfig.pageSize;
-    this.pageSizeOptions = this.dataTableConfig.pageSizeOptions;
-    this.showTotal = this.dataTableConfig.showTotal;
+      typeof this.bindObj.pageSize === 'string' ? parseInt(this.bindObj.pageSize) : this.bindObj.pageSize;
+    this.pageSizeOptions = this.bindObj.pageSizeOptions;
+    this.showTotal = this.bindObj.showTotal;
     this.dataSourceCfg = {
-      loadingOnInit: this.dataTableConfig.hasOwnProperty('loadingOnInit') ? this.dataTableConfig.loadingOnInit : false,
-      async: this.dataTableConfig.hasOwnProperty('async') ? this.dataTableConfig.async : false,
+      loadingOnInit: this.bindObj.hasOwnProperty('loadingOnInit') ? this.bindObj.loadingOnInit : false,
+      async: this.bindObj.hasOwnProperty('async') ? this.bindObj.async : false,
       loadingConfig: {
-        id: this.dataTableConfig.mainSource.hasOwnProperty('id') ? this.dataTableConfig.mainSource.id : 'loading',
+        id: this.bindObj.mainSource.hasOwnProperty('id') ? this.bindObj.mainSource.id : 'loading',
         // 请求地址，inner 匹配的后台地址
-        urlType: this.dataTableConfig.mainSource.hasOwnProperty('urlType') ? this.dataTableConfig.mainSource.urlType : 'inner',
+        urlType: this.bindObj.mainSource.hasOwnProperty('urlType') ? this.bindObj.mainSource.urlType : 'inner',
         // 适配外部请求
-        urlContent: this.dataTableConfig.mainSource.hasOwnProperty('urlContent') ? this.dataTableConfig.mainSource.urlContent : {},
-        url: this.dataTableConfig.mainSource.hasOwnProperty('url') ? this.dataTableConfig.mainSource.url : '',
-        ajaxType: this.dataTableConfig.mainSource.hasOwnProperty('ajaxType') ? this.dataTableConfig.mainSource.ajaxType : '',
+        urlContent: this.bindObj.mainSource.hasOwnProperty('urlContent') ? this.bindObj.mainSource.urlContent : {},
+        url: this.bindObj.mainSource.hasOwnProperty('url') ? this.bindObj.mainSource.url : '',
+        ajaxType: this.bindObj.mainSource.hasOwnProperty('ajaxType') ? this.bindObj.mainSource.ajaxType : '',
         // 头部参数
-        headParams: this.dataTableConfig.mainSource.headParams.length > 0 ? this.dataTableConfig.mainSource.headParams : [],
+        headParams: this.bindObj.mainSource.headParams.length > 0 ? this.bindObj.mainSource.headParams : [],
         // 路径参数
-        pathParams: this.dataTableConfig.mainSource.pathParams.length > 0 ? this.dataTableConfig.mainSource.pathParams : [],
+        pathParams: this.bindObj.mainSource.pathParams.length > 0 ? this.bindObj.mainSource.pathParams : [],
         // 查询参数
-        queryParams: this.dataTableConfig.mainSource.queryParams.length > 0 ? this.dataTableConfig.mainSource.queryParams : [],
+        queryParams: this.bindObj.mainSource.queryParams.length > 0 ? this.bindObj.mainSource.queryParams : [],
         // 请求体参数
-        bodyParams: this.dataTableConfig.mainSource.bodyParams.length > 0 ? this.dataTableConfig.mainSource.bodyParams : [],
+        bodyParams: this.bindObj.mainSource.bodyParams.length > 0 ? this.bindObj.mainSource.bodyParams : [],
       },
     };
-    this._buildColumns(this.dataTableConfig.columns, this.dataTableConfig);
+    this._buildColumns(this.bindObj.columns, this.bindObj);
   }
 
   private _buildColumns(columns, cfg) {
@@ -254,7 +254,7 @@ export class SmtDataTableComponent extends SmtComponentBase implements OnInit {
         data: d,
         originData: { ...d },
         validation: true,
-        actions: this.dataTableConfig.children,
+        actions: this.bindObj.children,
         mergeData: {},
         style: null,
       };
@@ -378,7 +378,7 @@ export class SmtDataTableComponent extends SmtComponentBase implements OnInit {
     if (!this.dataSourceCfg.loadingConfig) {
       return;
     }
-    if (!this.dataTableConfig['isPagination']) {
+    if (!this.bindObj['isPagination']) {
       response = await this.executeHttp(this.dataSourceCfg['loadingConfig'], null, null);
     } else {
       response = await this.executeHttp(this.dataSourceCfg['loadingConfig'], null, 'paging');
@@ -396,7 +396,7 @@ export class SmtDataTableComponent extends SmtComponentBase implements OnInit {
 
   public _buildPaging() {
     const params: any = {};
-    if (this.dataTableConfig.isPagination) {
+    if (this.bindObj.isPagination) {
       params._page = this.pageIndex;
       params._rows = this.pageSize;
     }
@@ -564,7 +564,7 @@ export class SmtDataTableComponent extends SmtComponentBase implements OnInit {
 
   private createNewRowData() {
     const newData = {};
-    this.dataTableConfig.columns.map((col) => {
+    this.bindObj.columns.map((col) => {
       newData[col.field] = null;
     });
     return newData;
@@ -577,7 +577,7 @@ export class SmtDataTableComponent extends SmtComponentBase implements OnInit {
 
   public editRow(option) {
     // console.log('edit====', option);
-    if (option.data) {
+    if (option) {
       this.addEditRows(option);
       this.startToEdit(option);
       // 2020.7.27 计算合并列
@@ -762,7 +762,7 @@ export class SmtDataTableComponent extends SmtComponentBase implements OnInit {
       }
     }
     if (commandName) {
-      this.dataTableConfig.customCommand.forEach((command) => {
+      this.bindObj.customCommand.forEach((command) => {
         if (command.command === commandName) {
           command.commandContent.forEach((content) => {
             if (content.type === 'ajaxConfig') {
@@ -952,7 +952,7 @@ export class SmtDataTableComponent extends SmtComponentBase implements OnInit {
   }
 
   public getCurrentComponentId() {
-    return this.dataTableConfig.id;
+    return this.bindObj.id;
   }
 
   public async executeSelectRow(option) {
@@ -1189,7 +1189,7 @@ export class SmtDataTableComponent extends SmtComponentBase implements OnInit {
   }
 
   // private resolveRelations() {
-  //   if (this.dataTableConfig.eventConent && this.config.cascade.messageSender) {
+  //   if (this.bindObj.eventConent && this.config.cascade.messageSender) {
   //     if (!this._sender_source$) {
   //       // 解析组件发送消息配置,并注册消息发送对象
   //       this._sender_source$ = new SmtMessageSenderEnterResolver(this).resolve(this.config);

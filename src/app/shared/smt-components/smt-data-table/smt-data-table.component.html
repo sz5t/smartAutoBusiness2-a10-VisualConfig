@@ -1,18 +1,17 @@
 <nz-spin nzTip="数据加载中,请稍后..." [nzSpinning]="IS_LOADING">
-    <nz-table #dataTable [nzData]="dataList" [nzShowSizeChanger]="dataTableConfig.isShowSizeChanger"
-        [nzLoadingDelay]="300" [nzFrontPagination]="dataTableConfig.isFrontPagination"
-        [nzShowPagination]="dataTableConfig.isPagination" [nzTotal]="total" [(nzPageIndex)]="pageIndex"
-        [(nzPageSize)]="pageSize" (nzPageIndexChange)="searchData()" (nzPageSizeChange)="searchData(true)"
-        [nzPageSizeOptions]="pageSizeOptions" [nzShowTotal]="showTotal" [nzBordered]="dataTableConfig.isBordered"
-        [nzSize]="dataTableConfig.size" [nzScroll]="dataTableConfig.scroll">
+    <nz-table #dataTable [nzData]="dataList" [nzShowSizeChanger]="bindObj.isShowSizeChanger" [nzLoadingDelay]="300"
+        [nzFrontPagination]="bindObj.isFrontPagination" [nzShowPagination]="bindObj.isPagination" [nzTotal]="total"
+        [(nzPageIndex)]="pageIndex" [(nzPageSize)]="pageSize" (nzPageIndexChange)="searchData()"
+        (nzPageSizeChange)="searchData(true)" [nzPageSizeOptions]="pageSizeOptions" [nzShowTotal]="showTotal"
+        [nzBordered]="bindObj.isBordered" [nzSize]="bindObj.size" [nzScroll]="bindObj.scroll">
         <thead>
             <tr>
-                <th [nzWidth]="(dataTableConfig.showCheckBoxConfig && dataTableConfig.showCheckBoxConfig.hasOwnProperty('width'))?dataTableConfig.showCheckBoxConfig['width']:'50px'"
-                    [nzLeft]="(dataTableConfig.showCheckBoxConfig && dataTableConfig.showCheckBoxConfig.hasOwnProperty('offsetLeft'))?dataTableConfig.showCheckBoxConfig.offsetLeft:false"
-                    *ngIf="dataTableConfig.showCheckBox" [nzShowCheckbox]="dataTableConfig.showCheckBox"
-                    [(nzChecked)]="isAllChecked" [nzIndeterminate]="indeterminate" (nzCheckedChange)="checkAll($event)">
+                <th [nzWidth]="(bindObj.showCheckBoxConfig && bindObj.showCheckBoxConfig.hasOwnProperty('width'))?bindObj.showCheckBoxConfig['width']:'50px'"
+                    [nzLeft]="(bindObj.showCheckBoxConfig && bindObj.showCheckBoxConfig.hasOwnProperty('offsetLeft'))?bindObj.showCheckBoxConfig.offsetLeft:false"
+                    *ngIf="bindObj.showCheckBox" [nzShowCheckbox]="bindObj.showCheckBox" [(nzChecked)]="isAllChecked"
+                    [nzIndeterminate]="indeterminate" (nzCheckedChange)="checkAll($event)">
                 </th>
-                <ng-template ngFor let-col [ngForOf]="dataTableConfig.columns">
+                <ng-template ngFor let-col [ngForOf]="bindObj.columns">
                     <th>
                         {{ col.title }}
                     </th>
@@ -24,8 +23,8 @@
             <tr *ngFor="let rowData of dataTable.data" (click)="setSelectRow(rowData, $event)"
                 [ngClass]="{ selectedRow: mapOfDataState[rowData[KEY_ID]] ? mapOfDataState[rowData[KEY_ID]]['selected'] : true, validationError: !mapOfDataState[rowData[KEY_ID]]['validation']}"
                 [ngStyle]="mapOfDataState[rowData[KEY_ID]] ? mapOfDataState[rowData[KEY_ID]]['style']:null">
-                <td *ngIf="dataTableConfig.showCheckBox" [nzShowCheckbox]="dataTableConfig.showCheckBox"
-                    [nzLeft]="(dataTableConfig.showCheckBoxConfig && dataTableConfig.showCheckBoxConfig.hasOwnProperty('offsetLeft'))?true:false"
+                <td *ngIf="bindObj.showCheckBox" [nzShowCheckbox]="bindObj.showCheckBox"
+                    [nzLeft]="(bindObj.showCheckBoxConfig && bindObj.showCheckBoxConfig.hasOwnProperty('offsetLeft'))?true:false"
                     [(nzChecked)]="mapOfDataState[rowData[KEY_ID]]['checked']"
                     (nzCheckedChange)="dataCheckedStatusChange()"></td>
                 <ng-template ngFor let-col [ngForOf]="tableColumns">
@@ -49,7 +48,7 @@
                                             [attr.colspan]="mapOfDataState[rowData[KEY_ID]]['mergeData'][col.field]?(mapOfDataState[rowData[KEY_ID]]['mergeData'][col.field]['colgroupIndex']===1 ? mapOfDataState[rowData[KEY_ID]]['mergeData'][col.field]['colgroupNum'] : 1):1"
                                             *ngIf="!mapOfDataState[rowData[KEY_ID]]['mergeData'][col.field] || ( mapOfDataState[rowData[KEY_ID]]['mergeData'][col.field]['groupIndex'] === 1 && mapOfDataState[rowData[KEY_ID]]['mergeData'][col.field]['colgroupIndex'] === 1 )">
                                             <!-- <ng-container CnGridItemDirective [state]="'new'" *ngIf="col.editor ; else t1"
-                                            [dataTableConfig]="col.editor" [rowData]="mapOfDataState[rowData[KEY_ID]]['data']"
+                                            [bindObj]="col.editor" [rowData]="mapOfDataState[rowData[KEY_ID]]['data']"
                                             [initData]="initData" [tempData]="tempData"
                                             [valueConfig]="{'id':rowData[KEY_ID],'value':mapOfDataState[rowData[KEY_ID]]['data'][col.editor.field]}"
                                             (updateValue)="valueChange($event)"
@@ -80,7 +79,7 @@
                                             *ngIf="!mapOfDataState[rowData[KEY_ID]]['mergeData'][col.field] || ( mapOfDataState[rowData[KEY_ID]]['mergeData'][col.field]['groupIndex'] === 1 && mapOfDataState[rowData[KEY_ID]]['mergeData'][col.field]['colgroupIndex'] === 1 )">
 
                                             <!-- <ng-container CnGridItemDirective [state]="'edit'" *ngIf="col.editor ; else t2"
-                                            [dataTableConfig]="col.editor" [rowData]="mapOfDataState[rowData[KEY_ID]]['data']"
+                                            [bindObj]="col.editor" [rowData]="mapOfDataState[rowData[KEY_ID]]['data']"
                                             [initData]="initData" [tempData]="tempData"
                                             [valueConfig]="{'id':rowData[KEY_ID],'value':mapOfDataState[rowData[KEY_ID]]['data'][col.editor.field]}"
                                             (updateValue)="valueChange($event)"
@@ -131,7 +130,7 @@
                                         [nzLeft]="col.hasOwnProperty('offsetLeft')?col.offsetLeft:false"
                                         [nzRight]="col.hasOwnProperty('offsetRight')?col.offsetRight:false">
                                         <!-- <ng-container CnGridItemDirective *ngIf="col.custom; else t3" [state]="'edit'"
-                                        [dataTableConfig]="col.custom" [rowData]="mapOfDataState[rowData[KEY_ID]]['data']"
+                                        [bindObj]="col.custom" [rowData]="mapOfDataState[rowData[KEY_ID]]['data']"
                                         [initData]="initData" [tempData]="tempData"
                                         [valueConfig]="{'id':rowData[KEY_ID],'value':mapOfDataState[rowData[KEY_ID]]['data']}"
                                         (updateValue)="valueChange($event)"
