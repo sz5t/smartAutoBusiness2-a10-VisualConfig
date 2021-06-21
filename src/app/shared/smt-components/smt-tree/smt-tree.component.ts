@@ -10,7 +10,7 @@ import { CommonUtils } from 'src/app/core/utils/common-utils';
 import { SmtCommandResolver } from '../../resolver/smt-command/smt-command.resovel';
 import { SmtEventResolver } from '../../resolver/smt-event/smt-event-resolver';
 import { SmtComponentBase } from '../smt-component.base';
-import { ISmtComponent } from '../smt-component.interface';
+import { IExecuteResult, ISmtComponent } from '../smt-component.interface';
 import { ITreeBindProperties, SmtTreeDataAdapter } from './smt-tree.adapter';
 
 @Component({
@@ -52,7 +52,7 @@ export class SmtTreeComponent extends SmtComponentBase implements ISmtComponent,
       type: 'title',
     },
   ];
-  public treeBindObj: ITreeBindProperties;
+  public bindObj: ITreeBindProperties;
 
   public mapOfDataState: {
     [key: string]: {
@@ -95,12 +95,12 @@ export class SmtTreeComponent extends SmtComponentBase implements ISmtComponent,
     const dataAdapter = new SmtTreeDataAdapter(this.config);
 
     this.columns = dataAdapter.setColumns();
-    this.treeBindObj = dataAdapter.setTreeBindObj();
+    this.bindObj = dataAdapter.setTreeBindObj();
     this.eventObjs = dataAdapter.setEventObjs();
     this.dataSourceObj = dataAdapter.setDataSource();
     this.commandObjs = dataAdapter.setCommandObjs();
 
-    this._buildIconState(this.treeBindObj, this.config);
+    this._buildIconState(this.bindObj, this.config);
   }
 
   ngOnInit(): void {
@@ -130,27 +130,40 @@ export class SmtTreeComponent extends SmtComponentBase implements ISmtComponent,
     }
   }
 
+  /**
+   * 加载数据（完成）
+   * @returns
+   */
   public async load() {
     this.IS_LOADING = true;
-    this.treeBindObj.nodes = [];
-    const response = await this.executeHttp(this.dataSourceObj.loadingConfig, {}, '');
-    if ((response && response.state === 1, response.data)) {
-      response.data.map((item, index): void => {
-        if (index === 0) {
-          this.ACTIVED_NODE = {};
-          this.ACTIVED_NODE['origin'] = item;
-        }
-        this._setTreeNode(item);
-      });
+    this.bindObj.nodes = [];
+    let result: IExecuteResult;
+    let response: any;
+    try {
+      response = await this.executeHttp(this.dataSourceObj.loadingConfig, {}, '');
+      if ((response && response.state === 1, response.data)) {
+        response.data.map((item, index): void => {
+          if (index === 0) {
+            this.ACTIVED_NODE = {};
+            this.ACTIVED_NODE['origin'] = item;
+          }
+          this._setTreeNode(item);
+        });
 
-      this.treeBindObj.nodes = response.data;
-      this.IS_LOADING = false;
-    } else {
-      this.IS_LOADING = false;
+        this.bindObj.nodes = response.data;
+        this.IS_LOADING = false;
+      } else {
+        this.IS_LOADING = false;
+      }
+      if (this.bindObj.nodes.length <= 0) {
+        this.emptyLoad();
+      }
+      result = this.getExecuteResult(response, false);
+    } catch {
+      result = this.getCatchResult();
     }
-    if (this.treeBindObj.nodes.length <= 0) {
-      this.emptyLoad();
-    }
+
+    return result;
   }
 
   emptyLoad() {
@@ -172,7 +185,7 @@ export class SmtTreeComponent extends SmtComponentBase implements ISmtComponent,
 
     if (node.children && node.children.length > 0) {
       if (!this.dataSourceObj.async) {
-        node.expanded = this.treeBindObj.expandAll;
+        node.expanded = this.bindObj.expandAll;
         node.children.map((n: any) => {
           this._setTreeNode(n);
         });
@@ -198,7 +211,7 @@ export class SmtTreeComponent extends SmtComponentBase implements ISmtComponent,
     node = this.treeComponentObj.getTreeNodeByKey(currentNode.key);
 
     if (node && node.isExpanded) {
-      const response: any = this.executeHttp(this.treeBindObj, node, null);
+      const response: any = this.executeHttp(this.bindObj, node, null);
       if (response && response.data && response.data.length > 0) {
         node.clearChildren();
         response.data.map((d: any) => {
@@ -218,9 +231,9 @@ export class SmtTreeComponent extends SmtComponentBase implements ISmtComponent,
 
   public preventClickNode($event) {
     const finalResults = [];
-    if (this.treeBindObj.nodeSelectionConfig && Array.isArray(this.treeBindObj.nodeSelectionConfig)) {
+    if (this.bindObj.nodeSelectionConfig && Array.isArray(this.bindObj.nodeSelectionConfig)) {
       if ($event.node.origin) {
-        this.treeBindObj.nodeSelectionConfig.forEach((cpm: any) => {
+        this.bindObj.nodeSelectionConfig.forEach((cpm: any) => {
           if (cpm.compare && Array.isArray(cpm.compare)) {
             const results = [];
             cpm.compare.forEach((element: any) => {
@@ -319,8 +332,10 @@ export class SmtTreeComponent extends SmtComponentBase implements ISmtComponent,
     }
   }
 
-  public loadRefreshData(option) {
+  public async loadRefreshData(option: any) {
     this.IS_LOADING = true;
+    let result: IExecuteResult;
+    let response: any;
     const url = this.dataSourceObj.loadingConfig.url;
     const method = this.dataSourceObj.loadingConfig.ajaxType;
     const param1: any = {};
@@ -341,30 +356,25 @@ export class SmtTreeComponent extends SmtComponentBase implements ISmtComponent,
       ...param1,
     };
 
-    this.componentService.apiService.getRequest(url, method, { params }).subscribe(
-      (response) => {
-        if (response && response.data && response.data) {
-          this.refreshData(response.data);
-          this.IS_LOADING = false;
-        } else {
-          this.IS_LOADING = false;
-        }
-      },
-      (error) => {
-        console.log(error);
-      },
-    );
+    try {
+      response = await this.executeHttp(this.dataSourceObj.loadingConfig, params, null);
+      result = this.getExecuteResult(response, true);
+    } catch {
+      result = this.getCatchResult();
+    }
+    this.IS_LOADING = false;
+    return result;
   }
 
   public refreshData(loadNewData) {
     if (loadNewData && Array.isArray(loadNewData)) {
       loadNewData.map((newData) => {
-        const index = this.treeBindObj.nodes.findIndex((d) => d[this.KEY_ID] === newData[this.KEY_ID]);
+        const index = this.bindObj.nodes.findIndex((d) => d[this.KEY_ID] === newData[this.KEY_ID]);
         if (index > -1) {
-          this.treeBindObj.nodes.splice(index, 1, newData);
-          this.treeBindObj.nodes = [...this.treeBindObj.nodes];
+          this.bindObj.nodes.splice(index, 1, newData);
+          this.bindObj.nodes = [...this.bindObj.nodes];
         } else {
-          this.treeBindObj.nodes = [loadNewData[index], ...this.treeBindObj.nodes];
+          this.bindObj.nodes = [loadNewData[index], ...this.bindObj.nodes];
         }
         const mapData = this.mapOfDataState[newData[this.KEY_ID]];
         if (mapData) {
@@ -412,7 +422,7 @@ export class SmtTreeComponent extends SmtComponentBase implements ISmtComponent,
     const newData = this.createNewNodeData();
     newData[this.KEY_ID] = newId;
 
-    this.treeBindObj.nodes = [newData, ...this.treeBindObj.nodes];
+    this.bindObj.nodes = [newData, ...this.bindObj.nodes];
 
     this.mapOfDataState[newId] = {
       data: newData,
@@ -427,7 +437,7 @@ export class SmtTreeComponent extends SmtComponentBase implements ISmtComponent,
 
   getActions(state): any {}
 
-  public deleteCheckedNodes(option) {
+  public deleteCheckedNodes(option: any) {
     if (option.ids) {
       const arr_id = option.ids.split(',');
       if (arr_id && arr_id.length > 0) {
@@ -438,7 +448,7 @@ export class SmtTreeComponent extends SmtComponentBase implements ISmtComponent,
     }
   }
 
-  public deleteSelectedNode(option) {
+  public deleteSelectedNode(option: any) {
     if (option[this.KEY_ID]) {
       const deletedNode = this.treeComponentObj.getTreeNodeByKey(option[this.KEY_ID]);
       if (deletedNode) {
@@ -460,9 +470,9 @@ export class SmtTreeComponent extends SmtComponentBase implements ISmtComponent,
           }
         } else {
           // 删除根节点
-          this.treeBindObj.nodes = this.treeBindObj.nodes.filter((node) => node.key !== option[this.KEY_ID]);
-          this.treeBindObj.nodes[0].isSelected = true;
-          this.ACTIVED_NODE = this.treeBindObj.nodes[0];
+          this.bindObj.nodes = this.bindObj.nodes.filter((node) => node.key !== option[this.KEY_ID]);
+          this.bindObj.nodes[0].isSelected = true;
+          this.ACTIVED_NODE = this.bindObj.nodes[0];
         }
 
         this.SELECTED_ITEM = this.ACTIVED_NODE.origin;
@@ -471,22 +481,29 @@ export class SmtTreeComponent extends SmtComponentBase implements ISmtComponent,
   }
 
   /**
-   * 未完成
+   * 执行选中节点异步操作（完成）
    * @param option
    */
   public async executeSelectNode(option) {
-    const response: any = await this.executeHttp(option.ajaxConfig, option['data']['data']);
-    if (response && response.state === 1) {
-    } else {
+    let response: any;
+    let result: IExecuteResult = { state: 0 };
+    try {
+      response = await this.executeHttp(option.ajaxConfig, option['data']);
+      result = this.getExecuteResult(response, true);
+    } catch {
+      result = this.getCatchResult();
     }
+    return result;
   }
 
   /**
-   *
+   * 执行勾选节点的异步操作（完成）
    * @param option
    * @returns
    */
   public async executeCheckedNodesByID(option: any) {
+    let response: any;
+    let result: IExecuteResult = { state: 0 };
     const data = this.getData();
     const parametersResult = [];
     const paramCfg = [{ name: this.KEY_ID, type: 'item', valueName: this.KEY_ID }];
@@ -505,16 +522,19 @@ export class SmtTreeComponent extends SmtComponentBase implements ISmtComponent,
         }
       });
 
-      const response = await this.executeHttp(option.ajaxConfig, { ids: ids.join(',') }, null);
-      //
-    } else {
-      return false;
+      try {
+        response = await this.executeHttp(option.ajaxConfig, { ids: ids.join(',') }, null);
+        result = this.getExecuteResult(response, true);
+      } catch {
+        result = this.getCatchResult();
+      }
     }
+    return result;
   }
 
   public getData(): any {
     let treeNodeList = [];
-    if (this.treeBindObj.checkStrictly) {
+    if (this.bindObj.checkStrictly) {
       treeNodeList = this.treeComponentObj.getCheckedNodeList();
     } else {
       const dataCheck = this.getCheckedNodeListByCustom(this.treeComponentObj.getCheckedNodeList());
@@ -550,7 +570,7 @@ export class SmtTreeComponent extends SmtComponentBase implements ISmtComponent,
     this.SELECTED_ITEM = rowData;
 
     // 选中当前行
-    this.treeBindObj.nodes.map((row) => {
+    this.bindObj.nodes.map((row) => {
       this.mapOfDataState[row[this.KEY_ID]].selected = false;
     });
 
@@ -567,7 +587,7 @@ export class SmtTreeComponent extends SmtComponentBase implements ISmtComponent,
    */
   public checkAll($value: boolean): void {
     //
-    this.treeBindObj.nodes
+    this.bindObj.nodes
       .filter((item) => !this.mapOfDataState[item[this.KEY_ID]]['dislabled'])
       .map((item) => (this.mapOfDataState[item[this.KEY_ID]].checked = $value));
     this.dataCheckedStatusChange();
@@ -577,19 +597,19 @@ export class SmtTreeComponent extends SmtComponentBase implements ISmtComponent,
    * 更新数据选中状态的CheckBox
    */
   public dataCheckedStatusChange() {
-    this.treeBindObj.isAllChecked = this.treeBindObj.nodes
+    this.bindObj.isAllChecked = this.bindObj.nodes
       .filter((item) => !this.mapOfDataState[item[this.KEY_ID]]['dislabled'])
       .every((item) => this.mapOfDataState[item[this.KEY_ID]].checked);
 
-    this.treeBindObj.indeterminate =
-      this.treeBindObj.nodes
+    this.bindObj.indeterminate =
+      this.bindObj.nodes
         .filter((item) => !this.mapOfDataState[item[this.KEY_ID]]['dislabled'])
-        .some((item) => this.mapOfDataState[item[this.KEY_ID]].checked) && !this.treeBindObj.isAllChecked;
+        .some((item) => this.mapOfDataState[item[this.KEY_ID]].checked) && !this.bindObj.isAllChecked;
 
-    this.treeBindObj.checkedNumber = this.treeBindObj.nodes.filter((item) => this.mapOfDataState[item[this.KEY_ID]].checked).length;
+    this.bindObj.checkedNumber = this.bindObj.nodes.filter((item) => this.mapOfDataState[item[this.KEY_ID]].checked).length;
 
     // 更新当前选中数据集合
-    this.CHECKED_ITEMS = this.treeBindObj.nodes
+    this.CHECKED_ITEMS = this.bindObj.nodes
       .filter((item) => !this.mapOfDataState[item[this.KEY_ID]]['dislabled'])
       .filter((item) => this.mapOfDataState[item[this.KEY_ID]].checked);
   }
@@ -619,8 +639,8 @@ export class SmtTreeComponent extends SmtComponentBase implements ISmtComponent,
       ...option,
     });
     addRootNode.isLeaf = true;
-    this.treeBindObj.nodes = this.treeComponentObj.getTreeNodes();
-    this.treeBindObj.nodes = [addRootNode, ...this.treeBindObj.nodes];
+    this.bindObj.nodes = this.treeComponentObj.getTreeNodes();
+    this.bindObj.nodes = [addRootNode, ...this.bindObj.nodes];
     this.ACTIVED_NODE = addRootNode;
     this.SELECTED_ITEM = addRootNode.origin;
     // const currentSelectedNode = this.treeObj.getTreeNodeByKey(this.ACTIVED_NODE.key);
@@ -646,7 +666,7 @@ export class SmtTreeComponent extends SmtComponentBase implements ISmtComponent,
     return data_form;
   }
 
-  public async appendChildToSelectedNode(option) {
+  public async appendChildToSelectedNode(option: any) {
     // let appendNode: NzTreeNode;
     let appendNodeData: any = {};
     if (this.config.loadingItemConfig) {
@@ -744,7 +764,7 @@ export class SmtTreeComponent extends SmtComponentBase implements ISmtComponent,
    * 更改节点状态数据
    * @param option
    */
-  public changeCheckedNodeData(option?) {
+  public changeCheckedNodeData(option?: any) {
     if (!option) {
       return true;
     }
@@ -825,10 +845,10 @@ export class SmtTreeComponent extends SmtComponentBase implements ISmtComponent,
       }
     } else {
       // 是根节点操作
-      this.treeBindObj.nodes = this.treeComponentObj.getTreeNodes();
+      this.bindObj.nodes = this.treeComponentObj.getTreeNodes();
       const currentSelectedNode = this.treeComponentObj.getTreeNodeByKey(this.ACTIVED_NODE.key);
-      const _nodes = this.sortNodes(this.treeBindObj.nodes, option, this.ACTIVED_NODE.key);
-      this.treeBindObj.nodes = [..._nodes];
+      const _nodes = this.sortNodes(this.bindObj.nodes, option, this.ACTIVED_NODE.key);
+      this.bindObj.nodes = [..._nodes];
     }
     return true;
   }
@@ -874,7 +894,7 @@ export class SmtTreeComponent extends SmtComponentBase implements ISmtComponent,
 
   public searchTargetString(objtext) {
     // 查找处理
-    const searchtext = this.treeBindObj.searchValue;
+    const searchtext = this.bindObj.searchValue;
     const reg = new RegExp(searchtext, 'g');
     const back = ['', '', ''];
     if (!reg.test(objtext)) {

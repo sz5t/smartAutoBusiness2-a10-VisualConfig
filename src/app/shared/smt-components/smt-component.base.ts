@@ -3,6 +3,7 @@ import { environment } from '@env/environment';
 import { Subscription } from 'rxjs';
 import { ComponentServiceProvider } from 'src/app/core/services/components/component.service';
 import { SmtParameterResolver } from '../resolver/smt-parameter/smt-parameter-resolver';
+import { IExecuteResult } from './smt-component.interface';
 
 /**
  * 1、参数解析
@@ -12,7 +13,7 @@ import { SmtParameterResolver } from '../resolver/smt-parameter/smt-parameter-re
  * 5、弹出页面
  */
 export class SmtComponentBase {
-  constructor(public componentService: ComponentServiceProvider) { }
+  constructor(public componentService: ComponentServiceProvider) {}
   //#region 组件公共属性定义
 
   private _IS_LOADING: boolean;
@@ -687,17 +688,12 @@ export class SmtComponentBase {
   }
   //#endregion
 
-
-
-
   // 表达式结果分析【true/false】
   public analysisResult(option, data?) {
-
     // 数组 第一个 【and true  】【 or  false】  合并进去。
     // 返回 结果是否通过
     let Result = false;
     option.forEach((element, index) => {
-
       if (element['type'] === 'expression') {
         element['value'] = this.getExpressionResult(element['expression'], data);
       }
@@ -720,16 +716,13 @@ export class SmtComponentBase {
       }
     });
     return Result;
-
   }
 
   // 计算表达式
   computeExpression(expression) {
-
     let Expression;
     let result = false;
     switch (expression.comput) {
-
       case 'empty':
         break;
       case 'notempty':
@@ -752,13 +745,9 @@ export class SmtComponentBase {
         break;
       case 'notequal':
         break;
-
-
     }
 
     return result;
-
-
   }
 
   // 表达式取值
@@ -766,10 +755,9 @@ export class SmtComponentBase {
     let back = {
       left: null,
       comput: null,
-      righit: null
-    }
+      righit: null,
+    };
     if (expression) {
-
       if (expression['comput']) {
         back['comput'] = expression['comput'];
       }
@@ -779,13 +767,10 @@ export class SmtComponentBase {
       if (expression['righitExpression']) {
         back['righit'] = this.getExpressionValue(expression['righitExpression'], data);
       }
-
     } else {
-
     }
 
     return this.computeExpression(back);
-
   }
 
   getExpressionValue(option, data?) {
@@ -807,7 +792,6 @@ export class SmtComponentBase {
         value = data[option['valueName']];
         break;
 
-
       // ......多种取值方式
       default:
         value = option['value'];
@@ -815,13 +799,10 @@ export class SmtComponentBase {
     }
 
     return value;
-
   }
-
 
   // 计算表达式
   expression_regular(option) {
-
     let regularflag = false;
     const reg1 = new RegExp(option.righit);
     regularflag = reg1.test(option.left);
@@ -843,4 +824,38 @@ export class SmtComponentBase {
     return regularflag;
   }
 
+  //#region 异常处理
+
+  /**
+   * 获取执行异常的返回结果
+   * @returns
+   */
+  public getCatchResult(): IExecuteResult {
+    return {
+      state: 0,
+      error: {
+        code: 'system.http.error',
+        message: '系统异常。请联系管理员',
+        data: {},
+        params: [],
+      },
+    };
+  }
+
+  /**
+   * 根据异步执行结果，返回方式执行的结果对象
+   * @param response
+   * @param hasData
+   * @returns
+   */
+  public getExecuteResult(response: any, hasData: boolean): IExecuteResult {
+    return {
+      state: response.state,
+      data: hasData ? response.data : {},
+      validation: response.validation,
+      error: response.error,
+      exception: response.exception,
+    };
+  }
+  //#endregion
 }

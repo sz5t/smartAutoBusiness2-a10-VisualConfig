@@ -1,1 +1,21 @@
-<p>smt-form-radio works!</p>
+<ng-container>
+    <nz-form-item>
+        <nz-form-label [nzSpan]="config.labelSize.span" [nzSm]="config.labelSize.nzSm" [nzXs]="config.labelSize.nzXs"
+            [nzMd]="config.labelSize.nzMd" [nzLg]="config.labelSize.nzLg" [nzXl]="config.labelSize.nzXl"
+            [nzTooltipTitle]="config.labelTooltipTitle" [nzTooltipIcon]="config.labelTooltipIcon">
+            {{config.title}}
+        </nz-form-label>
+        <nz-form-control [formGroup]="validateForm" [nzSpan]="config.controlSize.span" [nzSm]="config.controlSize.nzSm"
+            [nzXs]="config.controlSize.nzXs" [nzMd]="config.controlSize.nzMd" [nzLg]="config.controlSize.nzLg"
+            [nzXl]="config.controlSize.nzXl" [nzErrorTip]="combineTpl" nzHasFeedback>
+            <nz-radio-group [(ngModel)]="model" nzName="radiogroup" [formControlName]="config.field">
+                <ng-container *ngFor="let c of selectOptions">
+                    <label nz-radio [nzValue]="c.value">{{c.label}}</label>
+                </ng-container>
+            </nz-radio-group>
+            <ng-template #combineTpl let-control>
+            </ng-template>
+        </nz-form-control>
+    </nz-form-item>
+    <ng-template #combineTpl let-control></ng-template>
+</ng-container>
