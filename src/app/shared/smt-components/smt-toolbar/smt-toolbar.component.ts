@@ -25,6 +25,7 @@ export class SmtToolbarComponent extends SmtComponentBase implements OnInit, OnD
     super(componentService);
     this.COMPONENT_METHODS = CN_TOOLBAR_METHOD;
     this.ROUTE_VALUE = this.componentService.router;
+    this.TEMP_VALUE = {};
   }
   @Input() public config; // dataTables 的配置参数
   @Input() public initData;
@@ -39,7 +40,9 @@ export class SmtToolbarComponent extends SmtComponentBase implements OnInit, OnD
   private _sender_subscription$: Subscription;
   private _trigger_receiver_subscription$: Subscription;
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.TEMP_VALUE = this.tempData;
+  }
 
   public ngOnDestroy() {
     // 释放级联对象
