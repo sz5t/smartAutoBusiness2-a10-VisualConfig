@@ -29,8 +29,8 @@ export class SmtDataTableItemDirective implements OnInit, OnChanges, OnDestroy {
   @Input() public formCascade;
   @Input() public state;
   @Input() public valueConfig;
-  @Input() public dataTableDataService;
-  // @Output() public updateValue = new EventEmitter<any>(true);
+  @Input() public dataTableDataServe;
+  @Output() public updateValue = new EventEmitter<any>(true);
   @Output() public cascadeValue = new EventEmitter<any>(true);
   // @Input() fb: FormBuilder
   public component: ComponentRef<any>;
@@ -49,7 +49,13 @@ export class SmtDataTableItemDirective implements OnInit, OnChanges, OnDestroy {
         this.subscribe_cascadeValue(event);
       });
     }
-    this.component.instance.dataTableDataService = this.dataTableDataService;
+    if (this.component.instance.updateValue) {
+      this.component.instance.updateValue.subscribe((event) => {
+        this.setValue(event);
+      });
+    }
+
+    this.component.instance.dataTableDataServe = this.dataTableDataServe;
 
 
 
@@ -70,6 +76,11 @@ export class SmtDataTableItemDirective implements OnInit, OnChanges, OnDestroy {
 
   subscribe_cascadeValue(data) {
     this.cascadeValue.emit(data);
+  }
+
+  // 组件将值写回、级联数据-》回写
+  public setValue(data?) {
+    this.updateValue.emit(data);
   }
 
 }
