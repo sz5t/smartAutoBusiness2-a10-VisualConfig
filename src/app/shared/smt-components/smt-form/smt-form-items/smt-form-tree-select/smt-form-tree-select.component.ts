@@ -17,6 +17,8 @@ export class SmtFormTreeSelectComponent extends SmtComponentBase implements OnIn
   @Input() config: any;
   @Input() public fromDataService;
   @ViewChild('tree', { static: true }) tree: NzTreeComponent;
+
+  public model: any;
   constructor(
     @Inject(BSN_COMPONENT_SERVICES)
     public componentService: ComponentServiceProvider,
@@ -210,4 +212,6 @@ export class SmtFormTreeSelectComponent extends SmtComponentBase implements OnIn
     fn(this.bindObj.nodes); // 调用一下
     return result;
   }
+
+  public valueChange($event) {}
 }

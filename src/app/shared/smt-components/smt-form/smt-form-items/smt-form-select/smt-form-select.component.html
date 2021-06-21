@@ -11,7 +11,7 @@
             <nz-select [formControlName]="config.field" [(ngModel)]="model" nzAllowClear
                 [nzShowSearch]="config.showSearch" [nzServerSearch]="config.serverSearch"
                 (nzOnSearch)="onSearch($event)" [nzPlaceHolder]="config.placeholder">
-                <nz-option *ngIf="isLoading" nzDisabled nzCustomContent>
+                <nz-option *ngIf="IS_LOADING" nzDisabled nzCustomContent>
                     <i nz-icon nzType="loading" class="loading-icon"></i> 加载中...
                 </nz-option>
                 <nz-option *ngFor="let option of selectOptions" [nzLabel]="option.label" [nzValue]="option.value">
