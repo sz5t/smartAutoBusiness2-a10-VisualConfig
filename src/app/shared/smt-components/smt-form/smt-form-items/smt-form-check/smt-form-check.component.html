@@ -11,7 +11,7 @@
         <ng-container *ngIf="config.displayMode ==='wrapper'">
             <nz-checkbox-wrapper style="width: 100%;" [formControlName]="config.field" (nzOnChange)="checkedChange($event)">
                 <div nz-row>
-                    <div nz-col [nzSpan]="config.span" *ngFor="let c of checkOptions">
+                    <div nz-col [nzSpan]="config.span" *ngFor="let c of this.bindObj.options">
                         <label nz-checkbox [nzValue]="c['value']" [ngModel]="c['checked']"
                             [ngModelOptions]="{standalone: true}">{{c['label']}}</label>
                     </div>
@@ -19,8 +19,7 @@
             </nz-checkbox-wrapper>
         </ng-container>
         <ng-container *ngIf="config.displayMode !=='wrapper'">
-            <nz-checkbox-group [(ngModel)]="checkOptions" (ngModelChange)="log($event)"
-                [ngModelOptions]="{standalone: true}"></nz-checkbox-group>
+            <nz-checkbox-group [(ngModel)]="this.bindObj.options" [formControlName]="config.field"></nz-checkbox-group>
         </ng-container>
     </nz-form-control>
     </nz-form-item>
