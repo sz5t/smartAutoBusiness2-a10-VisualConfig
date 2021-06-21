@@ -261,13 +261,22 @@ export class CnStaticFormCommandComponent extends VcComponentBase implements OnI
     console.log('页面选择', v);
     let isGetJSON = true;
     let page_data = null;
+
+
+    let type = 'loadPage';
     if (v['data']) {
       if (v['data']['targetPageCode']) {
         if (this.PAGE_SELECT === v['data']['targetPageCode']) {
           isGetJSON = false;
         } else {
           this.PAGE_SELECT = v['data']['targetPageCode'];
-          page_data = await this.getPageLayoutJson(v['data']['targetPageCode']);
+          if (v['data']['targetPageCode'] === this.fromDataService.currentPage) {
+            type = 'current';
+            page_data = this.getPageLayoutJsonByCurrentPage();
+          } else {
+            page_data = await this.getPageLayoutJson(v['data']['targetPageCode']);
+          }
+
         }
 
       } else {
@@ -278,7 +287,7 @@ export class CnStaticFormCommandComponent extends VcComponentBase implements OnI
     }
     console.log('加载当前页配置', page_data);
     if (isGetJSON) {
-      this.page_data(page_data);
+      this.page_data(page_data, type);
     }
 
   }
@@ -335,16 +344,29 @@ export class CnStaticFormCommandComponent extends VcComponentBase implements OnI
 
   }
 
+  public getPageLayoutJsonByCurrentPage() {
+    let back = {
+      componentsJson: this.fromDataService.layoutSourceData,
+      layoutJson: this.fromDataService.layoutTreeInstance.layoutTree
+    }
+    return back;
+  }
+
   PAGE_SELECT: any;
   PAGE_JSON: any;
-  public page_data(data) {
-    if (data && data['JSON']) {
-      let json_config = data['JSON'];
-
-      this.PAGE_JSON = JSON.parse(json_config);
+  public page_data(data, type?) {
+    if (type && type === "current") {
+      this.PAGE_JSON = data;
     } else {
-      this.PAGE_JSON = null;
+      if (data && data['JSON']) {
+        let json_config = data['JSON'];
+
+        this.PAGE_JSON = JSON.parse(json_config);
+      } else {
+        this.PAGE_JSON = null;
+      }
     }
+
     console.log('页面json内容', this.PAGE_JSON);
     if (this.PAGE_JSON) {
       this.nodes = this.PAGE_JSON['layoutJson'];
@@ -536,7 +558,7 @@ export class CnStaticFormCommandComponent extends VcComponentBase implements OnI
       },
       {
         name: 'targetPageCode',
-        type: 'input',
+        type: 'label',
         componentConfig: {
           "labelTooltipTitle": "目标组件",
           "labelTooltipIcon": 'question-circle'
@@ -544,10 +566,60 @@ export class CnStaticFormCommandComponent extends VcComponentBase implements OnI
         formType: 'value',
         formName: 'formControlName',
         validations: [],
-        title: '目标页面'
+        title: '目标页面编码'
 
       }
-    ]
+    ],
+    enableLayout: true, // 启用布局
+    layout: {  //允许递归
+      "id": '001',
+      "type": "layout",
+      "container": "rows",
+      "rows": [
+        {
+          "id": 'r_001',
+          "type": "row",
+          "container": "cols",
+          "cols": [
+            {
+              id: 'c_002',
+              "type": "col",
+              "size": {
+                "span": 12,
+                "nzXs": 12,
+                "nzSm": 12,
+                "nzMd": 12,
+                "nzLg": 12,
+                "ngXl": 12,
+                "nzXXl": 12
+              },
+              "container": "control",
+              "controlName": 'valueName',
+              "controlIndex": 0
+
+            },
+            {
+              id: 'c_003',
+              "type": "col",
+              "size": {
+                "span": 12,
+                "nzXs": 12,
+                "nzSm": 12,
+                "nzMd": 12,
+                "nzLg": 12,
+                "ngXl": 12,
+                "nzXXl": 12
+              },
+              "container": "control",
+              "controlName": 'value',
+              "controlIndex": 1
+
+            }
+          ]
+        }
+      ]
+
+    }
   }
 
 }

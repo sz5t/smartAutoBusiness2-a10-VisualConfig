@@ -9,8 +9,7 @@
     <button nz-button nzType="primary" (click)="resetForm()">重置</button>
 </ng-template>
 
-<nz-card nzType="inner" nzTitle="页面信息" [nzExtra]="delextraTemplate" style="width:100%;padding-right: 4px;"
-    [nzBodyStyle]="{'padding':'1px 2px'}">
+<nz-card nzType="inner" nzTitle="页面信息" style="width:100%;padding-right: 4px;" [nzBodyStyle]="{'padding':'1px 2px'}">
     <app-cn-static-form #staticFormPage [config]="_form_page_config" [staticData]="sourceDataPage"
         [fromDataService]="fromDataService" (updateValue)="staticFormPageValueChange($event)">
     </app-cn-static-form>

@@ -26,6 +26,7 @@ export class configFormDataServerService {
     //=========全局变量==========
     public initValue: any = {};
 
+    public currentPage: any;
 
 
     public data: any = [];
