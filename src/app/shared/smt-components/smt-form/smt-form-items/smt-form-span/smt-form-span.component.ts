@@ -1,21 +1,30 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Inject, Input, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
+import { BSN_COMPONENT_SERVICES } from 'src/app/core/relations/bsn-relatives';
+import { ComponentServiceProvider } from 'src/app/core/services/components/component.service';
+import { SmtComponentBase } from '../../../smt-component.base';
 
 @Component({
   selector: 'app-smt-form-span',
   templateUrl: './smt-form-span.component.html',
   styles: [],
 })
-export class SmtFormSpanComponent implements OnInit {
+export class SmtFormSpanComponent extends SmtComponentBase implements OnInit {
   @Input() validateForm: FormGroup;
   @Input() config;
   @Input() public fromDataService;
+  public showTitle;
   public isShow = true;
   public showAll = false;
   public showLable;
   public showShortLable;
   public model: any;
-  constructor() {}
+  constructor(
+    @Inject(BSN_COMPONENT_SERVICES)
+    public componentService: ComponentServiceProvider,
+  ) {
+    super(componentService);
+  }
 
   ngOnInit(): void {}
 
@@ -30,7 +39,7 @@ export class SmtFormSpanComponent implements OnInit {
           }
         }
       }
-      this.validateForm = regularData;
+      this.showTitle = regularData;
       this.showLable = regularData;
       const regularflag = formatConfig.responseConfig.substrlength ? formatConfig.responseConfig.substrlength : 50;
       if (regularData) {

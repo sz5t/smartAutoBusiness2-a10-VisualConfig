@@ -9,7 +9,7 @@
             [nzXs]="config.controlSize.nzXs" [nzMd]="config.controlSize.nzMd" [nzLg]="config.controlSize.nzLg"
             [nzXl]="config.controlSize.nzXl" [nzErrorTip]="combineTpl" nzHasFeedback>
             <nz-radio-group [(ngModel)]="model" nzName="radiogroup" [formControlName]="config.field">
-                <ng-container *ngFor="let c of selectOptions">
+                <ng-container *ngFor="let c of this.bindObj.options">
                     <label nz-radio [nzValue]="c.value">{{c.label}}</label>
                 </ng-container>
             </nz-radio-group>

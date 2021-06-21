@@ -10,18 +10,31 @@ export class SmtFormSwitchComponent implements OnInit {
   @Input() validateForm: FormGroup;
   @Input() config;
   @Input() public fromDataService;
-  public model: any;
+  public model = 1;
 
   public on = 1;
   public off = 0;
 
-  selectOptions: any = {
-    check: {},
-    close: {},
+  public bindObj: {
+    option: {
+      check: any;
+      close: any;
+    };
   };
+
   constructor() {}
 
+  private _initData() {
+    this.bindObj = {
+      option: {
+        check: {},
+        close: {},
+      },
+    };
+  }
+
   ngOnInit(): void {
+    this._initData();
     if (this.config.hasOwnProperty('off')) {
       this.off = this.config.off;
     }
@@ -32,14 +45,14 @@ export class SmtFormSwitchComponent implements OnInit {
     if (this.config.options) {
       this.config.options.forEach((element) => {
         if (element.type === 'check') {
-          this.selectOptions.check = element;
+          this.bindObj.option.check = element;
         }
         if (element.type === 'close') {
-          this.selectOptions.close = element;
+          this.bindObj.option.close = element;
         }
       });
-      this.on = this.selectOptions.check.value;
-      this.off = this.selectOptions.close.value;
+      this.on = this.bindObj.option.check.value;
+      this.off = this.bindObj.option.close.value;
     }
   }
 

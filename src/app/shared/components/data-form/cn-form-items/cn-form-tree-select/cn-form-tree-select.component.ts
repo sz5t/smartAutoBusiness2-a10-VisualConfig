@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, Output, ViewChild, Inject, EventEmitter } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { NzTreeComponent, NzFormatEmitEvent, NzTreeNode } from 'ng-zorro-antd/tree';
+import { NzTreeSelectComponent } from 'ng-zorro-antd/tree-select';
 import { BSN_COMPONENT_SERVICES } from 'src/app/core/relations/bsn-relatives';
 import { ComponentServiceProvider } from 'src/app/core/services/components/component.service';
 import { ParameterResolver } from 'src/app/shared/resolver/parameter/parameter.resolver';
@@ -18,7 +19,7 @@ export class CnFormTreeSelectComponent extends CnComponentBase implements OnInit
   @Input() tempData;
   @Input() initData;
   @Output() public updateValue = new EventEmitter<any>();
-  @ViewChild('tree', { static: true }) tree: NzTreeComponent;
+  @ViewChild('tree', { static: true }) tree: NzTreeSelectComponent;
   isLoading;
   public mapOfDataState: {
     [key: string]: {
@@ -255,7 +256,6 @@ export class CnFormTreeSelectComponent extends CnComponentBase implements OnInit
         node.expanded = false;
       }
       node.isLeaf = false;
-
     } else {
       node.isLeaf = true;
     }

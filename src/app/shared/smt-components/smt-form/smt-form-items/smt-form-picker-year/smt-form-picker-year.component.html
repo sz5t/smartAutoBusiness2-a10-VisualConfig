@@ -1,1 +1,16 @@
-<p>smt-form-picker-year works!</p>
+<ng-container>
+    <nz-form-item>
+        <nz-form-label [nzSpan]="config.labelSize.span" [nzSm]="config.labelSize.nzSm" [nzXs]="config.labelSize.nzXs"
+        [nzMd]="config.labelSize.nzMd" [nzLg]="config.labelSize.nzLg" [nzXl]="config.labelSize.nzXl"
+        [nzTooltipTitle]="config.labelTooltipTitle" [nzTooltipIcon]="config.labelTooltipIcon">
+        {{config['title']}}
+    </nz-form-label>
+        <nz-form-control [formGroup]="validateForm" [nzSpan]="config.controlSize.span" [nzSm]="config.controlSize.nzSm"
+        [nzXs]="config.controlSize.nzXs" [nzMd]="config.controlSize.nzMd" [nzLg]="config.controlSize.nzLg"
+        [nzXl]="config.controlSize.nzXl" [nzErrorTip]="combineTpl" nzHasFeedback>
+        <input nz-input  [formControlName]="config.field"  hidden="hidden" [(ngModel)]="this.bindObj.value" (ngModelChange)="valueChange($event)" />
+        <nz-year-picker style="width: 100%;"   [(ngModel)]="this.bindObj.model"    (ngModelChange)="onChange($event)"   [nzPlaceHolder] = "config.placeholder"  [ngModelOptions]="{standalone: true}"></nz-year-picker>
+    </nz-form-control>
+    </nz-form-item>
+    <ng-template #combineTpl let-control></ng-template>
+</ng-container>
