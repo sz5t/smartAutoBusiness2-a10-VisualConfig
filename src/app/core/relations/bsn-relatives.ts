@@ -46,5 +46,5 @@ export class BsnRelativesMessageModel {
 
 // 发送命令结构
 export class BsnCommandMessageModel {
-  constructor(public command: any, public pageCode: string, public targetViewId: string, public params: any[], commandType: string) { }
+  constructor(public command: any, public pageCode: string, public targetViewId: string, public params: any[], data: any, commandType: string) { }
 }
