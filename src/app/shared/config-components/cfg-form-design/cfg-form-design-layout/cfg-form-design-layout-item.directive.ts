@@ -4,7 +4,22 @@ import { CfgFormSelectComponent } from './cfg-form-select/cfg-form-select.compon
 const components: { [type: string]: Type<any> } = {
 
   cnFormInput: CfgFormInputComponent,
-  cnFormSelect: CfgFormSelectComponent
+  cnFormSelect: CfgFormSelectComponent,
+  smtFormInput: CfgFormInputComponent,
+  smtFormSwitch: CfgFormInputComponent,
+  smtFormSelect: CfgFormInputComponent,
+  smtFormCheck: CfgFormInputComponent,
+  smtFormLabel: CfgFormInputComponent,
+  smtFormPickerDate: CfgFormInputComponent,
+  smtFormPickerRange: CfgFormInputComponent,
+  smtFormPickerMonth: CfgFormInputComponent,
+  smtFormPickerWeek: CfgFormInputComponent,
+  smtFormPickerYear: CfgFormInputComponent,
+  smtFormRadio: CfgFormInputComponent,
+  smtFormTag: CfgFormInputComponent,
+  smtFormTextarea: CfgFormInputComponent,
+  smtFormTreeSelect: CfgFormInputComponent,
+  smtFormSpan: CfgFormInputComponent
 
 };
 @Directive({
