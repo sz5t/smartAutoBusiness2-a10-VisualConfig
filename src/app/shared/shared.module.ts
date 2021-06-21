@@ -264,6 +264,8 @@ import { SmtFormItemDirective } from './smt-components/smt-form/smt-form-items/s
 import { SmtPopPageComponent } from './smt-components/smt-pop-page/smt-pop-page.component';
 import { SmtDataTableItemDirective } from './smt-components/smt-data-table/smt-data-table-items/smt-data-table-item.directive';
 import { SmtDataTableInputComponent } from './smt-components/smt-data-table/smt-data-table-items/smt-data-table-input/smt-data-table-input.component';
+import { CnStaticFormCommandComponent } from './components/cn-static-form/cn-static-form-cmpt/cn-static-form-command/cn-static-form-command.component';
+import { CnStaticFormPopCommandComponent } from './components/cn-static-form/cn-static-form-item/cn-static-form-pop-command/cn-static-form-pop-command.component';
 
 // #region third libs
 
@@ -477,6 +479,7 @@ const COMPONENTS = [
   CnStaticFormSelectTreeComponent,
   CnStaticFormTextareaComponent,
   CnStaticFormBusiApiComponent,
+  CnStaticFormPopCommandComponent,
   // --静态表单内特殊组件结构--
   CnStaticFormAjaxComponent,
   CnStaticFormFormItemComponent,
@@ -489,6 +492,8 @@ const COMPONENTS = [
   CnStaticFormMainResourceComponent,
   CnStaticFormApiComponent,
   CnStaticFormBusiPopApiComponent,
+  CnStaticFormCommandComponent,
+
 
   // --流程--
   CnCfgFlowDesignComponent,
@@ -576,6 +581,7 @@ const DIRECTIVES = [
     CfgAttributeRanksRowModalComponent,
     ToolAttrJsonComponent,
     SmtComponentComponent,
+
 
   ],
   exports: [

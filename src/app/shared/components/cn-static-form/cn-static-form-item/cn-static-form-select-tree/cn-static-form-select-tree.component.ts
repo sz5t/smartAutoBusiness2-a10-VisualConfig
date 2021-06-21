@@ -1,5 +1,7 @@
-import { Component, OnInit, EventEmitter, Input, Output, Inject } from '@angular/core';
+import { Component, OnInit, EventEmitter, Input, Output, Inject, ViewChild } from '@angular/core';
 import { FormGroup } from '@angular/forms';
+import { NzTreeComponent } from 'ng-zorro-antd/tree';
+import { NzTreeSelectComponent } from 'ng-zorro-antd/tree-select';
 import { BSN_COMPONENT_SERVICES } from 'src/app/core/relations/bsn-relatives';
 import { ComponentServiceProvider } from 'src/app/core/services/components/component.service';
 import { VcComponentBase } from 'src/app/shared/vc-components/vc-component';
@@ -16,6 +18,8 @@ export class CnStaticFormSelectTreeComponent extends VcComponentBase implements 
   @Input() public fromDataService;
   @Output() public updateValue = new EventEmitter<any>(true);
   @Output() public cascadeValue = new EventEmitter<any>(true);
+  // @ViewChild('tree', { static: true }) tree: NzTreeSelectComponent;
+  @ViewChild('tree') tree: NzTreeSelectComponent;
   selectValue: any;
   selectOptions: any[];
   nodes = [];
@@ -56,17 +60,23 @@ export class CnStaticFormSelectTreeComponent extends VcComponentBase implements 
       "nzLg": 16,
       "ngXl": 16,
       "nzXXl": 16
-    }
+    },
+    "dropdownStyle": "{ 'max-height': '450px' }"
   };
   constructor(@Inject(BSN_COMPONENT_SERVICES)
   public componentService: ComponentServiceProvider,) {
     super(componentService);
   }
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
     console.log('select:', this.config);
 
-
+    if (!this.config.componentConfig['labelSize']) {
+      this.config.componentConfig['labelSize'] = this.itemConfig['labelSize'];
+    }
+    if (!this.config.componentConfig['controlSize']) {
+      this.config.componentConfig['controlSize'] = this.itemConfig['controlSize'];
+    }
 
 
 
@@ -77,7 +87,7 @@ export class CnStaticFormSelectTreeComponent extends VcComponentBase implements 
       }
       switch (loadingMode) {
         case "ajax":
-          this.load();
+          await this.load();
           break;
         case "dataService":
           this.loadDataService();
@@ -87,12 +97,7 @@ export class CnStaticFormSelectTreeComponent extends VcComponentBase implements 
           break;
       }
 
-      if (!this.config.componentConfig['labelSize']) {
-        this.config.componentConfig['labelSize'] = this.itemConfig['labelSize'];
-      }
-      if (!this.config.componentConfig['controlSize']) {
-        this.config.componentConfig['controlSize'] = this.itemConfig['controlSize'];
-      }
+
     }
 
     if (this.validateForm.controls[this.config['name']]) {
@@ -115,7 +120,12 @@ export class CnStaticFormSelectTreeComponent extends VcComponentBase implements 
 
   public text(v) {
 
-    let back = { name: this.config.name, data: v, cascadeValueObj: this.config['componentConfig']['casadeValue'] }
+    let node = this.tree.getTreeNodeByKey(v);
+    let dataItem: any;
+    if (node) {
+      dataItem = node['origin'];
+    }
+    let back = { name: this.config.name, data: v, cascadeValueObj: this.config['componentConfig']['casadeValue'], dataItem: dataItem }
 
     this.cascadeValue.emit(back);
 
@@ -200,6 +210,11 @@ export class CnStaticFormSelectTreeComponent extends VcComponentBase implements 
   }
 
   onChange(v?) {
+    this.selectValue = v;
+    if (this.config['componentConfig']['casadeValue']) {
+      this.text(v);
+    }
+    console.log('选择中：', v);
     console.log('树选中值', v);
   }
 

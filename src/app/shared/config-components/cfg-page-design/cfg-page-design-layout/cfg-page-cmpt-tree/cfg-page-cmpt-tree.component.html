@@ -1,47 +1,47 @@
 <div (click)="click($event)" (drop)="f_ondrop($event,l_config)"
-    [ngStyle]="(selectedItem['item'] &&(selectedItem['active']==='cnTree')&& (selectedItem['item']['id']===l_config['id']) )? body_style_selected: body_style">
-    <div>
-        <ng-container *ngFor="let cmpt of l_config['children']">
-            <ng-container *ngIf="cmpt['type']==='cnToolbar'">
-                <div appCfgPageDesignLayoutItem [l_config]="cmpt" [showLayout]="showLayout"
-                    [(selectedItem)]="selectedItem" [(cmptState)]="cmptState" [fromDataService]="fromDataService">
+  [ngStyle]="(selectedItem['item'] &&(selectedItem['active']===l_config['type'])&& (selectedItem['item']['id']===l_config['id']) )? body_style_selected: body_style">
+  <div>
+    <ng-container *ngFor="let cmpt of l_config['children']">
+      <ng-container *ngIf="cmpt['type']==='cnToolbar'">
+        <div appCfgPageDesignLayoutItem [l_config]="cmpt" [showLayout]="showLayout" [(selectedItem)]="selectedItem"
+          [(cmptState)]="cmptState" [fromDataService]="fromDataService">
 
-                </div>
-            </ng-container>
-        </ng-container>
-    </div>
-    <form *ngIf="config.checkStrictlyShow" checkStrictly nz-form nzLayout="inline">
-        <nz-form-item>
-          <nz-form-label><label>无关联勾选</label></nz-form-label>
-          <nz-form-control>
-            <nz-switch [(ngModel)]="config.checkStrictly" name="checkStrictly"></nz-switch>
-          </nz-form-control>
-        </nz-form-item>
-      </form>
-      <nz-input-group *ngIf="config.showSearch" [nzSuffix]="suffixIcon" style="width: 100%;">
-        <input type="text" nz-input placeholder="查询" [(ngModel)]="config.searchValue" />
-      </nz-input-group>
-      <ng-template #suffixIcon>
-        <i nz-icon nzType="search"></i>
-      </ng-template>
-    <nz-tree #treeObj [nzData]="nodes" [nzExpandAll]="this.config.expandAll" [nzBlockNode]="true"
-        [nzSearchValue]="this.config.searchValue" (nzExpandChange)="change($event)" [nzTreeTemplate]="nzTreeTemplate"
-        [nzCheckable]="config.showCheckBox" [nzShowLine]="this.config.showLine" [nzCheckStrictly]="this.config.checkStrictly">
-    </nz-tree>
+        </div>
+      </ng-container>
+    </ng-container>
+  </div>
+  <form *ngIf="config.checkStrictlyShow" checkStrictly nz-form nzLayout="inline">
+    <nz-form-item>
+      <nz-form-label><label>无关联勾选</label></nz-form-label>
+      <nz-form-control>
+        <nz-switch [(ngModel)]="config.checkStrictly" name="checkStrictly"></nz-switch>
+      </nz-form-control>
+    </nz-form-item>
+  </form>
+  <nz-input-group *ngIf="config.showSearch" [nzSuffix]="suffixIcon" style="width: 100%;">
+    <input type="text" nz-input placeholder="查询" [(ngModel)]="config.searchValue" />
+  </nz-input-group>
+  <ng-template #suffixIcon>
+    <i nz-icon nzType="search"></i>
+  </ng-template>
+  <nz-tree #treeObj [nzData]="nodes" [nzExpandAll]="this.config.expandAll" [nzBlockNode]="true"
+    [nzSearchValue]="this.config.searchValue" (nzExpandChange)="change($event)" [nzTreeTemplate]="nzTreeTemplate"
+    [nzCheckable]="config.showCheckBox" [nzShowLine]="this.config.showLine"
+    [nzCheckStrictly]="this.config.checkStrictly">
+  </nz-tree>
 
-    <ng-template #nzTreeTemplate let-node>
-      <span class="custom-node">
-        <span *ngIf="!node.isLeaf">
-          <i nz-icon style="padding-right: 3px;" [nzType]="node.isExpanded ? 'folder-open' : 'folder'"
-           ></i> 
-           <!-- #{{config.columns ? config.columns[1].field : ''}} -->
-        </span>
-        <span *ngIf="node.isLeaf">
-          <i nz-icon nzType="file" style="padding-right: 3px;"></i>
-          <span class="file-desc">
-            <!-- #{{config.columns ? config.columns[1].field: ''}} -->
-          </span>
+  <ng-template #nzTreeTemplate let-node>
+    <span class="custom-node">
+      <span *ngIf="!node.isLeaf">
+        <i nz-icon style="padding-right: 3px;" [nzType]="node.isExpanded ? 'folder-open' : 'folder'"></i>
+        <!-- #{{config.columns ? config.columns[1].field : ''}} -->
+      </span>
+      <span *ngIf="node.isLeaf">
+        <i nz-icon nzType="file" style="padding-right: 3px;"></i>
+        <span class="file-desc">
+          <!-- #{{config.columns ? config.columns[1].field: ''}} -->
         </span>
       </span>
-    </ng-template>
+    </span>
+  </ng-template>
 </div>

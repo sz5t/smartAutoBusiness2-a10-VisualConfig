@@ -154,7 +154,7 @@ export class CfgPageCmptTableComponent implements OnInit {
     // this.optionState = true;
     // 选中
     this.selectedItem['item'] = this.l_config;
-    this.selectedItem['active'] = 'cnDataTable';
+    this.selectedItem['active'] = this.l_config['type'];
     this.fromDataService.layoutNodeSelected(this.l_config);
     console.log('选中当前tabs', this.selectedItem);
 

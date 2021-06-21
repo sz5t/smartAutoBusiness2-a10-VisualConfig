@@ -730,6 +730,25 @@ export class CnStaticFormComponent extends VcComponentBase implements OnInit {
               }
 
             }
+            if (cascadeItem['type'] === 'setValue') {
+
+
+              if (cascadeItem['data']['option']) {
+                let displayValueOption = cascadeItem['data']['option'];
+                displayValueOption.forEach(element => {
+                  if (element['type'] === 'currentValue') {
+                    element['value'] = currentValue;
+                  }
+                  if (element['type'] === 'dataItem') {
+                    element['value'] = back['dataItem'][element['valueName']];
+                  }
+
+
+                });
+                let displayValue = displayValueOption[0]['value'];
+                this.validateForm.controls[cascade['cascadeName']].setValue(displayValue);
+              }
+            }
           }
 
 
@@ -867,37 +886,36 @@ export class CnStaticFormComponent extends VcComponentBase implements OnInit {
 
   // 计算表达式
   computeExpression(expression) {
-
     let Expression;
     let result = false;
     switch (expression.comput) {
-
       case 'empty':
         break;
       case 'notempty':
         break;
       case 'null':
+        result = this.expression_null(expression);
         break;
       case 'notnull':
+        result = this.expression_notnull(expression);
         break;
       case 'true':
+        result = this.expression_true(expression);
         break;
       case 'false':
+        result = this.expression_false(expression);
         break;
       case 'regular':
-        result = this.Expression_regular(expression);
+        result = this.expression_regular(expression);
         break;
       case 'equal':
+        result = this.expression_equal(expression);
         break;
       case 'notequal':
         break;
-
-
     }
 
     return result;
-
-
   }
 
 
@@ -966,11 +984,35 @@ export class CnStaticFormComponent extends VcComponentBase implements OnInit {
 
 
   // 计算表达式
-  Expression_regular(option) {
-
+  expression_regular(option) {
     let regularflag = false;
     const reg1 = new RegExp(option.righit);
     regularflag = reg1.test(option.left);
+    return regularflag;
+  }
+  expression_true(option) {
+    let regularflag = false;
+    regularflag = option.left === true ? true : false;
+    return regularflag;
+  }
+  expression_false(option) {
+    let regularflag = false;
+    regularflag = option.left === false ? true : false;
+    return regularflag;
+  }
+  expression_equal(option) {
+    let regularflag = false;
+    regularflag = option.left === option.righit ? true : false;
+    return regularflag;
+  }
+  expression_null(option) {
+    let regularflag = false;
+    regularflag = option.left === null ? true : false;
+    return regularflag;
+  }
+  expression_notnull(option) {
+    let regularflag = false;
+    regularflag = option.left !== null ? true : false;
     return regularflag;
   }
 

@@ -85,15 +85,15 @@
             "active": true,
             "sourceConfig": {
               "type": "staticForm",
-              "backName": "eventConent",
+              "backName": "componentEvent",
               "backConfig": [
                 {
-                  "name": "eventConent"
+                  "name": "componentEvent"
                 }
               ],
               "properties": [
                 {
-                  "name": "eventConent",
+                  "name": "componentEvent",
                   "type": "arrayCollapse",
                   "componentConfig": {
                     "mode": "empty",

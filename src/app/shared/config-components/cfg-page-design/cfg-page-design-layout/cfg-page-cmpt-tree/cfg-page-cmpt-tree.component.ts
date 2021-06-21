@@ -16,7 +16,7 @@ export class CfgPageCmptTreeComponent implements OnInit {
   public config: any;
   private titleRoot = '根节点';
   private titleChild = '子节点';
-  constructor() {}
+  constructor() { }
 
   public nodes = [];
 
@@ -54,12 +54,12 @@ export class CfgPageCmptTreeComponent implements OnInit {
     // this.optionState = true;
     // 选中
     this.selectedItem['item'] = this.l_config;
-    this.selectedItem['active'] = 'cnTree';
+    this.selectedItem['active'] = this.l_config['type'];
     this.fromDataService.layoutNodeSelected(this.l_config);
     console.log('选中当前tabs', this.selectedItem);
   }
 
-  change($event) {}
+  change($event) { }
 
   public f_ondrop(e?, d?) {
     e.preventDefault();

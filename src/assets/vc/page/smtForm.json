@@ -105,7 +105,17 @@
                                     "formName": "formControlName",
                                     "validations": [],
                                     "title": "是否展示边框"
+                                },
+                                {
+                                    "name": "popCommand",
+                                    "type": "popCommand",
+                                    "componentConfig": {},
+                                    "formType": "value",
+                                    "formName": "formControlName",
+                                    "validations": [],
+                                    "title": "测试选择命令"
                                 }
+                                
                                 
                             ]
                         },

@@ -57,10 +57,10 @@
           "id": "003",
           "type": "component",
           "dropType": "page",
-          "dropName": "smtTable",
+          "dropName": "smtDataTable",
           "icon": "field-time",
           "title": "表格",
-          "path":"vc/componentInit/smtTable.json"
+          "path":"vc/componentInit/smtDataTable.json"
         },
         {
           "id": "004",
