@@ -10,14 +10,14 @@
             [nzXl]="config.controlSize.nzXl" [nzErrorTip]="combineTpl" nzHasFeedback>
             <input nz-input [formControlName]="config.field" hidden="hidden" [(ngModel)]="model"/>
 
-            <nz-switch [ngModel]="switchvalue" (ngModelChange)="switchValueChange($event)"
+            <nz-switch [ngModel]="model" (ngModelChange)="switchValueChange($event)"
                 [nzCheckedChildren]="checkedTemplate" [nzUnCheckedChildren]="unCheckedTemplate"
                 [ngModelOptions]="{standalone: true}" [nzDisabled]="config.readonly?config.readonly:false"></nz-switch>
             <ng-template #checkedTemplate><i nz-icon
-                    nzType="check"></i>{{selectOptions['check']['lable']?selectOptions['check']['lable']:''}}
+                    nzType="check"></i>{{this.bindObj.option['check']['lable']?this.bindObj.option['check']['lable']:''}}
             </ng-template>
             <ng-template #unCheckedTemplate><i nz-icon
-                    nzType="close"></i>{{selectOptions['close']['lable']?selectOptions['close']['lable']:''}}
+                    nzType="close"></i>{{this.bindObj.option['close']['lable']?this.bindObj.option['close']['lable']:''}}
             </ng-template>
 
         </nz-form-control>

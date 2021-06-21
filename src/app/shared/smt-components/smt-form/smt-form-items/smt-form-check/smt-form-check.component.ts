@@ -68,4 +68,8 @@ export class SmtFormCheckComponent extends SmtComponentBase implements OnInit {
   public onChange(value: string[]) {
     this.validateForm.controls[this.config.field].setValue(value);
   }
+
+  public checkedChange($event) {
+    console.log($event);
+  }
 }
