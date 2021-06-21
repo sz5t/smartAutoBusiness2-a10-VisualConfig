@@ -81,8 +81,8 @@
                                             <ng-container appSmtDataTableItem [state]="'edit'"
                                                 *ngIf="col.editor ; else t2" [config]="col.editor"
                                                 [valueConfig]="{'id':rowData[KEY_ID],'value':mapOfDataState[rowData[KEY_ID]]['data'][col.editor.field]}"
-                                                (cascadeValue)="valueChange($event)" [dataTableDataService]=""
-                                                [formCascade]="formCascade[rowData[KEY_ID]]?formCascade[rowData[KEY_ID]][col.editor.field]:null">
+                                                (updateValue)="valueChange($event)" (cascadeValue)="valueChange($event)"
+                                                [dataTableDataServe]="dataTableServe">
                                             </ng-container>
                                             <ng-template #t2>
                                                 <ng-container [ngSwitch]="mapOfDataState[rowData[KEY_ID]]['state']">

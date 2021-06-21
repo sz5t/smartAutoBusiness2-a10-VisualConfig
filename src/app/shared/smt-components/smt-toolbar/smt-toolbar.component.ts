@@ -80,7 +80,7 @@ export class SmtToolbarComponent extends SmtComponentBase implements OnInit, OnD
   }
 
   public action(cfg) {
-    cfg['eventConent'] = this.dataServe['componentsConfig'][cfg['id']]['eventConent'];
+    cfg['eventConent'] = this.dataServe['componentsConfig'][cfg['id']]['componentEvent'] ? this.dataServe['componentsConfig'][cfg['id']]['componentEvent'] : this.dataServe['componentsConfig'][cfg['id']]['eventConent'];
     cfg['customCommand'] = this.dataServe['componentsConfig'][cfg['id']]['customCommand'];
     for (let i = 0; i < cfg['eventConent'].length; i++) {
       for (let j = 0; j < cfg['eventConent'][i]['eventContent'].length; j++) {

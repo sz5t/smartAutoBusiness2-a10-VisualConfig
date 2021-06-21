@@ -14,6 +14,7 @@ import { SmtEventResolver } from '../../resolver/smt-event/smt-event-resolver';
 import { SmtCommandResolver } from '../../resolver/smt-command/smt-command.resovel';
 import { SmtMessageSenderResolver } from '../../resolver/smt-relation/smt-relation-resolver';
 import EventEmitter from 'wolfy87-eventemitter';
+import { dataTableServerService } from 'src/app/core/services/smt-dataTable-items/smt-dataTable.service';
 
 @Component({
   selector: 'app-smt-data-table',
@@ -26,11 +27,13 @@ import EventEmitter from 'wolfy87-eventemitter';
       }
     `,
   ],
+  providers: [dataTableServerService],
 })
 export class SmtDataTableComponent extends SmtComponentBase implements OnInit {
   constructor(
     @Inject(BSN_COMPONENT_SERVICES)
     public componentService: ComponentServiceProvider,
+    public dataTableServe: dataTableServerService
   ) {
     super(componentService);
     this.INIT_VALUE = {};
@@ -42,8 +45,9 @@ export class SmtDataTableComponent extends SmtComponentBase implements OnInit {
     this.KEY_ID = '';
     this.dataSourceCfg = {};
     this.COMPONENT_METHODS = CN_DATA_GRID_METHOD;
+    this.IS_LOADING = false;
+    this.CURRENT_ITEM = {};
     this.CACHE_VALUE = this.componentService.cacheService;
-    this.IS_LOADING = false
   }
   @Input() public config; // dataTables 的配置参数
   @Input() public initData;
@@ -98,7 +102,7 @@ export class SmtDataTableComponent extends SmtComponentBase implements OnInit {
     // 解析对应的组件配置
     this.createTableConfig(this.config);
 
-    console.log(this.bindObj);
+    // console.log(this.bindObj);
 
     // 初始化组件值
     this.initComponentValue();
@@ -258,7 +262,7 @@ export class SmtDataTableComponent extends SmtComponentBase implements OnInit {
         style: null,
       };
     });
-    console.log(this.mapOfDataState);
+    // console.log(this.mapOfDataState);
   }
 
   public dataCheckedStatusChange() {
@@ -589,6 +593,12 @@ export class SmtDataTableComponent extends SmtComponentBase implements OnInit {
 
   private startToEdit(option) {
     this.mapOfDataState[option[this.KEY_ID]].state = 'edit';
+    // 给服务赋值
+    this.dataTableServe.data = {
+      initValue: this.INIT_VALUE,
+      tempValue: this.TEMP_VALUE,
+      rowData: this.mapOfDataState[option[this.KEY_ID]].originData
+    }
   }
 
   public editRows(option) {
@@ -1182,5 +1192,14 @@ export class SmtDataTableComponent extends SmtComponentBase implements OnInit {
     dialog = this.componentService.modalService.create(dialogOptional);
   }
 
-  public valueChange(v?) { }
+  public valueChange(v?) {
+    // console.log('返回值', v);
+    // 给表格数据映射赋值
+    this.mapOfDataState[v.id].data[v.name] = v.value;
+    // 级联处理
+
+    // 给当前操作行中更新最新数据值
+    // const changeItem = { [v.name]: v.value }
+    this.CURRENT_ITEM = this.mapOfDataState[v.id].data;
+  }
 }

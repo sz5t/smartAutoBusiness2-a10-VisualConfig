@@ -8,63 +8,48 @@ import { Component, Input, EventEmitter, OnInit, Output } from '@angular/core';
 })
 export class SmtDataTableInputComponent implements OnInit {
   @Input() config;
-  @Input() public dataTableDataService;
+  @Input() dataTableDataServe;
   @Input() valueConfig;
   @Input() state;
   @Output() public updateValue = new EventEmitter<any>(true);
   @Output() public cascadeValue = new EventEmitter<any>(true);
-  itemConfig: any = {
-    hiddenTitle: false,
-    "labelSize": {
-      "span": 8,
-      "nzXs": {
-        "span": 8,
-        "offset": 0
-      },
-      "nzSm": {
-        "span": 8,
-        "offset": 0
-      },
-      "nzMd": {
-        "span": 8,
-        "offset": 0
-      },
-      "nzLg": {
-        "span": 8,
-        "offset": 0
-      },
-      "ngXl": {
-        "span": 8,
-        "offset": 0
-      },
-      "nzXXl": {
-        "span": 8,
-        "offset": 0
-      }
-    },
-    "controlSize": {
-      "span": 16,
-      "nzXs": 16,
-      "nzSm": 16,
-      "nzMd": 16,
-      "nzLg": 16,
-      "ngXl": 16,
-      "nzXXl": 16
-    }
-  };
+
+  public value = null;
+
   constructor() { }
 
 
   ngOnInit(): void {
-    if (this.config) {
-      if (!this.config['labelSize']) {
-        this.config['labelSize'] = this.itemConfig['labelSize'];
-      }
-      if (!this.config['controlSize']) {
-        this.config['controlSize'] = this.itemConfig['controlSize'];
-      }
-
+    // console.log(this.dataTableDataServe);
+    let input_value;
+    if (this.valueConfig) {
+      input_value = this.valueConfig.value;
     }
+
+    this.value = input_value;
+    this.valueChange(this.value);
+  }
+
+  public valueChange(v?) {
+    console.log('value', v)
+    const backValue = { id: this.valueConfig.id, name: this.config.field, value: v };
+    this.updateValue.emit(backValue);
+  }
+
+  public onblur(e?, type?) {
+    this.assemblyValue();
+
+  }
+  public onKeyPress(e?, type?) {
+    if (e.code === 'Enter') {
+      this.assemblyValue();
+    }
+  }
+
+  // 组装值
+  public assemblyValue() {
+    console.log('组装值', this.value);
+    this.valueChange(this.value);
   }
 
 }

@@ -126,7 +126,7 @@
                       "title": "事件名称"
                     },
                     {
-                      "name": "eventContent",
+                      "name": "componentEvent",
                       "type": "customSelect",
                       "componentConfig": {
                         "customPage": {
