@@ -52,30 +52,8 @@ export class CnStaticFormCommandComponent extends VcComponentBase implements OnI
     console.log(event);
     console.log('======选中节点信息=======', this.fromDataService.selectedItem);
     this.selectNode = event['node']['origin'];
-    let _pname = event['node']['key'];
-    let cmpt_name = event['node']['origin']['type'];
-    let _listOfData = [];
-    let cmpt_config = this.fromDataService.layoutSourceData[_pname];
-    if (cmpt_config && cmpt_config['customCommand']) {
-      _listOfData = cmpt_config['customCommand'];
-    } else {
-      _listOfData = [];
-    }
-    if (cmpt_name) {
-      let __listOfData_builtin = await this.load_component_default_command('vc/componentInit/' + cmpt_name + '.json');
-      if (__listOfData_builtin) {
-        _listOfData = [..._listOfData, ...__listOfData_builtin];
-      }
-    }
-
-    _listOfData.forEach(item => {
-      if (!item.hasOwnProperty('id')) {
-        item['id'] = CommonUtils.uuID(36);
-      }
-    })
-
-
-    this.listOfData = _listOfData.filter(item => item !== null);
+    // 生成命令列表
+    this.command_data(event['node']);
 
   }
   public loadDataService() {
@@ -373,6 +351,32 @@ export class CnStaticFormCommandComponent extends VcComponentBase implements OnI
     } else {
       this.nodes = [];
     }
+  }
+
+  public async command_data(node?) {
+    let _pname = node['key'];
+    let cmpt_name = node['origin']['type'];
+    let _listOfData = [];
+    let cmpt_config = this.PAGE_JSON['componentsJson'][_pname];
+    if (cmpt_config && cmpt_config['customCommand']) {
+      _listOfData = cmpt_config['customCommand'];
+    } else {
+      _listOfData = [];
+    }
+    if (cmpt_name) {
+      let __listOfData_builtin = await this.load_component_default_command('vc/componentInit/' + cmpt_name + '.json');
+      if (__listOfData_builtin) {
+        _listOfData = [..._listOfData, ...__listOfData_builtin];
+      }
+    }
+    _listOfData.forEach(item => {
+      if (!item.hasOwnProperty('id')) {
+        item['id'] = CommonUtils.uuID(36);
+      }
+    })
+
+
+    this.listOfData = _listOfData.filter(item => item !== null);
   }
 
 

@@ -1,0 +1,79 @@
+[
+    {
+      "active": true,
+      "disabled": false,
+      "name": "布局组件",
+      "children": [
+        {
+          "id": "001",
+          "type": "layout",
+          "dropType": "form",
+          "dropName": "row",
+          "icon": "insert-row-above",
+          "title": "行"
+        },
+        {
+          "id": "002",
+          "type": "layout",
+          "dropType": "form",
+          "dropName": "col",
+          "icon": "column-width",
+          "title": "列"
+        }
+      ]
+    },
+    {
+      "active": true,
+      "name": "数据组件",
+      "disabled": false,
+      "children": [
+        {
+          "id": "001",
+          "type": "component",
+          "dropType": "form",
+          "dropName": "cnFormInput",
+          "icon": "edit",
+          "title": "输入框",
+          "sourceData": {
+            "field": "name",
+            "type": "input",
+            "displayType": "text"
+          }
+        },
+        {
+          "id": "002",
+          "type": "component",
+          "dropType": "form",
+          "dropName": "cnFormSelect",
+          "icon": "select",
+          "title": "下拉"
+        },
+        {
+          "id": "003",
+          "type": "component",
+          "dropType": "form",
+          "dropName": "cnFormTime",
+          "icon": "field-time",
+          "title": "时间"
+        },
+        {
+          "id": "004",
+          "type": "component",
+          "dropType": "form",
+          "dropName": "cnFormCheck",
+          "icon": "check-square",
+          "title": "勾选"
+        },
+        {
+          "id": "004",
+          "type": "component",
+          "dropType": "form",
+          "dropName": "smtFormSpan",
+          "icon": "check-square",
+          "title": "文本行"
+        }
+      ]
+    }
+
+
+  ]
