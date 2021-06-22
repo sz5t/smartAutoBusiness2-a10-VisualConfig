@@ -266,6 +266,7 @@ import { SmtDataTableItemDirective } from './smt-components/smt-data-table/smt-d
 import { SmtDataTableInputComponent } from './smt-components/smt-data-table/smt-data-table-items/smt-data-table-input/smt-data-table-input.component';
 import { CnStaticFormCommandComponent } from './components/cn-static-form/cn-static-form-cmpt/cn-static-form-command/cn-static-form-command.component';
 import { CnStaticFormPopCommandComponent } from './components/cn-static-form/cn-static-form-item/cn-static-form-pop-command/cn-static-form-pop-command.component';
+import { CnStaticFormTagComponent } from './components/cn-static-form/cn-static-form-item/cn-static-form-tag/cn-static-form-tag.component';
 
 // #region third libs
 
@@ -480,6 +481,7 @@ const COMPONENTS = [
   CnStaticFormTextareaComponent,
   CnStaticFormBusiApiComponent,
   CnStaticFormPopCommandComponent,
+  CnStaticFormTagComponent,
   // --静态表单内特殊组件结构--
   CnStaticFormAjaxComponent,
   CnStaticFormFormItemComponent,
@@ -581,6 +583,7 @@ const DIRECTIVES = [
     CfgAttributeRanksRowModalComponent,
     ToolAttrJsonComponent,
     SmtComponentComponent,
+
 
 
   ],

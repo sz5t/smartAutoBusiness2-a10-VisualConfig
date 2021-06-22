@@ -12,6 +12,12 @@ import { CnStaticFormComponent } from '../../cn-static-form.component';
   selector: 'app-cn-static-form-command',
   templateUrl: './cn-static-form-command.component.html',
   styles: [
+    `
+    .selectedRow {
+      color: #000;
+      background-color: #9bebd8;
+    }
+    `
   ]
 })
 export class CnStaticFormCommandComponent extends VcComponentBase implements OnInit, AfterViewInit {
@@ -39,10 +45,16 @@ export class CnStaticFormCommandComponent extends VcComponentBase implements OnI
   defaultExpandedKeys = [];
   nodes: any[] = [];
   listOfData: any[] = [];
-  sourceData1: any;
+  sourceDataCmpt: any;
 
   ngOnInit(): void {
-    this.loadDataService();
+    // this.loadDataService();
+
+    if (this.sourceData) {
+      this.sourceDataCmpt = this.sourceData['sourceDataCmpt'];
+      this.sourceDataPage = this.sourceData['sourceDataPage'];
+      this.showLayoutTree(this.sourceDataPage);
+    }
 
 
 
@@ -60,19 +72,38 @@ export class CnStaticFormCommandComponent extends VcComponentBase implements OnI
     this.nodes = this.fromDataService.layoutTreeInstance.layoutTree;
   }
 
+  clickExpand(event?) {
+    event.stopPropagation();
+  }
   nzCheck(event: NzFormatEmitEvent): void {
     console.log(event);
   }
   setSelectRow(rowData?, e?) {
     console.log('选中行', rowData);
     this.selectRow = rowData;
-    this.sourceData1 = {};
-    this.sourceData1['commandTitle'] = rowData['commandTitle'];
-    this.sourceData1['commandType'] = rowData['commandType'];
-    this.sourceData1['command'] = rowData['command'];
-    this.sourceData1['targetViewId'] = this.selectNode['id'];
+    this.sourceDataCmpt = {};
+    this.sourceDataCmpt['commandTitle'] = rowData['commandTitle'];
+    this.sourceDataCmpt['commandType'] = rowData['commandType'];
+    this.sourceDataCmpt['command'] = rowData['command'];
+    this.sourceDataCmpt['targetViewId'] = this.selectNode['id'];
+    this.sourceDataCmpt['targetViewTitle'] = this.selectNode['title'];
+    if (rowData['declareParameters']) {
+      let _parameters = [];
+      rowData['declareParameters'].forEach(element => {
+        let _parametersObj = {};
+        _parametersObj['name'] = element['name'];
+        _parametersObj['title'] = element['title'];
+        _parameters.push(_parametersObj);
+      });
+      this.sourceDataCmpt['parameters'] = _parameters;
 
-    this.staticForm.validateForm.setValue(this.sourceData1);
+    } else {
+      this.sourceDataCmpt['parameters'] = [];
+    }
+
+
+
+    this.staticForm.validateForm.setValue(this.sourceDataCmpt);
   }
 
   _form_config = {
@@ -80,6 +111,9 @@ export class CnStaticFormCommandComponent extends VcComponentBase implements OnI
     type: 'staticForm',
     backName: 'ajaxConfig',
     backConfig: [      // 返回指定字段
+      {
+        name: 'targetViewTitle'
+      },
       {
         name: 'targetViewId'
       },
@@ -91,12 +125,29 @@ export class CnStaticFormCommandComponent extends VcComponentBase implements OnI
       },
       {
         name: 'command'
+      },
+      {
+        name: 'parameters'
       }
+
     ],
     properties: [
       {
+        name: 'targetViewTitle',
+        type: 'label',
+        componentConfig: {
+          "labelTooltipTitle": "目标组件",
+          "labelTooltipIcon": 'question-circle'
+        },
+        formType: 'value',
+        formName: 'formControlName',
+        validations: [],
+        title: '目标组件标题'
+
+      },
+      {
         name: 'targetViewId',
-        type: 'input',
+        type: 'label',
         componentConfig: {
           "labelTooltipTitle": "目标组件",
           "labelTooltipIcon": 'question-circle'
@@ -109,7 +160,7 @@ export class CnStaticFormCommandComponent extends VcComponentBase implements OnI
       },
       {
         name: 'commandTitle',
-        type: 'input',
+        type: 'label',
         componentConfig: {
           "labelTooltipTitle": "命令标题",
           "labelTooltipIcon": 'question-circle'
@@ -121,21 +172,8 @@ export class CnStaticFormCommandComponent extends VcComponentBase implements OnI
 
       },
       {
-        name: 'commandType',
-        type: 'input',
-        componentConfig: {
-          "labelTooltipTitle": "命令类型",
-          "labelTooltipIcon": 'question-circle'
-        },
-        formType: 'value',
-        formName: 'formControlName',
-        validations: [],
-        title: '命令类型'
-
-      },
-      {
         name: 'command',
-        type: 'input',
+        type: 'label',
         componentConfig: {
           "labelTooltipTitle": "命令编码",
           "labelTooltipIcon": 'question-circle'
@@ -145,9 +183,51 @@ export class CnStaticFormCommandComponent extends VcComponentBase implements OnI
         validations: [],
         title: '命令编码'
 
+      },
+      {
+        "name": "commandType",
+        "type": "tag",
+        "componentConfig": {
+          "dataMapping": [
+            {
+              "type": "currentValue",
+              "color": "#2db7f5",
+              "field": "commandType",
+              "value": "custom",
+              "valueText": "自定义"
+
+            },
+            {
+              "type": "currentValue",
+              "color": "#87d068",
+              "field": "commandType",
+              "value": "builtin",
+              "valueText": "系统内置"
+
+            }
+          ]
+        },
+        "formType": "value",
+        "formName": "formControlName",
+        "validations": [],
+        "title": "命令类型"
+      },
+      {
+        name: 'parameters',
+        type: 'input',
+        hidden: true,
+        componentConfig: {
+          "labelTooltipTitle": "命令编码",
+          "labelTooltipIcon": 'question-circle'
+        },
+        formType: 'value',
+        formName: 'formControlName',
+        validations: [],
+        title: '参数'
+
       }
     ],
-    enableLayout: false, // 启用布局
+    enableLayout: true, // 启用布局
     layout: {  //允许递归
       "id": '001',
       "type": "layout",
@@ -162,51 +242,85 @@ export class CnStaticFormCommandComponent extends VcComponentBase implements OnI
               id: 'c_001',
               "type": "col",
               "size": {
-                "span": 8,
+                "span": 12,
                 "nzXs": 12,
                 "nzSm": 12,
-                "nzMd": 8,
-                "nzLg": 8,
-                "ngXl": 8,
-                "nzXXl": 8
+                "nzMd": 12,
+                "nzLg": 12,
+                "ngXl": 12,
+                "nzXXl": 12
               },
               "container": "control",
               "controlName": 'email',
-              "controlIndex": 0,
+              "controlIndex": 0
 
             },
             {
               id: 'c_002',
               "type": "col",
               "size": {
-                "span": 8,
+                "span": 12,
                 "nzXs": 12,
                 "nzSm": 12,
-                "nzMd": 8,
-                "nzLg": 8,
-                "ngXl": 8,
-                "nzXXl": 8
+                "nzMd": 12,
+                "nzLg": 12,
+                "ngXl": 12,
+                "nzXXl": 12
               },
               "container": "control",
               "controlName": 'valueName',
-              "controlIndex": 1,
+              "controlIndex": 1
 
             },
             {
               id: 'c_003',
               "type": "col",
               "size": {
-                "span": 8,
+                "span": 12,
                 "nzXs": 12,
                 "nzSm": 12,
-                "nzMd": 8,
-                "nzLg": 8,
-                "ngXl": 8,
-                "nzXXl": 8
+                "nzMd": 12,
+                "nzLg": 12,
+                "ngXl": 12,
+                "nzXXl": 12
               },
               "container": "control",
               "controlName": 'value',
-              "controlIndex": 2,
+              "controlIndex": 2
+
+            },
+            {
+              id: 'c_004',
+              "type": "col",
+              "size": {
+                "span": 12,
+                "nzXs": 12,
+                "nzSm": 12,
+                "nzMd": 12,
+                "nzLg": 12,
+                "ngXl": 12,
+                "nzXXl": 12
+              },
+              "container": "control",
+              "controlName": 'value',
+              "controlIndex": 3
+
+            },
+            {
+              id: 'c_005',
+              "type": "col",
+              "size": {
+                "span": 12,
+                "nzXs": 12,
+                "nzSm": 12,
+                "nzMd": 12,
+                "nzLg": 12,
+                "ngXl": 12,
+                "nzXXl": 12
+              },
+              "container": "control",
+              "controlName": 'value',
+              "controlIndex": 4
 
             }
           ]
@@ -226,14 +340,14 @@ export class CnStaticFormCommandComponent extends VcComponentBase implements OnI
 
       v['backConfig'].forEach(element => {
 
-        this.sourceData1[element['name']] = v['data'][element['name']]
+        this.sourceDataCmpt[element['name']] = v['data'][element['name']]
       });
 
     } else {
-      this.sourceData1[v['name']] = v['data'];
+      this.sourceDataCmpt[v['name']] = v['data'];
     }
 
-    console.log('====static最终====>>>', this.sourceData1);
+    console.log('====static最终====>>>', this.sourceDataCmpt);
   }
 
   async load_component_default_command(cmpt?) {
@@ -257,24 +371,41 @@ export class CnStaticFormCommandComponent extends VcComponentBase implements OnI
   //  PAGE_CODE: "F67248F7-C89B-47EF-A299-816448EBBA8B"
 
   async staticFormPageValueChange(v?) {
+    if (v['backConfig'] && v['backConfig'].length > 0) {
 
+      v['backConfig'].forEach(element => {
+
+        this.sourceDataPage[element['name']] = v['data'][element['name']]
+      });
+
+    } else {
+      this.sourceDataPage[v['name']] = v['data'];
+    }
+
+    this.showLayoutTree(v['data']);
     console.log('页面选择', v);
+
+
+  }
+
+  async showLayoutTree(node?) {
+
     let isGetJSON = true;
     let page_data = null;
 
 
     let type = 'loadPage';
-    if (v['data']) {
-      if (v['data']['targetPageCode']) {
-        if (this.PAGE_SELECT === v['data']['targetPageCode']) {
+    if (node) {
+      if (node['targetPageCode']) {
+        if (this.PAGE_SELECT === node['targetPageCode']) {
           isGetJSON = false;
         } else {
-          this.PAGE_SELECT = v['data']['targetPageCode'];
-          if (v['data']['targetPageCode'] === this.fromDataService.currentPage) {
+          this.PAGE_SELECT = node['targetPageCode'];
+          if (node['targetPageCode'] === this.fromDataService.currentPage) {
             type = 'current';
             page_data = this.getPageLayoutJsonByCurrentPage();
           } else {
-            page_data = await this.getPageLayoutJson(v['data']['targetPageCode']);
+            page_data = await this.getPageLayoutJson(node['targetPageCode']);
           }
 
         }
@@ -289,7 +420,6 @@ export class CnStaticFormCommandComponent extends VcComponentBase implements OnI
     if (isGetJSON) {
       this.page_data(page_data, type);
     }
-
   }
 
   public async getPageLayoutJson(PAGE_CODE?) {
@@ -370,8 +500,10 @@ export class CnStaticFormCommandComponent extends VcComponentBase implements OnI
     console.log('页面json内容', this.PAGE_JSON);
     if (this.PAGE_JSON) {
       this.nodes = this.PAGE_JSON['layoutJson'];
+      this.listOfData = [];
     } else {
       this.nodes = [];
+      this.listOfData = [];
     }
   }
 
@@ -395,6 +527,7 @@ export class CnStaticFormCommandComponent extends VcComponentBase implements OnI
       if (!item.hasOwnProperty('id')) {
         item['id'] = CommonUtils.uuID(36);
       }
+      item['expand'] = false;
     })
 
 
@@ -402,11 +535,14 @@ export class CnStaticFormCommandComponent extends VcComponentBase implements OnI
   }
 
 
-  sourceDataPage: any;
+  sourceDataPage: any = {};
   _form_page_config = {
     type: 'staticForm',
     backName: 'ajaxConfig',
     backConfig: [      // 返回指定字段
+      {
+        name: 'targetPageTitle'
+      },
       {
         name: 'targetPageId'
       },
@@ -547,6 +683,81 @@ export class CnStaticFormCommandComponent extends VcComponentBase implements OnI
                   }
                 }
               ]
+            },
+            {
+              "cascadeName": "targetPageTitle",
+              "cascadeItems": [
+                {
+                  "type": "condition",
+                  "condition": [
+                    {
+                      "conditionType": "and",
+                      "type": "expression",
+                      "centent": [],
+                      "expression": {
+                        "comput": "null",
+                        "leftExpression": {
+                          "type": "componentValue",
+                          "value": "0",
+                          "valueName": "targetPageId"
+                        },
+                        "righitExpression": {
+                          "type": "value",
+                          "value": "^commandConfig$"
+                        }
+                      }
+                    }
+                  ],
+                  "content": {
+                    "type": "setValue",
+                    "data": {
+                      "option": [
+                        {
+                          "name": "setValue",
+                          "type": "value",
+                          "value": null,
+                          "valueName": "NAME"
+                        }
+                      ]
+                    }
+                  }
+                },
+                {
+                  "type": "condition",
+                  "condition": [
+                    {
+                      "conditionType": "and",
+                      "type": "expression",
+                      "centent": [],
+                      "expression": {
+                        "comput": "notnull",
+                        "leftExpression": {
+                          "type": "componentValue",
+                          "value": "0",
+                          "valueName": "targetPageId"
+                        },
+                        "righitExpression": {
+                          "type": "value",
+                          "value": "^commandConfig$"
+                        }
+                      }
+                    }
+                  ],
+                  "content": {
+                    "type": "setValue",
+                    "data": {
+                      "option": [
+                        {
+                          "name": "setValue",
+                          "type": "dataItem",
+                          "value": false,
+                          "valueName": "NAME"
+                        }
+                      ]
+                    }
+                  }
+                }
+              ]
             }
           ]
         },
@@ -567,6 +778,19 @@ export class CnStaticFormCommandComponent extends VcComponentBase implements OnI
         formName: 'formControlName',
         validations: [],
         title: '目标页面编码'
+
+      },
+      {
+        name: 'targetPageTitle',
+        type: 'label',
+        componentConfig: {
+          "labelTooltipTitle": "目标页面标题",
+          "labelTooltipIcon": 'question-circle'
+        },
+        formType: 'value',
+        formName: 'formControlName',
+        validations: [],
+        title: '目标页面标题'
 
       }
     ],

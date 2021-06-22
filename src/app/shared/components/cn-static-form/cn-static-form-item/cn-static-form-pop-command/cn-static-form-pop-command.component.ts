@@ -40,13 +40,30 @@ export class CnStaticFormPopCommandComponent implements OnInit {
     "showConfig": {
       "showString": [
         {
-          "name": "size",
+          "name": "sourceDataCmpt",
           "children": [
             {
-              "name": "span"
+              "name": "commandTitle"
             }
           ]
+        },
+        {
+          "type": "value",
+          "value": " ["
+        },
+        {
+          "name": "sourceDataCmpt",
+          "children": [
+            {
+              "name": "command"
+            }
+          ]
+        },
+        {
+          "type": "value",
+          "value": "]"
         }
+
 
       ]
 
@@ -112,29 +129,58 @@ export class CnStaticFormPopCommandComponent implements OnInit {
   }
 
   loadShowValue() {
+    let _valueStrConfig_base = this.config.componentConfig['showConfig']
     let d = this.validateForm.controls[this.config['name']].value;
     if (d) {
-      let _valueStrConfig = this.config.componentConfig['showConfig']['showString'];
+      if (_valueStrConfig_base['type'] && _valueStrConfig_base['type'] === 'exist') {
+        if (Array.isArray(d)) {
+          if (d.length > 0) {
 
-      this.showValue = this.getStringByshow(d, _valueStrConfig);
+            this.showValue = "已设置[" + d.length + "]项";
+          } else {
+            this.showValue = "";
+          }
 
-      // this.showValue = d['style']['span'];
+        } else {
+          this.showValue = "已设置";
+        }
+      } else {
+        let _valueStrConfig = _valueStrConfig_base['showString'];
+
+        this.showValue = this.getStringByshow(d, _valueStrConfig);
+
+      }
+    } else {
+      this.showValue = "";
     }
   }
 
   getStringByshow(_value, _config) {
+    let backstr: any = "";
     let str: any;
     _config.forEach(element => {
-      if (_value && _value.hasOwnProperty(element['name'])) {
-        str = _value[element['name']];
-        if (element['children'] && element['children'].length > 0) {
-          str = this.getStringByshow(str, element['children'])
+      if (element['type']) {
+        if (element['type'] === "value") {
+          str = element['value'];
+        }
+
+      } else {
+        if (_value && _value.hasOwnProperty(element['name'])) {
+          str = _value[element['name']];
+          if (element['children'] && element['children'].length > 0) {
+            str = this.getStringByshow(str, element['children'])
+          }
         }
       }
 
+      if (str) {
+        backstr = backstr + str;
+      }
+
+
     });
 
-    return str;
+    return backstr;
 
   }
 
@@ -161,21 +207,6 @@ export class CnStaticFormPopCommandComponent implements OnInit {
     }
 
     let _initDataItem = {}
-    let _staticData = {}
-    if (staticData) {
-      _initDataItem = {
-        apiId: staticData["apiId"],
-        label: staticData["label"],
-        resourceType: staticData["resourceType"],
-        value: staticData["value"]
-      }
-      _staticData = {
-        ajaxType: staticData["ajaxType"],
-        isCreateParameter: false,
-        executionType: staticData["executionType"]
-      }
-    }
-
     let initData = {};
     initData['tag_BAxdPtAm5Gbzipe3DFRjhbtRcysySoIrlG5C'] = [_initDataItem];
 
@@ -188,7 +219,7 @@ export class CnStaticFormPopCommandComponent implements OnInit {
       nzContent: components[dialogCfg['customContent']],
       nzComponentParams: {
         config: dialogCfg['customPageConfig'],
-        sourceData: _staticData,
+        sourceData: staticData,
         fromDataService: this.fromDataService,
         initData: initData
       },
@@ -204,66 +235,44 @@ export class CnStaticFormPopCommandComponent implements OnInit {
           onClick: async (componentInstance) => {
             console.log('当前弹出表单值：', componentInstance)
             // saveData
-            let saveStaticData = await componentInstance['getNode']();
-
-            if (saveStaticData['isCreateParameter']) {
-              if (saveStaticData['ajaxType'] === 'get') {
-
-                let d = [];
-                saveStaticData['parameterSet'].forEach(element => {
-                  let obj = {};
-                  obj['name'] = element['paramName']
-                  d.push(obj);
-                  this.add(this.validateForm.parent.controls['queryParams'], obj, this.q_config);
-                });
-                saveStaticData['resultSet'].forEach(element => {
-                  let obj = {};
-                  obj['name'] = element['paramName']
-                  //d.push(obj);
-                  this.add(this.validateForm.parent.controls['queryParams'], obj, this.q_config);
-                });
-                // parent.
-
-                //this.validateForm.controls['queryParams'].setValue(d);
-              } else {
-                let d = [];
-                /*                 if (saveStaticData['resourceType'] === 10) {
-                                } */
-                saveStaticData['parameterSet'].forEach(element => {
-                  let obj = {};
-                  obj['name'] = element['paramName']
-                  d.push(obj);
-                  this.add(this.validateForm.parent.controls['bodyParams'], obj, this.b_config);
-                });
-
-
-                saveStaticData['resultSet'].forEach(element => {
-                  let obj = {};
-                  obj['name'] = element['paramName']
-                  d.push(obj);
-                  this.add(this.validateForm.parent.controls['bodyParams'], obj, this.b_config);
-                });
-
-
-                // this.validateForm.parent.controls['bodyParams'].setValue(d);
-              }
+            let cmpt = componentInstance.sourceDataCmpt;
+            let page = componentInstance.sourceDataPage;
+            let saveData = {
+              sourceDataCmpt: cmpt,
+              sourceDataPage: page
             }
-            this.validateForm.parent.controls['url'].setValue("smt_app/resource/" + saveStaticData['value'] + "/" + saveStaticData['executionType']);
-            this.validateForm.parent.controls['ajaxType'].setValue(saveStaticData['ajaxType']);
+            /*
+command: null
+commandType: null
+parameters: []
+popCommand: null
+preCondition: null
+targetPageId: null
+targetViewId: null
+targetViewTitle: "2"
+targetPageTitle
+*/
+            this.validateForm.controls['command'].setValue(cmpt['command']);
+            this.validateForm.controls['commandType'].setValue(cmpt['commandType']);
+            this.validateForm.controls['targetViewId'].setValue(cmpt['targetViewId']);
+            this.validateForm.controls['targetViewTitle'].setValue(cmpt['targetViewTitle']);
+            this.validateForm.controls['targetPageId'].setValue(page['targetPageCode']);
+            this.validateForm.controls['targetPageTitle'].setValue(page['targetPageTitle']);
 
+            // this.validateForm.controls['parameters'].setValue(cmpt['parameters']);
+            this.removeparameters();
+            cmpt['parameters'].forEach(element => {
+              let obj = {};
+              // obj['name'] = element['paramName']
 
-            if (dialogCfg['updateData']) {
+              this.add(this.validateForm.controls['parameters'], element, this.q_config);
+            });
 
-              dialogCfg['updateData'].forEach(element => {
-                this.validateForm.controls[element['name']].setValue(saveStaticData[element['name']]);
-              });
-            } else {
+            // 缓存选择结果
+            this.validateForm.controls[this.config['name']].setValue(saveData);
 
-              this.validateForm.controls[this.config['name']].setValue(saveStaticData);
-            }
+            this.loadShowValue();
 
-            // this.loadShowValue();
-            // console.log('当前弹出表单值：', componentInstance['staticForm']['validateForm']['value'])
             dialog.close();
           },
         },
@@ -275,25 +284,31 @@ export class CnStaticFormPopCommandComponent implements OnInit {
   }
 
 
-  b_config = {
+
+  q_config = {
     "properties": [
+      {
+        "name": "title",
+        "type": "input",
+        "componentConfig": {},
+        "formType": "value",
+        "formName": "formControlName",
+        "validations": [],
+        "title": "描述"
+      },
       {
         "name": "name",
         "type": "input",
-        "componentConfig": {
-
-        },
+        "componentConfig": {},
         "formType": "value",
         "formName": "formControlName",
         "validations": [],
         "title": "参数名称"
       },
-
       {
         "name": "type",
         "type": "input",
-        "componentConfig": {
-        },
+        "componentConfig": {},
         "formType": "value",
         "formName": "formControlName",
         "validations": [],
@@ -301,9 +316,8 @@ export class CnStaticFormPopCommandComponent implements OnInit {
       },
       {
         "name": "valueName",
-        "type": "popSelectParameter",
-        "componentConfig": {
-        },
+        "type": "input",
+        "componentConfig": {},
         "formType": "value",
         "formName": "formControlName",
         "validations": [],
@@ -312,54 +326,11 @@ export class CnStaticFormPopCommandComponent implements OnInit {
       {
         "name": "value",
         "type": "input",
-        "componentConfig": {
-        },
+        "componentConfig": {},
         "formType": "value",
         "formName": "formControlName",
         "validations": [],
         "title": "默认值"
-      }
-    ]
-
-  }
-  q_config = {
-    "properties": [
-      {
-        "name": "name",
-        "type": "input",
-        "componentConfig": {},
-        "formType": "value",
-        "formName": "formControlName",
-        "validations": [],
-        "title": "参数名称"
-      },
-      {
-        "name": "conditionType",
-        "type": "select",
-        "componentConfig": {
-        },
-        "formType": "value",
-        "formName": "formControlName",
-        "validations": [],
-        "title": "匹配类型"
-      },
-      {
-        "name": "type",
-        "type": "input",
-        "componentConfig": {},
-        "formType": "value",
-        "formName": "formControlName",
-        "validations": [],
-        "title": "参数类型"
-      },
-      {
-        "name": "valueName",
-        "type": "input",
-        "componentConfig": {},
-        "formType": "value",
-        "formName": "formControlName",
-        "validations": [],
-        "title": "参数取值名称"
       }
     ]
   }
@@ -471,6 +442,14 @@ export class CnStaticFormPopCommandComponent implements OnInit {
         }
       });
     return validation;
+  }
+
+  removeparameters() {
+    // (this.validateForm.get('phone') as FormArray).removeAt(index);
+    // this.phoneArray.removeAt(index);
+
+    let a = this.validateForm.get('parameters') as FormArray;
+    a.clear();
   }
 
 }

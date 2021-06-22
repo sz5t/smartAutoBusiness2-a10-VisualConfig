@@ -1,7 +1,6 @@
-<p>cn-static-form-command works!</p>
 <nz-card nzType="inner" nzTitle="命令信息" [nzExtra]="delextraTemplate" style="width:100%;padding-right: 4px;"
     [nzBodyStyle]="{'padding':'1px 2px'}">
-    <app-cn-static-form #staticForm [config]="_form_config" [staticData]="sourceData1"
+    <app-cn-static-form #staticForm [config]="_form_config" [staticData]="sourceDataCmpt"
         [fromDataService]="fromDataService" (updateValue)="staticFormValueChange($event)">
     </app-cn-static-form>
 </nz-card>
@@ -19,7 +18,7 @@
         <nz-card nzType="inner" [nzBodyStyle]="{'padding':'1px 2px','max-height':'680px','overflow':'auto'}">
             <nz-tree #nzTreeComponent nzShowLine="true" [nzData]="nodes" [nzExpandAll]="'true'"
                 (nzClick)="nzClick($event)" (nzContextMenu)="nzClick($event)" (nzCheckBoxChange)="nzCheck($event)"
-                (nzExpandChange)="nzCheck($event)">
+                (nzExpandChange)="nzCheck($event)" [nzSelectedKeys]="defaultSelectedKeys">
             </nz-tree>
 
         </nz-card>
@@ -31,19 +30,48 @@
         <nz-table #basicTable [nzData]="listOfData">
             <thead>
                 <tr>
+                    <th></th>
                     <th>命令名称</th>
                     <th>命令编码</th>
                     <th>命令类型</th>
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let data of basicTable.data" (click)="setSelectRow(data, $event)"
-                    [ngClass]="{ selectedRow: (selectRow && selectRow['id'] === data['id']) ? true: false}">
-                    <td>{{ data.commandTitle }}</td>
-                    <td>{{ data.command }}</td>
-                    <td>{{ data.commandType }}</td>
+                <ng-template ngFor let-data [ngForOf]="basicTable.data">
+                    <tr (click)="setSelectRow(data, $event)"
+                        [ngClass]="{ selectedRow: (selectRow && selectRow['id'] === data['id']) ? true: false}">
+                        <td [(nzExpand)]="data.expand"
+                            [nzShowExpand]="(data['declareParameters'] && data['declareParameters'].length>0)"
+                            (click)="clickExpand($event)">
+
+                        </td>
+                        <td>{{ data.commandTitle }}</td>
+                        <td>{{ data.command }}</td>
+                        <td>{{ data.commandType }}</td>
+                    </tr>
+                    <tr [nzExpand]="data.expand">
+                        <nz-table #innerTable [nzData]="data['declareParameters']" nzSize="middle"
+                            [nzShowPagination]="false">
+                            <thead>
+                                <tr>
+                                    <th>参数名</th>
+                                    <th>描述</th>
+                                    <th>另存为</th>
+                                </tr>
+                            </thead>
+            <tbody>
+                <tr *ngFor="let data of innerTable.data">
+                    <td>{{ data.name }}</td>
+                    <th>{{ data['title'] }}</th>
+                    <td>{{ data.valueTo }}</td>
+
+
                 </tr>
             </tbody>
+        </nz-table>
+        </tr>
+        </ng-template>
+        </tbody>
         </nz-table>
 
     </div>

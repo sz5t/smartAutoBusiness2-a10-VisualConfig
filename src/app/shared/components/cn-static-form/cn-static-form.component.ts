@@ -735,18 +735,25 @@ export class CnStaticFormComponent extends VcComponentBase implements OnInit {
 
               if (cascadeItem['data']['option']) {
                 let displayValueOption = cascadeItem['data']['option'];
+                let setValueState = true;
                 displayValueOption.forEach(element => {
                   if (element['type'] === 'currentValue') {
                     element['value'] = currentValue;
                   }
                   if (element['type'] === 'dataItem') {
-                    element['value'] = back['dataItem'][element['valueName']];
+                    if (back['dataItem']) {
+                      element['value'] = back['dataItem'][element['valueName']];
+                    } else {
+                      setValueState = false;
+                    }
+
                   }
 
 
                 });
                 let displayValue = displayValueOption[0]['value'];
-                this.validateForm.controls[cascade['cascadeName']].setValue(displayValue);
+                if (setValueState)
+                  this.validateForm.controls[cascade['cascadeName']].setValue(displayValue);
               }
             }
           }

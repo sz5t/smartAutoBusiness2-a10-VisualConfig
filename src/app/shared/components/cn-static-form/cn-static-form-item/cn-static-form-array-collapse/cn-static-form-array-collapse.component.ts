@@ -101,7 +101,8 @@ export class CnStaticFormArrayCollapseComponent implements OnInit {
   }
 
 
-  getStringByshow(_value, _config) {
+  // 有默认值处理
+  getStringByshow1(_value, _config) {
     let str: any = "";
     let backstr: any = "";
     _config.forEach(element => {
@@ -124,6 +125,35 @@ export class CnStaticFormArrayCollapseComponent implements OnInit {
         }
 
       }
+
+    });
+
+    return backstr;
+
+  }
+
+  getStringByshow(_value, _config) {
+    let backstr: any = "";
+    let str: any;
+    _config.forEach(element => {
+      if (element['type']) {
+        if (element['type'] === "value") {
+          str = element['value'];
+        }
+
+      } else {
+        if (_value && _value.hasOwnProperty(element['name'])) {
+          str = _value[element['name']];
+          if (element['children'] && element['children'].length > 0) {
+            str = this.getStringByshow(str, element['children'])
+          }
+        }
+      }
+
+      if (str) {
+        backstr = backstr + str;
+      }
+
 
     });
 
