@@ -2,7 +2,7 @@
 <div (click)="click($event)"
     [ngStyle]="(selectedItem['item'] &&(selectedItem['active']===l_config['type'])&& (selectedItem['item']['id']===l_config['id']) )? body_style_selected: body_style">
 
-    <nz-form-item *ngIf="!this.config.hidden">
+    <nz-form-item>
         <nz-form-label *ngIf="!config['hiddenTitle']" [nzSpan]="config.labelSize.span" [nzSm]="config.labelSize.nzSm"
             [nzXs]="config.labelSize.nzXs" [nzMd]="config.labelSize.nzMd" [nzLg]="config.labelSize.nzLg"
             [nzXl]="config.labelSize.nzXl" [nzTooltipTitle]="config.labelTooltipTitle"
@@ -12,24 +12,8 @@
         <nz-form-control [nzSpan]="config.controlSize.span" [nzSm]="config.controlSize.nzSm"
             [nzXs]="config.controlSize.nzXs" [nzMd]="config.controlSize.nzMd" [nzLg]="config.controlSize.nzLg"
             [nzXl]="config.controlSize.nzXl">
-            <nz-input-group [nzAddOnBefore]="before" [nzAddOnBeforeIcon]="changeIcon(this.config.inputType)">
-                <input nz-input value="#{{config.field}}" [type]="config.inputType" disabled  [placeholder]="this.config.placeholder"/>
-            </nz-input-group>
-            <ng-template #afterIcon>
-
-            </ng-template>
-
-            <ng-template #beforeIcon>
-
-            </ng-template>
-
-            <ng-template #before>
-
-            </ng-template>
-
-            <ng-template #after>
-
-            </ng-template>
+            <textarea nz-input [placeholder]="this.config.placeholder" value="#{{config.field}}" disabled
+            [nzAutosize]="{ minRows: this.config.autosize?.minRows , maxRows: this.config.autosize?.maxRows }"></textarea>
         </nz-form-control>
     </nz-form-item>
 </div>
