@@ -734,8 +734,10 @@ export class SmtComponentBase {
       case 'notempty':
         break;
       case 'null':
+        result = this.expression_null(expression);
         break;
       case 'notnull':
+        result = this.expression_notnull(expression);
         break;
       case 'true':
         result = this.expression_true(expression);
@@ -829,6 +831,17 @@ export class SmtComponentBase {
     regularflag = option.left === option.righit ? true : false;
     return regularflag;
   }
+  expression_null(option) {
+    let regularflag = false;
+    regularflag = option.left === null ? true : false;
+    return regularflag;
+  }
+  expression_notnull(option) {
+    let regularflag = false;
+    regularflag = option.left !== null ? true : false;
+    return regularflag;
+  }
+
 
   //#region 异常处理
 

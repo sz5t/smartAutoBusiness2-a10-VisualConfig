@@ -41,6 +41,7 @@ export class CfgPageDesignComponent extends CnComponentBase implements OnInit {
     this.setChangeValue(this.changeValue);
     this.load();
     this.fromDataService.selectedItem = this.selectedItem;
+    this.fromDataService.currentPage = this.tempValue['PID'];
   }
   private _initInnerValue() {
     if (this.tempData) {

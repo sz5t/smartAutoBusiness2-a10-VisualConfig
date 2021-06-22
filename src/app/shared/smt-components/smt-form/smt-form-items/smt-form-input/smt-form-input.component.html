@@ -8,14 +8,9 @@
         <nz-form-control [formGroup]="validateForm" [nzSpan]="config.controlSize.span" [nzSm]="config.controlSize.nzSm"
             [nzXs]="config.controlSize.nzXs" [nzMd]="config.controlSize.nzMd" [nzLg]="config.controlSize.nzLg"
             [nzXl]="config.controlSize.nzXl" [nzErrorTip]="combineTpl" nzHasFeedback nzValidatingTip="Validating...">
-            <input nz-input [formControlName]="config['field']" />
+            <input nz-input [formControlName]="config['field']"/>
             <ng-template #combineTpl let-control>
-                <span>
-                    <ng-container *ngIf="control.hasError('required')">{{'校验不通过' }}</ng-container>
-                    <ng-container *ngIf="control.hasError('email')">{{'邮箱格式不正确' }}</ng-container>
-                </span>
-
-
+                
             </ng-template>
         </nz-form-control>
     </nz-form-item>

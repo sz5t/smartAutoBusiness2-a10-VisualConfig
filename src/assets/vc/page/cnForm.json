@@ -113,11 +113,374 @@
                             "type": "root",
                             "name": "title"
                         }
+                    },
+                    {
+                        "code": "dataSource",
+                        "title": "数据源",
+                        "type": "property",
+                        "active": true,
+                        "sourceConfig": {
+                            "type": "staticForm",
+                            "backName": "dataSource",
+                            "backConfig": [
+                                {
+                                    "name": "dataSource"
+                                }
+                            ],
+                            "properties": [
+                                {
+                                    "name": "dataSource",
+                                    "type": "objectEmpty",
+                                    "componentConfig": {
+                                        "mode": "empty",
+                                        "staticDefaultValueConfig": [
+                                            {
+                                                "name": "dataSourceType",
+                                                "type": "value",
+                                                "value": "apiData"
+                                            }
+                                        ],
+                                        "showConfig": {
+                                            "showString": [
+                                                {
+                                                    "name": "title",
+                                                    "children": []
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    "formType": "object",
+                                    "properties": [
+                                        {
+                                            "name": "dataSourceType",
+                                            "type": "select",
+                                            "componentConfig": {
+                                                "options": [
+                                                    {
+                                                        "label": "静态数据",
+                                                        "value": "staticData"
+                                                    },
+                                                    {
+                                                        "label": "接口访问",
+                                                        "value": "apiData"
+                                                    }
+                                                ],
+                                                "labelName": "label",
+                                                "valueName": "value"
+                                            },
+                                            "formType": "value",
+                                            "formName": "formControlName",
+                                            "validations": [],
+                                            "title": "数据访问类型"
+                                        },
+                                        {
+                                            "name": "loadingOnInit",
+                                            "type": "switch",
+                                            "componentConfig": {},
+                                            "formType": "value",
+                                            "formName": "formControlName",
+                                            "validations": [],
+                                            "title": "初始化加载"
+                                        },
+                                        {
+                                            "name": "async",
+                                            "type": "switch",
+                                            "componentConfig": {},
+                                            "formType": "value",
+                                            "formName": "formControlName",
+                                            "validations": [],
+                                            "title": "异步加载"
+                                        },
+                                        {
+                                            "name": "loadingConfig",
+                                            "type": "customSelect",
+                                            "componentConfig": {
+                                                "customPage": {
+                                                    "title": "",
+                                                    "width": "90%",
+                                                    "style": null,
+                                                    "maskClosable": true,
+                                                    "cancelText": "取消",
+                                                    "okText": "确定",
+                                                    "footerButton": null,
+                                                    "customAction": [],
+                                                    "customContent": "mainResource",
+                                                    "customPageConfig": {
+                                                        "asyncLoad": true,
+                                                        "loadingConfig": {
+                                                            "path": "vc/config/mainLoadingConfig.json"
+                                                        },
+                                                        "type": "",
+                                                        "backName": "title",
+                                                        "backConfig": [
+                                                            {
+                                                                "name": "loadingConfig"
+                                                            }
+                                                        ]
+                                                    },
+                                                    "sourceData": {
+                                                        "type": "_root",
+                                                        "name": "loadingConfig"
+                                                    }
+                                                },
+                                                "showConfig": {
+                                                    "showString": [
+                                                        {
+                                                            "name": "url"
+                                                        }
+                                                    ]
+                                                }
+                                            },
+                                            "formType": "value",
+                                            "formName": "formControlName",
+                                            "validations": [],
+                                            "title": "数据绑定"
+                                        },
+                                        {
+                                            "name": "expandConfig",
+                                            "type": "customSelect",
+                                            "componentConfig": {
+                                                "customPage": {
+                                                    "title": "",
+                                                    "width": "90%",
+                                                    "style": null,
+                                                    "maskClosable": true,
+                                                    "cancelText": "取消",
+                                                    "okText": "确定",
+                                                    "footerButton": null,
+                                                    "customAction": [],
+                                                    "customContent": "mainResource",
+                                                    "customPageConfig": {
+                                                        "asyncLoad": true,
+                                                        "loadingConfig": {
+                                                            "path": "vc/config/mainLoadingConfig.json"
+                                                        },
+                                                        "type": "",
+                                                        "backName": "title",
+                                                        "backConfig": [
+                                                            {
+                                                                "name": "expandConfig"
+                                                            }
+                                                        ]
+                                                    },
+                                                    "sourceData": {
+                                                        "type": "_root",
+                                                        "name": "expandConfig"
+                                                    }
+                                                },
+                                                "showConfig": {
+                                                    "showString": [
+                                                        {
+                                                            "name": "url"
+                                                        }
+                                                    ]
+                                                }
+                                            },
+                                            "formType": "value",
+                                            "formName": "formControlName",
+                                            "validations": [],
+                                            "title": "数据展开"
+                                        },
+                                        {
+                                            "name": "loadingItemConfig",
+                                            "type": "customSelect",
+                                            "componentConfig": {
+                                                "customPage": {
+                                                    "title": "",
+                                                    "width": "90%",
+                                                    "style": null,
+                                                    "maskClosable": true,
+                                                    "cancelText": "取消",
+                                                    "okText": "确定",
+                                                    "footerButton": null,
+                                                    "customAction": [],
+                                                    "customContent": "mainResource",
+                                                    "customPageConfig": {
+                                                        "asyncLoad": true,
+                                                        "loadingConfig": {
+                                                            "path": "vc/config/mainLoadingConfig.json"
+                                                        },
+                                                        "type": "",
+                                                        "backName": "title",
+                                                        "backConfig": [
+                                                            {
+                                                                "name": "loadingItemConfig"
+                                                            }
+                                                        ]
+                                                    },
+                                                    "sourceData": {
+                                                        "type": "_root",
+                                                        "name": "loadingItemConfig"
+                                                    }
+                                                },
+                                                "showConfig": {
+                                                    "showString": [
+                                                        {
+                                                            "name": "url"
+                                                        }
+                                                    ]
+                                                }
+                                            },
+                                            "formType": "value",
+                                            "formName": "formControlName",
+                                            "validations": [],
+                                            "title": "节点数据"
+                                        }
+                                    ],
+                                    "formName": "formControlName",
+                                    "validations": [],
+                                    "title": "列"
+                                }
+                            ]
+                        },
+                        "sourceData": {
+                            "type": "root",
+                            "name": "title"
+                        }
                     }
                 ]
             },
             {
                 "code": "attr",
+                "title": "字段",
+                "propertyTypeConent": [
+                    {
+                        "code": "base",
+                        "title": "列字段属性",
+                        "type": "property",
+                        "active": true,
+                        "sourceConfig": {
+                            "type": "staticForm",
+                            "backName": "fields",
+                            "backConfig": [
+                                {
+                                    "name": "fields"
+                                }
+                            ],
+                            "properties": [
+                                {
+                                    "name": "fields",
+                                    "type": "arrayCollapse",
+                                    "componentConfig": {
+                                        "mode": "empty",
+                                        "staticDefaultValueConfig": [
+                                            {
+                                                "name": "id",
+                                                "type": "GUID"
+                                            },
+                                            {
+                                                "name": "type",
+                                                "type": "value",
+                                                "value": "field"
+                                            },
+                                            {
+                                                "name": "validations",
+                                                "type": "value",
+                                                "value": []
+                                            }
+                                        ],
+                                        "showConfig": {
+                                            "showString": [
+                                                {
+                                                    "name": "title",
+                                                    "children": []
+                                                },
+                                                {
+                                                    "type":"value",
+                                                    "value":" [",
+                                                    "name": "title",
+                                                    "children": []
+                                                },
+                                                {
+                                                    "name": "field",
+                                                    "children": []
+                                                },
+                                                {
+                                                    "type":"value",
+                                                    "value":"]",
+                                                    "name": "title",
+                                                    "children": []
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    "formType": "array",
+                                    "properties": [
+                                        {
+                                            "name": "id",
+                                            "type": "label",
+                                            "componentConfig": {},
+                                            "formType": "value",
+                                            "formName": "formControlName",
+                                            "validations": [],
+                                            "title": "主键"
+                                        },
+                                        {
+                                            "name": "title",
+                                            "type": "input",
+                                            "componentConfig": {},
+                                            "formType": "value",
+                                            "formName": "formControlName",
+                                            "validations": [],
+                                            "title": "标题"
+                                        },
+                                        {
+                                            "name": "type",
+                                            "type": "select",
+                                            "componentConfig": {
+                                                "options": [
+                                                    {
+                                                        "label": "字段",
+                                                        "value": "field"
+                                                    },
+                                                    {
+                                                        "label": "操作",
+                                                        "value": "action"
+                                                    }
+                                                ],
+                                                "labelName": "label",
+                                                "valueName": "value"
+                                            },
+                                            "formType": "value",
+                                            "formName": "formControlName",
+                                            "validations": [],
+                                            "title": "列类型"
+                                        },
+                                        {
+                                            "name": "field",
+                                            "type": "input",
+                                            "componentConfig": {},
+                                            "formType": "value",
+                                            "formName": "formControlName",
+                                            "validations": [],
+                                            "title": "字段"
+                                        },
+                                        {
+                                            "name": "validations",
+                                            "type": "value",
+                                            "hidden":true,
+                                            "componentConfig": {},
+                                            "formType": "value",
+                                            "formName": "formControlName",
+                                            "validations": [],
+                                            "title": "校验"
+                                        }
+                                    ],
+                                    "formName": "formControlName",
+                                    "validations": [],
+                                    "title": "字段"
+                                }
+                            ]
+                        },
+                        "sourceData": {
+                            "type": "root",
+                            "name": "title"
+                        }
+                    }
+                ]
+            },
+            {
+                "code": "order",
                 "title": "命令",
                 "propertyTypeConent": [
                     {
@@ -166,6 +529,10 @@
                                                     {
                                                         "label": "自定义",
                                                         "value": "custom"
+                                                    },
+                                                    {
+                                                        "label": "系统内置",
+                                                        "value": "builtin"
                                                     }
                                                 ],
                                                 "labelName": "label",
@@ -623,13 +990,15 @@
                                                                     },
                                                                     {
                                                                         "name": "commandConfig",
-                                                                        "type": "objectEmpty",
+                                                                        "type": "arrayCard",
                                                                         "componentConfig": {},
                                                                         "properties": [
                                                                             {
                                                                                 "name": "targetViewId",
-                                                                                "type": "input",
-                                                                                "componentConfig": {},
+                                                                                "type": "treeSelect",
+                                                                                "componentConfig": {
+                                                                                    "loadingMode": "dataService"
+                                                                                },
                                                                                 "formType": "value",
                                                                                 "formName": "formControlName",
                                                                                 "validations": [],
@@ -643,6 +1012,10 @@
                                                                                         {
                                                                                             "label": "自定义",
                                                                                             "value": "custom"
+                                                                                        },
+                                                                                        {
+                                                                                            "label": "系统内置",
+                                                                                            "value": "builtin"
                                                                                         }
                                                                                     ],
                                                                                     "labelName": "label",
@@ -730,7 +1103,7 @@
                                                                                 "title": "参数设置"
                                                                             }
                                                                         ],
-                                                                        "formType": "object",
+                                                                        "formType": "array",
                                                                         "formName": "formControlName",
                                                                         "validations": [],
                                                                         "title": "组件行为配置"
@@ -1846,6 +2219,10 @@
                                                                                                 {
                                                                                                     "label": "自定义",
                                                                                                     "value": "custom"
+                                                                                                },
+                                                                                                {
+                                                                                                    "label": "系统内置",
+                                                                                                    "value": "builtin"
                                                                                                 }
                                                                                             ],
                                                                                             "labelName": "label",
@@ -1986,7 +2363,7 @@
                 ]
             },
             {
-                "code": "attr",
+                "code":"event",
                 "title": "事件",
                 "propertyTypeConent": [
                     {
@@ -2007,6 +2384,8 @@
                                     "name": "componentEvent",
                                     "type": "arrayCollapse",
                                     "componentConfig": {
+                                        "defaultActionAddHidden":true, 
+                                        "defaultActionDeleteHidden":true,
                                         "mode": "empty",
                                         "showConfig": {
                                             "showString": [
@@ -2077,7 +2456,7 @@
                                                                 "title": "事件内容",
                                                                 "properties": [
                                                                     {
-                                                                        "name": "tagViewTitle",
+                                                                        "name": "targetViewTitle",
                                                                         "type": "input",
                                                                         "componentConfig": {},
                                                                         "formType": "value",
@@ -2086,18 +2465,16 @@
                                                                         "title": "绑定组件标题"
                                                                     },
                                                                     {
-                                                                        "name": "tagViewId",
-                                                                        "type": "treeSelect",
-                                                                        "componentConfig": {
-                                                                            "loadingMode": "dataService"
-                                                                        },
+                                                                        "name": "targetViewId",
+                                                                        "type": "input",
+                                                                        "componentConfig": {},
                                                                         "formType": "value",
                                                                         "formName": "formControlName",
                                                                         "validations": [],
                                                                         "title": "绑定组件标识"
                                                                     },
                                                                     {
-                                                                        "name": "tagPageId",
+                                                                        "name": "targetPageId",
                                                                         "type": "input",
                                                                         "componentConfig": {},
                                                                         "formType": "value",
@@ -2155,6 +2532,10 @@
                                                                                 {
                                                                                     "label": "自定义",
                                                                                     "value": "custom"
+                                                                                },
+                                                                                {
+                                                                                    "label": "系统内置",
+                                                                                    "value": "builtin"
                                                                                 }
                                                                             ],
                                                                             "labelName": "label",
@@ -2281,146 +2662,8 @@
                         }
                     }
                 ]
-            },
-            {
-                "code": "attr",
-                "title": "字段",
-                "propertyTypeConent": [
-                    {
-                        "code": "base",
-                        "title": "列字段属性",
-                        "type": "property",
-                        "active": true,
-                        "sourceConfig": {
-                            "type": "staticForm",
-                            "backName": "fields",
-                            "backConfig": [
-                                {
-                                    "name": "fields"
-                                }
-                            ],
-                            "properties": [
-                                {
-                                    "name": "fields",
-                                    "type": "arrayCollapse",
-                                    "componentConfig": {
-                                        "mode": "empty",
-                                        "staticDefaultValueConfig": [
-                                            {
-                                                "name": "id",
-                                                "type": "GUID"
-                                            },
-                                            {
-                                                "name": "type",
-                                                "type": "value",
-                                                "value": "field"
-                                            },
-                                            {
-                                                "name": "validations",
-                                                "type": "value",
-                                                "value": []
-                                            }
-                                        ],
-                                        "showConfig": {
-                                            "showString": [
-                                                {
-                                                    "name": "title",
-                                                    "children": []
-                                                },
-                                                {
-                                                    "type":"value",
-                                                    "value":" [",
-                                                    "name": "title",
-                                                    "children": []
-                                                },
-                                                {
-                                                    "name": "field",
-                                                    "children": []
-                                                },
-                                                {
-                                                    "type":"value",
-                                                    "value":"]",
-                                                    "name": "title",
-                                                    "children": []
-                                                }
-                                            ]
-                                        }
-                                    },
-                                    "formType": "array",
-                                    "properties": [
-                                        {
-                                            "name": "id",
-                                            "type": "label",
-                                            "componentConfig": {},
-                                            "formType": "value",
-                                            "formName": "formControlName",
-                                            "validations": [],
-                                            "title": "主键"
-                                        },
-                                        {
-                                            "name": "title",
-                                            "type": "input",
-                                            "componentConfig": {},
-                                            "formType": "value",
-                                            "formName": "formControlName",
-                                            "validations": [],
-                                            "title": "标题"
-                                        },
-                                        {
-                                            "name": "type",
-                                            "type": "select",
-                                            "componentConfig": {
-                                                "options": [
-                                                    {
-                                                        "label": "字段",
-                                                        "value": "field"
-                                                    },
-                                                    {
-                                                        "label": "操作",
-                                                        "value": "action"
-                                                    }
-                                                ],
-                                                "labelName": "label",
-                                                "valueName": "value"
-                                            },
-                                            "formType": "value",
-                                            "formName": "formControlName",
-                                            "validations": [],
-                                            "title": "列类型"
-                                        },
-                                        {
-                                            "name": "field",
-                                            "type": "input",
-                                            "componentConfig": {},
-                                            "formType": "value",
-                                            "formName": "formControlName",
-                                            "validations": [],
-                                            "title": "字段"
-                                        },
-                                        {
-                                            "name": "validations",
-                                            "type": "value",
-                                            "hidden":true,
-                                            "componentConfig": {},
-                                            "formType": "value",
-                                            "formName": "formControlName",
-                                            "validations": [],
-                                            "title": "校验"
-                                        }
-                                    ],
-                                    "formName": "formControlName",
-                                    "validations": [],
-                                    "title": "字段"
-                                }
-                            ]
-                        },
-                        "sourceData": {
-                            "type": "root",
-                            "name": "title"
-                        }
-                    }
-                ]
             }
+           
         ]
     }
 }

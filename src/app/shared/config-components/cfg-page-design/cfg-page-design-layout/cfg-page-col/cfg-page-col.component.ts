@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, Input, OnChanges, OnInit, Output, SimpleChanges, EventEmitter } from '@angular/core';
 import { configFormDataServerService } from 'src/app/core/services/config/form-data.service';
 import { CommonUtils } from 'src/app/core/utils/common-utils';
@@ -20,7 +21,7 @@ export class CfgPageColComponent implements OnInit, OnChanges {
   public config: any;
   public testCmp;
   public testRows;
-  constructor() { }
+  constructor(private httpClient: HttpClient) { }
 
 
   draging = false;
@@ -92,19 +93,6 @@ export class CfgPageColComponent implements OnInit, OnChanges {
         this.fromDataService.layoutTreeInstance.clearChildrenByNode(this.l_config['id']);
       }
       this.l_config['container'] = 'rows';
-      // this.l_config.children.push(
-      //   {
-      //     cols: [],
-      //     children: [],
-      //     container: "cols",
-      //     expanded: true,
-      //     id: rowId,
-      //     key: rowId,
-      //     parentId: this.l_config['id'],
-      //     title: "【表单主对象】布局",
-      //     type: "row"
-      //   }
-      // )
 
       this.testRows = d;
       let node = this.fromDataService.l_createRow(this.l_config['id']);
@@ -131,7 +119,13 @@ export class CfgPageColComponent implements OnInit, OnChanges {
           cnTree: 'cnTree',
           cnTreeTable: 'cnTreeTable',
           cnToolbar: 'cnToolbar',
-          tabs: 'tabs'
+          tabs: 'tabs',
+
+          smtForm: 'smtForm',
+          smtDataTable: 'smtDataTable',
+          smtTree: 'smtTree',
+          smtToolbar: 'smtToolbar',
+          smtRowToolbar: 'smtRowToolbar'
         }
       }
 
@@ -153,7 +147,7 @@ export class CfgPageColComponent implements OnInit, OnChanges {
         this.fromDataService.layoutTreeInstance.clearChildrenByNode(this.l_config['id']);
       }
       this.l_config['container'] = 'component';
-      let node = this.fromDataService.l_create_component(this.l_config['id'], cmptObj);
+      let node = this.fromDataService.l_create_component(this.l_config['id'], cmptObj, dropData['data']);
       // this.l_config.children.splice(0, 0, node);
       this.fromDataService.layoutTreeInstance.addChildrenNode(this.l_config['id'], node, 0);
 
@@ -177,5 +171,18 @@ export class CfgPageColComponent implements OnInit, OnChanges {
     console.log('选中当前列', this.selectedItem);
 
   }
+
+
+  async load_component_default_value(cmpt?) {
+
+    let backData = null;
+    const timestamp = new Date().getTime();
+    const data = await this.httpClient.get(`assets/${cmpt}?${timestamp}`).toPromise();
+    backData = data;
+    console.log('加载配置', data);
+    return backData;
+  }
+
+
 
 }

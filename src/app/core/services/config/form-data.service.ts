@@ -26,6 +26,7 @@ export class configFormDataServerService {
     //=========全局变量==========
     public initValue: any = {};
 
+    public currentPage: any;
 
 
     public data: any = [];
@@ -322,7 +323,7 @@ export class configFormDataServerService {
         return row_obj;
 
     }
-    public l_create_component(pid?, cmptObj?) {
+    public l_create_component(pid?, cmptObj?, data?) {
         let cmpt_id = CommonUtils.uuID(30);
         let cmpt_obj = {
             "id": cmpt_id,
@@ -340,7 +341,7 @@ export class configFormDataServerService {
                 ]
             }
         }
-
+        cmpt_obj = { ...cmpt_obj, ...data };
         this.layoutSourceData[cmpt_id] = cmpt_obj;
         return cmpt_obj;
 
@@ -378,7 +379,7 @@ export class configFormDataServerService {
         this.layoutSourceData[cmpt_id] = cmpt_obj;
         return cmpt_obj;
     }
-    public l_create_component_conent_button(pid?, cmptObj?) {
+    public l_create_component_conent_button(pid?, cmptObj?, data?) {
         let cmpt_id = CommonUtils.uuID(30);
         let cmpt_obj = {
             "id": cmpt_id,
@@ -390,7 +391,7 @@ export class configFormDataServerService {
             "expanded": true,
             "children": []
         }
-
+        cmpt_obj = { ...cmpt_obj, ...data };
         this.layoutSourceData[cmpt_id] = cmpt_obj;
         return cmpt_obj;
 

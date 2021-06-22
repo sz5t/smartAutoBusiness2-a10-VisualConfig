@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { NzTreeComponent, NzTreeNodeOptions } from 'ng-zorro-antd/tree';
 import { configFormDataServerService } from 'src/app/core/services/config/form-data.service';
@@ -19,15 +20,16 @@ export class CfgFormSiderComponent implements OnInit {
   defaultSelectedKeys = [];
   is_drag = true;
   //  layoutTree = [];
-  constructor() { }
+  constructor(private httpClient: HttpClient) { }
 
   ngOnInit(): void {
 
     this.fromDataService.layoutTreeInstance = this;
-
+    this.load();
   }
-  load() {
+  async load() {
     // 加载 侧边栏
+    this.left_panels = await this.load_sider('vc/componentInit/form-sider.json');
   }
 
   gridStyle = {
@@ -159,5 +161,20 @@ export class CfgFormSiderComponent implements OnInit {
 
   }
 
+  async load_sider(cmpt?) {
+
+    let backData = null;
+    const timestamp = new Date().getTime();
+    const data = await this.httpClient.get(`assets/${cmpt}?${timestamp}`).toPromise();
+    backData = data;
+    console.log('加载配置', data);
+    /*     backData[1]['children'].forEach(async d => {
+          if (d['path']) {
+            d['data'] = await this.load_component_default_value(d['path']);
+          }
+        }); */
+
+    return backData;
+  }
 
 }

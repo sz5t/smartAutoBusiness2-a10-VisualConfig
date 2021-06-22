@@ -117,32 +117,18 @@ export class CfgFormColComponent implements OnInit, OnChanges {
     else {
       let cmpTypeMapping = {}
       if (dropData['dropType'] === 'form') {
-        cmpTypeMapping = {
-          cnFormInput: 'cnFormInput',
-          cnFormSelect: 'cnFormSelect',
-          cnFormTime: 'cnFormTime'
-        }
 
-      } else {
-        cmpTypeMapping = {
-          cnForm: 'cnForm',
-          cnTable: 'cnDataTable',
-          cnTree: 'cnTree',
-          cnTreeTable: 'cnTreeTable',
-          cnToolbar: 'cnToolbar',
-          tabs: 'tabs'
-        }
       }
 
-      if (!cmpTypeMapping[dropName]) {
-        e.stopPropagation();
-        return;
-      }
+      /*    if (!cmpTypeMapping[dropName]) {
+           e.stopPropagation();
+           return;
+         } */
 
       let cmptObj = {
-        "type": cmpTypeMapping[dropName],
+        "type": dropName,
         "title": "表单条目",
-        "container": cmpTypeMapping[dropName]
+        "container": dropName
       }
       this.l_config.children = [];
       if (this.l_config['container'] === 'rows') {

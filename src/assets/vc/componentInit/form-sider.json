@@ -1,0 +1,151 @@
+[
+    {
+      "active": true,
+      "disabled": false,
+      "name": "布局组件",
+      "children": [
+        {
+          "id": "001",
+          "type": "layout",
+          "dropType": "form",
+          "dropName": "row",
+          "icon": "insert-row-above",
+          "title": "行"
+        },
+        {
+          "id": "002",
+          "type": "layout",
+          "dropType": "form",
+          "dropName": "col",
+          "icon": "column-width",
+          "title": "列"
+        }
+      ]
+    },
+    {
+      "active": true,
+      "name": "表单组件",
+      "disabled": false,
+      "children": [
+        {
+          "id": "001",
+          "type": "component",
+          "dropType": "form",
+          "dropName": "smtFormInput",
+          "icon": "edit",
+          "title": "单行输入",
+          "sourceData": {
+            "field": "name",
+            "type": "input",
+            "displayType": "text"
+          }
+        },
+        {
+          "id": "003",
+          "type": "component",
+          "dropType": "form",
+          "dropName": "smtFormTextarea",
+          "icon": "field-time",
+          "title": "多行输入"
+        },
+        {
+          "id": "004",
+          "type": "component",
+          "dropType": "form",
+          "dropName": "smtFormLabel",
+          "icon": "check-square",
+          "title": "文本"
+        },
+        {
+          "id": "002",
+          "type": "component",
+          "dropType": "form",
+          "dropName": "smtFormSelect",
+          "icon": "select",
+          "title": "下拉选择"
+        },
+        {
+          "id": "002",
+          "type": "component",
+          "dropType": "form",
+          "dropName": "smtFormTreeSelect",
+          "icon": "select",
+          "title": "下拉树"
+        },
+        {
+          "id": "004",
+          "type": "component",
+          "dropType": "form",
+          "dropName": "smtFormRadio",
+          "icon": "check-square",
+          "title": "单选框"
+        },
+        {
+          "id": "004",
+          "type": "component",
+          "dropType": "form",
+          "dropName": "smtFormCheck",
+          "icon": "check-square",
+          "title": "复选框"
+        },
+        {
+          "id": "003",
+          "type": "component",
+          "dropType": "form",
+          "dropName": "smtFormSwitch",
+          "icon": "field-time",
+          "title": "开关按钮"
+        },
+        {
+          "id": "003",
+          "type": "component",
+          "dropType": "form",
+          "dropName": "smtFormTag",
+          "icon": "field-time",
+          "title": "标签"
+        },
+        {
+          "id": "003",
+          "type": "component",
+          "dropType": "form",
+          "dropName": "smtFormPickerDate",
+          "icon": "field-time",
+          "title": "时间选择"
+        },
+        {
+          "id": "003",
+          "type": "component",
+          "dropType": "form",
+          "dropName": "smtFormPickerRange",
+          "icon": "field-time",
+          "title": "时间范围"
+        },
+        {
+          "id": "003",
+          "type": "component",
+          "dropType": "form",
+          "dropName": "smtFormPickerWeek",
+          "icon": "field-time",
+          "title": "周选择"
+        },
+        {
+          "id": "003",
+          "type": "component",
+          "dropType": "form",
+          "dropName": "smtFormPickerMonth",
+          "icon": "field-time",
+          "title": "月份选择"
+        },
+        {
+          "id": "003",
+          "type": "component",
+          "dropType": "form",
+          "dropName": "smtFormPickerYear",
+          "icon": "field-time",
+          "title": "年份选择"
+        }
+      ]
+    }
+
+
+  ]

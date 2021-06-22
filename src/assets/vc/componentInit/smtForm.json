@@ -1,0 +1,49 @@
+{
+
+    "default":{
+        "title": "表单值",
+        "data": {
+            "componentEvent":[
+                {
+                    "eventTitle":"刷新",
+                    "eventName":"load",
+                    "eventContent":null
+                },
+                {
+                    "eventTitle":"点击事件",
+                    "eventName":"action",
+                    "eventContent":null
+                }
+            ]
+        },
+        "properties": [
+          {
+            "name": "componentEvent",
+            "defaultType": "default",  
+            "formType": "array",
+            "properties": [
+                {
+                    "name": "eventTitle",
+                    "defaultType": "default",  
+                    "formType": "value"
+                },
+                {
+                    "name": "eventName",
+                    "defaultType": "default",  
+                    "formType": "value"
+                }
+            ]
+          }
+        ]
+    },
+    "builtinCommand":[
+        {
+            "command": "LOAD",
+            "commandTitle": "刷新",
+            "commandType": "builtin",
+            "declareParameters":[]
+        }
+    ]
+
+    
+}

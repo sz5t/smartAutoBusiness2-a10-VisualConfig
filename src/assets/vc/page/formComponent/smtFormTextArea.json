@@ -16,6 +16,9 @@
                             "backName": "title",
                             "backConfig": [
                                 {
+                                    "name": "title"
+                                },
+                                {
                                     "name": "field"
                                 },
                                 {
@@ -30,62 +33,78 @@
                             ],
                             "properties": [
                                 {
-                                    "name": "field",
-                                    "type": "input",
-                                    "componentConfig": {
-                                        "labelSize": {
-                                            "span": 4
-                                        },
-                                        "controlSize": {
-                                            "span": 20
-                                        }
-                                    },
-                                    "formType": "value",
-                                    "formName": "formControlName",
-                                    "validations": [],
-                                    "title": "字段"
-                                },
-                                {
                                     "name": "type",
                                     "type": "input",
                                     "componentConfig": {
                                         "labelSize": {
-                                            "span": 4
+                                            "span": 6
                                         },
                                         "controlSize": {
-                                            "span": 20
+                                            "span": 18
                                         }
                                     },
                                     "formType": "value",
                                     "formName": "formControlName",
                                     "validations": [],
-                                    "title": "类型"
+                                    "title": "表单组件"
+                                },
+                                {
+                                    "name": "title",
+                                    "type": "input",
+                                    "componentConfig": {
+                                        "labelSize": {                
+                                            "span": 6
+                                          },
+                                          "controlSize": {             
+                                            "span": 18
+                                          }
+                                    },
+                                    "formType": "value",
+                                    "formName": "formControlName",
+                                    "validations": [],
+                                    "title": "标题"
+                                },
+                                {
+                                    "name": "field",
+                                    "type": "input",
+                                    "componentConfig": {
+                                        "labelSize": {
+                                            "span": 6
+                                        },
+                                        "controlSize": {
+                                            "span": 18
+                                        }
+                                    },
+                                    "formType": "value",
+                                    "formName": "formControlName",
+                                    "validations": [],
+                                    "title": "绑定字段"
                                 },
                                 {
                                     "name": "placeholder",
                                     "type": "input",
                                     "componentConfig": {
                                         "labelSize": {
-                                            "span": 4
+                                            "span": 6
                                         },
                                         "controlSize": {
-                                            "span": 20
+                                            "span": 18
                                         }
                                     },
                                     "formType": "value",
                                     "formName": "formControlName",
                                     "validations": [],
-                                    "title": "默认填充文本"
+                                    "title": "默认文本"
                                 },
                                 {
                                     "name": "autosize",
                                     "type": "objectEmpty",
                                     "componentConfig": {
                                         "labelSize": {
-                                            "span": 4
+                                            "span": 6
                                         },
                                         "controlSize": {
-                                            "span": 20
+                                            "span": 18
                                         }
                                     },
                                     "properties": [
@@ -94,38 +113,38 @@
                                             "type": "input",
                                             "componentConfig": {
                                                 "labelSize": {
-                                                    "span": 4
+                                                    "span": 6
                                                 },
                                                 "controlSize": {
-                                                    "span": 20
+                                                    "span": 18
                                                 }
                                             },
                                             "formType": "value",
                                             "formName": "formControlName",
                                             "validations": [],
-                                            "title": "最少显示行数"
+                                            "title": "最小行数"
                                         },
                                         {
                                             "name": "maxRows",
                                             "type": "input",
                                             "componentConfig": {
                                                 "labelSize": {
-                                                    "span": 4
+                                                    "span": 6
                                                 },
                                                 "controlSize": {
-                                                    "span": 20
+                                                    "span": 18
                                                 }
                                             },
                                             "formType": "value",
                                             "formName": "formControlName",
                                             "validations": [],
-                                            "title": "最多显示行数"
+                                            "title": "最大行数"
                                         }
                                     ],
                                     "formType": "object",
                                     "formName": "formControlName",
                                     "validations": [],
-                                    "title": "文本域大小设置"
+                                    "title": "显示设置"
                                 }
                             ]
                         },

@@ -1,0 +1,94 @@
+[
+    {
+      "active": true,
+      "disabled": false,
+      "name": "布局组件",
+      "children": [
+        {
+          "id": "001",
+          "type": "layout",
+          "dropType": "page",
+          "dropName": "row",
+          "icon": "insert-row-above",
+          "title": "行"
+        },
+        {
+          "id": "002",
+          "type": "layout",
+          "dropType": "page",
+          "dropName": "col",
+          "icon": "column-width",
+          "title": "列"
+        },
+        {
+          "id": "003",
+          "type": "layout",
+          "dropType": "page",
+          "dropName": "tabs",
+          "icon": "column-width",
+          "title": "页签"
+        }
+      ]
+    },
+    {
+      "active": true,
+      "name": "数据组件",
+      "disabled": false,
+      "children": [
+        {
+          "id": "001",
+          "type": "component",
+          "dropType": "page",
+          "dropName": "smtForm",
+          "icon": "edit",
+          "title": "表单",
+          "path":"vc/componentInit/smtForm.json"
+        },
+        {
+          "id": "002",
+          "type": "component",
+          "dropType": "page",
+          "dropName": "smtTree",
+          "icon": "select",
+          "title": "树",
+          "path":"vc/componentInit/smtTree.json"
+        },
+        {
+          "id": "003",
+          "type": "component",
+          "dropType": "page",
+          "dropName": "smtDataTable",
+          "icon": "field-time",
+          "title": "表格",
+          "path":"vc/componentInit/smtDataTable.json"
+        },
+        {
+          "id": "004",
+          "type": "component",
+          "dropType": "page",
+          "dropName": "smtTreeTable",
+          "icon": "check-square",
+          "title": "树表",
+          "path":"vc/componentInit/smtTreeTable.json"
+        },
+        {
+          "id": "005",
+          "type": "component",
+          "dropType": "page",
+          "dropName": "smtToolbar",
+          "icon": "check-square",
+          "title": "按钮组",
+          "path":"vc/componentInit/smtToolbar.json"
+        },
+        {
+          "id": "006",
+          "type": "component",
+          "dropType": "page",
+          "dropName": "smtRowToolbar",
+          "icon": "check-square",
+          "title": "行内按钮",
+          "path":"vc/componentInit/smtRowToolbar.json"
+        }
+      ]
+    }
+  ]

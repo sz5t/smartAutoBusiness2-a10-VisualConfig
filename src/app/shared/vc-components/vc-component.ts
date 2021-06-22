@@ -788,5 +788,63 @@ export class VcComponentBase {
     }
 
 
+    // 展示文本内容
+    showValueStr(_valueStrConfig_base, d) {
+        let showValue;
+        if (d) {
+            if (_valueStrConfig_base['type'] && _valueStrConfig_base['type'] === 'exist') {
+                if (Array.isArray(d)) {
+                    if (d.length > 0) {
+
+                        showValue = "已设置[" + d.length + "]项";
+                    } else {
+                        showValue = "";
+                    }
+
+                } else {
+                    showValue = "已设置";
+                }
+            } else {
+                let _valueStrConfig = _valueStrConfig_base['showString'];
+
+                showValue = this.getStringByshow(d, _valueStrConfig);
+
+            }
+        } else {
+            showValue = "";
+        }
+        return showValue;
+    }
+
+    getStringByshow(_value, _config) {
+        let backstr: any = "";
+        let str: any;
+        _config.forEach(element => {
+            if (element['type']) {
+                if (element['type'] === "value") {
+                    str = element['value'];
+                }
+
+            } else {
+                if (_value && _value.hasOwnProperty(element['name'])) {
+                    str = _value[element['name']];
+                    if (element['children'] && element['children'].length > 0) {
+                        str = this.getStringByshow(str, element['children'])
+                    }
+                }
+            }
+
+            if (str) {
+                backstr = backstr + str;
+            }
+
+
+        });
+
+        return backstr;
+
+    }
+
+
 
 }

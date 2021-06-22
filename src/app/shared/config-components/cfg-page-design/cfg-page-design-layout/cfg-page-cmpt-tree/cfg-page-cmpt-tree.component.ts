@@ -54,7 +54,7 @@ export class CfgPageCmptTreeComponent implements OnInit {
     // this.optionState = true;
     // 选中
     this.selectedItem['item'] = this.l_config;
-    this.selectedItem['active'] = 'cnTree';
+    this.selectedItem['active'] = this.l_config['type'];
     this.fromDataService.layoutNodeSelected(this.l_config);
     console.log('选中当前tabs', this.selectedItem);
   }
@@ -70,14 +70,9 @@ export class CfgPageCmptTreeComponent implements OnInit {
     // console.log('拖拽JSON', dropData);
 
     let dropName = dropData['dropName'];
-    if (dropData['dropName'] === 'cnToolbar') {
+    if (dropData['dropName'] === 'smtToolbar') {
       const cmpTypeMapping = {
-        cnForm: 'cnForm',
-        cnTable: 'cnDataTable',
-        cnTree: 'cnTree',
-        cnTreeTable: 'cnTreeTable',
-        cnToolbar: 'cnToolbar',
-        tabs: 'tabs',
+        smtToolbar: 'smtToolbar',
       };
 
       if (!cmpTypeMapping[dropName]) {

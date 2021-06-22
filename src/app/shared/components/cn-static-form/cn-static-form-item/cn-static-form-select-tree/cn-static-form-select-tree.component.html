@@ -17,8 +17,9 @@
                 </nz-option>
 
             </nz-select> -->
-            <nz-tree-select style="width: 100%" [nzNodes]="nodes" nzPlaceHolder="Please select"
-                [formControlName]="config['name']" (ngModelChange)="onChange($event)">
+            <nz-tree-select #tree style="width: 100%" [nzNodes]="nodes" nzPlaceHolder="Please select"
+                [formControlName]="config['name']" [nzDropdownStyle]="config.componentConfig['dropdownStyle']"
+                (ngModelChange)="onChange($event)">
             </nz-tree-select>
         </nz-form-control>
     </nz-form-item>
