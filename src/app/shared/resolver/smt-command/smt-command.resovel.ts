@@ -66,6 +66,10 @@ export class SmtCommandResolver {
     }
 
     // 执行命令
+    await this.execCommandContent(cmd, _execParamsData);
+  }
+
+  private async execCommandContent(cmd, _execParamsData) {
     if (cmd.commandType === 'builtin') {
       const method = this._componentInstance.COMPONENT_METHODS[cmd.command];
       const result = await this._componentInstance[method](_execParamsData);
@@ -99,35 +103,6 @@ export class SmtCommandResolver {
           }
         }
       }
-      // cmd.commandContent.forEach(async (command) => {
-      //   if (command.type === 'ajaxConfig') {
-      //     const data = _execParamsData === {} ? null : _execParamsData;
-      //     const response = await this._componentInstance.executeHttp(command.ajaxConfig, data, null);
-      //     if (response.state === 1) {
-      //       for (let i = 0; i < command.result.length; i++) {
-      //         // if (command.result[i]['enableCondition'] === 'true') {
-      //         // }
-      //         this.afterOperate(command.result[i], this._componentInstance.componentService.modalService);
-      //       }
-      //     }
-      //   } else if (command.type === 'commandConfig') {
-      //     for (let i = 0; i < command.commandConfig.length; i++) {
-      //       if (command.commandConfig[i].commandType === 'custom') {
-      //         new SmtMessageSenderResolver(this._componentInstance).resolve(command.commandConfig[i]);
-      //       } else {
-      //         const method = this._componentInstance.COMPONENT_METHODS[command.commandConfig[i].command];
-      //         const result = await this._componentInstance[method](_execParamsData);
-      //         if (result.state === 1) {
-      //           // this.showDefaultMessage();
-      //         }
-      //       }
-      //     }
-
-      //     // for (let j = 0; j < command.result.length; j++) {
-      //     //   this.afterOperate(command.result[j], this._componentInstance.componentService.modalService);
-      //     // }
-      //   }
-      // });
     }
   }
 
@@ -148,7 +123,7 @@ export class SmtCommandResolver {
     const response = await this._componentInstance.executeHttp(command.ajaxConfig, data, '', Array.isArray(data));
     if (response.state === 1) {
       for (let i = 0; i < command.result.length; i++) {
-        const nextResult = this.afterOperate(command.result[i], this._componentInstance.componentService.modalService, data);
+        const nextResult = this.afterOperate(command.result[i], this._componentInstance.componentService.modalService, data, execParamsData);
         next = nextResult === undefined ? next : nextResult
         switch (next) {
           case 'next':
@@ -174,7 +149,7 @@ export class SmtCommandResolver {
         const response = await this._componentInstance[method](execParamsData);
         if (response.state === 1) {
           for (let i = 0; i < command.result.length; i++) {
-            const nextResult = this.afterOperate(command.result[i], this._componentInstance.componentService.modalService, data);
+            const nextResult = this.afterOperate(command.result[i], this._componentInstance.componentService.modalService, data, execParamsData);
             next = nextResult === undefined ? next : nextResult
             switch (next) {
               case 'next':
@@ -191,7 +166,7 @@ export class SmtCommandResolver {
     return next;
   }
 
-  public afterOperate(commandObj, modal, data?) {
+  public afterOperate(commandObj, modal, data?, execParamsData?) {
     let nextCommand: any;
     if (commandObj['condition'] && commandObj['condition'].length > 0) {
       const conditionResult = this._componentInstance.analysisResult(
@@ -199,17 +174,17 @@ export class SmtCommandResolver {
         data,
       );
       if (conditionResult) {
-        nextCommand = this.resultResolver(commandObj, modal);
+        nextCommand = this.resultResolver(commandObj, modal, execParamsData);
       } else {
         return 'prevent';
       }
     } else {
-      nextCommand = this.resultResolver(commandObj, modal);
+      nextCommand = this.resultResolver(commandObj, modal, execParamsData);
     }
     return nextCommand;
   }
 
-  private resultResolver(result, modal) {
+  private resultResolver(result, modal, execParamsData?) {
     let nextOperate: any;
     let returnValue: any;
     switch (result['type']) {
@@ -221,6 +196,9 @@ export class SmtCommandResolver {
         break;
       case 'execution':
         nextOperate = this.showExecution(result['execution'], returnValue);
+        break;
+      case 'command':
+        nextOperate = this.sendCommand(result['command'], returnValue, execParamsData);
         break;
     }
     return nextOperate;
@@ -255,6 +233,13 @@ export class SmtCommandResolver {
   showExecution(cfg, returnValue) {
     returnValue = this.nextOperate(cfg['point']);
     return returnValue;
+  }
+
+  sendCommand(commandArray, returnValue, execParamsData) {
+    for (let i = 0; i < commandArray.length; i++) {
+      this.execCommandContent(commandArray[i], execParamsData)
+    }
+    returnValue = this.nextOperate('next');
   }
 
   createContent(cfg) {
