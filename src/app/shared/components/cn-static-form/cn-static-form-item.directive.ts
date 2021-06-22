@@ -21,6 +21,7 @@ import { CnStaticFormSelectComponent } from './cn-static-form-item/cn-static-for
 import { CnStaticFormSliderComponent } from './cn-static-form-item/cn-static-form-slider/cn-static-form-slider.component';
 import { CnStaticFormSubComponentComponent } from './cn-static-form-item/cn-static-form-sub-component/cn-static-form-sub-component.component';
 import { CnStaticFormSwitchComponent } from './cn-static-form-item/cn-static-form-switch/cn-static-form-switch.component';
+import { CnStaticFormTagComponent } from './cn-static-form-item/cn-static-form-tag/cn-static-form-tag.component';
 import { CnStaticFormTextareaComponent } from './cn-static-form-item/cn-static-form-textarea/cn-static-form-textarea.component';
 
 const components: { [type: string]: Type<any> } = {
@@ -44,7 +45,8 @@ const components: { [type: string]: Type<any> } = {
   treeSelect: CnStaticFormSelectTreeComponent,
   textarea: CnStaticFormTextareaComponent,
   busiPopApi: CnStaticFormBusiPopApiComponent,
-  popCommand: CnStaticFormPopCommandComponent
+  popCommand: CnStaticFormPopCommandComponent,
+  tag: CnStaticFormTagComponent,
 
 }
 @Directive({

@@ -103,7 +103,7 @@ export class CnStaticFormSelectTreeComponent extends VcComponentBase implements 
     if (this.validateForm.controls[this.config['name']]) {
       let d = this.validateForm.controls[this.config['name']].value;
       if (this.config['componentConfig']['casadeValue']) {
-        this.text(d);
+        // this.text(d);
       }
     }
 

@@ -1,0 +1,237 @@
+{
+    "type": "staticForm",
+    "backName": "name",
+    "backConfig": [
+        {
+            "name": "eventContent"
+        }
+    ],
+    "properties": [
+        {
+            "name": "eventContent",
+            "type": "arrayCard",
+            "componentConfig": {
+                "staticDefaultValueConfig": [
+                    {
+                        "name": "tagPageId",
+                        "type": "tempValue",
+                        "valueName": "ID"
+                    }
+                ]
+            },
+            "formType": "array",
+            "formName": "formControlName",
+            "validations": [],
+            "title": "事件内容",
+            "properties": [
+                {
+                    "name": "targetPageTitle",
+                    "type": "label",
+                    "componentConfig": {},
+                    "formType": "value",
+                    "formName": "formControlName",
+                    "validations": [],
+                    "title": "绑定页面标题"
+                },
+                {
+                    "name": "targetPageId",
+                    "type": "input",
+                    "hidden": true,
+                    "componentConfig": {},
+                    "formType": "value",
+                    "formName": "formControlName",
+                    "validations": [],
+                    "title": "绑定页面标识"
+                },
+                {
+                    "name": "targetViewTitle",
+                    "type": "label",
+                    "componentConfig": {},
+                    "formType": "value",
+                    "formName": "formControlName",
+                    "validations": [],
+                    "title": "绑定组件标题"
+                },
+                {
+                    "name": "targetViewId",
+                    "type": "input",
+                    "hidden": true,
+                    "componentConfig": {},
+                    "formType": "value",
+                    "formName": "formControlName",
+                    "validations": [],
+                    "title": "绑定组件标识"
+                },
+                {
+                    "name": "commandType",
+                    "type": "tag",
+                    "componentConfig": {
+                        "dataMapping": [
+                            {
+                                "type": "currentValue",
+                                "color": "#2db7f5",
+                                "field": "commandType",
+                                "value": "custom",
+                                "valueText": "自定义"
+                            },
+                            {
+                                "type": "currentValue",
+                                "color": "#87d068",
+                                "field": "commandType",
+                                "value": "builtin",
+                                "valueText": "系统内置"
+                            }
+                        ]
+                    },
+                    "formType": "value",
+                    "formName": "formControlName",
+                    "validations": [],
+                    "title": "命令类型"
+                },
+                {
+                    "name": "command",
+                    "type": "input",
+                    "hidden": true,
+                    "componentConfig": {},
+                    "formType": "value",
+                    "formName": "formControlName",
+                    "validations": [],
+                    "title": "命令名称"
+                },
+                {
+                    "name": "popCommand",
+                    "type": "popCommand",
+                    "componentConfig": {},
+                    "formType": "value",
+                    "formName": "formControlName",
+                    "validations": [],
+                    "title": "选择命令"
+                },
+                {
+                    "name": "preCondition",
+                    "type": "customSelect",
+                    "componentConfig": {
+                        "customPage": {
+                            "title": "",
+                            "width": "90%",
+                            "style": null,
+                            "maskClosable": true,
+                            "cancelText": "取消",
+                            "okText": "确定",
+                            "footerButton": null,
+                            "customAction": [],
+                            "customContent": "staticForm",
+                            "customPageConfig": {
+                                "asyncLoad": true,
+                                "loadingConfig": {
+                                    "path": "vc/page/condition.json"
+                                }
+                            },
+                            "sourceData": {
+                                "type": "root",
+                                "name": "preCondition"
+                            },
+                            "saveData": {
+                                "type": "_root",
+                                "name": "preCondition"
+                            }
+                        },
+                        "showConfig": {
+                            "type": "exist",
+                            "showString": [
+                                {
+                                    "name": "type"
+                                }
+                            ]
+                        }
+                    },
+                    "formType": "value",
+                    "formName": "formControlName",
+                    "validations": [],
+                    "title": "前置条件"
+                },
+                {
+                    "name": "parameters",
+                    "type": "arrayTable",
+                    "componentConfig": {},
+                    "properties": [
+                        {
+                            "name": "title",
+                            "type": "label",
+                            "componentConfig": {
+                                "hiddenTitle": true,
+                                "controlSize": {
+                                    "span": 24
+                                }
+                            },
+                            "formType": "value",
+                            "formName": "formControlName",
+                            "validations": [],
+                            "title": "描述"
+                        },
+                        {
+                            "name": "name",
+                            "type": "input",
+                            "componentConfig": {
+                                "hiddenTitle": true,
+                                "controlSize": {
+                                    "span": 24
+                                }
+                            },
+                            "formType": "value",
+                            "formName": "formControlName",
+                            "validations": [],
+                            "title": "参数名称"
+                        },
+                        {
+                            "name": "type",
+                            "type": "input",
+                            "componentConfig": {
+                                "hiddenTitle": true,
+                                "controlSize": {
+                                    "span": 24
+                                }
+                            },
+                            "formType": "value",
+                            "formName": "formControlName",
+                            "validations": [],
+                            "title": "参数类型"
+                        },
+                        {
+                            "name": "valueName",
+                            "type": "input",
+                            "componentConfig": {
+                                "hiddenTitle": true,
+                                "controlSize": {
+                                    "span": 24
+                                }
+                            },
+                            "formType": "value",
+                            "formName": "formControlName",
+                            "validations": [],
+                            "title": "参数取值字段"
+                        },
+                        {
+                            "name": "value",
+                            "type": "input",
+                            "componentConfig": {
+                                "hiddenTitle": true,
+                                "controlSize": {
+                                    "span": 24
+                                }
+                            },
+                            "formType": "value",
+                            "formName": "formControlName",
+                            "validations": [],
+                            "title": "默认值"
+                        }
+                    ],
+                    "formType": "array",
+                    "formName": "formControlName",
+                    "validations": [],
+                    "title": "参数设置"
+                }
+            ]
+        }
+    ]
+}

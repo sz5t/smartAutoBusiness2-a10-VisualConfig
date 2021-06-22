@@ -278,6 +278,7 @@ import { CfgFormPickerDateComponent } from './config-components/cfg-form-design/
 import { CfgFormLabelComponent } from './config-components/cfg-form-design/cfg-form-design-layout/cfg-form-label/cfg-form-label.component';
 import { CfgFormPickerYearComponent } from './config-components/cfg-form-design/cfg-form-design-layout/cfg-form-pickerYear/cfg-form-pickerYear.component';
 import { CfgFormSwitchComponent } from './config-components/cfg-form-design/cfg-form-design-layout/cfg-form-switch/cfg-form-switch.component';
+import { CnStaticFormTagComponent } from './components/cn-static-form/cn-static-form-item/cn-static-form-tag/cn-static-form-tag.component';
 
 // #region third libs
 
@@ -503,6 +504,7 @@ const COMPONENTS = [
   CnStaticFormTextareaComponent,
   CnStaticFormBusiApiComponent,
   CnStaticFormPopCommandComponent,
+  CnStaticFormTagComponent,
   // --静态表单内特殊组件结构--
   CnStaticFormAjaxComponent,
   CnStaticFormFormItemComponent,
