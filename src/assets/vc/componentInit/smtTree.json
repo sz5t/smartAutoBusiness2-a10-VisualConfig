@@ -1,0 +1,194 @@
+{
+
+    "default":{
+        "title": "表单值",
+        "data": {
+            "componentEvent":[
+                {
+                    "eventTitle":"点击节点",
+                    "eventName":"clickNode",
+                    "eventContent":null
+                }
+            ]
+        },
+        "properties": [
+          {
+            "name": "componentEvent",
+            "defaultType": "default",  
+            "formType": "array",
+            "properties": [
+                {
+                    "name": "eventTitle",
+                    "defaultType": "default",  
+                    "formType": "value"
+                },
+                {
+                    "name": "eventName",
+                    "defaultType": "default",  
+                    "formType": "value"
+                }
+            ]
+          }
+        ]
+    },
+    "builtinCommand":[
+        {
+            "command": "LOAD",
+            "commandTitle": "刷新",
+            "commandType": "builtin",
+            "declareParameters":[]
+        },
+        {
+            "command": "REFRESH_AS_CHILD",
+            "commandTitle": "刷新",
+            "commandType": "builtin",
+            "declareParameters":[
+                {
+                    "name": "$ID",
+                    "title": "主键",
+                    "dataType": "string"
+                }
+            ]
+        },
+        {
+            "command": "WINDOW",
+            "commandTitle": "弹出页面",
+            "commandType": "builtin",
+            "declareParameters":[]
+        },
+        {
+            "command": "CONFIRM",
+            "commandTitle": "确认操作",
+            "commandType": "builtin",
+            "declareParameters":[]
+        },
+        {
+            "command": "MESSAGE",
+            "commandTitle": "弹出对话框",
+            "commandType": "builtin",
+            "declareParameters":[]
+        },
+        {
+            "command": "LOAD_REFRESH_DATA",
+            "commandTitle": "刷新操作后的节点",
+            "commandType": "builtin",
+            "declareParameters":[
+                {
+                    "name":"$IDS",
+                    "title": "主键集合",
+                    "dataType": "string"
+                }
+            ]
+        },
+        {
+            "command": "APPEND_CHILD_TO_SELECTED_NODE",
+            "commandTitle": "为选中节点添加一个子节点",
+            "commandType": "builtin",
+            "declareParameters":[
+                {
+                    "name":"$ID",
+                    "title": "主键",
+                    "dataType": "string"
+                }
+            ]
+        },
+        {
+            "command": "APPEND_CHILDS_TO_SELECTED_NODE",
+            "commandTitle": "为选中节点添加多个子节点",
+            "commandType": "builtin",
+            "declareParameters":[
+                {
+                    "name":"$IDS",
+                    "title": "主键",
+                    "dataType": "string"
+                }
+            ]
+        },
+        {
+            "command": "APPEND_CHILD_TO_ROOT_NODE",
+            "commandTitle": "为根节点添加子节点",
+            "commandType": "builtin",
+            "declareParameters":[
+                {
+                    "name":"$ID",
+                    "title": "主键",
+                    "dataType": "string"
+                }
+            ]
+        },
+        {
+            "command": "UPDATE_SELECTED_NODE",
+            "commandTitle": "更新选中节点",
+            "commandType": "builtin",
+            "declareParameters":[
+                {
+                    "name":"$ID",
+                    "title": "主键",
+                    "dataType": "string"
+                }
+            ]
+        },
+        {
+            "command": "DELETE_SELECTED_NODE",
+            "commandTitle": "删除选中节点",
+            "commandType": "builtin",
+            "declareParameters":[
+                {
+                    "name":"$ID",
+                    "title": "主键",
+                    "dataType": "string"
+                }
+            ]
+        },
+        {
+            "command": "DELETE_CHECKED_NODES",
+            "commandTitle": "删除所有勾选节点",
+            "commandType": "builtin",
+            "declareParameters":[
+                {
+                    "name":"$IDS",
+                    "title": "主键",
+                    "dataType": "string"
+                }
+            ]
+        },
+        {
+            "command": "REFRESH_DATA_TO_SELECTED_PARENT_NODE",
+            "commandTitle": "刷新父节点数据",
+            "commandType": "builtin",
+            "declareParameters":[
+                {
+                    "name":"$PARENT_ID",
+                    "title": "主键",
+                    "dataType": "string"
+                }
+            ]
+        },
+        {
+            "command": "MOVE_TO_UP_SELECTED_NODE",
+            "commandTitle": "选中节点上移",
+            "commandType": "builtin",
+            "declareParameters":[
+                {
+                    "name":"$ID",
+                    "title": "主键",
+                    "dataType": "string"
+                }
+            ]
+        },
+        {
+            "command": "MOVE_TO_DOWN_SELECTED_NODE",
+            "commandTitle": "选中节点下移",
+            "commandType": "builtin",
+            "declareParameters":[
+                {
+                    "name":"$ID",
+                    "title": "主键",
+                    "dataType": "string"
+                }
+            ]
+        }
+    ]
+
+    
+}
