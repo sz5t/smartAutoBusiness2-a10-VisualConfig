@@ -1,0 +1,67 @@
+{
+    "type": "staticForm",
+    "backName": "name",
+    "backConfig": [
+        {
+            "name": "declareParameters"
+        }
+    ],
+    "properties": [
+        {
+            "name": "declareParameters",
+            "type": "arrayCard",
+            "componentConfig": {},
+            "formType": "array",
+            "formName": "formControlName",
+            "validations": [],
+            "title": "参数",
+            "properties": [
+                {
+                    "name": "name",
+                    "type": "input",
+                    "componentConfig": {},
+                    "formType": "value",
+                    "formName": "formControlName",
+                    "validations": [],
+                    "title": "参数名称"
+                },
+                {
+                    "name": "title",
+                    "type": "input",
+                    "componentConfig": {},
+                    "formType": "value",
+                    "formName": "formControlName",
+                    "validations": [],
+                    "title": "描述"
+                },
+                {
+                    "name": "type",
+                    "type": "input",
+                    "componentConfig": {},
+                    "formType": "value",
+                    "formName": "formControlName",
+                    "validations": [],
+                    "title": "参数类型"
+                },
+                {
+                    "name": "value",
+                    "type": "input",
+                    "componentConfig": {},
+                    "formType": "value",
+                    "formName": "formControlName",
+                    "validations": [],
+                    "title": "默认值"
+                },
+                {
+                    "name": "valueName",
+                    "type": "input",
+                    "componentConfig": {},
+                    "formType": "value",
+                    "formName": "formControlName",
+                    "validations": [],
+                    "title": "参数取值字段"
+                }
+            ]
+        }
+    ]
+}

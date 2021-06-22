@@ -624,71 +624,11 @@
                                                     "customAction": [],
                                                     "customContent": "staticForm",
                                                     "customPageConfig": {
-                                                        "type": "staticForm",
-                                                        "backName": "name",
-                                                        "backConfig": [
-                                                            {
-                                                                "name": "declareParameters"
-                                                            }
-                                                        ],
-                                                        "properties": [
-                                                            {
-                                                                "name": "declareParameters",
-                                                                "type": "arrayCard",
-                                                                "componentConfig": {},
-                                                                "formType": "array",
-                                                                "formName": "formControlName",
-                                                                "validations": [],
-                                                                "title": "参数",
-                                                                "properties": [
-                                                                    {
-                                                                        "name": "name",
-                                                                        "type": "input",
-                                                                        "componentConfig": {},
-                                                                        "formType": "value",
-                                                                        "formName": "formControlName",
-                                                                        "validations": [],
-                                                                        "title": "参数名称"
-                                                                    },
-                                                                    {
-                                                                        "name": "title",
-                                                                        "type": "input",
-                                                                        "componentConfig": {},
-                                                                        "formType": "value",
-                                                                        "formName": "formControlName",
-                                                                        "validations": [],
-                                                                        "title": "描述"
-                                                                    },
-                                                                    {
-                                                                        "name": "type",
-                                                                        "type": "input",
-                                                                        "componentConfig": {},
-                                                                        "formType": "value",
-                                                                        "formName": "formControlName",
-                                                                        "validations": [],
-                                                                        "title": "参数类型"
-                                                                    },
-                                                                    {
-                                                                        "name": "value",
-                                                                        "type": "input",
-                                                                        "componentConfig": {},
-                                                                        "formType": "value",
-                                                                        "formName": "formControlName",
-                                                                        "validations": [],
-                                                                        "title": "默认值"
-                                                                    },
-                                                                    {
-                                                                        "name": "valueName",
-                                                                        "type": "input",
-                                                                        "componentConfig": {},
-                                                                        "formType": "value",
-                                                                        "formName": "formControlName",
-                                                                        "validations": [],
-                                                                        "title": "参数取值字段"
-                                                                    }
-                                                                ]
-                                                            }
-                                                        ]
+                                                        "asyncLoad":true,  
+                                                        "loadingConfig":{
+                                                          "path":"vc/page/gloab/declareParameters.json"
+                                                        },
+                                                        "type": "staticForm"
                                                     },
                                                     "sourceData": {
                                                         "type": "root",
@@ -727,62 +667,11 @@
                                                     "customAction": [],
                                                     "customContent": "staticForm",
                                                     "customPageConfig": {
-                                                        "type": "staticForm",
-                                                        "backName": "name",
-                                                        "backConfig": [
-                                                            {
-                                                                "name": "localParameters"
-                                                            }
-                                                        ],
-                                                        "properties": [
-                                                            {
-                                                                "name": "localParameters",
-                                                                "type": "arrayCard",
-                                                                "componentConfig": {},
-                                                                "formType": "array",
-                                                                "formName": "formControlName",
-                                                                "validations": [],
-                                                                "title": "参数",
-                                                                "properties": [
-                                                                    {
-                                                                        "name": "name",
-                                                                        "type": "input",
-                                                                        "componentConfig": {},
-                                                                        "formType": "value",
-                                                                        "formName": "formControlName",
-                                                                        "validations": [],
-                                                                        "title": "参数名称"
-                                                                    },
-                                                                    {
-                                                                        "name": "type",
-                                                                        "type": "input",
-                                                                        "componentConfig": {},
-                                                                        "formType": "value",
-                                                                        "formName": "formControlName",
-                                                                        "validations": [],
-                                                                        "title": "参数类型"
-                                                                    },
-                                                                    {
-                                                                        "name": "value",
-                                                                        "type": "input",
-                                                                        "componentConfig": {},
-                                                                        "formType": "value",
-                                                                        "formName": "formControlName",
-                                                                        "validations": [],
-                                                                        "title": "默认值"
-                                                                    },
-                                                                    {
-                                                                        "name": "valueName",
-                                                                        "type": "input",
-                                                                        "componentConfig": {},
-                                                                        "formType": "value",
-                                                                        "formName": "formControlName",
-                                                                        "validations": [],
-                                                                        "title": "参数取值字段"
-                                                                    }
-                                                                ]
-                                                            }
-                                                        ]
+                                                        "asyncLoad":true,  
+                                                        "loadingConfig":{
+                                                          "path":"vc/page/gloab/localParameters.json"
+                                                        },
+                                                        "type": "staticForm"
                                                     },
                                                     "sourceData": {
                                                         "type": "root",
@@ -823,7 +712,7 @@
                                                     "customPageConfig": {
                                                         "asyncLoad":true,  
                                                         "loadingConfig":{
-                                                          "path":"vc/page/gloab/gloabCommandConent.json"
+                                                          "path":"vc/page/gloab/commandConent.json"
                                                         },
                                                         "type": "staticForm"
                                                         
@@ -940,7 +829,7 @@
                                                         "type": "staticForm",
                                                         "asyncLoad":true,  
                                                         "loadingConfig":{
-                                                          "path":"vc/page/gloab/gloabEventConent.json"
+                                                          "path":"vc/page/gloab/eventConent.json"
                                                         }
                                                     },
                                                     "sourceData": {
