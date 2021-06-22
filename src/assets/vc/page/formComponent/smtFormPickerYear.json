@@ -1,6 +1,6 @@
 {
     "propertyconfig": {
-        "componentCode": "smtFormShowSpanText",
+        "componentCode": "smtFormPickerYear",
         "typeConent": [
             {
                 "code": "attr",
@@ -16,6 +16,9 @@
                             "backName": "title",
                             "backConfig": [
                                 {
+                                    "name": "title"
+                                },
+                                {
                                     "name": "field"
                                 },
                                 {
@@ -23,12 +26,25 @@
                                 },
                                 {
                                     "name": "placeholder"
-                                },
-                                {
-                                    "name": "formatConfig"
                                 }
                             ],
                             "properties": [
+                                {
+                                    "name": "title",
+                                    "type": "input",
+                                    "componentConfig": {
+                                        "labelSize": {                
+                                            "span": 6
+                                          },
+                                          "controlSize": {             
+                                            "span": 18
+                                          }
+                                    },
+                                    "formType": "value",
+                                    "formName": "formControlName",
+                                    "validations": [],
+                                    "title": "标题"
+                                },
                                 {
                                     "name": "field",
                                     "type": "input",
@@ -76,58 +92,6 @@
                                     "formName": "formControlName",
                                     "validations": [],
                                     "title": "默认填充文本"
-                                },
-                                {
-                                    "name": "formatConfig",
-                                    "type": "objectEmpty",
-                                    "componentConfig": {
-                                        "labelSize": {                
-                                            "span": 4
-                                          },
-                                          "controlSize": {             
-                                            "span": 20
-                                          }
-                                    },
-                                    "properties": [
-                                        {
-                                            "name": "responseConfig",
-                                            "type": "objectEmpty",
-                                            "componentConfig": {
-                                                "labelSize": {                
-                                                    "span": 4
-                                                  },
-                                                  "controlSize": {             
-                                                    "span": 20
-                                                  }
-                                            },
-                                            "properties": [
-                                                {
-                                                    "name": "substrlength",
-                                                    "type": "input",
-                                                    "componentConfig": {
-                                                        "labelSize": {                
-                                                            "span": 4
-                                                          },
-                                                          "controlSize": {             
-                                                            "span": 20
-                                                          }
-                                                    },
-                                                    "formType": "value",
-                                                    "formName": "formControlName",
-                                                    "validations": [],
-                                                    "title": "截取长度"
-                                                }
-                                            ],
-                                            "formType": "object",
-                                            "formName": "formControlName",
-                                            "validations": [],
-                                            "title": "返回结果配置"
-                                        }
-                                    ],
-                                    "formType": "object",
-                                    "formName": "formControlName",
-                                    "validations": [],
-                                    "title": "初始化配置"
                                 }
                             ]
                         },

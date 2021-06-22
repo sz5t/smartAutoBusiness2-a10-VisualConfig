@@ -1,6 +1,6 @@
 {
     "propertyconfig": {
-        "componentCode": "smtFormRangePicker",
+        "componentCode": "smtFormLabel",
         "typeConent": [
             {
                 "code": "attr",
@@ -16,28 +16,60 @@
                             "backName": "title",
                             "backConfig": [
                                 {
+                                    "name": "title"
+                                },
+                                {
                                     "name": "field"
                                 },
                                 {
                                     "name": "type"
                                 },
                                 {
-                                    "name": "placeholder"
-                                },
-                                {
-                                    "name": "showTime"
+                                    "name": "hidden"
                                 }
                             ],
                             "properties": [
+                                {
+                                    "name": "type",
+                                    "type": "input",
+                                    "componentConfig": {
+                                        "labelSize": {                
+                                            "span": 6
+                                          },
+                                          "controlSize": {             
+                                            "span": 18
+                                          }
+                                    },
+                                    "formType": "value",
+                                    "formName": "formControlName",
+                                    "validations": [],
+                                    "title": "表单组件"
+                                },
+                                {
+                                    "name": "title",
+                                    "type": "input",
+                                    "componentConfig": {
+                                        "labelSize": {                
+                                            "span": 6
+                                          },
+                                          "controlSize": {             
+                                            "span": 18
+                                          }
+                                    },
+                                    "formType": "value",
+                                    "formName": "formControlName",
+                                    "validations": [],
+                                    "title": "标题"
+                                },
                                 {
                                     "name": "field",
                                     "type": "input",
                                     "componentConfig": {
                                         "labelSize": {                
-                                            "span": 4
+                                            "span": 6
                                           },
                                           "controlSize": {             
-                                            "span": 20
+                                            "span": 18
                                           }
                                     },
                                     "formType": "value",
@@ -46,52 +78,34 @@
                                     "title": "字段"
                                 },
                                 {
-                                    "name": "type",
-                                    "type": "input",
-                                    "componentConfig": {
-                                        "labelSize": {                
-                                            "span": 4
-                                          },
-                                          "controlSize": {             
-                                            "span": 20
-                                          }
-                                    },
-                                    "formType": "value",
-                                    "formName": "formControlName",
-                                    "validations": [],
-                                    "title": "类型"
-                                },
-                                {
-                                    "name": "placeholder",
-                                    "type": "input",
-                                    "componentConfig": {
-                                        "labelSize": {                
-                                            "span": 4
-                                          },
-                                          "controlSize": {             
-                                            "span": 20
-                                          }
-                                    },
-                                    "formType": "value",
-                                    "formName": "formControlName",
-                                    "validations": [],
-                                    "title": "默认填充文本"
-                                },
-                                {
-                                    "name": "showTime",
+                                    "name": "hidden",
                                     "type": "switch",
                                     "componentConfig": {
                                         "labelSize": {                
-                                            "span": 4
+                                            "span": 6
                                           },
                                           "controlSize": {             
-                                            "span": 20
-                                          }
+                                            "span": 18
+                                          },
+                                          "options":[
+                                            {
+                                                "label": "显示",
+                                                "value": false,
+                                                "type": "check"
+                                            },
+                                            {
+                                                "label": "隐藏",
+                                                "value": true,
+                                                "type": "close"
+                                            }
+                                        ],
+                                        "labelName": "label",
+                                        "valueName": "value"
                                     },
                                     "formType": "value",
                                     "formName": "formControlName",
                                     "validations": [],
-                                    "title": "是否展示具体时间"
+                                    "title": "隐藏"
                                 }
                             ]
                         },

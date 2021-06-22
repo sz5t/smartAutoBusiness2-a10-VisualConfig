@@ -266,6 +266,18 @@ import { SmtDataTableItemDirective } from './smt-components/smt-data-table/smt-d
 import { SmtDataTableInputComponent } from './smt-components/smt-data-table/smt-data-table-items/smt-data-table-input/smt-data-table-input.component';
 import { CnStaticFormCommandComponent } from './components/cn-static-form/cn-static-form-cmpt/cn-static-form-command/cn-static-form-command.component';
 import { CnStaticFormPopCommandComponent } from './components/cn-static-form/cn-static-form-item/cn-static-form-pop-command/cn-static-form-pop-command.component';
+import { CfgFormDesignBase } from './config-components/cfg-form-design/cfg-form-design-layout/cfgFormDesignBase';
+import { CfgFormSpanComponent } from './config-components/cfg-form-design/cfg-form-design-layout/cfg-form-span/cfg-form-span.component';
+import { CfgFormTextareaComponent } from './config-components/cfg-form-design/cfg-form-design-layout/cfg-form-textarea/cfg-form-textarea.component';
+import { CfgFormTagComponent } from './config-components/cfg-form-design/cfg-form-design-layout/cfg-form-tag/cfg-form-tag.component';
+import { CfgFormRadioComponent } from './config-components/cfg-form-design/cfg-form-design-layout/cfg-form-radio/cfg-form-radio.component';
+import { CfgFormPickerWeekComponent } from './config-components/cfg-form-design/cfg-form-design-layout/cfg-form-pickerWeek/cfg-form-pickerWeek.component';
+import { CfgFormPickerMonthComponent } from './config-components/cfg-form-design/cfg-form-design-layout/cfg-form-pickerMonth/cfg-form-pickerMonth.component';
+import { CfgFormPickerRangeComponent } from './config-components/cfg-form-design/cfg-form-design-layout/cfg-form-pickerRange/cfg-form-pickerRange.component';
+import { CfgFormPickerDateComponent } from './config-components/cfg-form-design/cfg-form-design-layout/cfg-form-pickerDate/cfg-form-pickerDate.component';
+import { CfgFormLabelComponent } from './config-components/cfg-form-design/cfg-form-design-layout/cfg-form-label/cfg-form-label.component';
+import { CfgFormPickerYearComponent } from './config-components/cfg-form-design/cfg-form-design-layout/cfg-form-pickerYear/cfg-form-pickerYear.component';
+import { CfgFormSwitchComponent } from './config-components/cfg-form-design/cfg-form-design-layout/cfg-form-switch/cfg-form-switch.component';
 
 // #region third libs
 
@@ -453,7 +465,18 @@ const COMPONENTS = [
   CfgFormInputComponent,
   CfgFormSelectComponent,
   CfgFormCheckComponent,
-
+  CfgFormDesignBase,
+  CfgFormSpanComponent,
+  CfgFormTextareaComponent,
+  CfgFormTagComponent,
+  CfgFormRadioComponent,
+  CfgFormPickerWeekComponent,
+  CfgFormPickerMonthComponent,
+  CfgFormPickerRangeComponent,
+  CfgFormPickerDateComponent,
+  CfgFormLabelComponent,
+  CfgFormPickerYearComponent,
+  CfgFormSwitchComponent,
   //--静态表单--
   CnStaticFormComponent,
   CnStaticFormInputComponent,
@@ -494,7 +517,6 @@ const COMPONENTS = [
   CnStaticFormBusiPopApiComponent,
   CnStaticFormCommandComponent,
 
-
   // --流程--
   CnCfgFlowDesignComponent,
   CnCfgFlowAttrSettingComponent,
@@ -534,7 +556,7 @@ const COMPONENTS = [
   // 弹出页
   SmtPopPageComponent,
   // 新表格小组件
-  SmtDataTableInputComponent
+  SmtDataTableInputComponent,
 ];
 const DIRECTIVES = [
   CnLayoutResolverDirective,
@@ -581,8 +603,6 @@ const DIRECTIVES = [
     CfgAttributeRanksRowModalComponent,
     ToolAttrJsonComponent,
     SmtComponentComponent,
-
-
   ],
   exports: [
     CommonModule,
@@ -606,4 +626,4 @@ const DIRECTIVES = [
   entryComponents: [...COMPONENTS],
   providers: [],
 })
-export class SharedModule { }
+export class SharedModule {}

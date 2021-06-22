@@ -16,6 +16,9 @@
                             "backName": "title",
                             "backConfig": [
                                 {
+                                    "name": "title"
+                                },
+                                {
                                     "name": "field"
                                 },
                                 {
@@ -35,6 +38,22 @@
                                 }
                             ],
                             "properties": [
+                                {
+                                    "name": "title",
+                                    "type": "input",
+                                    "componentConfig": {
+                                        "labelSize": {                
+                                            "span": 6
+                                          },
+                                          "controlSize": {             
+                                            "span": 18
+                                          }
+                                    },
+                                    "formType": "value",
+                                    "formName": "formControlName",
+                                    "validations": [],
+                                    "title": "标题"
+                                },
                                 {
                                     "name": "field",
                                     "type": "input",

@@ -70,13 +70,13 @@
           "dropType": "form",
           "dropName": "smtFormTreeSelect",
           "icon": "select",
-          "title": "下拉选择"
+          "title": "下拉树"
         },
         {
           "id": "004",
           "type": "component",
           "dropType": "form",
-          "dropName": "smtFormCheck",
+          "dropName": "smtFormRadio",
           "icon": "check-square",
           "title": "单选框"
         },
@@ -84,7 +84,7 @@
           "id": "004",
           "type": "component",
           "dropType": "form",
-          "dropName": "smtFormRadio",
+          "dropName": "smtFormCheck",
           "icon": "check-square",
           "title": "复选框"
         },

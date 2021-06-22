@@ -16,63 +16,160 @@
                             "backName": "title",
                             "backConfig": [
                                 {
+                                    "name": "title"
+                                },
+                                {
                                     "name": "field"
+                                },
+                                {
+                                    "name": "inputType"
+                                },
+                                {
+                                    "name": "hidden"
                                 },
                                 {
                                     "name": "type"
                                 },
                                 {
-                                    "name": "displayType"
+                                    "name": "placeholder"
                                 }
                             ],
                             "properties": [
+                                {
+                                    "name": "type",
+                                    "type": "input",
+                                    "componentConfig": {
+                                        "labelSize": {
+                                            "span": 6
+                                        },
+                                        "controlSize": {
+                                            "span": 18
+                                        }
+                                    },
+                                    "formType": "value",
+                                    "formName": "formControlName",
+                                    "validations": [],
+                                    "title": "表单组件"
+                                },
+                                {
+                                    "name": "title",
+                                    "type": "input",
+                                    "componentConfig": {
+                                        "labelSize": {                
+                                            "span": 6
+                                          },
+                                          "controlSize": {             
+                                            "span": 18
+                                          }
+                                    },
+                                    "formType": "value",
+                                    "formName": "formControlName",
+                                    "validations": [],
+                                    "title": "标题"
+                                },
                                 {
                                     "name": "field",
                                     "type": "input",
                                     "componentConfig": {
                                         "labelSize": {                
-                                            "span": 4
+                                            "span": 6
                                           },
                                           "controlSize": {             
-                                            "span": 20
+                                            "span": 18
                                           }
                                     },
                                     "formType": "value",
                                     "formName": "formControlName",
                                     "validations": [],
-                                    "title": "字段"
+                                    "title": "绑定字段"
                                 },
                                 {
-                                    "name": "type",
+                                    "name": "placeholder",
                                     "type": "input",
                                     "componentConfig": {
-                                        "labelSize": {                
-                                            "span": 4
-                                          },
-                                          "controlSize": {             
-                                            "span": 20
-                                          }
+                                        "labelSize": {
+                                            "span": 6
+                                        },
+                                        "controlSize": {
+                                            "span": 18
+                                        }
                                     },
                                     "formType": "value",
                                     "formName": "formControlName",
                                     "validations": [],
-                                    "title": "类型"
+                                    "title": "默认文本"
                                 },
                                 {
-                                    "name": "displayType",
-                                    "type": "input",
+                                    "name": "inputType",
+                                    "type": "select",
                                     "componentConfig": {
                                         "labelSize": {                
-                                            "span": 4
+                                            "span": 6
                                           },
                                           "controlSize": {             
-                                            "span": 20
-                                          }
+                                            "span": 18
+                                          },
+                                          "options":[
+                                            {
+                                                "label": "文本",
+                                                "value": "text"
+                                            },
+                                            {
+                                                "label": "数字",
+                                                "value": "number"
+                                            },
+                                            {
+                                                "label": "密码",
+                                                "value": "password"
+                                            },
+                                            {
+                                                "label": "URL",
+                                                "value": "url"
+                                            },
+                                            {
+                                                "label": "电子邮箱",
+                                                "value": "email"
+                                            },
+                                            {
+                                                "label": "隐藏域",
+                                                "value": "hidden"
+                                            }
+                                        ],
+                                        "labelName": "label",
+                                        "valueName": "value"
                                     },
                                     "formType": "value",
                                     "formName": "formControlName",
                                     "validations": [],
-                                    "title": "显示类型"
+                                    "title": "文本类型"
+                                },
+                                {
+                                    "name": "hidden",
+                                    "type": "switch",
+                                    "componentConfig": {
+                                        "labelSize": {                
+                                            "span": 6
+                                          },
+                                          "controlSize": {             
+                                            "span": 18
+                                          },
+                                          "options":[
+                                            {
+                                                "label": "显示",
+                                                "value": false,
+                                                "type": "check"
+                                            },
+                                            {
+                                                "label": "隐藏",
+                                                "value": true,
+                                                "type": "close"
+                                            }
+                                        ]
+                                    },
+                                    "formType": "value",
+                                    "formName": "formControlName",
+                                    "validations": [],
+                                    "title": "隐藏"
                                 }
                             ]
                         },

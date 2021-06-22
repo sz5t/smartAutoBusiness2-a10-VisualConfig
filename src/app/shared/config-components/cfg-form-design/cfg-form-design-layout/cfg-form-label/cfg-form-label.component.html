@@ -12,24 +12,7 @@
         <nz-form-control [nzSpan]="config.controlSize.span" [nzSm]="config.controlSize.nzSm"
             [nzXs]="config.controlSize.nzXs" [nzMd]="config.controlSize.nzMd" [nzLg]="config.controlSize.nzLg"
             [nzXl]="config.controlSize.nzXl">
-            <nz-input-group [nzAddOnBefore]="before" [nzAddOnBeforeIcon]="changeIcon(this.config.inputType)">
-                <input nz-input value="#{{config.field}}" [type]="config.inputType" disabled  [placeholder]="this.config.placeholder"/>
-            </nz-input-group>
-            <ng-template #afterIcon>
-
-            </ng-template>
-
-            <ng-template #beforeIcon>
-
-            </ng-template>
-
-            <ng-template #before>
-
-            </ng-template>
-
-            <ng-template #after>
-
-            </ng-template>
+            <nz-form-text disabled>#{{this.config.field}}</nz-form-text>
         </nz-form-control>
     </nz-form-item>
 </div>
