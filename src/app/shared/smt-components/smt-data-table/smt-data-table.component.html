@@ -128,26 +128,26 @@
                                     <td nzBreakWord [nzAlign]="col.align?col.align:'left'"
                                         [nzLeft]="col.hasOwnProperty('offsetLeft')?col.offsetLeft:false"
                                         [nzRight]="col.hasOwnProperty('offsetRight')?col.offsetRight:false">
-                                        <!-- <ng-container CnGridItemDirective *ngIf="col.custom; else t3" [state]="'edit'"
-                                        [bindObj]="col.custom" [rowData]="mapOfDataState[rowData[KEY_ID]]['data']"
-                                        [initData]="initData" [tempData]="tempData"
-                                        [valueConfig]="{'id':rowData[KEY_ID],'value':mapOfDataState[rowData[KEY_ID]]['data']}"
-                                        (updateValue)="valueChange($event)"
-                                        [formCascade]="formCascade[rowData[KEY_ID]]?formCascade[rowData[KEY_ID]][col.custom.field]:null">
-                                    </ng-container> -->
-                                        <!-- <ng-template #t3> -->
-                                        <ng-container [ngSwitch]="mapOfDataState[rowData[KEY_ID]]['state']">
-                                            <ng-container *ngSwitchCase="'new'">
-                                                {{ mapOfDataState[rowData[KEY_ID]]['data'][col.field] }}
-                                            </ng-container>
-                                            <ng-container *ngSwitchCase="'edit'">
-                                                {{ mapOfDataState[rowData[KEY_ID]]['data'][col.field] }}
-                                            </ng-container>
-                                            <ng-container *ngSwitchDefault>
-                                                {{ mapOfDataState[rowData[KEY_ID]]['originData'][col.field] }}
-                                            </ng-container>
+                                        <ng-container appSmtDataTableItem [state]="'text'" *ngIf="col.custom; else t3"
+                                            [config]="col.custom"
+                                            [valueConfig]="{'id':rowData[KEY_ID], 'rowData':mapOfDataState[rowData[KEY_ID]]['data'],
+                                            'value':mapOfDataState[rowData[KEY_ID]]['data'][col.custom.field] ? mapOfDataState[rowData[KEY_ID]]['data'][col.custom.field] : mapOfDataState[rowData[KEY_ID]]['data'][col.field]}"
+                                            (updateValue)="valueChange($event)" (cascadeValue)="valueChange($event)"
+                                            [dataTableDataServe]="dataTableServe">
                                         </ng-container>
-                                        <!-- </ng-template> -->
+                                        <ng-template #t3>
+                                            <ng-container [ngSwitch]="mapOfDataState[rowData[KEY_ID]]['state']">
+                                                <ng-container *ngSwitchCase="'new'">
+                                                    {{ mapOfDataState[rowData[KEY_ID]]['data'][col.field] }}
+                                                </ng-container>
+                                                <ng-container *ngSwitchCase="'edit'">
+                                                    {{ mapOfDataState[rowData[KEY_ID]]['data'][col.field] }}
+                                                </ng-container>
+                                                <ng-container *ngSwitchDefault>
+                                                    {{ mapOfDataState[rowData[KEY_ID]]['originData'][col.field] }}
+                                                </ng-container>
+                                            </ng-container>
+                                        </ng-template>
                                     </td>
 
                                 </ng-container>

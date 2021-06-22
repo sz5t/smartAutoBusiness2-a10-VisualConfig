@@ -90,8 +90,13 @@ export class SmtParameterResolver {
     return new DataItemParameter(param, model).buildParameter();
   }
 
-  private static checkedItems(param, model, parseNull) {
-    return new CheckedItemsParameter(param, model, parseNull).buildParameter();
+  private static checkedItemsIds(param, model, parseNull) {
+    // tslint:disable-next-line: no-use-before-declare
+    return new CheckedItemsIdsParameter(param, model, parseNull).buildParameter();
+  }
+
+  private static checkedItems(param, model) {
+    return new CheckedItemsParameter(param, model).buildParameter();
   }
 
   private static selectedItem(param, model, parseNull) {
@@ -130,12 +135,12 @@ export class SmtParameterResolver {
     return new RouterParameter(param, model, parseNull).buildParameter();
   }
 
-  public static addedItems(param, model, parseNull) {
-    return new AddedItems(param, model, parseNull).buildParameter();
+  public static addedItems(param, model) {
+    return new AddedItems(param, model).buildParameter();
   }
 
-  public static editedItems(param, model, parseNull) {
-    return new EditedItems(param, model, parseNull).buildParameter();
+  public static editedItems(param, model) {
+    return new EditedItems(param, model).buildParameter();
   }
 }
 
@@ -436,14 +441,14 @@ class ComponentValueParameter extends BaseParameter implements IParameter {
   }
 }
 
-class CheckedItemsParameter extends BaseParameter implements IParameter {
+class CheckedItemsIdsParameter extends BaseParameter implements IParameter {
   private _result: any;
   constructor(private _param, private _model, private _parseNull) {
     super();
   }
   public buildParameter() {
     if (this._parseNull) {
-      const checkedVal = this._model.checkedItems;
+      const checkedVal = this._model.checkedItemsIds;
       if (this._param.valueName) {
         this._result = checkedVal[this._param.valueName];
       } else {
@@ -452,7 +457,7 @@ class CheckedItemsParameter extends BaseParameter implements IParameter {
         }
       }
     } else {
-      const checkedVal = this._model.checkedItems;
+      const checkedVal = this._model.checkedItemsIds;
       if (this._param.valueName) {
         const value = checkedVal[this._param.valueName];
         if (this._param.conditionType) {
@@ -471,6 +476,18 @@ class CheckedItemsParameter extends BaseParameter implements IParameter {
         }
       }
     }
+    return this._result;
+  }
+}
+
+class CheckedItemsParameter extends BaseParameter implements IParameter {
+  private _result: any;
+  constructor(private _param, private _model) {
+    super();
+  }
+  public buildParameter() {
+    const checkedVal = this._model.checkedItems;
+    this._result = checkedVal;
     return this._result;
   }
 }
@@ -828,38 +845,15 @@ class RouterParameter extends BaseParameter implements IParameter {
 
 class AddedItems extends BaseParameter implements IParameter {
   private _result: any;
-  constructor(private _param, private _model, private _parseNull) {
+  constructor(private _param, private _model) {
     super();
   }
   public buildParameter() {
-    if (this._parseNull) {
-      const addedItemsVal = this._model.addedItems;
-      if (this._param.valueName) {
-        this._result = addedItemsVal[this._param.valueName];
-      } else {
-        if (this._param.value) {
-          this._result = this._param.value === 'null' ? null : this._param.value;
-        }
-      }
+    const addedItemsVal = this._model.addedItems;
+    if (this._param.conditionType) {
+      this._result = this.getParameter(this._param.conditionType, addedItemsVal);
     } else {
-      const addedItemsVal = this._model.addedItems;
-      if (this._param.valueName) {
-        const value = addedItemsVal[this._param.valueName];
-        if (this._param.conditionType) {
-          this._result = this.getParameter(this._param.conditionType, value);
-        } else {
-          this._result = value;
-        }
-      } else {
-        if (this._param.value) {
-          const value = this._param.value === 'null' ? null : this._param.value;
-          if (this._param.conditionType) {
-            this._result = this.getParameter(this._param.conditionType, value);
-          } else {
-            this._result = value;
-          }
-        }
-      }
+      this._result = addedItemsVal;
     }
     return this._result;
   }
@@ -867,38 +861,15 @@ class AddedItems extends BaseParameter implements IParameter {
 
 class EditedItems extends BaseParameter implements IParameter {
   private _result: any;
-  constructor(private _param, private _model, private _parseNull) {
+  constructor(private _param, private _model) {
     super();
   }
   public buildParameter() {
-    if (this._parseNull) {
-      const editedItemsVal = this._model.editedItems;
-      if (this._param.valueName) {
-        this._result = editedItemsVal[this._param.valueName];
-      } else {
-        if (this._param.value) {
-          this._result = this._param.value === 'null' ? null : this._param.value;
-        }
-      }
+    const editedItemsVal = this._model.editedItems;
+    if (this._param.conditionType) {
+      this._result = this.getParameter(this._param.conditionType, editedItemsVal);
     } else {
-      const editedItemsVal = this._model.editedItems;
-      if (this._param.valueName) {
-        const value = editedItemsVal[this._param.valueName];
-        if (this._param.conditionType) {
-          this._result = this.getParameter(this._param.conditionType, value);
-        } else {
-          this._result = value;
-        }
-      } else {
-        if (this._param.value) {
-          const value = this._param.value === 'null' ? null : this._param.value;
-          if (this._param.conditionType) {
-            this._result = this.getParameter(this._param.conditionType, value);
-          } else {
-            this._result = value;
-          }
-        }
-      }
+      this._result = editedItemsVal;
     }
     return this._result;
   }

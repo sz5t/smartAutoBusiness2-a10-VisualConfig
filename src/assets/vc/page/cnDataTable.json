@@ -363,6 +363,35 @@
                                             "title": "列宽"
                                         },
                                         {
+                                            "name": "custom",
+                                            "type": "customSelect",
+                                            "componentConfig": {
+                                                "customPage": {
+                                                    "title": "",
+                                                    "width": "90%",
+                                                    "style": null,
+                                                    "maskClosable": true,
+                                                    "cancelText": "取消",
+                                                    "okText": "确定",
+                                                    "footerButton": null,
+                                                    "customAction": [],
+                                                    "customContent": "gridItem",
+                                                    "customPageConfig": {}
+                                                },
+                                                "showConfig": {
+                                                    "showString": [
+                                                        {
+                                                            "name": "type"
+                                                        }
+                                                    ]
+                                                }
+                                            },
+                                            "formType": "value",
+                                            "formName": "formControlName",
+                                            "validations": [],
+                                            "title": "文本展示"
+                                        },
+                                        {
                                             "name": "editor",
                                             "type": "customSelect",
                                             "componentConfig": {
@@ -389,7 +418,7 @@
                                             "formType": "value",
                                             "formName": "formControlName",
                                             "validations": [],
-                                            "title": "展示"
+                                            "title": "编辑展示"
                                         },
                                         {
                                             "name": "editParams",

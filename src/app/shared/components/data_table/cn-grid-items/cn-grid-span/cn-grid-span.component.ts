@@ -12,7 +12,7 @@ export class CnGridSpanComponent implements OnInit {
   @Input() public rowData;
   @Input() public tempData;
   text;
-  
+
   public isShow = true;
   public showAll = false;
   public showLable;
@@ -29,36 +29,31 @@ export class CnGridSpanComponent implements OnInit {
     }
   }
 
-  public initText(v?){
+  public initText(v?) {
     if (this.config.formatConfig) {
-     
-      const  formatConfig = this.config.formatConfig;
+
+      const formatConfig = this.config.formatConfig;
       let regularData = v;
       if (formatConfig.type) {
-          if (formatConfig.type === 'row') {
-            if (this.rowData) {
-              regularData = this.rowData[formatConfig.valueName];
-            }
+        if (formatConfig.type === 'row') {
+          if (this.rowData) {
+            regularData = this.rowData[formatConfig.valueName];
           }
         }
+      }
       this.showTitle = regularData;
       this.showLable = regularData;
       const regularflag = formatConfig.responseConfig.substrlength ? formatConfig.responseConfig.substrlength : 50;
       if (regularData) {
-          if (regularData.length <= regularflag) {
-            this.isShow = true;
-            return true;
-          } else {
-            this.isShow = false;
-            this.showShortLable = regularData.substring(0, regularflag);
-            return true;
-          }
+        if (regularData.length <= regularflag) {
+          this.isShow = true;
+          return true;
+        } else {
+          this.isShow = false;
+          this.showShortLable = regularData.substring(0, regularflag);
+          return true;
         }
-
-
-     
-
-
+      }
     }
   }
 
@@ -73,7 +68,7 @@ export class CnGridSpanComponent implements OnInit {
     this.showAll = !this.showAll;
 
   }
-  public cascadeAnalysis(c?){
+  public cascadeAnalysis(c?) {
 
   }
 

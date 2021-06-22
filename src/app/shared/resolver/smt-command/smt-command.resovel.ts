@@ -1,4 +1,6 @@
 import { async } from '@angular/core/testing';
+import { isArray } from '@antv/x6/lib/util/lang/lang';
+import { event } from 'jquery';
 import { ISenderModel } from 'src/app/core/relations/bsn-relatives';
 import { SmtPreCondition } from '../smt-pre-condition/smt-pre-condition.resolver';
 import { SmtMessageSenderResolver } from '../smt-relation/smt-relation-resolver';
@@ -16,7 +18,7 @@ export class SmtCommandResolver {
           console.log('commandItem');
           customCommand.map(async (cmdItem: any) => {
             // debugger;
-            if (cmdItem.command === eventData.command && eventData.pageCode === this._componentInstance.dataServe.pageCode) {
+            if (cmdItem.command === eventData.command && eventData.targetViewId === this._componentInstance.config.id && eventData.pageCode === this._componentInstance.dataServe.pageCode) {
               // 缺少pageCode 判断
               await this._executeCommand(eventData.data, cmdItem);
             }
@@ -29,26 +31,40 @@ export class SmtCommandResolver {
   private async _executeCommand(eventData: any, cmd: any) {
     if (cmd.preCondition) {
     }
-    let _execParamsData: any = {};
+    let _execParamsData: any;
     if (cmd.declareParameters && cmd.declareParameters.length > 0) {
+      eventData = Object.keys(eventData).length > 0 ? eventData : null
       const declareParamValue = this._componentInstance.buildParameters(cmd.declareParameters, eventData, false);
-      cmd.declareParameters.map((p: any) => {
-        if (p.valueTo && this._componentInstance[p.valueTo]) {
-          this._componentInstance[p.valueTo][p.name] = declareParamValue[p.name];
-        }
-      });
-      _execParamsData = { ...declareParamValue, ..._execParamsData };
+      const declareParamArray = this.handleParams(declareParamValue);
+      if (declareParamArray.length === 0) {
+        _execParamsData = {};
+        cmd.declareParameters.map((p: any) => {
+          if (p.valueTo && this._componentInstance[p.valueTo]) {
+            this._componentInstance[p.valueTo][p.name] = declareParamValue[p.name];
+          }
+        });
+        _execParamsData = { ...declareParamValue, ..._execParamsData };
+      } else {
+        _execParamsData = [];
+        _execParamsData = [...declareParamArray, ..._execParamsData];
+      }
     }
     if (cmd.localParameters && cmd.localParameters.length > 0) {
       const localParamValue = this._componentInstance.buildParameters(cmd.localParameters);
-      cmd.localParameters.map((p: any) => {
-        if (p.valueTo && this._componentInstance[p.valueTo]) {
-          this._componentInstance[p.valueTo][p.name] = localParamValue[p.name];
-        }
-      });
+      const localParamArray = this.handleParams(localParamValue);
+      if (localParamArray.length === 0) {
+        cmd.localParameters.map((p: any) => {
+          if (p.valueTo && this._componentInstance[p.valueTo]) {
+            this._componentInstance[p.valueTo][p.name] = localParamValue[p.name];
+          }
+        });
 
-      _execParamsData = { ...localParamValue, ..._execParamsData };
+        _execParamsData = { ...localParamValue, ..._execParamsData };
+      } else {
+        _execParamsData = [...localParamArray, ..._execParamsData];
+      }
     }
+
     // 执行命令
     if (cmd.commandType === 'builtin') {
       const method = this._componentInstance.COMPONENT_METHODS[cmd.command];
@@ -115,10 +131,21 @@ export class SmtCommandResolver {
     }
   }
 
+  private handleParams(paramsObj) {
+    const paramsArray = Object.keys(paramsObj);
+    let paramsFinal: any = [];
+    for (let i = 0; i < paramsArray.length; i++) {
+      if (Array.isArray(paramsObj[paramsArray[i]]) === true) {
+        paramsFinal = paramsObj[paramsArray[i]]
+      }
+    }
+    return paramsFinal;
+  }
+
   private async resolveCommandOfAjax(command, execParamsData) {
     let next: any = 'prevent';
     const data = execParamsData === {} ? null : execParamsData;
-    const response = await this._componentInstance.executeHttp(command.ajaxConfig, data, null);
+    const response = await this._componentInstance.executeHttp(command.ajaxConfig, data, '', Array.isArray(data));
     if (response.state === 1) {
       for (let i = 0; i < command.result.length; i++) {
         const nextResult = this.afterOperate(command.result[i], this._componentInstance.componentService.modalService, data);

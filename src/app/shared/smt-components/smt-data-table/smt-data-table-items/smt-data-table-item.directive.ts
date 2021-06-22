@@ -1,23 +1,32 @@
 import { ComponentFactoryResolver, ComponentRef, Directive, Input, Output, SimpleChanges, ViewContainerRef, EventEmitter, OnDestroy, OnInit, OnChanges, Type } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
+import { SmtDataTableDatePickerComponent } from './smt-data-table-date-picker/smt-data-table-date-picker.component';
+import { SmtDataTableDateTimePickerComponent } from './smt-data-table-date-time-picker/smt-data-table-date-time-picker.component';
 import { SmtDataTableInputComponent } from './smt-data-table-input/smt-data-table-input.component';
+import { SmtDataTableMonthPickerComponent } from './smt-data-table-month-picker/smt-data-table-month-picker.component';
+import { SmtDataTableRangePickerComponent } from './smt-data-table-range-picker/smt-data-table-range-picker.component';
+import { SmtDataTableSelectComponent } from './smt-data-table-select/smt-data-table-select.component';
+import { SmtDataTableShowSpanTextComponent } from './smt-data-table-show-span-text/smt-data-table-show-span-text.component';
+import { SmtDataTableTagComponent } from './smt-data-table-tag/smt-data-table-tag.component';
+import { SmtDataTableWeekPickerComponent } from './smt-data-table-week-picker/smt-data-table-week-picker.component';
+import { SmtDataTableYearPickerComponent } from './smt-data-table-year-picker/smt-data-table-year-picker.component';
 const components: { [type: string]: Type<any> } = {
-  cnGridInput: SmtDataTableInputComponent,
+  smtGridInput: SmtDataTableInputComponent,
   // cnGridSwitch:'',
-  // cnGridShowSpanText:'',
-  // cnGridTag:'',
+  smtGridShowSpanText: SmtDataTableShowSpanTextComponent,
+  smtGridTag: SmtDataTableTagComponent,
   // cnGridSelectMultiple:'',
   // cnGridTreeSelect:'',
-  // cnGridSelect:'',
+  smtGridSelect: SmtDataTableSelectComponent,
   // cnGridGridSelect:'',
   // cnGridTextArea:'',
   // cnGridRadio:'',
-  // cnGridDatePicker:'',
-  // cnGridDateTimePicker:'',
-  // cnGridYearPicker:'',
-  // cnGridWeekPicker:'',
-  // cnGridMonthPicker:'',
-  // cnGridRangePicker:'',
+  smtGridDatePicker: SmtDataTableDatePickerComponent,
+  smtGridDateTimePicker: SmtDataTableDateTimePickerComponent,
+  smtGridYearPicker: SmtDataTableYearPickerComponent,
+  smtGridWeekPicker: SmtDataTableWeekPickerComponent,
+  smtGridMonthPicker: SmtDataTableMonthPickerComponent,
+  smtGridRangePicker: SmtDataTableRangePickerComponent
 
 }
 @Directive({
