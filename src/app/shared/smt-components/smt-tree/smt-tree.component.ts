@@ -109,7 +109,7 @@ export class SmtTreeComponent extends SmtComponentBase implements ISmtComponent,
     this.initEvent(this.eventObjs);
 
     this.initCommand(this.commandObjs);
-
+    console.log('tree');
     this.dataSourceObj.loadingOnInit && this.load();
   }
 

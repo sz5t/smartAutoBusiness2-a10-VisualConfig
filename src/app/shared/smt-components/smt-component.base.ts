@@ -275,13 +275,23 @@ export class SmtComponentBase {
 
   //#region 数据源解析
   public setDataSourceCfg(config: any) {
+    let ds: any = {};
+    if (config.hasOwnProperty('dataSource')) {
+      ds = config.dataSource
+    }
+    if (config.hasOwnProperty('dataSourceCfg')) {
+      ds = config.dataSourceCfg
+    }
+
     return {
-      isloadingOnInit: config.sourceData.isloadingOnInit,
-      loadingConfig: config.sourceData.loadingConfig,
-      loadingItemConfig: config.sourceData.loadingItemConfig,
-      expandConfig: config.sourceData.expandConfig,
-      async: config.sourceData.async,
+      async: ds.hasOwnProperty('async') ? ds.async : false,
+      isloadingOnInit: ds.hasOwnProperty('isloadingOnInit') ? ds['isloadingOnInit'] : false,
+      loadingOnInit: ds.hasOwnProperty('loadingOnInit') ? ds.loadingOnInit : true,
+      loadingConfig: ds['loadingConfig'] ? ds.loadingConfig : null,
+      loadingItemConfig: ds['loadingItemConfig'] ? ds.loadingItemConfig : null,
+      expandConfig: ds['expandConfig'] ? ds.expandConfig : null,
     };
+
   }
   //#endregion
 

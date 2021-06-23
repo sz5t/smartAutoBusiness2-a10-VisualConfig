@@ -15,6 +15,8 @@ export class SmtPopPageComponent extends SmtComponentBase implements OnInit {
   parentDom: any;
   config: any;
   popPage: any;
+  pageCode: any;
+  pageInitData: any;
 
   // @ViewChild('popPage', { static: true }) public popPage: SmtDynamicPageComponent;
   private _layoutObj: ComponentRef<any>;
@@ -32,7 +34,10 @@ export class SmtPopPageComponent extends SmtComponentBase implements OnInit {
   }
 
   ngOnInit(): void {
-    this.loadDynamicLayout('PAGE_TEST_FLOW_STUDENT_APPLY');
+    if (!this.pageCode) {
+      this.pageCode = 'PAGE_TEST_FLOW_STUDENT_APPLY';
+    }
+    this.loadDynamicLayout(this.pageCode);
     console.log('poppage');
 
   }
@@ -57,7 +62,7 @@ export class SmtPopPageComponent extends SmtComponentBase implements OnInit {
           this.componentService.apiService.get(permission_url, permission_params).subscribe((response: any) => {
             if (response && response.state === 1) {
               this.config = { pageJson: pageJson, permissionJson: response.data };
-              this.buildLayout({ name: pageCode });
+              this.buildLayout({ ...{ name: pageCode }, ...this.pageInitData });
             }
           });
         }

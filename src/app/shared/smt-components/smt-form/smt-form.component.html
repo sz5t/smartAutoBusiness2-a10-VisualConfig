@@ -1,46 +1,48 @@
-<p>smt-form works!</p>
 <form [formGroup]="validateForm" *ngIf="formBindObj && loading">
+    <ng-container *ngIf="formBindObj['formLayout'] && formBindObj['formLayout'].length>0 ">
 
+        <div nz-row [nzGutter]="12" *ngFor="let r of formBindObj['formLayout'][0]['children']">
+            <div nz-col *ngFor="let c of r['children']" [nzSpan]="c.span" [nzSm]="c.size.nzSm" [nzXs]="c.size.nzXs"
+                [nzMd]="c.size.nzMd" [nzLg]="c.size.nzLg" [nzXl]="c.size.nzXl"
+                [ngStyle]="{'display': c.display ? c.display : null}">
 
-    <div nz-row [nzGutter]="12" *ngFor="let r of formBindObj['formLayout'][0]['children']">
-        <div nz-col *ngFor="let c of r['children']" [nzSpan]="c.span" [nzSm]="c.size.nzSm" [nzXs]="c.size.nzXs"
-            [nzMd]="c.size.nzMd" [nzLg]="c.size.nzLg" [nzXl]="c.size.nzXl"
-            [ngStyle]="{'display': c.display ? c.display : null}">
+                <ng-container *ngIf="c['container']==='component'">
 
-            <ng-container *ngIf="c['container']==='component'">
+                    <div>
 
-                <div>
-
-                    <ng-container appSmtFormItem [validateForm]="validateForm"
-                        [config]="formBindObj['componentJson'][c['children'][0]['id']]" [globalConfig]="config"
-                        [fromDataService]="fromDataService" (cascadeValue)="cascadeValueEmit($event)">
-                    </ng-container>
-                </div>
-
-            </ng-container>
-            <ng-container *ngIf="c['container']==='rows'">
-                <div nz-row [nzGutter]="12" *ngFor="let c_r of c['children']">
-                    <div nz-col *ngFor="let c_c of c_r.cols" [nzSpan]="c_c.span" [nzSm]="c_c.size.nzSm"
-                        [nzXs]="c_c.size.nzXs" [nzMd]="c_c.size.nzMd" [nzLg]="c_c.size.nzLg" [nzXl]="c_c.size.nzXl"
-                        [ngStyle]="{'display': c_c.display ? c_c.display : null}">
-
-                        <ng-container *ngIf="c_c['container']==='component'">
-                            ddd
-                            <!--                             <div [hidden]="config['properties'][c['controlIndex']]['hidden']"
-                                *ngIf="!config['properties'][c['controlIndex']]['hiddenIf']">
-                                <ng-container appSmtFormItem [validateForm]="validateForm"
-                                    [config]="config['properties'][c_c['controlIndex']]" [globalConfig]="config"
-                                    [fromDataService]="fromDataService" (cascadeValue)="cascadeValueEmit($event)">
-                                </ng-container>
-                            </div> -->
+                        <ng-container appSmtFormItem [validateForm]="validateForm"
+                            [config]="formBindObj['componentJson'][c['children'][0]['id']]" [globalConfig]="config"
+                            [fromDataService]="fromDataService" (cascadeValue)="cascadeValueEmit($event)">
                         </ng-container>
                     </div>
-                </div>
-            </ng-container>
+
+                </ng-container>
+                <ng-container *ngIf="c['container']==='rows'">
+                    <div nz-row [nzGutter]="12" *ngFor="let c_r of c['children']">
+                        <div nz-col *ngFor="let c_c of c_r.cols" [nzSpan]="c_c.span" [nzSm]="c_c.size.nzSm"
+                            [nzXs]="c_c.size.nzXs" [nzMd]="c_c.size.nzMd" [nzLg]="c_c.size.nzLg" [nzXl]="c_c.size.nzXl"
+                            [ngStyle]="{'display': c_c.display ? c_c.display : null}">
+
+                            <ng-container *ngIf="c_c['container']==='component'">
+                                ddd
+                                <!--                             <div [hidden]="config['properties'][c['controlIndex']]['hidden']"
+                                    *ngIf="!config['properties'][c['controlIndex']]['hiddenIf']">
+                                    <ng-container appSmtFormItem [validateForm]="validateForm"
+                                        [config]="config['properties'][c_c['controlIndex']]" [globalConfig]="config"
+                                        [fromDataService]="fromDataService" (cascadeValue)="cascadeValueEmit($event)">
+                                    </ng-container>
+                                </div> -->
+                            </ng-container>
+                        </div>
+                    </div>
+                </ng-container>
 
 
+            </div>
         </div>
-    </div>
+    </ng-container>
+
+
 
 
 
@@ -57,3 +59,4 @@
 
 <button (click)="_testTHAT()">外部方法执行</button>
 <button (click)="createDefault()">测试默认值生成</button>
+<button (click)="showWindow()">[新弹出]</button>
