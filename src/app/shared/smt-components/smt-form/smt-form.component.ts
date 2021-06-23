@@ -35,6 +35,7 @@ export class SmtFormComponent extends SmtComponentBase implements OnInit, OnDest
   private eventObjs: any[];
   private commandObjs: any[];
   public dataSourceObj: any;
+  public windows: any[];
 
 
   private _sender$: Subject<any>;
@@ -60,35 +61,6 @@ export class SmtFormComponent extends SmtComponentBase implements OnInit, OnDest
   ngOnInit(): void {
     this._initComponent(this.config);
     this.validateForm = this.fb.group({});
-
-    let dataSourceCfg1 = {
-      loadingOnInit: true,
-      loadingConfig: {
-        id: 'loading',
-        urlType: 'inner', // 请求地址，inner 匹配的后台地址
-        urlContent: {
-          // 适配外部请求
-          name: 'system_url',
-          title: '权限系统访问地址',
-        },
-        url: 'smt-app/resource/TEST_TABLE/query',
-        headParams: [
-          // 头部参数
-        ],
-        ajaxType: 'get',
-        pathParams: [
-          // 路径参数
-          // {
-          //   name: 'pathParam',
-          //   type: 'value',
-          //   value: 'ddd'
-          // }
-        ],
-        queryParams: [
-        ], // 查询参数
-        bodyParams: [], // 请求体参数
-      }
-    };
 
     this.createControls(this.validateForm, {});
     this.loading = true;
@@ -123,6 +95,7 @@ export class SmtFormComponent extends SmtComponentBase implements OnInit, OnDest
     this.eventObjs = dataAdapter.setEventObjs();
     this.dataSourceObj = dataAdapter.setDataSource();
     this.commandObjs = dataAdapter.setCommandObjs();
+    this.windows = dataAdapter.setWindows();
 
   }
 
@@ -142,10 +115,10 @@ export class SmtFormComponent extends SmtComponentBase implements OnInit, OnDest
 
   async load() {
     let response: any;
-    if (!this.dataSourceCfg.loadingConfig) {
+    if (!this.dataSourceObj.loadingConfig) {
       return;
     }
-    response = await this.executeHttp(this.dataSourceCfg['loadingConfig'], null, null);
+    response = await this.executeHttp(this.dataSourceObj['loadingConfig'], null, null);
 
     console.log('表单加载值', response);
     let data_form = {};
@@ -163,7 +136,7 @@ export class SmtFormComponent extends SmtComponentBase implements OnInit, OnDest
       }
     }
     let formValue = {};
-    this.formBindObj.fields.forEach(item => {
+    this.formBindObj['fields'] && this.formBindObj.fields.forEach(item => {
       if (data_form.hasOwnProperty(item['field'])) {
         formValue[item['field']] = data_form[item['field']];
       }
@@ -599,18 +572,23 @@ export class SmtFormComponent extends SmtComponentBase implements OnInit, OnDest
   }
 
 
-  public showWindow(option?, params?) {
-
-    // 弹出准备参数
-    // 弹出 事件响应
+  public showWindow(option?) {
 
     let dialog;
-    let dialogCfg = {
+    let dialogCfg: any;
+    if (option && option['$WINDOW_CODE']) {
+      dialogCfg = this.getWindowObj(option['$WINDOW_CODE']);
+    }
+    else {
+      console.log('参数不正确');
+    }
+
+    let dialogCfg1 = {
       title: '测试弹出',
       width: "90%",
       style: { "top": "100px", "padding-bottom": "0px" },
       targetPageTitle: null,
-      targetPageCode: '333', // 'LAYOUT_TEST',
+      targetPageCode: 'PAGE_USER_FORM_TEST', // 'LAYOUT_TEST',
       targetPageId: null,
       maskClosable: null,
       buttonContent: [
@@ -626,7 +604,9 @@ export class SmtFormComponent extends SmtComponentBase implements OnInit, OnDest
       ]
 
     }
-
+    if (!dialogCfg) {
+      return;
+    }
     let that = this;
     const dialogOptional = {
       nzTitle: dialogCfg.title ? dialogCfg.title : '',
@@ -636,7 +616,8 @@ export class SmtFormComponent extends SmtComponentBase implements OnInit, OnDest
       nzContent: SmtPopPageComponent,
       nzComponentParams: {
         parentDom: that,
-        pageCode: dialogCfg.targetPageCode
+        pageCode: dialogCfg.targetPageCode,
+        pageInitData: option
       },
       nzFooter: [
       ]
@@ -667,9 +648,15 @@ export class SmtFormComponent extends SmtComponentBase implements OnInit, OnDest
     console.log('弹出配置');
   }
 
-
-  public action(cfg) {
-
+  public getWindowObj(code?) {
+    let windowObj: any;
+    if (this.windows && code) {
+      let index = this.windows.findIndex(item => item['windowCode'] === code);
+      if (index > -1) {
+        windowObj = this.windows[index];
+      }
+    }
+    return windowObj;
   }
 
   execCustomAction(_button) {
@@ -681,6 +668,14 @@ export class SmtFormComponent extends SmtComponentBase implements OnInit, OnDest
     }
 
   }
+
+  public windowClose(option?) {
+    if (this.windowDialog) {
+      this.windowDialog['close']();
+    }
+  }
+
+
   _testTHAT() {
     console.log('执行');
     this.EXEC_THAT.testTHAT();

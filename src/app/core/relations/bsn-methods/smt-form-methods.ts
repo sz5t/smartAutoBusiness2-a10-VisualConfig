@@ -8,6 +8,7 @@ export const SMT_FORM_METHOD = {
     CONFIRM: 'showConfirm',
     MESSAGE: 'showMessage',
     LOAD_REFRESH_DATA: 'load',
+    WINDOW_CLOSE: 'windowClose',
 
     // behavior
     REFRESH: 'load',
