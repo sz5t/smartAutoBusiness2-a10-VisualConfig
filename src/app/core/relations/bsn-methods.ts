@@ -34,6 +34,7 @@ export const CN_DATA_GRID_METHOD: IDataGridTrigger = {
     CUSTOM_ACTION: 'component_customAction',
 
     // behavior
+    LOAD: 'load',
     REFRESH: 'load',
     HIDDEN: 'hidden',
     SHOW: 'show',
