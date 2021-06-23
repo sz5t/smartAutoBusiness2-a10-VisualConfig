@@ -25,10 +25,5 @@ export class CfgFormCheckComponent extends CfgFormDesignBase implements OnInit {
     this.selected();
   }
 
-  private _initData() {
-    this.model = [
-      { label: '选项1', value: '' },
-      { label: '选项2', value: '' },
-    ];
-  }
+  private _initData() {}
 }

@@ -13,7 +13,7 @@ export class CfgFormSwitchComponent extends CfgFormDesignBase implements OnInit 
 
   ngOnInit(): void {
     this.load();
-    this.initLayout;
+    this.initLayout();
   }
 
   click(e?) {

@@ -49,10 +49,10 @@
                                     "type": "input",
                                     "componentConfig": {
                                         "labelSize": {
-                                            "span": 4
+                                            "span": 6
                                         },
                                         "controlSize": {
-                                            "span": 20
+                                            "span": 18
                                         }
                                     },
                                     "formType": "value",
@@ -65,10 +65,10 @@
                                     "type": "label",
                                     "componentConfig": {
                                         "labelSize": {
-                                            "span": 4
+                                            "span": 6
                                         },
                                         "controlSize": {
-                                            "span": 20
+                                            "span": 18
                                         }
                                     },
                                     "formType": "value",
@@ -81,10 +81,10 @@
                                     "type": "input",
                                     "componentConfig": {
                                         "labelSize": {
-                                            "span": 4
+                                            "span": 6
                                         },
                                         "controlSize": {
-                                            "span": 20
+                                            "span": 18
                                         }
                                     },
                                     "formType": "value",
@@ -97,10 +97,10 @@
                                     "type": "switch",
                                     "componentConfig": {
                                         "labelSize": {
-                                            "span": 4
+                                            "span": 6
                                         },
                                         "controlSize": {
-                                            "span": 20
+                                            "span": 18
                                         }
                                     },
                                     "formType": "value",
@@ -113,10 +113,10 @@
                                     "type": "input",
                                     "componentConfig": {
                                         "labelSize": {
-                                            "span": 4
+                                            "span": 6
                                         },
                                         "controlSize": {
-                                            "span": 20
+                                            "span": 18
                                         }
                                     },
                                     "formType": "value",
@@ -129,10 +129,10 @@
                                     "type": "objectEmpty",
                                     "componentConfig": {
                                         "labelSize": {
-                                            "span": 4
+                                            "span": 6
                                         },
                                         "controlSize": {
-                                            "span": 20
+                                            "span": 18
                                         }
                                     },
                                     "properties": [
@@ -141,10 +141,10 @@
                                             "type": "input",
                                             "componentConfig": {
                                                 "labelSize": {
-                                                    "span": 4
+                                                    "span": 6
                                                 },
                                                 "controlSize": {
-                                                    "span": 20
+                                                    "span": 18
                                                 }
                                             },
                                             "formType": "value",
@@ -163,10 +163,10 @@
                                     "type": "objectEmpty",
                                     "componentConfig": {
                                         "labelSize": {
-                                            "span": 4
+                                            "span": 6
                                         },
                                         "controlSize": {
-                                            "span": 20
+                                            "span": 18
                                         }
                                     },
                                     "properties": [
@@ -175,10 +175,10 @@
                                             "type": "input",
                                             "componentConfig": {
                                                 "labelSize": {
-                                                    "span": 4
+                                                    "span": 6
                                                 },
                                                 "controlSize": {
-                                                    "span": 20
+                                                    "span": 18
                                                 }
                                             },
                                             "formType": "value",
@@ -197,10 +197,10 @@
                                     "type": "objectEmpty",
                                     "componentConfig": {
                                         "labelSize": {
-                                            "span": 4
+                                            "span": 6
                                         },
                                         "controlSize": {
-                                            "span": 20
+                                            "span": 18
                                         }
                                     },
                                     "properties": [
@@ -209,10 +209,10 @@
                                             "type": "input",
                                             "componentConfig": {
                                                 "labelSize": {
-                                                    "span": 4
+                                                    "span": 6
                                                 },
                                                 "controlSize": {
-                                                    "span": 20
+                                                    "span": 18
                                                 }
                                             },
                                             "formType": "value",
@@ -237,10 +237,10 @@
                                             "type": "input",
                                             "componentConfig": {
                                                 "labelSize": {
-                                                    "span": 4
+                                                    "span": 6
                                                 },
                                                 "controlSize": {
-                                                    "span": 20
+                                                    "span": 18
                                                 },
                                                 "hiddenTitle": true
                                             },
@@ -254,10 +254,10 @@
                                             "type": "label",
                                             "componentConfig": {
                                                 "labelSize": {
-                                                    "span": 4
+                                                    "span": 6
                                                 },
                                                 "controlSize": {
-                                                    "span": 20
+                                                    "span": 18
                                                 },
                                                 "hiddenTitle": true
                                             },
@@ -271,10 +271,10 @@
                                             "type": "input",
                                             "componentConfig": {
                                                 "labelSize": {
-                                                    "span": 4
+                                                    "span": 6
                                                 },
                                                 "controlSize": {
-                                                    "span": 20
+                                                    "span": 18
                                                 },
                                                 "hiddenTitle": true
                                             },

@@ -26,9 +26,24 @@
                                 },
                                 {
                                     "name": "placeholder"
+                                },
+                                {
+                                    "name": "checkedText"
+                                },
+                                {
+                                    "name": "unCheckedText"
                                 }
                             ],
                             "properties": [
+                                {
+                                    "name": "type",
+                                    "type": "input",
+                                    "componentConfig": {},
+                                    "formType": "value",
+                                    "formName": "formControlName",
+                                    "validations": [],
+                                    "title": "组件类型"
+                                },
                                 {
                                     "name": "title",
                                     "type": "input",
@@ -52,25 +67,25 @@
                                     "formType": "value",
                                     "formName": "formControlName",
                                     "validations": [],
-                                    "title": "字段"
+                                    "title": "绑定字段"
                                 },
                                 {
-                                    "name": "type",
+                                    "name": "checkedText",
                                     "type": "input",
                                     "componentConfig": {},
                                     "formType": "value",
                                     "formName": "formControlName",
                                     "validations": [],
-                                    "title": "类型"
+                                    "title": "选中文本"
                                 },
                                 {
-                                    "name": "placeholder",
+                                    "name": "unCheckedText",
                                     "type": "input",
                                     "componentConfig": {},
                                     "formType": "value",
                                     "formName": "formControlName",
                                     "validations": [],
-                                    "title": "默认填充文本"
+                                    "title": "取消文本"
                                 }
                             ]
                         },
@@ -111,10 +126,10 @@
                                     "type": "arrayCollapse",
                                     "componentConfig": {
                                         "labelSize": {
-                                            "span": 4
+                                            "span": 6
                                         },
                                         "controlSize": {
-                                            "span": 20
+                                            "span": 18
                                         }
                                     },
                                     "formType": "array",
@@ -136,10 +151,10 @@
                                                 "labelName": "label",
                                                 "valueName": "value",
                                                 "labelSize": {
-                                                    "span": 4
+                                                    "span": 6
                                                 },
                                                 "controlSize": {
-                                                    "span": 20
+                                                    "span": 18
                                                 }
                                             },
                                             "formType": "value",
@@ -152,10 +167,10 @@
                                             "type": "input",
                                             "componentConfig": {
                                                 "labelSize": {
-                                                    "span": 4
+                                                    "span": 6
                                                 },
                                                 "controlSize": {
-                                                    "span": 20
+                                                    "span": 18
                                                 }
                                             },
                                             "formType": "value",
