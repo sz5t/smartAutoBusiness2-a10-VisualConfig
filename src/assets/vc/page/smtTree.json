@@ -200,7 +200,7 @@
                             "properties": [
                                 {
                                     "name": "dataSource",
-                                    "type": "objectCard",
+                                    "type": "objectEmpty",
                                     "componentConfig": {
                                         "mode": "empty",
                                         "staticDefaultValueConfig": [
@@ -410,7 +410,7 @@
                     },
                     {
                         "code": "col",
-                        "title": "列映射",
+                        "title": "节点设置",
                         "type": "property",
                         "active": true,
                         "sourceConfig": {
@@ -424,34 +424,85 @@
                             "properties": [
                                 {
                                     "name": "columns",
-                                    "type": "arrayCollapse",
+                                    "type": "arrayTable",
                                     "componentConfig": {
+                                        "mode": "empty",
+                                        "showConfig": {
+                                            "showString": [
+                                                {
+                                                    "name": "title",
+                                                    "children": []
+                                                },
+                                                {
+                                                    "type":"value",
+                                                    "value":" [",
+                                                    "name": "title",
+                                                    "children": []
+                                                },
+                                                {
+                                                    "name": "field",
+                                                    "children": []
+                                                },
+                                                {
+                                                    "type":"value",
+                                                    "value":"]",
+                                                    "name": "title",
+                                                    "children": []
+                                                }
+                                            ]
+                                        },
+                                        "defaultActionAddHidden":true, 
+                                        "defaultActionDeleteHidden":true
         
                                     },
                                     "formType": "array",
                                     "properties": [
                                         {
                                             "name": "title",
-                                            "type": "input",
-                                            "componentConfig": {},
+                                            "hidden":false,
+                                            "type": "label",
+                                            "componentConfig": {
+                                                "hiddenTitle": true,
+                                                "controlSize": {
+                                                    "span": 24,
+                                                    "nzXs": 24,
+                                                    "nzSm": 24,
+                                                    "nzMd": 24,
+                                                    "nzLg": 24,
+                                                    "ngXl": 24,
+                                                    "nzXXl": 24
+                                                }
+                                            },
                                             "formType": "value",
                                             "formName": "formControlName",
                                             "validations": [],
-                                            "title": "标题"
+                                            "title": ""
                                         },
                                         {
                                             "name": "type",
                                             "type": "input",
+                                            "hidden":true,
                                             "componentConfig": {},
                                             "formType": "value",
                                             "formName": "formControlName",
                                             "validations": [],
-                                            "title": "映射属性"
+                                            "title": "节点设置"
                                         },
                                         {
                                             "name": "field",
                                             "type": "input",
-                                            "componentConfig": {},
+                                            "componentConfig": {
+                                                "hiddenTitle": true,
+                                                "controlSize": {
+                                                    "span": 23,
+                                                    "nzXs": 23,
+                                                    "nzSm": 23,
+                                                    "nzMd": 23,
+                                                    "nzLg": 23,
+                                                    "ngXl": 23,
+                                                    "nzXXl": 23
+                                                }
+                                            },
                                             "formType": "value",
                                             "formName": "formControlName",
                                             "validations": [],
