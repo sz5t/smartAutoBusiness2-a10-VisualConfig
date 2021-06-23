@@ -18,8 +18,8 @@ export const environment: any = {
   hmr: false,
   routeInfo: {
     enable404Page: true,
-    loginPath: 'login', //login, vclogin
-    defaultPath: 'app', // app, vc
+    loginPath: 'vclogin', //login, vclogin
+    defaultPath: 'vc', // app, vc
   },
 };
 

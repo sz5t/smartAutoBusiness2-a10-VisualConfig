@@ -29,9 +29,28 @@
                                 },
                                 {
                                     "name": "showTime"
+                                },
+                                {
+                                    "name": "showFormat"
                                 }
                             ],
                             "properties": [
+                                {
+                                    "name": "type",
+                                    "type": "label",
+                                    "componentConfig": {
+                                        "labelSize": {                
+                                            "span": 6
+                                          },
+                                          "controlSize": {             
+                                            "span": 18
+                                          }
+                                    },
+                                    "formType": "value",
+                                    "formName": "formControlName",
+                                    "validations": [],
+                                    "title": "类型"
+                                },
                                 {
                                     "name": "title",
                                     "type": "input",
@@ -53,10 +72,10 @@
                                     "type": "input",
                                     "componentConfig": {
                                         "labelSize": {                
-                                            "span": 4
+                                            "span": 6
                                           },
                                           "controlSize": {             
-                                            "span": 20
+                                            "span": 18
                                           }
                                     },
                                     "formType": "value",
@@ -65,52 +84,54 @@
                                     "title": "字段"
                                 },
                                 {
-                                    "name": "type",
-                                    "type": "input",
-                                    "componentConfig": {
-                                        "labelSize": {                
-                                            "span": 4
-                                          },
-                                          "controlSize": {             
-                                            "span": 20
-                                          }
-                                    },
-                                    "formType": "value",
-                                    "formName": "formControlName",
-                                    "validations": [],
-                                    "title": "类型"
-                                },
-                                {
-                                    "name": "placeholder",
-                                    "type": "input",
-                                    "componentConfig": {
-                                        "labelSize": {                
-                                            "span": 4
-                                          },
-                                          "controlSize": {             
-                                            "span": 20
-                                          }
-                                    },
-                                    "formType": "value",
-                                    "formName": "formControlName",
-                                    "validations": [],
-                                    "title": "默认填充文本"
-                                },
-                                {
                                     "name": "showTime",
                                     "type": "switch",
                                     "componentConfig": {
                                         "labelSize": {                
-                                            "span": 4
+                                            "span": 6
                                           },
                                           "controlSize": {             
-                                            "span": 20
+                                            "span": 18
                                           }
                                     },
                                     "formType": "value",
                                     "formName": "formControlName",
                                     "validations": [],
-                                    "title": "是否展示具体时间"
+                                    "title": "显示时间"
+                                },
+                                {
+                                    "name": "showFormat",
+                                    "type": "select",
+                                    "componentConfig": {
+                                        "labelSize": {                
+                                            "span": 6
+                                          },
+                                          "controlSize": {             
+                                            "span": 18
+                                          },
+                                          "options": [
+                                              {
+                                                  "label": "yyyy-MM-dd:hh:mm:ss",
+                                                  "value": "yyyy-MM-dd:hh:mm:ss"
+                                              },
+                                              {
+                                                "label": "yyyy-MM-dd",
+                                                "value": "yyyy-MM-dd"
+                                              },
+                                              {
+                                                "label": "yyyy/MM/dd:hh:mm:ss",
+                                                "value": "yyyy/MM/dd:hh:mm:ss"
+                                            },
+                                              {
+                                                "label": "yyyy/MM/dd",
+                                                "value": "yyyy/MM/dd"
+                                              }
+                                          ]
+                                    },
+                                    "formType": "value",
+                                    "formName": "formControlName",
+                                    "validations": [],
+                                    "title": "时间格式"
                                 }
                             ]
                         },

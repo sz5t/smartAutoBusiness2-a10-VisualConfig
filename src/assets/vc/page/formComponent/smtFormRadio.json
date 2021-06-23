@@ -48,13 +48,13 @@
                                 }
                                 ,
                                 {
-                                    "name": "staticData"
+                                    "name": "options"
                                 }
                             ],
                             "properties": [
                                 {
                                     "name": "type",
-                                    "type": "input",
+                                    "type": "label",
                                     "componentConfig": {
                                         "labelSize": {
                                             "span": 6
@@ -192,7 +192,7 @@
                                         },
                                         "casadeValue": [
                                             {
-                                                "cascadeName": "staticData",
+                                                "cascadeName": "options",
                                                 "cascadeItems": [
                                                     {
                                                         "type": "condition",
@@ -210,7 +210,7 @@
                                                                     },
                                                                     "righitExpression": {
                                                                         "type": "value",
-                                                                        "value": "^staticData$"
+                                                                        "value": "^options$"
                                                                     }
                                                                 }
                                                             }
@@ -245,7 +245,7 @@
                                                                     },
                                                                     "righitExpression": {
                                                                         "type": "value",
-                                                                        "value": "^((?!staticData).)*$"
+                                                                        "value": "^((?!options).)*$"
                                                                     }
                                                                 }
                                                             }
@@ -345,7 +345,7 @@
                                         "options": [
                                             {
                                                 "label": "静态数据",
-                                                "value": "staticData"
+                                                "value": "options"
                                             },
                                             {
                                                 "label": "接口访问",
@@ -497,7 +497,7 @@
                                     "title": "数据源设置"
                                 },
                                 {
-                                    "name": "staticData",
+                                    "name": "options",
                                     "type": "arrayCollapse",
                                     "componentConfig": {
                                         "labelSize": {

@@ -294,6 +294,7 @@ import { SmtDataTableRangePickerComponent } from './smt-components/smt-data-tabl
 import { SmtDataTableWeekPickerComponent } from './smt-components/smt-data-table/smt-data-table-items/smt-data-table-week-picker/smt-data-table-week-picker.component';
 import { SmtDataTableYearPickerComponent } from './smt-components/smt-data-table/smt-data-table-items/smt-data-table-year-picker/smt-data-table-year-picker.component';
 import { SmtDataTableDateTimePickerComponent } from './smt-components/smt-data-table/smt-data-table-items/smt-data-table-date-time-picker/smt-data-table-date-time-picker.component';
+import { CfgFormTreeSelectComponent } from './config-components/cfg-form-design/cfg-form-design-layout/cfg-form-treeSelect/cfg-form-treeSelect.component';
 
 // #region third libs
 
@@ -493,6 +494,7 @@ const COMPONENTS = [
   CfgFormLabelComponent,
   CfgFormPickerYearComponent,
   CfgFormSwitchComponent,
+  CfgFormTreeSelectComponent,
   //--静态表单--
   CnStaticFormComponent,
   CnStaticFormInputComponent,
@@ -589,7 +591,7 @@ const COMPONENTS = [
   SmtDataTableWeekPickerComponent,
   SmtDataTableYearPickerComponent,
   SmtDataTableDateTimePickerComponent,
-  SmtDataTableInputComponent
+  SmtDataTableInputComponent,
 ];
 const DIRECTIVES = [
   CnLayoutResolverDirective,

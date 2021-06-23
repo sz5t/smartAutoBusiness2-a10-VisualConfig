@@ -40,7 +40,7 @@
                             "properties": [
                                 {
                                     "name": "title",
-                                    "type": "input",
+                                    "type": "label",
                                     "componentConfig": {
                                         "labelSize": {                
                                             "span": 6
