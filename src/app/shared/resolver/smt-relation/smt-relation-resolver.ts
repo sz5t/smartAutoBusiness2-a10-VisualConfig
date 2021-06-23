@@ -1,5 +1,3 @@
-import { BsnCommandMessageModel } from "src/app/core/relations/bsn-relatives";
-
 export class SmtMessageSenderResolver {
     constructor(private _componentInstance: any) { }
     public resolve(cfg) {

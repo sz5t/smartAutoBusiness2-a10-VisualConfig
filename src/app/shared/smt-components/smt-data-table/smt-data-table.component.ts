@@ -117,6 +117,19 @@ export class SmtDataTableComponent extends SmtComponentBase implements OnInit {
     this.initAnalysis();
   }
 
+  public ngOnDestroy() {
+    // 释放级联对象
+    this.unsubscribeRelation();
+
+    if (this._sender_subscription$) {
+      this._sender_subscription$.unsubscribe();
+    }
+
+    if (this.subscription$) {
+      this.subscription$.unsubscribe();
+    }
+  }
+
   public initAnalysis() {
     // 解析行为
     this.createEvent();
