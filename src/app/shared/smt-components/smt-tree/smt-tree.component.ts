@@ -109,7 +109,7 @@ export class SmtTreeComponent extends SmtComponentBase implements ISmtComponent,
     this.initEvent(this.eventObjs);
 
     this.initCommand(this.commandObjs);
-
+    console.log('tree');
     this.dataSourceObj.loadingOnInit && this.load();
   }
 
@@ -435,7 +435,7 @@ export class SmtTreeComponent extends SmtComponentBase implements ISmtComponent,
     };
   }
 
-  getActions(state): any {}
+  getActions(state): any { }
 
   public deleteCheckedNodes(option: any) {
     if (option.ids) {
@@ -867,9 +867,9 @@ export class SmtTreeComponent extends SmtComponentBase implements ISmtComponent,
     });
   }
 
-  public showUpload() {}
+  public showUpload() { }
 
-  public showBatchDialog() {}
+  public showBatchDialog() { }
 
   /**
    * 显示消息框

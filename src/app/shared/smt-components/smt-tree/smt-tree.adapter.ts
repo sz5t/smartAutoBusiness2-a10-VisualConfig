@@ -20,7 +20,7 @@ export interface ITreeBindProperties {
 }
 
 export class SmtTreeDataAdapter {
-  constructor(private _config: any) {}
+  constructor(private _config: any) { }
 
   public setColumns(): any[] {
     if (this._config.columns) {
@@ -55,8 +55,8 @@ export class SmtTreeDataAdapter {
     if (this._config.dataSource) {
       const ds = this._config.dataSource;
       return {
-        async: ds.async ? ds.async : false,
-        loadingOnInit: ds.loadingOnInit ? ds.loadingOnInit : true,
+        async: ds.hasOwnProperty('async') ? ds.async : false,
+        loadingOnInit: ds.hasOwnProperty('loadingOnInit') ? ds.loadingOnInit : true,
         loadingConfig: ds.loadingConfig ? ds.loadingConfig : null,
         loadingItemConfig: ds.loadingItemConfig ? ds.loadingItemConfig : null,
         expandConfig: ds.expandConfig ? ds.expandConfig : null,

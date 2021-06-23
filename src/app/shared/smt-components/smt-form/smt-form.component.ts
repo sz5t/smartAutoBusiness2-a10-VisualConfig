@@ -8,6 +8,7 @@ import { CommonUtils } from 'src/app/core/utils/common-utils';
 import { CustomValidator } from '../../components/data-form/form-validator/CustomValidator';
 import { SmtCommandResolver } from '../../resolver/smt-command/smt-command.resovel';
 import { SmtEventResolver } from '../../resolver/smt-event/smt-event-resolver';
+import { SmtMessageSenderResolver } from '../../resolver/smt-relation/smt-relation-resolver';
 import { SmtComponentBase } from '../smt-component.base';
 import { SmtPopPageComponent } from '../smt-pop-page/smt-pop-page.component';
 import { SmtExec } from './smt-exec';
@@ -59,8 +60,8 @@ export class SmtFormComponent extends SmtComponentBase implements OnInit, OnDest
   ngOnInit(): void {
     this._initComponent(this.config);
     this.validateForm = this.fb.group({});
-    // this.formBindObj = this.setFormBindObj(this.config);
-    this.dataSourceCfg = {
+
+    let dataSourceCfg1 = {
       loadingOnInit: true,
       loadingConfig: {
         id: 'loading',
@@ -103,7 +104,8 @@ export class SmtFormComponent extends SmtComponentBase implements OnInit, OnDest
 
     this.initCommand(this.commandObjs);
 
-    //  this.dataSourceObj.loadingOnInit && this.load();
+    this.dataSourceObj.loadingOnInit && this.load();
+
   }
 
   private _initComponent(config: any) {
@@ -168,6 +170,7 @@ export class SmtFormComponent extends SmtComponentBase implements OnInit, OnDest
     });
     console.log('表单最终值', formValue);
     this.COMPONENT_VALUE = formValue;
+    this.setFormValue();
     return formValue;
 
   }
@@ -203,7 +206,7 @@ export class SmtFormComponent extends SmtComponentBase implements OnInit, OnDest
    */
   private createControls(f, data) {
 
-    this.formBindObj.fields.forEach(Control => {
+    this.formBindObj.fields && this.formBindObj.fields.forEach(Control => {
       let value = null;
       let key = Control['field'];
       if (data && data.hasOwnProperty(key)) {
@@ -585,7 +588,7 @@ export class SmtFormComponent extends SmtComponentBase implements OnInit, OnDest
             // 获取当前目标实例
             let target = componentInstance.popPage.pageService.componentInstance['exYPv7ZuLekRlIyWCCoJcRGLDOXdKm'];
 
-            this.execCustomAction(_button, target);
+            // this.execCustomAction(_button, target);
           },
         });
       });
@@ -596,87 +599,87 @@ export class SmtFormComponent extends SmtComponentBase implements OnInit, OnDest
   }
 
 
-  public showWindow(option, params?) {
+  public showWindow(option?, params?) {
 
     // 弹出准备参数
     // 弹出 事件响应
 
+    let dialog;
+    let dialogCfg = {
+      title: '测试弹出',
+      width: "90%",
+      style: { "top": "100px", "padding-bottom": "0px" },
+      targetPageTitle: null,
+      targetPageCode: '333', // 'LAYOUT_TEST',
+      targetPageId: null,
+      maskClosable: null,
+      buttonContent: [
+        {
+          buttonTitle: '确定',
+          buttonType: "default",
+          buttonSize: "buttonSize",
+          buttonDanger: false,
+          eventContent: []
 
-    let d = {
-      "id": "business_object_page_1",
-      "layoutName": "0MwdEVnpL0PPFnGISDWYdkovXiQ2cIOG",
-      "type": "confirm",
-      "width": "100%",
-      "title": "业务对象页面",
-      "cancelText": "取消",
-      "okText": "提交",
-      "footerButton": [
-        {
-          "name": 'ok',  // 确定按钮
-          "text": "【加载】",
-          "customActionId": '001',
-          "eventConent": [
-            {
-              "type": "pop", // 弹出页面对象
-              "targetPageId": "pop",
-              "targetViewId": "001",
-              "command": "load"
-            }
-          ]
-        },
-        {
-          "name": 'cancel', // 取消按钮
-          "text": "【赋值】",
-          "customActionId": '002',
-          "eventConent": [
-            {
-              "type": "pop", // 弹出页面对象
-              "execType": "", // 实例控制、消息响应
-              "targetPageId": "pop",
-              "targetViewId": "001",
-              "command": "setFormValue"
-            }
-          ]
-        },
-        {
-          "name": 'cancel', // 取消按钮
-          "text": "【自定义】",
-          "customActionId": '002'
-        },
-        {
-          "name": 'cancel', // 取消按钮
-          "text": "【按钮大全】",
-          "customActionId": '002',
-          // 需要连续动作
-          "eventConent": [
-            {
-              "type": "pop", // 弹出页面对象
-              "targetPageId": "pop",
-              "targetViewId": "001",
-              "command": "add_row"
-            },
-            {
-              "type": "current", // 当前 父对象
-              "targetPageId": "parent",
-              "targetViewId": "001",
-              "command": "add_row"
-            }
-          ]
         }
+
       ]
 
     }
 
+    let that = this;
+    const dialogOptional = {
+      nzTitle: dialogCfg.title ? dialogCfg.title : '',
+      nzWidth: dialogCfg.width ? dialogCfg.width : '600px',
+      nzStyle: dialogCfg.style ? dialogCfg.style : null, // style{top:'1px'},
+      nzMaskClosable: dialogCfg.hasOwnProperty('maskClosable') ? dialogCfg.maskClosable : false,
+      nzContent: SmtPopPageComponent,
+      nzComponentParams: {
+        parentDom: that,
+        pageCode: dialogCfg.targetPageCode
+      },
+      nzFooter: [
+      ]
+    };
+    if (dialogCfg.buttonContent && dialogCfg.buttonContent.length > 0) {
+      dialogOptional.nzFooter = [];
+
+      dialogCfg.buttonContent.forEach((_button) => {
+        dialogOptional.nzFooter.push({
+          label: _button.buttonTitle,
+          type: _button.buttonType,
+          danger: _button.buttonDanger,
+          size: _button.buttonSize,
+          onClick: (componentInstance) => {
+
+
+            // _button.eventContent
+            console.log(_button, "执行内容");
+            // 获取当前目标实例
+
+            this.execCustomAction(_button);
+          },
+        });
+      });
+    }
+    dialog = this.componentService.modalService.create(dialogOptional);
+    this.windowDialog = dialog;
     console.log('弹出配置');
   }
 
 
+  public action(cfg) {
 
-  execCustomAction(_button, target) {
+  }
+
+  execCustomAction(_button) {
     console.log('执行事件');
-    _button['eventConent'] && _button['eventConent'].forEach(element => {
-      target[element['command']]();
-    });
+    if (_button['eventConent'] && _button['eventConent'].length > 0) {
+      for (let i = 0; i < _button['eventConent'].length; i++) {
+        new SmtMessageSenderResolver(this).resolve(_button['eventConent'][i]);
+      }
+    }
+
   }
   _testTHAT() {
     console.log('执行');

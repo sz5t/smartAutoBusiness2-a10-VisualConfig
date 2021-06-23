@@ -276,7 +276,8 @@ export class SmtComponentBase {
   //#region 数据源解析
   public setDataSourceCfg(config: any) {
     return {
-      isloadingOnInit: config.sourceData.isloadingOnInit,
+      isloadingOnInit: config.sourceData['isloadingOnInit'],
+      loadingOnInit: config.sourceData['loadingOnInit'],
       loadingConfig: config.sourceData.loadingConfig,
       loadingItemConfig: config.sourceData.loadingItemConfig,
       expandConfig: config.sourceData.expandConfig,

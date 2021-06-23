@@ -23,7 +23,13 @@ const components: { [type: string]: Type<any> } = {
   cnTree: SmtTreeComponent,
   smtLayOut: SmtLayoutComponent,
   smtPage: SmtPageComponent,
-  cnForm: SmtFormComponent
+  cnForm: SmtFormComponent,
+
+  smtToolbar: SmtToolbarComponent,
+  smtRowToolbar: SmtToolbarComponent,
+  smtTree: SmtTreeComponent,
+  smtForm: SmtFormComponent,
+  smtDataTable: SmtDataTableComponent,
 };
 
 @Directive({
@@ -69,17 +75,9 @@ export class SmtComponentResolverDirective implements OnInit, OnDestroy {
       this._buildComponent(config, type);
     } else {
       // const cmptObj: any = this._getComponentObjectById(this.config.id);
+      const supportedTypes = Object.keys(components).join(', ');
+      throw new Error(`Trying to use an unsupported types (${this.config.component}).Supported types: ${supportedTypes}`);
 
-      // 2020.11.21
-      const cmptObj: any = this._getMenuComponentObjectById(config.id);
-
-      cmptObj.component = config.container;
-      if (!components[cmptObj.component]) {
-        const supportedTypes = Object.keys(components).join(', ');
-        throw new Error(`Trying to use an unsupported types (${this.config.component}).Supported types: ${supportedTypes}`);
-      } else {
-        this._buildComponent(cmptObj, type);
-      }
     }
   }
 

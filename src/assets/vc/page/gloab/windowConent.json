@@ -1,0 +1,668 @@
+{
+    "type": "staticForm",
+    "backName": "name",
+    "backConfig": [
+        {
+            "name": "windowContent"
+        }
+    ],
+    "properties": [
+        
+        {
+            "name": "windowContent",
+            "type": "objectEmpty",
+            "componentConfig": {
+
+            },
+            "formType": "object",
+            "formName": "formControlName",
+            "validations": [],
+            "title": "弹出窗口内容",
+            "properties":[
+                {
+                    "name": "title",
+                    "type": "input",
+                    "componentConfig": {},
+                    "formType": "value",
+                    "formName": "formControlName",
+                    "validations": [],
+                    "title": "弹出窗口标题"
+                },
+                {
+                    "name": "maskClosable",
+                    "type": "switch",
+                    "componentConfig": {},
+                    "formType": "value",
+                    "formName": "formControlName",
+                    "validations": [],
+                    "title": "点击蒙层关闭"
+                },
+                {
+                    "name": "width",
+                    "type": "input",
+                    "componentConfig": {},
+                    "formType": "value",
+                    "formName": "formControlName",
+                    "validations": [],
+                    "title": "宽度"
+                },
+                {
+                    "name": "style",
+                    "type": "objectEmpty",
+                    "componentConfig": {},
+                    "formType": "object",
+                    "formName": "formControlName",
+                    "validations": [],
+                    "title": "样式",
+                    "properties": [
+                        {
+                            "name": "top",
+                            "type": "input",
+                            "componentConfig": {},
+                            "formType": "value",
+                            "formName": "formControlName",
+                            "validations": [],
+                            "title": "上边距"
+                        },
+                        {
+                            "name": "padding-bottom",
+                            "type": "input",
+                            "componentConfig": {},
+                            "formType": "value",
+                            "formName": "formControlName",
+                            "validations": [],
+                            "title": "上边距"
+                        }
+                    ]
+                },
+                {
+                    "name": "targetPageId",
+                    "type": "treeSelect",
+                    "componentConfig": {
+                      "labelTooltipTitle": "弹出页面",
+                      "labelTooltipIcon": "question-circle",
+                      "loadingMode": "ajax",  
+                      "dropdownStyle": { "max-height": "300px" },
+                      "ajaxConfig": {
+                        "id": "load_name",
+                        "enableAjaxMore": true,
+                        "url": "smt-app/resource/GET_FUNC_ALL_PAGE_TREE/query",
+                        "urlType": "inner",
+                        "ajaxType": "get",
+                        "headParams": [],
+                        "queryParams": [
+                          {
+                            "name": "_recursive",
+                            "type": "value",
+                            "valueName": "",
+                            "value": true
+                          },
+                          {
+                            "name": "_deep",
+                            "type": "value",
+                            "valueName": "",
+                            "value": -1
+                          },
+                          {
+                            "name": "_pcName",
+                            "type": "value",
+                            "valueName": "",
+                            "value": "PID"
+                          }
+            
+            
+                        ],
+                        "pathParams": [],
+                        "bodyParams": [],
+                        "enableResultData": false
+                      },
+                      "columns": [{
+                        "title": "ID",
+                        "type": "key",
+                        "field": "ID"
+                      },
+                      {
+                        "title": "PID",
+                        "type": "parentId",
+                        "field": "PID"
+                      },
+                      {
+                        "title": "NAME",
+                        "type": "title",
+                        "field": "NAME"
+                      }
+                      ],
+                      "casadeValue": [
+                        {
+                          "cascadeName": "targetPageCode",
+                          "cascadeItems": [
+                            {
+                              "type": "condition",
+                              "condition": [
+                                {
+                                  "conditionType": "and",
+                                  "type": "expression",
+                                  "centent": [],
+                                  "expression": {
+                                    "comput": "null",
+                                    "leftExpression": {
+                                      "type": "componentValue",
+                                      "value": "0",
+                                      "valueName": "targetPageId"
+                                    },
+                                    "righitExpression": {
+                                      "type": "value",
+                                      "value": "^commandConfig$"
+                                    }
+                                  }
+                                }
+                              ],
+                              "content": {
+                                "type": "setValue",
+                                "data": {
+                                  "option": [
+                                    {
+                                      "name": "setValue",
+                                      "type": "value",
+                                      "value": null,
+                                      "valueName": "CODE"
+                                    }
+                                  ]
+                                }
+                              }
+                            },
+                            {
+                              "type": "condition",
+                              "condition": [
+                                {
+                                  "conditionType": "and",
+                                  "type": "expression",
+                                  "centent": [],
+                                  "expression": {
+                                    "comput": "notnull",
+                                    "leftExpression": {
+                                      "type": "componentValue",
+                                      "value": "0",
+                                      "valueName": "targetPageId"
+                                    },
+                                    "righitExpression": {
+                                      "type": "value",
+                                      "value": "^commandConfig$"
+                                    }
+                                  }
+                                }
+                              ],
+                              "content": {
+                                "type": "setValue",
+                                "data": {
+                                  "option": [
+                                    {
+                                      "name": "setValue",
+                                      "type": "dataItem",
+                                      "value": false,
+                                      "valueName": "CODE"
+                                    }
+                                  ]
+                                }
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "cascadeName": "targetPageTitle",
+                          "cascadeItems": [
+                            {
+                              "type": "condition",
+                              "condition": [
+                                {
+                                  "conditionType": "and",
+                                  "type": "expression",
+                                  "centent": [],
+                                  "expression": {
+                                    "comput": "null",
+                                    "leftExpression": {
+                                      "type": "componentValue",
+                                      "value": "0",
+                                      "valueName": "targetPageId"
+                                    },
+                                    "righitExpression": {
+                                      "type": "value",
+                                      "value": "^commandConfig$"
+                                    }
+                                  }
+                                }
+                              ],
+                              "content": {
+                                "type": "setValue",
+                                "data": {
+                                  "option": [
+                                    {
+                                      "name": "setValue",
+                                      "type": "value",
+                                      "value": null,
+                                      "valueName": "NAME"
+                                    }
+                                  ]
+                                }
+                              }
+                            },
+                            {
+                              "type": "condition",
+                              "condition": [
+                                {
+                                  "conditionType": "and",
+                                  "type": "expression",
+                                  "centent": [],
+                                  "expression": {
+                                    "comput": "notnull",
+                                    "leftExpression": {
+                                      "type": "componentValue",
+                                      "value": "0",
+                                      "valueName": "targetPageId"
+                                    },
+                                    "righitExpression": {
+                                      "type": "value",
+                                      "value": "^commandConfig$"
+                                    }
+                                  }
+                                }
+                              ],
+                              "content": {
+                                "type": "setValue",
+                                "data": {
+                                  "option": [
+                                    {
+                                      "name": "setValue",
+                                      "type": "dataItem",
+                                      "value": false,
+                                      "valueName": "NAME"
+                                    }
+                                  ]
+                                }
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    "formType": "value",
+                    "formName": "formControlName",
+                    "validations": [],
+                    "title": "弹出页面"
+            
+                  },
+                  {
+                    "name": "targetPageCode",
+                    "type": "label",
+                    "componentConfig": {
+                      "labelTooltipTitle": "页面编码",
+                      "labelTooltipIcon": "question-circle"
+                    },
+                    "formType": "value",
+                    "formName": "formControlName",
+                    "validations": [],
+                    "title": "弹出页面编码"
+            
+                  },
+                  {
+                    "name": "targetPageTitle",
+                    "type": "label",
+                    "hidden":true,
+                    "componentConfig": {
+                      "labelTooltipTitle": "目标页面标题",
+                      "labelTooltipIcon": "question-circle"
+                    },
+                    "formType": "value",
+                    "formName": "formControlName",
+                    "validations": [],
+                    "title": "目标页面标题"
+            
+                  },
+                {
+                    "name": "buttonContent",
+                    "type": "arrayCollapse",
+                    "componentConfig": {
+                        "staticDefaultValueConfig": [
+                            {
+                                "name":"buttonType",
+                                "type":"value",
+                                "value":"default"
+                            },
+                            {
+                                "name":"buttonSize",
+                                "type":"value",
+                                "value":"default"
+                            },
+                            {
+                                "name":"buttonDanger",
+                                "type":"value",
+                                "value":false
+                            }
+                        ],
+                        "showConfig": {
+                            "showString": [
+                                {
+                                    "name": "buttonTitle"
+                                }
+                            ]
+                        }
+                    },
+                    "formType": "array",
+                    "formName": "formControlName",
+                    "validations": [],
+                    "title": "按钮内容",
+                    "properties": [
+                        {
+                            "name": "buttonTitle",
+                            "type": "input",
+                            "componentConfig": {},
+                            "formType": "value",
+                            "formName": "formControlName",
+                            "validations": [],
+                            "title": "按钮名称"
+                        },
+                        {
+                            "name": "buttonType",
+                            "type": "select",
+                            "componentConfig": {
+                                "options": [
+                                    {
+                                        "label": "主按钮",
+                                        "value": "primary"
+                                    },
+                                    {
+                                        "label": "默认按钮",
+                                        "value": "default"
+                                    },
+                                    {
+                                        "label": "虚线按钮",
+                                        "value": "dashed"
+                                    },
+                                    {
+                                        "label": "文本按钮",
+                                        "value": "text"
+                                    },
+                                    {
+                                        "label": "链接按钮",
+                                        "value": "link"
+                                    }
+                                ],
+                                "labelName": "label",
+                                "valueName": "value"   
+                            },
+                            "formType": "value",
+                            "formName": "formControlName",
+                            "validations": [],
+                            "title": "按钮类型"
+                        },
+                        {
+                            "name": "buttonSize",
+                            "type": "select",
+                            "componentConfig": {
+                                "options": [
+                                    {
+                                        "label": "大",
+                                        "value": "large"
+                                    },
+                                    {
+                                        "label": "中",
+                                        "value": "small"
+                                    },
+                                    {
+                                        "label": "默认",
+                                        "value": "default"
+                                    }
+                                ],
+                                "labelName": "label",
+                                "valueName": "value"   
+                            },
+                            "formType": "value",
+                            "formName": "formControlName",
+                            "validations": [],
+                            "title": "按钮大小"
+                        },
+                        
+                        {
+                            "name": "buttonDanger",
+                            "type": "switch",
+                            "componentConfig": {},
+                            "formType": "value",
+                            "formName": "formControlName",
+                            "validations": [],
+                            "title": "危险状态"
+                        },
+                        {
+                            "name": "eventContent",
+                            "type": "arrayCard",
+                            "componentConfig": {
+                                "staticDefaultValueConfig": [
+                                    {
+                                        "name": "tagPageId",
+                                        "type": "tempValue",
+                                        "valueName": "ID"
+                                    }
+                                ]
+                            },
+                            "formType": "array",
+                            "formName": "formControlName",
+                            "validations": [],
+                            "title": "事件内容",
+                            "properties": [
+                                {
+                                    "name": "targetPageTitle",
+                                    "type": "label",
+                                    "componentConfig": {},
+                                    "formType": "value",
+                                    "formName": "formControlName",
+                                    "validations": [],
+                                    "title": "绑定页面标题"
+                                },
+                                {
+                                    "name": "targetPageId",
+                                    "type": "input",
+                                    "hidden": true,
+                                    "componentConfig": {},
+                                    "formType": "value",
+                                    "formName": "formControlName",
+                                    "validations": [],
+                                    "title": "绑定页面标识"
+                                },
+                                {
+                                    "name": "targetViewTitle",
+                                    "type": "label",
+                                    "componentConfig": {},
+                                    "formType": "value",
+                                    "formName": "formControlName",
+                                    "validations": [],
+                                    "title": "绑定组件标题"
+                                },
+                                {
+                                    "name": "targetViewId",
+                                    "type": "input",
+                                    "hidden": true,
+                                    "componentConfig": {},
+                                    "formType": "value",
+                                    "formName": "formControlName",
+                                    "validations": [],
+                                    "title": "绑定组件标识"
+                                },
+                                {
+                                    "name": "commandType",
+                                    "type": "tag",
+                                    "componentConfig": {
+                                        "dataMapping": [
+                                            {
+                                                "type": "currentValue",
+                                                "color": "#2db7f5",
+                                                "field": "commandType",
+                                                "value": "custom",
+                                                "valueText": "自定义"
+                                            },
+                                            {
+                                                "type": "currentValue",
+                                                "color": "#87d068",
+                                                "field": "commandType",
+                                                "value": "builtin",
+                                                "valueText": "系统内置"
+                                            }
+                                        ]
+                                    },
+                                    "formType": "value",
+                                    "formName": "formControlName",
+                                    "validations": [],
+                                    "title": "命令类型"
+                                },
+                                {
+                                    "name": "command",
+                                    "type": "input",
+                                    "hidden": true,
+                                    "componentConfig": {},
+                                    "formType": "value",
+                                    "formName": "formControlName",
+                                    "validations": [],
+                                    "title": "命令名称"
+                                },
+                                {
+                                    "name": "popCommand",
+                                    "type": "popCommand",
+                                    "componentConfig": {},
+                                    "formType": "value",
+                                    "formName": "formControlName",
+                                    "validations": [],
+                                    "title": "选择命令"
+                                },
+                                {
+                                    "name": "preCondition",
+                                    "type": "customSelect",
+                                    "componentConfig": {
+                                        "customPage": {
+                                            "title": "",
+                                            "width": "90%",
+                                            "style": null,
+                                            "maskClosable": true,
+                                            "cancelText": "取消",
+                                            "okText": "确定",
+                                            "footerButton": null,
+                                            "customAction": [],
+                                            "customContent": "staticForm",
+                                            "customPageConfig": {
+                                                "asyncLoad": true,
+                                                "loadingConfig": {
+                                                    "path": "vc/page/condition.json"
+                                                }
+                                            },
+                                            "sourceData": {
+                                                "type": "root",
+                                                "name": "preCondition"
+                                            },
+                                            "saveData": {
+                                                "type": "_root",
+                                                "name": "preCondition"
+                                            }
+                                        },
+                                        "showConfig": {
+                                            "type": "exist",
+                                            "showString": [
+                                                {
+                                                    "name": "type"
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    "formType": "value",
+                                    "formName": "formControlName",
+                                    "validations": [],
+                                    "title": "前置条件"
+                                },
+                                {
+                                    "name": "parameters",
+                                    "type": "arrayTable",
+                                    "componentConfig": {},
+                                    "properties": [
+                                        {
+                                            "name": "title",
+                                            "type": "label",
+                                            "componentConfig": {
+                                                "hiddenTitle": true,
+                                                "controlSize": {
+                                                    "span": 24
+                                                }
+                                            },
+                                            "formType": "value",
+                                            "formName": "formControlName",
+                                            "validations": [],
+                                            "title": "描述"
+                                        },
+                                        {
+                                            "name": "name",
+                                            "type": "input",
+                                            "componentConfig": {
+                                                "hiddenTitle": true,
+                                                "controlSize": {
+                                                    "span": 24
+                                                }
+                                            },
+                                            "formType": "value",
+                                            "formName": "formControlName",
+                                            "validations": [],
+                                            "title": "参数名称"
+                                        },
+                                        {
+                                            "name": "type",
+                                            "type": "input",
+                                            "componentConfig": {
+                                                "hiddenTitle": true,
+                                                "controlSize": {
+                                                    "span": 24
+                                                }
+                                            },
+                                            "formType": "value",
+                                            "formName": "formControlName",
+                                            "validations": [],
+                                            "title": "参数类型"
+                                        },
+                                        {
+                                            "name": "valueName",
+                                            "type": "input",
+                                            "componentConfig": {
+                                                "hiddenTitle": true,
+                                                "controlSize": {
+                                                    "span": 24
+                                                }
+                                            },
+                                            "formType": "value",
+                                            "formName": "formControlName",
+                                            "validations": [],
+                                            "title": "参数取值字段"
+                                        },
+                                        {
+                                            "name": "value",
+                                            "type": "input",
+                                            "componentConfig": {
+                                                "hiddenTitle": true,
+                                                "controlSize": {
+                                                    "span": 24
+                                                }
+                                            },
+                                            "formType": "value",
+                                            "formName": "formControlName",
+                                            "validations": [],
+                                            "title": "默认值"
+                                        }
+                                    ],
+                                    "formType": "array",
+                                    "formName": "formControlName",
+                                    "validations": [],
+                                    "title": "参数设置"
+                                }
+                            ]
+                        }
+                    ]
+                }
+
+                
+            ]
+        }
+       
+    ]
+}

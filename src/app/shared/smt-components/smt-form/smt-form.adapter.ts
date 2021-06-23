@@ -27,8 +27,8 @@ export class SmtFormDataAdapter {
     if (this._config.dataSource) {
       const ds = this._config.dataSource;
       return {
-        async: ds.async ? ds.async : false,
-        loadingOnInit: ds.loadingOnInit ? ds.loadingOnInit : true,
+        async: ds.hasOwnProperty('async') ? ds.async : false,
+        loadingOnInit: ds.hasOwnProperty('loadingOnInit') ? ds.loadingOnInit : true,
         loadingConfig: ds.loadingConfig ? ds.loadingConfig : null,
         loadingItemConfig: ds.loadingItemConfig ? ds.loadingItemConfig : null,
         expandConfig: ds.expandConfig ? ds.expandConfig : null,
