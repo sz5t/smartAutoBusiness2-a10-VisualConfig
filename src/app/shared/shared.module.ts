@@ -279,6 +279,21 @@ import { CfgFormLabelComponent } from './config-components/cfg-form-design/cfg-f
 import { CfgFormPickerYearComponent } from './config-components/cfg-form-design/cfg-form-design-layout/cfg-form-pickerYear/cfg-form-pickerYear.component';
 import { CfgFormSwitchComponent } from './config-components/cfg-form-design/cfg-form-design-layout/cfg-form-switch/cfg-form-switch.component';
 import { CnStaticFormTagComponent } from './components/cn-static-form/cn-static-form-item/cn-static-form-tag/cn-static-form-tag.component';
+import { SmtDataTableSelectComponent } from './smt-components/smt-data-table/smt-data-table-items/smt-data-table-select/smt-data-table-select.component';
+import { SmtDataTableDatePickerComponent } from './smt-components/smt-data-table/smt-data-table-items/smt-data-table-date-picker/smt-data-table-date-picker.component';
+import { SmtDataTableShowSpanTextComponent } from './smt-components/smt-data-table/smt-data-table-items/smt-data-table-show-span-text/smt-data-table-show-span-text.component';
+import { SmtDataTableTreeSelectComponent } from './smt-components/smt-data-table/smt-data-table-items/smt-data-table-tree-select/smt-data-table-tree-select.component';
+import { SmtDataTableTagComponent } from './smt-components/smt-data-table/smt-data-table-items/smt-data-table-tag/smt-data-table-tag.component';
+import { SmtDataTableGridSelectComponent } from './smt-components/smt-data-table/smt-data-table-items/smt-data-table-grid-select/smt-data-table-grid-select.component';
+import { SmtDataTableTextAreaComponent } from './smt-components/smt-data-table/smt-data-table-items/smt-data-table-text-area/smt-data-table-text-area.component';
+import { SmtDataTableRadioComponent } from './smt-components/smt-data-table/smt-data-table-items/smt-data-table-radio/smt-data-table-radio.component';
+import { SmtDataTableSwitchComponent } from './smt-components/smt-data-table/smt-data-table-items/smt-data-table-switch/smt-data-table-switch.component';
+import { SmtDataTableSelectMultipleComponent } from './smt-components/smt-data-table/smt-data-table-items/smt-data-table-select-multiple/smt-data-table-select-multiple.component';
+import { SmtDataTableMonthPickerComponent } from './smt-components/smt-data-table/smt-data-table-items/smt-data-table-month-picker/smt-data-table-month-picker.component';
+import { SmtDataTableRangePickerComponent } from './smt-components/smt-data-table/smt-data-table-items/smt-data-table-range-picker/smt-data-table-range-picker.component';
+import { SmtDataTableWeekPickerComponent } from './smt-components/smt-data-table/smt-data-table-items/smt-data-table-week-picker/smt-data-table-week-picker.component';
+import { SmtDataTableYearPickerComponent } from './smt-components/smt-data-table/smt-data-table-items/smt-data-table-year-picker/smt-data-table-year-picker.component';
+import { SmtDataTableDateTimePickerComponent } from './smt-components/smt-data-table/smt-data-table-items/smt-data-table-date-time-picker/smt-data-table-date-time-picker.component';
 
 // #region third libs
 
@@ -559,6 +574,22 @@ const COMPONENTS = [
   SmtPopPageComponent,
   // 新表格小组件
   SmtDataTableInputComponent,
+  SmtDataTableSelectComponent,
+  SmtDataTableDatePickerComponent,
+  SmtDataTableShowSpanTextComponent,
+  SmtDataTableTreeSelectComponent,
+  SmtDataTableTagComponent,
+  SmtDataTableGridSelectComponent,
+  SmtDataTableTextAreaComponent,
+  SmtDataTableRadioComponent,
+  SmtDataTableSwitchComponent,
+  SmtDataTableSelectMultipleComponent,
+  SmtDataTableMonthPickerComponent,
+  SmtDataTableRangePickerComponent,
+  SmtDataTableWeekPickerComponent,
+  SmtDataTableYearPickerComponent,
+  SmtDataTableDateTimePickerComponent,
+  SmtDataTableInputComponent
 ];
 const DIRECTIVES = [
   CnLayoutResolverDirective,
