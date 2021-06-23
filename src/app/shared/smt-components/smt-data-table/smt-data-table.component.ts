@@ -117,6 +117,19 @@ export class SmtDataTableComponent extends SmtComponentBase implements OnInit {
     this.initAnalysis();
   }
 
+  public ngOnDestroy() {
+    // 释放级联对象
+    this.unsubscribeRelation();
+
+    if (this._sender_subscription$) {
+      this._sender_subscription$.unsubscribe();
+    }
+
+    if (this.subscription$) {
+      this.subscription$.unsubscribe();
+    }
+  }
+
   public initAnalysis() {
     // 解析行为
     this.createEvent();
@@ -547,6 +560,20 @@ export class SmtDataTableComponent extends SmtComponentBase implements OnInit {
     return newData;
   }
 
+  public cancelEditRows() {
+    this.CHECKED_ITEMS.map((item) => {
+      this.mapOfDataState[item[this.KEY_ID]]['state'] = 'text'
+      this.removeEditRow(item);
+      // const trigger = new ButtonOperationResolver(this.componentService, this.config, this.mapOfDataState[item[this.KEY_ID]]);
+      // trigger.sendBtnMessage(
+      //   option.btnCfg,
+      //   { triggerType: BSN_TRIGGER_TYPE.STATE, trigger: BSN_DATAGRID_TRIGGER.CANCEL_EDIT_ROW },
+      //   this.config.id,
+      // );
+    });
+    return this.getDefaultResult();
+  }
+
   private removeEditRow(item) {
     this.EDITED_ITEMS = this.EDITED_ITEMS.filter((r) => r[this.KEY_ID] !== item[this.KEY_ID]);
     this.dataCheckedStatusChange();
@@ -582,6 +609,7 @@ export class SmtDataTableComponent extends SmtComponentBase implements OnInit {
       this.addEditRows(item);
       this.startToEdit(item);
     }
+    this;
     return this.getDefaultResult();
   }
 
@@ -625,19 +653,6 @@ export class SmtDataTableComponent extends SmtComponentBase implements OnInit {
     // if (this.config.mergeconfig) {
     //   this._createMapd_new(this.config.mergeconfig, this.dataList);
     // }
-  }
-
-  public cancelEditRows(option) {
-    this.CHECKED_ITEMS.map((item) => {
-      this.removeEditRow(item);
-      // const trigger = new ButtonOperationResolver(this.componentService, this.config, this.mapOfDataState[item[this.KEY_ID]]);
-      // trigger.sendBtnMessage(
-      //   option.btnCfg,
-      //   { triggerType: BSN_TRIGGER_TYPE.STATE, trigger: BSN_DATAGRID_TRIGGER.CANCEL_EDIT_ROW },
-      //   this.config.id,
-      // );
-    });
-    return true;
   }
 
   public changeAddedRowsToText(option) {

@@ -70,14 +70,27 @@ export class SmtCommandResolver {
   }
 
   private async execCommandContent(cmd, _execParamsData) {
+    let next: any = 'prevent';
     if (cmd.commandType === 'builtin') {
       const method = this._componentInstance.COMPONENT_METHODS[cmd.command];
       const result = await this._componentInstance[method](_execParamsData);
+      const data = _execParamsData === {} ? null : _execParamsData;
       if (result.state === 1) {
-        this.showDefaultMessage();
+        // this.showDefaultMessage();
+        for (let i = 0; i < cmd.result.length; i++) {
+          const nextResult = this.afterOperate(cmd.result[i], this._componentInstance.componentService.modalService, data, _execParamsData);
+          next = nextResult === undefined ? next : nextResult
+          switch (next) {
+            case 'next':
+              continue;
+            case 'pass':
+              break;
+            case 'prevent':
+              return;
+          }
+        }
       }
     } else if (cmd.commandType === 'custom') {
-      let next: any = 'prevent';
       for (let i = 0; i < cmd.commandContent.length; i++) {
         if (cmd.commandContent[i].type === 'ajaxConfig') {
           const nextResult = await this.resolveCommandOfAjax(cmd.commandContent[i], _execParamsData);
