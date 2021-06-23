@@ -406,12 +406,80 @@
                             },
                             {
                                 "name": "type",
-                                "type": "input",
+                                "type": "select",
                                 "componentConfig": {
                                     "hiddenTitle": true,
                                     "controlSize": {
                                         "span": 24
-                                    }
+                                    },
+                                    "options": [
+                                        {
+                                            "label": "默认值",
+                                            "value": "value"
+                                        },
+                                        {
+                                            "label": "临时变量",
+                                            "value": "tempValue"
+                                        },
+                                        {
+                                            "label": "初始值",
+                                            "value": "initValue"
+                                        },
+                                        {
+                                            "label": "组件值",
+                                            "value": "componentValue"
+                                        },
+                                        {
+                                            "label": "数据项",
+                                            "value": "dataItem"
+                                        },
+                                        {
+                                            "label": "缓存值",
+                                            "value": "cacheValue"
+                                        },
+                                        {
+                                            "label": "级联值",
+                                            "value": "cascadeValue"
+                                        },
+                                        {
+                                            "label": "添加的元素值",
+                                            "value": "addedItems"
+                                        },
+                                        {
+                                            "label": "编辑的元素值",
+                                            "value": "editedItems"
+                                        },
+                                        {
+                                            "label": "编辑的元素值",
+                                            "value": "editedItems"
+                                        },
+                                        {
+                                            "label": "勾选中",
+                                            "value": "checkedItemsIds"
+                                        },
+                                        {
+                                            "label": "选中",
+                                            "value": "selectedItem"
+                                        },
+                                        {
+                                            "label": "当前",
+                                            "value": "currentItem"
+                                        },
+                                        {
+                                            "label": "用户",
+                                            "value": "userValue"
+                                        },
+                                        {
+                                            "label": "菜单值",
+                                            "value": "menuValue"
+                                        },
+                                        {
+                                            "label": "路由",
+                                            "value": "router"
+                                        }
+                                    ],
+                                    "labelName": "label",
+                                    "valueName": "value"
                                 },
                                 "formType": "value",
                                 "formName": "formControlName",
@@ -752,8 +820,77 @@
                                         "properties": [
                                             {
                                                 "name": "type",
-                                                "type": "input",
-                                                "componentConfig": {},
+                                                "type": "select",
+                                                "componentConfig": {
+                                                    "options": [
+                                                        {
+                                                            "label": "默认值",
+                                                            "value": "value"
+                                                        },
+                                                        {
+                                                            "label": "临时变量",
+                                                            "value": "tempValue"
+                                                        },
+                                                        {
+                                                            "label": "初始值",
+                                                            "value": "initValue"
+                                                        },
+                                                        {
+                                                            "label": "组件值",
+                                                            "value": "componentValue"
+                                                        },
+                                                        {
+                                                            "label": "数据项",
+                                                            "value": "dataItem"
+                                                        },
+                                                        {
+                                                            "label": "缓存值",
+                                                            "value": "cacheValue"
+                                                        },
+                                                        {
+                                                            "label": "级联值",
+                                                            "value": "cascadeValue"
+                                                        },
+                                                        {
+                                                            "label": "添加的元素值",
+                                                            "value": "addedItems"
+                                                        },
+                                                        {
+                                                            "label": "编辑的元素值",
+                                                            "value": "editedItems"
+                                                        },
+                                                        {
+                                                            "label": "编辑的元素值",
+                                                            "value": "editedItems"
+                                                        },
+                                                        {
+                                                            "label": "勾选中",
+                                                            "value": "checkedItemsIds"
+                                                        },
+                                                        {
+                                                            "label": "选中",
+                                                            "value": "selectedItem"
+                                                        },
+                                                        {
+                                                            "label": "当前",
+                                                            "value": "currentItem"
+                                                        },
+                                                        {
+                                                            "label": "用户",
+                                                            "value": "userValue"
+                                                        },
+                                                        {
+                                                            "label": "菜单值",
+                                                            "value": "menuValue"
+                                                        },
+                                                        {
+                                                            "label": "路由",
+                                                            "value": "router"
+                                                        }
+                                                    ],
+                                                    "labelName": "label",
+                                                    "valueName": "value"
+                                                },
                                                 "formType": "value",
                                                 "formName": "formControlName",
                                                 "validations": [],
@@ -790,8 +927,77 @@
                                         "properties": [
                                             {
                                                 "name": "type",
-                                                "type": "input",
-                                                "componentConfig": {},
+                                                "type": "select",
+                                                "componentConfig": {
+                                                    "options": [
+                                                        {
+                                                            "label": "默认值",
+                                                            "value": "value"
+                                                        },
+                                                        {
+                                                            "label": "临时变量",
+                                                            "value": "tempValue"
+                                                        },
+                                                        {
+                                                            "label": "初始值",
+                                                            "value": "initValue"
+                                                        },
+                                                        {
+                                                            "label": "组件值",
+                                                            "value": "componentValue"
+                                                        },
+                                                        {
+                                                            "label": "数据项",
+                                                            "value": "dataItem"
+                                                        },
+                                                        {
+                                                            "label": "缓存值",
+                                                            "value": "cacheValue"
+                                                        },
+                                                        {
+                                                            "label": "级联值",
+                                                            "value": "cascadeValue"
+                                                        },
+                                                        {
+                                                            "label": "添加的元素值",
+                                                            "value": "addedItems"
+                                                        },
+                                                        {
+                                                            "label": "编辑的元素值",
+                                                            "value": "editedItems"
+                                                        },
+                                                        {
+                                                            "label": "编辑的元素值",
+                                                            "value": "editedItems"
+                                                        },
+                                                        {
+                                                            "label": "勾选中",
+                                                            "value": "checkedItemsIds"
+                                                        },
+                                                        {
+                                                            "label": "选中",
+                                                            "value": "selectedItem"
+                                                        },
+                                                        {
+                                                            "label": "当前",
+                                                            "value": "currentItem"
+                                                        },
+                                                        {
+                                                            "label": "用户",
+                                                            "value": "userValue"
+                                                        },
+                                                        {
+                                                            "label": "菜单值",
+                                                            "value": "menuValue"
+                                                        },
+                                                        {
+                                                            "label": "路由",
+                                                            "value": "router"
+                                                        }
+                                                    ],
+                                                    "labelName": "label",
+                                                    "valueName": "value"
+                                                },
                                                 "formType": "value",
                                                 "formName": "formControlName",
                                                 "validations": [],
@@ -1255,12 +1461,80 @@
                                             },
                                             {
                                                 "name": "type",
-                                                "type": "input",
+                                                "type": "select",
                                                 "componentConfig": {
                                                     "hiddenTitle": true,
                                                     "controlSize": {
                                                         "span": 24
-                                                    }
+                                                    },
+                                                    "options": [
+                                                        {
+                                                            "label": "默认值",
+                                                            "value": "value"
+                                                        },
+                                                        {
+                                                            "label": "临时变量",
+                                                            "value": "tempValue"
+                                                        },
+                                                        {
+                                                            "label": "初始值",
+                                                            "value": "initValue"
+                                                        },
+                                                        {
+                                                            "label": "组件值",
+                                                            "value": "componentValue"
+                                                        },
+                                                        {
+                                                            "label": "数据项",
+                                                            "value": "dataItem"
+                                                        },
+                                                        {
+                                                            "label": "缓存值",
+                                                            "value": "cacheValue"
+                                                        },
+                                                        {
+                                                            "label": "级联值",
+                                                            "value": "cascadeValue"
+                                                        },
+                                                        {
+                                                            "label": "添加的元素值",
+                                                            "value": "addedItems"
+                                                        },
+                                                        {
+                                                            "label": "编辑的元素值",
+                                                            "value": "editedItems"
+                                                        },
+                                                        {
+                                                            "label": "编辑的元素值",
+                                                            "value": "editedItems"
+                                                        },
+                                                        {
+                                                            "label": "勾选中",
+                                                            "value": "checkedItemsIds"
+                                                        },
+                                                        {
+                                                            "label": "选中",
+                                                            "value": "selectedItem"
+                                                        },
+                                                        {
+                                                            "label": "当前",
+                                                            "value": "currentItem"
+                                                        },
+                                                        {
+                                                            "label": "用户",
+                                                            "value": "userValue"
+                                                        },
+                                                        {
+                                                            "label": "菜单值",
+                                                            "value": "menuValue"
+                                                        },
+                                                        {
+                                                            "label": "路由",
+                                                            "value": "router"
+                                                        }
+                                                    ],
+                                                    "labelName": "label",
+                                                    "valueName": "value"
                                                 },
                                                 "formType": "value",
                                                 "formName": "formControlName",
@@ -1388,12 +1662,80 @@
                                             },
                                             {
                                                 "name": "type",
-                                                "type": "input",
+                                                "type": "select",
                                                 "componentConfig": {
                                                     "hiddenTitle": true,
                                                     "controlSize": {
                                                         "span": 24
-                                                    }
+                                                    },
+                                                    "options": [
+                                                        {
+                                                            "label": "默认值",
+                                                            "value": "value"
+                                                        },
+                                                        {
+                                                            "label": "临时变量",
+                                                            "value": "tempValue"
+                                                        },
+                                                        {
+                                                            "label": "初始值",
+                                                            "value": "initValue"
+                                                        },
+                                                        {
+                                                            "label": "组件值",
+                                                            "value": "componentValue"
+                                                        },
+                                                        {
+                                                            "label": "数据项",
+                                                            "value": "dataItem"
+                                                        },
+                                                        {
+                                                            "label": "缓存值",
+                                                            "value": "cacheValue"
+                                                        },
+                                                        {
+                                                            "label": "级联值",
+                                                            "value": "cascadeValue"
+                                                        },
+                                                        {
+                                                            "label": "添加的元素值",
+                                                            "value": "addedItems"
+                                                        },
+                                                        {
+                                                            "label": "编辑的元素值",
+                                                            "value": "editedItems"
+                                                        },
+                                                        {
+                                                            "label": "编辑的元素值",
+                                                            "value": "editedItems"
+                                                        },
+                                                        {
+                                                            "label": "勾选中",
+                                                            "value": "checkedItemsIds"
+                                                        },
+                                                        {
+                                                            "label": "选中",
+                                                            "value": "selectedItem"
+                                                        },
+                                                        {
+                                                            "label": "当前",
+                                                            "value": "currentItem"
+                                                        },
+                                                        {
+                                                            "label": "用户",
+                                                            "value": "userValue"
+                                                        },
+                                                        {
+                                                            "label": "菜单值",
+                                                            "value": "menuValue"
+                                                        },
+                                                        {
+                                                            "label": "路由",
+                                                            "value": "router"
+                                                        }
+                                                    ],
+                                                    "labelName": "label",
+                                                    "valueName": "value"
                                                 },
                                                 "formType": "value",
                                                 "formName": "formControlName",
@@ -1741,12 +2083,80 @@
                                     },
                                     {
                                         "name": "type",
-                                        "type": "input",
+                                        "type": "select",
                                         "componentConfig": {
                                             "hiddenTitle": true,
                                             "controlSize": {
                                                 "span": 24
-                                            }
+                                            },
+                                            "options": [
+                                                {
+                                                    "label": "默认值",
+                                                    "value": "value"
+                                                },
+                                                {
+                                                    "label": "临时变量",
+                                                    "value": "tempValue"
+                                                },
+                                                {
+                                                    "label": "初始值",
+                                                    "value": "initValue"
+                                                },
+                                                {
+                                                    "label": "组件值",
+                                                    "value": "componentValue"
+                                                },
+                                                {
+                                                    "label": "数据项",
+                                                    "value": "dataItem"
+                                                },
+                                                {
+                                                    "label": "缓存值",
+                                                    "value": "cacheValue"
+                                                },
+                                                {
+                                                    "label": "级联值",
+                                                    "value": "cascadeValue"
+                                                },
+                                                {
+                                                    "label": "添加的元素值",
+                                                    "value": "addedItems"
+                                                },
+                                                {
+                                                    "label": "编辑的元素值",
+                                                    "value": "editedItems"
+                                                },
+                                                {
+                                                    "label": "编辑的元素值",
+                                                    "value": "editedItems"
+                                                },
+                                                {
+                                                    "label": "勾选中",
+                                                    "value": "checkedItemsIds"
+                                                },
+                                                {
+                                                    "label": "选中",
+                                                    "value": "selectedItem"
+                                                },
+                                                {
+                                                    "label": "当前",
+                                                    "value": "currentItem"
+                                                },
+                                                {
+                                                    "label": "用户",
+                                                    "value": "userValue"
+                                                },
+                                                {
+                                                    "label": "菜单值",
+                                                    "value": "menuValue"
+                                                },
+                                                {
+                                                    "label": "路由",
+                                                    "value": "router"
+                                                }
+                                            ],
+                                            "labelName": "label",
+                                            "valueName": "value"
                                         },
                                         "formType": "value",
                                         "formName": "formControlName",
