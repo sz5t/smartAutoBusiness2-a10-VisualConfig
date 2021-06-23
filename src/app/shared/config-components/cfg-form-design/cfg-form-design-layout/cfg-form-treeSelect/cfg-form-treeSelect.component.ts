@@ -8,6 +8,7 @@ import { CfgFormDesignBase } from '../cfgFormDesignBase';
 })
 export class CfgFormTreeSelectComponent extends CfgFormDesignBase implements OnInit {
   public nodes: any[] = [];
+  public model;
   constructor() {
     super();
   }
