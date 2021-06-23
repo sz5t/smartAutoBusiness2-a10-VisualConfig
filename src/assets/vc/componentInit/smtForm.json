@@ -38,10 +38,29 @@
     },
     "builtinCommand":[
         {
-            "command": "LOAD",
+            "command": "REFRESH",
             "commandTitle": "刷新",
             "commandType": "builtin",
             "declareParameters":[]
+        },
+        {
+            "command": "WINDOW",
+            "commandTitle": "弹出窗口",
+            "commandType": "builtin",
+            "declareParameters":[
+                {
+                    "name": "$WINDOW_CODE",
+                    "title": "弹出窗",
+                    "dataType": "string"
+                }
+            ]
+        },
+        {
+            "command": "WINDOW_CLOSE",
+            "commandTitle": "关闭弹出窗口",
+            "commandType": "builtin",
+            "declareParameters":[
+            ]
         }
     ]
 

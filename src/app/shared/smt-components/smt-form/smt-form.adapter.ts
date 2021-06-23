@@ -13,6 +13,13 @@ export class SmtFormDataAdapter {
       return this._config.columns;
     }
   }
+  public setWindows(): any[] {
+    if (this._config['windows']) {
+      return this._config.windows;
+    } else {
+      return null;
+    }
+  }
 
   public setFormBindObj(): IFormBindProperties {
     return {
@@ -24,17 +31,21 @@ export class SmtFormDataAdapter {
   }
 
   public setDataSource(): any {
-    if (this._config.dataSource) {
-      const ds = this._config.dataSource;
-      return {
-        async: ds.hasOwnProperty('async') ? ds.async : false,
-        loadingOnInit: ds.hasOwnProperty('loadingOnInit') ? ds.loadingOnInit : true,
-        loadingConfig: ds.loadingConfig ? ds.loadingConfig : null,
-        loadingItemConfig: ds.loadingItemConfig ? ds.loadingItemConfig : null,
-        expandConfig: ds.expandConfig ? ds.expandConfig : null,
-      };
+    let ds: any = {};
+    if (this._config.hasOwnProperty('dataSource')) {
+      ds = this._config.dataSource
     }
-    return null;
+    if (this._config.hasOwnProperty('dataSourceCfg')) {
+      ds = this._config.dataSourceCfg
+    }
+    return {
+      async: ds.hasOwnProperty('async') ? ds.async : false,
+      loadingOnInit: ds.hasOwnProperty('loadingOnInit') ? ds.loadingOnInit : true,
+      loadingConfig: ds['loadingConfig'] ? ds.loadingConfig : null,
+      loadingItemConfig: ds['loadingItemConfig'] ? ds.loadingItemConfig : null,
+      expandConfig: ds['expandConfig'] ? ds.expandConfig : null,
+    };
+
   }
 
   public setEventObjs(): any[] {

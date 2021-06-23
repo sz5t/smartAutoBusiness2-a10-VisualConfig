@@ -932,7 +932,7 @@
                                             "title": "窗口标题"
                                         },
                                         {
-                                            "name": "windowName",
+                                            "name": "windowCode",
                                             "type": "input",
                                             "componentConfig": {},
                                             "formType": "value",
