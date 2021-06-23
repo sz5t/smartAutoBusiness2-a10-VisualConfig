@@ -3,7 +3,7 @@
 
     <div>
         <ng-container *ngFor="let cmpt of l_config['children']">
-            <ng-container *ngIf="cmpt['type']==='cnToolbar'">
+            <ng-container *ngIf="cmpt['type']==='smtToolbar'">
                 <div appCfgPageDesignLayoutItem [l_config]="cmpt" [showLayout]="showLayout"
                     [(selectedItem)]="selectedItem" [(cmptState)]="cmptState" [fromDataService]="fromDataService">
 

@@ -46,7 +46,6 @@ export class CfgFormDesignComponent extends CnComponentBase implements OnInit {
     if (this.layoutSourceData) {
       this.fromDataService.layoutSourceData = this.layoutSourceData;
     }
-    this.fromDataService.propertyPath = 'vc/page/formComponent/';
   }
   private _initInnerValue() {
     if (this.tempData) {
