@@ -592,7 +592,6 @@ const COMPONENTS = [
   SmtDataTableYearPickerComponent,
   SmtDataTableDateTimePickerComponent,
   SmtDataTableInputComponent,
-  SmtDataTableInputComponent
 ];
 const DIRECTIVES = [
   CnLayoutResolverDirective,
