@@ -310,6 +310,7 @@ export class SmtComponentBase {
       editedItems: this.EDITED_ITEMS,
       returnValue: this.RETURN_VALUE,
       selectedItem: this.SELECTED_ITEM,
+      checkedItemsIds: this.CHECKED_ITEMS_IDS,
       currentItem: this.CURRENT_ITEM,
       userValue: this.USER_VALUE,
       menuValue: this.componentService.cacheService.getNone('activeMenu') ? this.componentService.cacheService.getNone('activeMenu') : {},
@@ -333,6 +334,7 @@ export class SmtComponentBase {
       //checkedRow: this.ROWS_CHECKED,
       outputValue: data,
       selectedItem: this.SELECTED_ITEM,
+      checkedItemsIds: this.CHECKED_ITEMS_IDS,
       currentItem: this.CURRENT_ITEM,
       userValue: this.USER_VALUE,
       menuValue: this.componentService.cacheService.getNone('activeMenu') ? this.componentService.cacheService.getNone('activeMenu') : {},
@@ -340,7 +342,7 @@ export class SmtComponentBase {
   }
 
   private _buildArrayParams(paramsCfg, data): any[] {
-    let returnData: any[];
+    let returnData: any[] = [];
     data.map((d) => {
       const param = SmtParameterResolver.resolve({
         params: paramsCfg,
@@ -357,6 +359,7 @@ export class SmtComponentBase {
         //checkedRow: this.ROWS_CHECKED,
         outputValue: data,
         currentItem: this.CURRENT_ITEM,
+        checkedItemsIds: this.CHECKED_ITEMS_IDS,
         userValue: this.USER_VALUE,
         menuValue: this.componentService.cacheService.getNone('activeMenu') ? this.componentService.cacheService.getNone('activeMenu') : {},
       });
@@ -375,7 +378,7 @@ export class SmtComponentBase {
   //#endregion
 
   //#region 异步请求
-  public async executeHttp(ajaxConfig: any, data: any, option = '') {
+  public async executeHttp(ajaxConfig: any, data: any, option = '', isArray = false) {
     let _param_data = {};
     let _paramsResult: any;
     let _resultData: any;
@@ -392,7 +395,7 @@ export class SmtComponentBase {
       _param_data[item['name']] = ajaxConfig[item['name']] ? ajaxConfig[item['name']] : [];
     });
 
-    _paramsResult = this.buildHttpParameters(_param_data, data, false, option);
+    _paramsResult = this.buildHttpParameters(_param_data, data, isArray, option);
     _resultData = await this.buildAjax(ajaxConfig, _paramsResult);
 
     if (ajaxConfig['enableResultData']) {
@@ -415,7 +418,9 @@ export class SmtComponentBase {
           ...this['_buildFilter'](),
         };
       } else {
-        paramsResult[p] = this.buildParameters(cfgItem, data, isArray);
+        if (cfgItem.length > 0) {
+          paramsResult[p] = this.buildParameters(cfgItem, data, isArray);
+        }
       }
     }
     return paramsResult;
@@ -839,6 +844,22 @@ export class SmtComponentBase {
 
 
   //#region 异常处理
+
+  /**
+   * 获取执行异常的返回结果
+   * @returns
+   */
+  public getDefaultResult(): IExecuteResult {
+    return {
+      state: 1,
+      error: {
+        code: '',
+        message: '',
+        data: {},
+        params: [],
+      },
+    };
+  }
 
   /**
    * 获取执行异常的返回结果

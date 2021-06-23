@@ -671,67 +671,67 @@ export class CnStaticFormGridItemComponent implements OnInit {
           "options": [
             {
               "label": "输入",
-              "value": "cnGridInput"
+              "value": "smtGridInput"
             },
             {
               "label": "开关",
-              "value": "cnGridSwitch"
+              "value": "smtGridSwitch"
             },
             {
               "label": "收缩展示文本",
-              "value": "cnGridShowSpanText"
+              "value": "smtGridShowSpanText"
             },
             {
               "label": "标签",
-              "value": "cnGridTag"
+              "value": "smtGridTag"
             },
             {
               "label": "多选下拉列表",
-              "value": "cnGridSelectMultiple"
+              "value": "smtGridSelectMultiple"
             },
             {
               "label": "下拉树",
-              "value": "cnGridTreeSelect"
+              "value": "smtGridTreeSelect"
             },
             {
               "label": "下拉选择",
-              "value": "cnGridSelect"
+              "value": "smtGridSelect"
             },
             {
               "label": "下拉表格",
-              "value": "cnGridGridSelect"
+              "value": "smtGridGridSelect"
             },
             {
               "label": "大文本",
-              "value": "cnGridTextArea"
+              "value": "smtGridTextArea"
             },
             {
               "label": "单选",
-              "value": "cnGridRadio"
+              "value": "smtGridRadio"
             },
             {
               "label": "下拉日期",
-              "value": "cnGridDatePicker"
+              "value": "smtGridDatePicker"
             },
             {
               "label": "下拉日期时间",
-              "value": "cnGridDateTimePicker"
+              "value": "smtGridDateTimePicker"
             },
             {
               "label": "下拉选择年",
-              "value": "cnGridYearPicker"
+              "value": "smtGridYearPicker"
             },
             {
               "label": "下拉选择周",
-              "value": "cnGridWeekPicker"
+              "value": "smtGridWeekPicker"
             },
             {
               "label": "下拉选择月",
-              "value": "cnGridMonthPicker"
+              "value": "smtGridMonthPicker"
             },
             {
               "label": "下拉选择日期范围",
-              "value": "cnGridRangePicker"
+              "value": "smtGridRangePicker"
             }
 
           ],

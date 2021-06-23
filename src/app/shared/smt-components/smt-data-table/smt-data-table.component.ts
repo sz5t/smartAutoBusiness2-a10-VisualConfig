@@ -1,4 +1,4 @@
-import { Component, Inject, Input, OnInit, Output } from '@angular/core';
+import { Component, Inject, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { ComponentServiceProvider } from 'src/app/core/services/components/component.service';
 import { BSN_COMPONENT_SERVICES } from 'src/app/core/relations/bsn-relatives';
 import { SmtComponentBase } from '../smt-component.base';
@@ -13,7 +13,6 @@ import { CN_DATA_GRID_METHOD } from 'src/app/core/relations/bsn-methods';
 import { SmtEventResolver } from '../../resolver/smt-event/smt-event-resolver';
 import { SmtCommandResolver } from '../../resolver/smt-command/smt-command.resovel';
 import { SmtMessageSenderResolver } from '../../resolver/smt-relation/smt-relation-resolver';
-import EventEmitter from 'wolfy87-eventemitter';
 import { dataTableServerService } from 'src/app/core/services/smt-dataTable-items/smt-dataTable.service';
 
 @Component({
@@ -39,6 +38,7 @@ export class SmtDataTableComponent extends SmtComponentBase implements OnInit {
     this.INIT_VALUE = {};
     this.TEMP_VALUE = {};
     this.CHECKED_ITEMS_IDS = {};
+    this.CHECKED_ITEMS = [];
     this.SELECTED_ITEM = {};
     this.ADDED_ITEMS = [];
     this.EDITED_ITEMS = [];
@@ -89,7 +89,6 @@ export class SmtDataTableComponent extends SmtComponentBase implements OnInit {
   public indeterminate = false;
 
   public ROW_SELECTED: any;
-  public ROWS_CHECKED: any[] = [];
 
   public commandList: any[];
 
@@ -279,12 +278,12 @@ export class SmtDataTableComponent extends SmtComponentBase implements OnInit {
       this.checkedNumber = this.dataList.filter((item) => this.mapOfDataState[item[this.KEY_ID]].checked).length;
 
       // 更新当前选中数据集合
-      this.ROWS_CHECKED = this.dataList
+      this.CHECKED_ITEMS = this.dataList
         .filter((item) => !this.mapOfDataState[item[this.KEY_ID]].disabled)
         .filter((item) => this.mapOfDataState[item[this.KEY_ID]].checked);
 
       // 更新勾选的IDS
-      this.CHECKED_ITEMS_IDS = this.createIds(this.ROWS_CHECKED);
+      this.CHECKED_ITEMS_IDS = this.createIds(this.CHECKED_ITEMS);
     } else {
       this.isAllChecked = false;
       this.indeterminate = false;
@@ -387,8 +386,17 @@ export class SmtDataTableComponent extends SmtComponentBase implements OnInit {
       response = await this.executeHttp(this.dataSourceCfg['loadingConfig'], null, 'paging');
     }
 
+    if (response && response.data.hasOwnProperty('_procedure_resultset_1')) {
+      response.data['resultDatas'] = response.data['_procedure_resultset_1'];
+    }
+
     this.dataList = response.data.resultDatas;
     this.total = response.data.count;
+
+    this.dataTableServe.data = {
+      initValue: this.INIT_VALUE,
+      tempValue: this.TEMP_VALUE
+    }
 
     this.createTableMapping();
     this.initSelectedRow();
@@ -444,70 +452,42 @@ export class SmtDataTableComponent extends SmtComponentBase implements OnInit {
   }
 
   // 有操作之后的刷新方法
-  public loadRefreshData(option) {
-    if (this.dataSourceCfg.loadingConfig) {
-      this.executeHttp(this.dataSourceCfg.loadingConfig, 'buildParameters', 'paging').then(
-        (response) => {
-          if (response && response.data && response.data) {
-            this.refreshData(response.data.resultDatas);
-          } else {
-          }
-        },
-        (error) => {
-          console.log(error);
-        },
-      );
+  public loadRefreshData() {
+    if (this.EDITED_ITEMS.length > 0) {
+      for (let i = 0; i < this.EDITED_ITEMS.length; i++) {
+        this.cancelEditRow(this.EDITED_ITEMS[i]['ID']);
+        this.refreshData(this.EDITED_ITEMS[i]['ID']);
+      }
     }
+    return this.getDefaultResult();
   }
 
-  public refreshData(loadNewData) {
-    if (loadNewData && Array.isArray(loadNewData)) {
-      loadNewData.map((newData, ind) => {
-        const index = this.dataList.findIndex((d) => d[this.KEY_ID] === newData[this.KEY_ID]);
-        if (index > -1) {
-          this.dataList.splice(index, 1, newData);
-          this.dataList = [...this.dataList];
-        } else {
-          this.dataList = [loadNewData[ind], ...this.dataList];
-        }
+  // 关闭编辑行状态
+  public cancelEditRow(id) {
+    this.mapOfDataState[id].state = 'text';
+  }
 
-        // liu 20200818 处理编辑一次后不可编辑，刷新将状态恢复
-
-        // liu 20200525
-        const mapData = this.mapOfDataState[newData[this.KEY_ID]];
-        if (mapData) {
-          mapData.state = 'text';
-          mapData.actions = this.getRowActions('text');
-          mapData.data = newData;
-          mapData.originData = { ...newData };
-        } else {
-          // 组装状态数据
-          this.mapOfDataState[newData[this.KEY_ID]] = {
-            data: newData,
-            originData: { ...newData },
-            disabled: false,
-            checked: true, // index === 0 ? true : false,
-            selected: false, // index === 0 ? true : false,
-            state: 'text',
-            validation: true,
-            actions: this.getRowActions('text'),
-            mergeData: {},
-          };
-        }
-
-        this.rows_Add_Edit(newData);
-      });
-    }
+  public refreshData(id) {
     // 刷新dataList
-    // 刷新mapOfDataState
+    const index = this.dataList.findIndex(e => e[this.KEY_ID] === id);
+    this.dataList[index] = this.mapOfDataState[id].data;
+    this.mapOfDataState[id].originData = this.dataList[index];
+    // 刷新新增，编辑行数据
+    this.rows_Add_Edit(id);
 
-    this.dataList.forEach((item, idx) => {
-      this.mapOfDataState[item[this.KEY_ID]].originData._index = idx + 1;
-      // item[this.KEY_ID]
-      item._index = idx + 1;
-    });
+    // this.dataList.forEach((item, idx) => {
+    //   this.mapOfDataState[item[this.KEY_ID]].originData._index = idx + 1;
+    //   // item[this.KEY_ID]
+    //   item._index = idx + 1;
+    // });
     // liu 20200818
     this.dataCheckedStatusChange();
+  }
+
+  public rows_Add_Edit(item?) {
+    this.ADDED_ITEMS = this.ADDED_ITEMS.filter((r) => r[this.KEY_ID] !== item[this.KEY_ID]);
+    this.EDITED_ITEMS = this.EDITED_ITEMS.filter((r) => r[this.KEY_ID] !== item[this.KEY_ID]);
+    // this.dataCheckedStatusChange();
   }
 
   public getRowActions(state): any[] {
@@ -523,12 +503,6 @@ export class SmtDataTableComponent extends SmtComponentBase implements OnInit {
       }
     }
     return copyAction;
-  }
-
-  public rows_Add_Edit(item?) {
-    this.ADDED_ITEMS = this.ADDED_ITEMS.filter((r) => r[this.KEY_ID] !== item[this.KEY_ID]);
-    this.EDITED_ITEMS = this.EDITED_ITEMS.filter((r) => r[this.KEY_ID] !== item[this.KEY_ID]);
-    // this.dataCheckedStatusChange();
   }
 
   // 添加行
@@ -588,7 +562,7 @@ export class SmtDataTableComponent extends SmtComponentBase implements OnInit {
       //   this._createMapd_new(this.config.mergeconfig, this.dataList);
       // }
     }
-    return true;
+    return this.getDefaultResult();
   }
 
   private startToEdit(option) {
@@ -602,15 +576,13 @@ export class SmtDataTableComponent extends SmtComponentBase implements OnInit {
   }
 
   public editRows(option) {
-    this.ROWS_CHECKED.map((item) => {
+    const idArray = option.IDS.split(',');
+    for (let i = 0; i < idArray.length; i++) {
+      const item = { ID: idArray[i] }
       this.addEditRows(item);
-      // const trigger = new ButtonOperationResolver(this.componentService, this.config, this.mapOfDataState[item[this.KEY_ID]]);
-      // trigger.sendBtnMessage(
-      //   option.btnCfg,
-      //   { triggerType: BSN_TRIGGER_TYPE.STATE, trigger: BSN_DATAGRID_TRIGGER.EDIT_ROW },
-      //   this.config.id,
-      // );
-    });
+      this.startToEdit(item);
+    }
+    return this.getDefaultResult();
   }
 
   private addEditRows(item) {
@@ -656,7 +628,7 @@ export class SmtDataTableComponent extends SmtComponentBase implements OnInit {
   }
 
   public cancelEditRows(option) {
-    this.ROWS_CHECKED.map((item) => {
+    this.CHECKED_ITEMS.map((item) => {
       this.removeEditRow(item);
       // const trigger = new ButtonOperationResolver(this.componentService, this.config, this.mapOfDataState[item[this.KEY_ID]]);
       // trigger.sendBtnMessage(
@@ -665,25 +637,6 @@ export class SmtDataTableComponent extends SmtComponentBase implements OnInit {
       //   this.config.id,
       // );
     });
-    return true;
-  }
-
-  public cancelEditRow(option) {
-    if (option.data) {
-      const itemId = option.data.data[this.KEY_ID];
-      if (itemId) {
-        this.EDITED_ITEMS = this.EDITED_ITEMS.filter((r) => r[this.KEY_ID] !== itemId);
-      }
-      // 2020.7.27 计算合并列
-      // if (this.config.mergeconfig) {
-      //   this._createMapd_new(this.config.mergeconfig, this.dataList);
-      // }
-    }
-
-    // console.log('-------------', this.ADDED_ITEMS, this.EDITED_ITEMS);
-    // 调用方法之前,判断传递的验证配置,解析后是否能够继续进行后续操作
-    // return true 表示通过验证, return false 表示未通过,无法继续后续操作
-
     return true;
   }
 
@@ -1193,13 +1146,12 @@ export class SmtDataTableComponent extends SmtComponentBase implements OnInit {
   }
 
   public valueChange(v?) {
-    // console.log('返回值', v);
     // 给表格数据映射赋值
     this.mapOfDataState[v.id].data[v.name] = v.value;
     // 级联处理
 
-    // 给当前操作行中更新最新数据值
-    // const changeItem = { [v.name]: v.value }
-    this.CURRENT_ITEM = this.mapOfDataState[v.id].data;
+    // 更新编辑行参数
+    const index = this.EDITED_ITEMS.findIndex(e => e[this.KEY_ID] === v.id);
+    this.EDITED_ITEMS[index][v.name] = v.value;
   }
 }

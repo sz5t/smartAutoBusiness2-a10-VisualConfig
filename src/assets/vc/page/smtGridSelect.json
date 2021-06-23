@@ -45,12 +45,12 @@
                                     "name": "field",
                                     "type": "input",
                                     "componentConfig": {
-                                        "labelSize": {                
+                                        "labelSize": {
                                             "span": 4
-                                          },
-                                          "controlSize": {             
+                                        },
+                                        "controlSize": {
                                             "span": 20
-                                          }
+                                        }
                                     },
                                     "formType": "value",
                                     "formName": "formControlName",
@@ -61,12 +61,12 @@
                                     "name": "type",
                                     "type": "label",
                                     "componentConfig": {
-                                        "labelSize": {                
+                                        "labelSize": {
                                             "span": 4
-                                          },
-                                          "controlSize": {             
+                                        },
+                                        "controlSize": {
                                             "span": 20
-                                          }
+                                        }
                                     },
                                     "formType": "value",
                                     "formName": "formControlName",
@@ -77,12 +77,12 @@
                                     "name": "placeholder",
                                     "type": "input",
                                     "componentConfig": {
-                                        "labelSize": {                
+                                        "labelSize": {
                                             "span": 4
-                                          },
-                                          "controlSize": {             
+                                        },
+                                        "controlSize": {
                                             "span": 20
-                                          }
+                                        }
                                     },
                                     "formType": "value",
                                     "formName": "formControlName",
@@ -93,12 +93,12 @@
                                     "name": "defaultValue",
                                     "type": "input",
                                     "componentConfig": {
-                                        "labelSize": {                
+                                        "labelSize": {
                                             "span": 4
-                                          },
-                                          "controlSize": {             
+                                        },
+                                        "controlSize": {
                                             "span": 20
-                                          }
+                                        }
                                     },
                                     "formType": "value",
                                     "formName": "formControlName",
@@ -109,12 +109,12 @@
                                     "name": "labelName",
                                     "type": "input",
                                     "componentConfig": {
-                                        "labelSize": {                
+                                        "labelSize": {
                                             "span": 4
-                                          },
-                                          "controlSize": {             
+                                        },
+                                        "controlSize": {
                                             "span": 20
-                                          }
+                                        }
                                     },
                                     "formType": "value",
                                     "formName": "formControlName",
@@ -125,12 +125,12 @@
                                     "name": "valueName",
                                     "type": "input",
                                     "componentConfig": {
-                                        "labelSize": {                
+                                        "labelSize": {
                                             "span": 4
-                                          },
-                                          "controlSize": {             
+                                        },
+                                        "controlSize": {
                                             "span": 20
-                                          }
+                                        }
                                     },
                                     "formType": "value",
                                     "formName": "formControlName",
@@ -141,12 +141,12 @@
                                     "name": "showSearch",
                                     "type": "switch",
                                     "componentConfig": {
-                                        "labelSize": {                
+                                        "labelSize": {
                                             "span": 4
-                                          },
-                                          "controlSize": {             
+                                        },
+                                        "controlSize": {
                                             "span": 20
-                                          }
+                                        }
                                     },
                                     "formType": "value",
                                     "formName": "formControlName",
@@ -157,12 +157,12 @@
                                     "name": "serverSearch",
                                     "type": "switch",
                                     "componentConfig": {
-                                        "labelSize": {                
+                                        "labelSize": {
                                             "span": 4
-                                          },
-                                          "controlSize": {             
+                                        },
+                                        "controlSize": {
                                             "span": 20
-                                          }
+                                        }
                                     },
                                     "formType": "value",
                                     "formName": "formControlName",
@@ -200,12 +200,12 @@
                                     "name": "options",
                                     "type": "arrayCollapse",
                                     "componentConfig": {
-                                        "labelSize": {                
+                                        "labelSize": {
                                             "span": 4
-                                          },
-                                          "controlSize": {             
+                                        },
+                                        "controlSize": {
                                             "span": 20
-                                          }
+                                        }
                                     },
                                     "formType": "array",
                                     "properties": [
@@ -213,13 +213,13 @@
                                             "name": "label",
                                             "type": "input",
                                             "componentConfig": {
-                                        "labelSize": {                
-                                            "span": 4
-                                          },
-                                          "controlSize": {             
-                                            "span": 20
-                                          }
-                                    },
+                                                "labelSize": {
+                                                    "span": 4
+                                                },
+                                                "controlSize": {
+                                                    "span": 20
+                                                }
+                                            },
                                             "formType": "value",
                                             "formName": "formControlName",
                                             "validations": [],
@@ -229,13 +229,13 @@
                                             "name": "value",
                                             "type": "input",
                                             "componentConfig": {
-                                        "labelSize": {                
-                                            "span": 4
-                                          },
-                                          "controlSize": {             
-                                            "span": 20
-                                          }
-                                    },
+                                                "labelSize": {
+                                                    "span": 4
+                                                },
+                                                "controlSize": {
+                                                    "span": 20
+                                                }
+                                            },
                                             "formType": "value",
                                             "formName": "formControlName",
                                             "validations": [],
@@ -252,10 +252,75 @@
                             "type": "root",
                             "name": "title"
                         }
+                    },
+                    {
+                        "code": "data",
+                        "title": "静态数据集",
+                        "type": "property",
+                        "active": true,
+                        "sourceConfig": {
+                            "type": "staticForm",
+                            "backName": "mainSource",
+                            "backConfig": [
+                                {
+                                    "name": "mainSource"
+                                }
+                            ],
+                            "properties": [
+                                {
+                                    "name": "mainSource",
+                                    "type": "customSelect",
+                                    "componentConfig": {
+                                        "customPage": {
+                                            "title": "",
+                                            "width": "90%",
+                                            "style": null,
+                                            "maskClosable": true,
+                                            "cancelText": "取消",
+                                            "okText": "确定",
+                                            "footerButton": null,
+                                            "customAction": [],
+                                            "customContent": "mainResource",
+                                            "customPageConfig": {
+                                                "asyncLoad": true,
+                                                "loadingConfig": {
+                                                    "path": "vc/config/mainLoadingConfig.json"
+                                                },
+                                                "type": "mainResource",
+                                                "backName": "title",
+                                                "backConfig": [
+                                                    {
+                                                        "name": "mainResource"
+                                                    }
+                                                ]
+                                            },
+                                            "sourceData": {
+                                                "type": "_root",
+                                                "name": "mainSource"
+                                            }
+                                        },
+                                        "showConfig": {
+                                            "showString": [
+                                                {
+                                                    "name": "url"
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    "formType": "value",
+                                    "formName": "formControlName",
+                                    "validations": [],
+                                    "title": "主资源"
+                                }
+                            ]
+                        },
+                        "sourceData": {
+                            "type": "root",
+                            "name": "title"
+                        }
                     }
                 ]
             }
-           
         ]
     }
 }

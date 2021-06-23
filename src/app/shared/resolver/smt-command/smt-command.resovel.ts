@@ -1,4 +1,6 @@
 import { async } from '@angular/core/testing';
+import { isArray } from '@antv/x6/lib/util/lang/lang';
+import { event } from 'jquery';
 import { ISenderModel } from 'src/app/core/relations/bsn-relatives';
 import { SmtPreCondition } from '../smt-pre-condition/smt-pre-condition.resolver';
 import { SmtMessageSenderResolver } from '../smt-relation/smt-relation-resolver';
@@ -16,7 +18,7 @@ export class SmtCommandResolver {
           console.log('commandItem');
           customCommand.map(async (cmdItem: any) => {
             // debugger;
-            if (cmdItem.command === eventData.command && eventData.pageCode === this._componentInstance.dataServe.pageCode) {
+            if (cmdItem.command === eventData.command && eventData.targetViewId === this._componentInstance.config.id && eventData.pageCode === this._componentInstance.dataServe.pageCode) {
               // 缺少pageCode 判断
               await this._executeCommand(eventData.data, cmdItem);
             }
@@ -29,27 +31,45 @@ export class SmtCommandResolver {
   private async _executeCommand(eventData: any, cmd: any) {
     if (cmd.preCondition) {
     }
-    let _execParamsData: any = {};
+    let _execParamsData: any;
     if (cmd.declareParameters && cmd.declareParameters.length > 0) {
+      eventData = Object.keys(eventData).length > 0 ? eventData : null
       const declareParamValue = this._componentInstance.buildParameters(cmd.declareParameters, eventData, false);
-      cmd.declareParameters.map((p: any) => {
-        if (p.valueTo && this._componentInstance[p.valueTo]) {
-          this._componentInstance[p.valueTo][p.name] = declareParamValue[p.name];
-        }
-      });
-      _execParamsData = { ...declareParamValue, ..._execParamsData };
+      const declareParamArray = this.handleParams(declareParamValue);
+      if (declareParamArray.length === 0) {
+        _execParamsData = {};
+        cmd.declareParameters.map((p: any) => {
+          if (p.valueTo && this._componentInstance[p.valueTo]) {
+            this._componentInstance[p.valueTo][p.name] = declareParamValue[p.name];
+          }
+        });
+        _execParamsData = { ...declareParamValue, ..._execParamsData };
+      } else {
+        _execParamsData = [];
+        _execParamsData = [...declareParamArray, ..._execParamsData];
+      }
     }
     if (cmd.localParameters && cmd.localParameters.length > 0) {
       const localParamValue = this._componentInstance.buildParameters(cmd.localParameters);
-      cmd.localParameters.map((p: any) => {
-        if (p.valueTo && this._componentInstance[p.valueTo]) {
-          this._componentInstance[p.valueTo][p.name] = localParamValue[p.name];
-        }
-      });
+      const localParamArray = this.handleParams(localParamValue);
+      if (localParamArray.length === 0) {
+        cmd.localParameters.map((p: any) => {
+          if (p.valueTo && this._componentInstance[p.valueTo]) {
+            this._componentInstance[p.valueTo][p.name] = localParamValue[p.name];
+          }
+        });
 
-      _execParamsData = { ...localParamValue, ..._execParamsData };
+        _execParamsData = { ...localParamValue, ..._execParamsData };
+      } else {
+        _execParamsData = [...localParamArray, ..._execParamsData];
+      }
     }
+
     // 执行命令
+    await this.execCommandContent(cmd, _execParamsData);
+  }
+
+  private async execCommandContent(cmd, _execParamsData) {
     if (cmd.commandType === 'builtin') {
       const method = this._componentInstance.COMPONENT_METHODS[cmd.command];
       const result = await this._componentInstance[method](_execParamsData);
@@ -83,45 +103,27 @@ export class SmtCommandResolver {
           }
         }
       }
-      // cmd.commandContent.forEach(async (command) => {
-      //   if (command.type === 'ajaxConfig') {
-      //     const data = _execParamsData === {} ? null : _execParamsData;
-      //     const response = await this._componentInstance.executeHttp(command.ajaxConfig, data, null);
-      //     if (response.state === 1) {
-      //       for (let i = 0; i < command.result.length; i++) {
-      //         // if (command.result[i]['enableCondition'] === 'true') {
-      //         // }
-      //         this.afterOperate(command.result[i], this._componentInstance.componentService.modalService);
-      //       }
-      //     }
-      //   } else if (command.type === 'commandConfig') {
-      //     for (let i = 0; i < command.commandConfig.length; i++) {
-      //       if (command.commandConfig[i].commandType === 'custom') {
-      //         new SmtMessageSenderResolver(this._componentInstance).resolve(command.commandConfig[i]);
-      //       } else {
-      //         const method = this._componentInstance.COMPONENT_METHODS[command.commandConfig[i].command];
-      //         const result = await this._componentInstance[method](_execParamsData);
-      //         if (result.state === 1) {
-      //           // this.showDefaultMessage();
-      //         }
-      //       }
-      //     }
-
-      //     // for (let j = 0; j < command.result.length; j++) {
-      //     //   this.afterOperate(command.result[j], this._componentInstance.componentService.modalService);
-      //     // }
-      //   }
-      // });
     }
+  }
+
+  private handleParams(paramsObj) {
+    const paramsArray = Object.keys(paramsObj);
+    let paramsFinal: any = [];
+    for (let i = 0; i < paramsArray.length; i++) {
+      if (Array.isArray(paramsObj[paramsArray[i]]) === true) {
+        paramsFinal = paramsObj[paramsArray[i]]
+      }
+    }
+    return paramsFinal;
   }
 
   private async resolveCommandOfAjax(command, execParamsData) {
     let next: any = 'prevent';
     const data = execParamsData === {} ? null : execParamsData;
-    const response = await this._componentInstance.executeHttp(command.ajaxConfig, data, null);
+    const response = await this._componentInstance.executeHttp(command.ajaxConfig, data, '', Array.isArray(data));
     if (response.state === 1) {
       for (let i = 0; i < command.result.length; i++) {
-        const nextResult = this.afterOperate(command.result[i], this._componentInstance.componentService.modalService, data);
+        const nextResult = this.afterOperate(command.result[i], this._componentInstance.componentService.modalService, data, execParamsData);
         next = nextResult === undefined ? next : nextResult
         switch (next) {
           case 'next':
@@ -147,7 +149,7 @@ export class SmtCommandResolver {
         const response = await this._componentInstance[method](execParamsData);
         if (response.state === 1) {
           for (let i = 0; i < command.result.length; i++) {
-            const nextResult = this.afterOperate(command.result[i], this._componentInstance.componentService.modalService, data);
+            const nextResult = this.afterOperate(command.result[i], this._componentInstance.componentService.modalService, data, execParamsData);
             next = nextResult === undefined ? next : nextResult
             switch (next) {
               case 'next':
@@ -164,7 +166,7 @@ export class SmtCommandResolver {
     return next;
   }
 
-  public afterOperate(commandObj, modal, data?) {
+  public afterOperate(commandObj, modal, data?, execParamsData?) {
     let nextCommand: any;
     if (commandObj['condition'] && commandObj['condition'].length > 0) {
       const conditionResult = this._componentInstance.analysisResult(
@@ -172,17 +174,17 @@ export class SmtCommandResolver {
         data,
       );
       if (conditionResult) {
-        nextCommand = this.resultResolver(commandObj, modal);
+        nextCommand = this.resultResolver(commandObj, modal, execParamsData);
       } else {
         return 'prevent';
       }
     } else {
-      nextCommand = this.resultResolver(commandObj, modal);
+      nextCommand = this.resultResolver(commandObj, modal, execParamsData);
     }
     return nextCommand;
   }
 
-  private resultResolver(result, modal) {
+  private resultResolver(result, modal, execParamsData?) {
     let nextOperate: any;
     let returnValue: any;
     switch (result['type']) {
@@ -194,6 +196,9 @@ export class SmtCommandResolver {
         break;
       case 'execution':
         nextOperate = this.showExecution(result['execution'], returnValue);
+        break;
+      case 'command':
+        nextOperate = this.sendCommand(result['command'], returnValue, execParamsData);
         break;
     }
     return nextOperate;
@@ -228,6 +233,13 @@ export class SmtCommandResolver {
   showExecution(cfg, returnValue) {
     returnValue = this.nextOperate(cfg['point']);
     return returnValue;
+  }
+
+  sendCommand(commandArray, returnValue, execParamsData) {
+    for (let i = 0; i < commandArray.length; i++) {
+      this.execCommandContent(commandArray[i], execParamsData)
+    }
+    returnValue = this.nextOperate('next');
   }
 
   createContent(cfg) {
