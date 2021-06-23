@@ -869,6 +869,135 @@
                         }
                     }
                 ]
+            },
+            {
+                "code": "window",
+                "title": "弹出窗口",
+                "propertyTypeConent": [
+                    {
+                        "code": "base",
+                        "title": "弹出窗口",
+                        "type": "property",
+                        "active": true,
+                        "sourceConfig": {
+                            "type": "staticForm",
+                            "backName": "windows",
+                            "backConfig": [
+                                {
+                                    "name": "windows"
+                                }
+                            ],
+                            "properties": [
+                                {
+                                    "name": "windows",
+                                    "type": "arrayCollapse",
+                                    "componentConfig": {
+                                       
+                                        "mode": "empty",
+                                        "showConfig": {
+                                            "showString": [
+                                                {
+                                                    "name": "windowTitle",
+                                                    "children": []
+                                                },
+                                                {
+                                                    "name": "windowName",
+                                                    "children": []
+                                                }
+                                            ]
+                                        },
+                                        "staticDefaultValueConfig": [
+                                            {
+                                                "name": "windowContent",
+                                                "type": "value",
+                                                "value": {
+                                                    "width":"90%",
+                                                    "style":{
+                                                        "top": "100px",
+                                                        "padding-bottom": "0px"
+                                                    }
+                                                }
+                                            }
+                                        ]
+                                       
+                                    },
+                                    "properties": [
+                                        {
+                                            "name": "windowTitle",
+                                            "type": "input",
+                                            "componentConfig": {},
+                                            "formType": "value",
+                                            "formName": "formControlName",
+                                            "validations": [],
+                                            "title": "窗口标题"
+                                        },
+                                        {
+                                            "name": "windowName",
+                                            "type": "input",
+                                            "componentConfig": {},
+                                            "formType": "value",
+                                            "formName": "formControlName",
+                                            "validations": [],
+                                            "title": "窗口编码"
+                                        },
+                                        {
+                                            "name": "windowContent",
+                                            "type": "customSelect",
+                                            "componentConfig": {
+                                                "customPage": {
+                                                    "title": "",
+                                                    "width": "90%",
+                                                    "style": null,
+                                                    "maskClosable": true,
+                                                    "cancelText": "取消",
+                                                    "okText": "确定",
+                                                    "footerButton": null,
+                                                    "customAction": [],
+                                                    "customContent": "staticForm",
+                                                    "customPageConfig": {
+                                                        "type": "staticForm",
+                                                        "asyncLoad":true,  
+                                                        "loadingConfig":{
+                                                          "path":"vc/page/gloab/windowConent.json"
+                                                        }
+                                                    },
+                                                    "sourceData": {
+                                                        "type": "root",
+                                                        "name": "title"
+                                                    },
+                                                    "saveData": {
+                                                        "type": "_root",
+                                                        "name": "windowContent"
+                                                    }
+                                                },
+                                                "showConfig": {
+                                                    "type": "exist",
+                                                    "showString": [
+                                                        {
+                                                            "name": "type"
+                                                        }
+                                                    ]
+                                                }
+                                            },
+                                            "formType": "value",
+                                            "formName": "formControlName",
+                                            "validations": [],
+                                            "title": "弹出内容"
+                                        }
+                                    ],
+                                    "formType": "array",
+                                    "formName": "formControlName",
+                                    "validations": [],
+                                    "title": "弹出窗口"
+                                }
+                            ]
+                        },
+                        "sourceData": {
+                            "type": "root",
+                            "name": "title"
+                        }
+                    }
+                ]
             }
         ]
     }

@@ -29,6 +29,7 @@ import { SmtFormTagComponent } from './smt-form-tag/smt-form-tag.component';
 import { SmtFormTextareaComponent } from './smt-form-textarea/smt-form-textarea.component';
 import { SmtFormTreeSelectComponent } from './smt-form-tree-select/smt-form-tree-select.component';
 const components: { [type: string]: Type<any> } = {
+  cnFormInput: SmtFormInputComponent,
   smtFormInput: SmtFormInputComponent,
   smtFormSwitch: SmtFormSwitchComponent,
   smtFormSelect: SmtFormSelectComponent,
@@ -58,7 +59,7 @@ export class SmtFormItemDirective implements OnInit, OnChanges, OnDestroy {
   @Output() public cascadeValue = new EventEmitter<any>(true);
   @Input() fb: FormBuilder;
   public component: ComponentRef<any>;
-  constructor(private resolver: ComponentFactoryResolver, private container: ViewContainerRef) {}
+  constructor(private resolver: ComponentFactoryResolver, private container: ViewContainerRef) { }
 
   ngOnInit(): void {
     // throw new Error('Method not implemented.');
