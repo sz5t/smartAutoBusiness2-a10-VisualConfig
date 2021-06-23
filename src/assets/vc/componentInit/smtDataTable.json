@@ -5,13 +5,8 @@
         "data": {
             "componentEvent":[
                 {
-                    "eventTitle":"刷新",
-                    "eventName":"load",
-                    "eventContent":null
-                },
-                {
                     "eventTitle":"点击事件",
-                    "eventName":"action",
+                    "eventName":"SET_SELECT_ROW",
                     "eventContent":null
                 }
             ]
@@ -40,6 +35,42 @@
         {
             "command": "LOAD",
             "commandTitle": "刷新",
+            "commandType": "builtin",
+            "declareParameters":[]
+        },
+        {
+            "command": "REFRESH_AS_CHILD",
+            "commandTitle": "刷新",
+            "commandType": "builtin",
+            "declareParameters":[]
+        },
+        {
+            "command": "REFRESH",
+            "commandTitle": "刷新",
+            "commandType": "builtin",
+            "declareParameters":[]
+        },
+        {
+            "command": "EDIT_ROW",
+            "commandTitle": "编辑单行",
+            "commandType": "builtin",
+            "declareParameters":[]
+        },
+        {
+            "command": "EDIT_ROWS",
+            "commandTitle": "批量编辑行",
+            "commandType": "builtin",
+            "declareParameters":[]
+        },
+        {
+            "command": "CANCEL_EDIT_ROWS",
+            "commandTitle": "关闭编辑行",
+            "commandType": "builtin",
+            "declareParameters":[]
+        },
+        {
+            "command": "LOAD_REFRESH_DATA",
+            "commandTitle": "更新部分数据",
             "commandType": "builtin",
             "declareParameters":[]
         }
