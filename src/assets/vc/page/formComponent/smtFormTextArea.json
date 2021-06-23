@@ -34,7 +34,7 @@
                             "properties": [
                                 {
                                     "name": "type",
-                                    "type": "input",
+                                    "type": "label",
                                     "componentConfig": {
                                         "labelSize": {
                                             "span": 6
@@ -46,7 +46,7 @@
                                     "formType": "value",
                                     "formName": "formControlName",
                                     "validations": [],
-                                    "title": "表单组件"
+                                    "title": "组件类型"
                                 },
                                 {
                                     "name": "title",
@@ -110,7 +110,7 @@
                                     "properties": [
                                         {
                                             "name": "minRows",
-                                            "type": "input",
+                                            "type": "label",
                                             "componentConfig": {
                                                 "labelSize": {
                                                     "span": 6

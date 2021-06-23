@@ -1,5 +1,5 @@
 <div (click)="click($event)"
-    [ngStyle]="(selectedItem['item'] &&(selectedItem['active']===l_config['type'])&& (selectedItem['item']['id']===l_config['id']) )? body_style_selected: body_style">
+    [ngStyle]="(selectedItem['item'] &&(selectedItem['active']==='smtFormSelect')&& (selectedItem['item']['id']===l_config['id']) )? body_style_selected: body_style">
 
     <nz-form-item>
         <nz-form-label [nzSpan]="config.labelSize.span" [nzSm]="config.labelSize.nzSm"
@@ -11,10 +11,12 @@
         <nz-form-control [nzSpan]="config.controlSize.span" [nzSm]="config.controlSize.nzSm"
             [nzXs]="config.controlSize.nzXs" [nzMd]="config.controlSize.nzMd" [nzLg]="config.controlSize.nzLg"
             [nzXl]="config.controlSize.nzXl">
-            <nz-select [(ngModel)]="this.config.valueName">
-                <nz-option *ngFor="let option of this.config.options" [nzLabel]="option.label" [nzValue]="option.value"></nz-option>
-                <nz-option *ngIf="this.config.labelName && this.config.valueName" nzLabel="{{'标签字段[' + this.config.labelName + '], 取值字段[' + this.config.valueName +']'}}" [nzValue]="this.config.valueName"></nz-option>
-            </nz-select>
+            <nz-tree-select
+                [nzNodes]="nodes"
+                [nzShowSearch]="config.showSearch"
+                [nzPlaceHolder]="config.placeHolder"
+                [(ngModel)]="value">
+    </nz-tree-select>
         </nz-form-control>
     </nz-form-item>
 </div>

@@ -12,8 +12,8 @@
         <nz-form-control [nzSpan]="config.controlSize.span" [nzSm]="config.controlSize.nzSm"
             [nzXs]="config.controlSize.nzXs" [nzMd]="config.controlSize.nzMd" [nzLg]="config.controlSize.nzLg"
             [nzXl]="config.controlSize.nzXl">
-            <nz-radio-group *ngIf="this.config.staticData" [(ngModel)]="model">
-                <label nz-radio [nzValue]="o.value" *ngFor="let o of this.config.staticData">{{ o.label }}</label>
+            <nz-radio-group *ngIf="this.config.options" [(ngModel)]="model">
+                <label nz-radio [nzValue]="o.value" *ngFor="let o of this.config.options">{{ o.label }}</label>
             </nz-radio-group>
             
             <nz-radio-group *ngIf="this.config.valueName && this.config.labelName" [(ngModel)]="this.config.valueName">

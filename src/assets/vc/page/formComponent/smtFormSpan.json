@@ -33,6 +33,22 @@
                             ],
                             "properties": [
                                 {
+                                    "name": "type",
+                                    "type": "label",
+                                    "componentConfig": {
+                                        "labelSize": {                
+                                            "span": 4
+                                          },
+                                          "controlSize": {             
+                                            "span": 20
+                                          }
+                                    },
+                                    "formType": "value",
+                                    "formName": "formControlName",
+                                    "validations": [],
+                                    "title": "类型"
+                                },
+                                {
                                     "name": "title",
                                     "type": "input",
                                     "componentConfig": {
@@ -63,22 +79,6 @@
                                     "formName": "formControlName",
                                     "validations": [],
                                     "title": "字段"
-                                },
-                                {
-                                    "name": "type",
-                                    "type": "input",
-                                    "componentConfig": {
-                                        "labelSize": {                
-                                            "span": 4
-                                          },
-                                          "controlSize": {             
-                                            "span": 20
-                                          }
-                                    },
-                                    "formType": "value",
-                                    "formName": "formControlName",
-                                    "validations": [],
-                                    "title": "类型"
                                 },
                                 {
                                     "name": "placeholder",
