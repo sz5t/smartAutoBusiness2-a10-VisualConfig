@@ -24,6 +24,7 @@ import { CfgFormSpanComponent } from './cfg-form-span/cfg-form-span.component';
 import { CfgFormSwitchComponent } from './cfg-form-switch/cfg-form-switch.component';
 import { CfgFormTagComponent } from './cfg-form-tag/cfg-form-tag.component';
 import { CfgFormTextareaComponent } from './cfg-form-textarea/cfg-form-textarea.component';
+import { CfgFormTreeSelectComponent } from './cfg-form-treeSelect/cfg-form-treeSelect.component';
 const components: { [type: string]: Type<any> } = {
   smtFormInput: CfgFormInputComponent,
   smtFormSwitch: CfgFormSwitchComponent,
@@ -38,7 +39,7 @@ const components: { [type: string]: Type<any> } = {
   smtFormRadio: CfgFormRadioComponent,
   smtFormTag: CfgFormTagComponent,
   smtFormTextarea: CfgFormTextareaComponent,
-  smtFormTreeSelect: CfgFormInputComponent,
+  smtFormTreeSelect: CfgFormTreeSelectComponent,
   smtFormSpan: CfgFormSpanComponent,
 };
 @Directive({

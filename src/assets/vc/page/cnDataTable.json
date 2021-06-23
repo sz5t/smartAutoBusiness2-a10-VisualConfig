@@ -2825,7 +2825,7 @@
                                                                 "componentConfig": {
                                                                     "staticDefaultValueConfig": [
                                                                         {
-                                                                            "name": "tagPageId",
+                                                                            "name": "targetPageId",
                                                                             "type": "tempValue",
                                                                             "valueName": "ID"
                                                                         }
@@ -2837,7 +2837,7 @@
                                                                 "title": "事件内容",
                                                                 "properties": [
                                                                     {
-                                                                        "name": "tagViewTitle",
+                                                                        "name": "targetViewTitle",
                                                                         "type": "input",
                                                                         "componentConfig": {},
                                                                         "formType": "value",
@@ -2846,7 +2846,7 @@
                                                                         "title": "绑定组件标题"
                                                                     },
                                                                     {
-                                                                        "name": "tagViewId",
+                                                                        "name": "targetViewId",
                                                                         "type": "input",
                                                                         "componentConfig": {},
                                                                         "formType": "value",
@@ -2855,7 +2855,7 @@
                                                                         "title": "绑定组件标识"
                                                                     },
                                                                     {
-                                                                        "name": "tagPageId",
+                                                                        "name": "targetPageId",
                                                                         "type": "input",
                                                                         "componentConfig": {},
                                                                         "formType": "value",

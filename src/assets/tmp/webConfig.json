@@ -61,7 +61,7 @@
                 ]
             },
             "loginAjaxConfig": {
-                "url": "smt-base/login",
+                "url": "smt-base/vclogin",
                 "ajaxType": "post",
                 "params": [
                     {

@@ -23,12 +23,25 @@
                                 },
                                 {
                                     "name": "type"
-                                },
-                                {
-                                    "name": "placeholder"
                                 }
                             ],
                             "properties": [
+                                {
+                                    "name": "type",
+                                    "type": "label",
+                                    "componentConfig": {
+                                        "labelSize": {                
+                                            "span": 6
+                                          },
+                                          "controlSize": {             
+                                            "span": 18
+                                          }
+                                    },
+                                    "formType": "value",
+                                    "formName": "formControlName",
+                                    "validations": [],
+                                    "title": "组件类型"
+                                },
                                 {
                                     "name": "title",
                                     "type": "input",
@@ -50,48 +63,16 @@
                                     "type": "input",
                                     "componentConfig": {
                                         "labelSize": {                
-                                            "span": 4
+                                            "span": 6
                                           },
                                           "controlSize": {             
-                                            "span": 20
+                                            "span": 18
                                           }
                                     },
                                     "formType": "value",
                                     "formName": "formControlName",
                                     "validations": [],
-                                    "title": "字段"
-                                },
-                                {
-                                    "name": "type",
-                                    "type": "input",
-                                    "componentConfig": {
-                                        "labelSize": {                
-                                            "span": 4
-                                          },
-                                          "controlSize": {             
-                                            "span": 20
-                                          }
-                                    },
-                                    "formType": "value",
-                                    "formName": "formControlName",
-                                    "validations": [],
-                                    "title": "类型"
-                                },
-                                {
-                                    "name": "placeholder",
-                                    "type": "input",
-                                    "componentConfig": {
-                                        "labelSize": {                
-                                            "span": 4
-                                          },
-                                          "controlSize": {             
-                                            "span": 20
-                                          }
-                                    },
-                                    "formType": "value",
-                                    "formName": "formControlName",
-                                    "validations": [],
-                                    "title": "默认填充文本"
+                                    "title": "绑定字段"
                                 }
                             ]
                         },

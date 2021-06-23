@@ -3,6 +3,20 @@
     "default":{
         "title": "表单值",
         "data": {
+            "columns":[
+                {
+                    "title":"节点文本",
+                    "type": "title"
+                },
+                {
+                    "title":"主键",
+                    "type": "key"
+                },
+                {
+                    "title":"父节点",
+                    "type": "parentId"
+                }
+            ],
             "componentEvent":[
                 {
                     "eventTitle":"点击节点",
