@@ -646,6 +646,7 @@ export class SmtFormComponent extends SmtComponentBase implements OnInit, OnDest
     dialog = this.componentService.modalService.create(dialogOptional);
     this.windowDialog = dialog;
     console.log('弹出配置');
+    return this.getDefaultResult();
   }
 
   public getWindowObj(code?) {
@@ -673,6 +674,7 @@ export class SmtFormComponent extends SmtComponentBase implements OnInit, OnDest
     if (this.windowDialog) {
       this.windowDialog['close']();
     }
+    return this.getDefaultResult();
   }
 
 

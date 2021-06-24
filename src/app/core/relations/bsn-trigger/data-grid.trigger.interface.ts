@@ -29,6 +29,7 @@ export interface IDataGridTrigger {
     TRANSFER_VALUE: string;
     CUSTOM_ACTION: string;
 
+    LOAD: string;
     REFRESH: string;
     HIDDEN: string;
     SHOW: string;
@@ -99,6 +100,7 @@ export const BSN_DATAGRID_TRIGGER: IDataGridTrigger = {
     CUSTOM_ACTION: 'CUSTOM_ACTION',
 
     // behavior
+    LOAD: 'LOAD',
     REFRESH: 'REFRESH',
     REFRESH_AS_CHILD: 'REFRESH_AS_CHILD',
     LOAD_BY_FILTER: 'LOAD_BY_FILTER',
